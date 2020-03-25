@@ -1,84 +1,64 @@
-<template>
-  <div class="columns">
-    <div class="column is-4 asset-column">
-      <div class="box">
-        <b-tabs>
-          <b-tab-item label="слова">
-            <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">Добавить
-            </button>
-            <ul>
-              <asset v-for="word in words" :item="word" @edit="assetEdit"
-                     @remove="removeAsset"></asset>
-            </ul>
-          </b-tab-item>
-          <b-tab-item label="предложения">
-            <button class="button is-small" style="margin: 10px 0;" @click="addAsset(2)">Добавить
-            </button>
-            <ul>
-              <asset v-for="sentence in sentences" :item="sentence" @edit="assetEdit"
-                     @remove="removeAsset"></asset>
-            </ul>
-          </b-tab-item>
-        </b-tabs>
-      </div>
-    </div>
-    <div class="column is-4 cards-column">
-      <div class="box">
-        <card
-          v-for="(card, index) in cards"
-          :card="card"
-          :index="index"
-          :key="card.id"
-          v-on:remove="removeCard">
+<template lang="pug">
+  .columns
+    .column.is-4.asset-column
+      div.box
+        b-tabs
 
-        </card>
-      </div>
-    </div>
-    <div class="column is-4 translate-column">
-      <div class="box">
-        <div class="block">
-          <p class="control has-addons">
-            <input class="input" type="text" placeholder="rus" v-model="text">
-            <a :class="['button', {'is-loading': searchloaded }]" @click="search">Искать</a>
-            <a :class="['button', {'is-loading': sentencesloaded }]"
-               @click="searchsentences">Предложения</a>
-          </p>
-        </div>
-        <div class="block">
-          <translate
-            v-for="(item, index) in translates"
-            :item="item"
-            :index="index"
-            v-on:increment="increment"
-            v-on:remove="removeTranslate">
-          </translate>
-        </div>
-      </div>
-    </div>
+          b-tab-item(label="слова")
+            button.button.is-small(style="margin: 10px 0;", @click="addAsset(1)") Добавить
+            ul
+              asset(
+                v-for="word in words",
+                :item="word",
+                @edit="assetEdit",
+                @remove="removeAsset")
 
-    <b-modal :active.sync="isComponentModalActive" @close="close">
-      <div class="box">
-        <div class="translate-section">
-          <p>
+          b-tab-item label="предложения"
+            button.button.is-small(style="margin: 10px 0;", @click="addAsset(2)") Добавить
+            ul
+              asset(
+                v-for="sentence in sentences",
+                :item="sentence",
+                @edit="assetEdit",
+                @remove="removeAsset")
+    .column.is-4.cards-column
+      .box
+        card(
+          v-for="(card, index) in cards",
+          :card="card",
+          :index="index",
+          :key="card.id",
+          v-on:remove="removeCard")
+
+    div.column.is-4.translate-column
+      .box
+        div.block
+          p.control.has-addons
+            input.input(type="text", placeholder="rus", v-model="text")
+            a(:class="['button', {'is-loading': searchloaded }]", @click="search") Искать
+            a(:class="['button', {'is-loading': sentencesloaded }]", @click="searchsentences") Предложения
+        .block
+          translate(
+            v-for="(item, index) in translates",
+            :item="item",
+            :index="index",
+            @increment="increment",
+            @remove="removeTranslate")
+
+    b-modal(:active.sync="isComponentModalActive" @close="close")
+      .box
+        .translate-section
+          p.
             Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}}
             level={{editedAsset.level}} favorite={{editedAsset.favorite}}
-          </p>
-          <b-field>
-            <b-input type="text" placeholder="text" v-model="editedAsset.title"
-                     style="width: 380px;"></b-input>
-            <b-input type="text" placeholder="text" v-model="editedAsset.level"
-                     style="width: 80px;"></b-input>
-            <p class="control">
-              <button class="button is-success" @click="updateTitle">Сохранить</button>
-            </p>
-            <p class="control">
-              <button class="button is-warning" @click="close">Отмена</button>
-            </p>
-          </b-field>
-        </div>
-      </div>
-    </b-modal>
-  </div>
+
+          .b-field
+            b-input(type="text", placeholder="text", v-model="editedAsset.title", style="width: 380px;")
+            b-input(type="text" placeholder="text" v-model="editedAsset.level" style="width: 80px;")
+            p.control
+              button.button.is-success(@click="updateTitle") Сохранить
+            p.control
+              button.button.is-warning(@click="close") Отмена
 </template>
 
 <script lang="ts">
@@ -87,7 +67,7 @@ import Vue from 'vue'
 import Asset from '@/components/assets/Asset.vue'
 import Card from '@/components/assets/Card.vue'
 import Translate from '@/components/assets/Translate.vue'
-import assetAPI from "@/api/assetAPI"
+import assetAPI from '@/api/assetAPI'
 
   @Component({
     name: 'AssetsView',
@@ -128,12 +108,12 @@ export default class extends Vue {
       })
     }
 
-    removeCard(data: any) {
+    removeCard(data: any): void {
       this.$store.dispatch('removeCard', data)
       this.decrement()
     }
 
-    removeAsset(item: any) {
+    removeAsset(item: any): void {
       assetAPI.destroyAsset(item.id).then((response) => {
         this.load()
       }, (response) => {
@@ -141,7 +121,7 @@ export default class extends Vue {
       })
     }
 
-    addAsset(type: any) {
+    addAsset(type: any): void {
       assetAPI.addAsset(type).then((response) => {
         this.load()
       }, (response) => {
@@ -149,7 +129,7 @@ export default class extends Vue {
       })
     }
 
-    search() {
+    search(): any {
       if (this.text === '') return false
       this.searchloaded = true
       assetAPI.getTranslate(this.text, this.sentence).then(
@@ -211,7 +191,7 @@ export default class extends Vue {
     }
 
     updateTitle() {
-      assetAPI.updateTitle(this.editedAsset.id,{
+      assetAPI.updateTitle(this.editedAsset.id, {
         text: this.editedAsset.title,
         level: this.editedAsset.level,
       }).then((response) => {

@@ -1,18 +1,15 @@
-<template>
-  <div class="content has-text-centered">
-    <p>
-      <img width="200" src="~assets/logo.png" :alt="description">
-    </p>
+<template lang="pug">
+  .content.has-text-centered
+    p
+      img(width="200", src="~assets/logo.png", :alt="description")
 
-    <h1 class="is-title is-bold">{{ name.replace('-', ' ') }}</h1>
+    h1.is-title.is-bold {{ name.replace('-', ' ') }}
 
-    <p>
-      <strong>{{ description }}</strong>,
-      <a :href="homepage">Live Demo</a>
-    </p>
+    p
+      strong {{ description }}
+      a(:href="homepage") Live Demo
 
-    <p>Supports Vue 2.0 and Bulma 0.3!</p>
-  </div>
+    p Supports Vue 2.0 and Bulma 0.3!
 </template>
 
 <script lang="ts">
@@ -30,7 +27,7 @@ import Translate from '@/components/assets/Translate.vue'
       Translate,
     },
   })
-export default class extends Vue {
+export default class HomeView extends Vue {
   // this.$store.state.pkg
 }
 </script>

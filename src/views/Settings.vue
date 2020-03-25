@@ -9,7 +9,7 @@ import Vue from 'vue'
   @Component({
     name: 'SettingsView',
   })
-export default class extends Vue {
+export default class SettingsView extends Vue {
 
 }
 </script>

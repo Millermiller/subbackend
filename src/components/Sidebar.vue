@@ -40,20 +40,20 @@
 import Expanding from 'vue-bulma-expanding'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {Prop} from 'vue-property-decorator'
+import { Prop, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router';
 
 @Component({
   name: 'Sidebar',
   components: {
-    Expanding
+    Expanding,
   },
 })
 export default class Sidebar extends Vue {
   @Prop({ required: true })
   private show!: any
 
-  private   isReady: boolean = false,
-
+  private isReady: boolean = false
 
   mounted() {
     const route = this.$route
@@ -64,64 +64,61 @@ export default class Sidebar extends Vue {
   }
 
 
-    isExpanded(item) {
-      return item.meta.expanded
+  isExpanded = (item: any) => item.meta.expanded
+
+  // toggle(index: number, item: any) {
+  //  this.expandMenu({
+  //    index,
+  //    expanded: !item.meta.expanded,
+  //  })
+  // }
+
+  shouldExpandMatchItem(route: any) {
+    const { matched } = route
+    const lastMatched = matched[matched.length - 1]
+    const parent = lastMatched.parent || lastMatched
+    const isParent = parent === lastMatched
+
+    // if (isParent) {
+    //   const p = this.findParentFromMenu(route)
+    //   if (p) {
+    //     parent = p
+    //   }
+    // }
+
+    if ('expanded' in parent.meta && !isParent) {
+    //   this.expandMenu({
+    //     item: parent,
+    //     expanded: true,
+    //   })
     }
+  }
 
-    toggle(index, item) {
-      this.expandMenu({
-        index,
-        expanded: !item.meta.expanded,
-      })
-    }
+  generatePath(item: any, subItem: any) {
+    return `${item.component ? `${item.path}/` : ''}${subItem.path}`
+  }
 
-    shouldExpandMatchItem(route) {
-      const { matched } = route
-      const lastMatched = matched[matched.length - 1]
-      let parent = lastMatched.parent || lastMatched
-      const isParent = parent === lastMatched
-
-      if (isParent) {
-        const p = this.findParentFromMenu(route)
-        if (p) {
-          parent = p
-        }
-      }
-
-      if ('expanded' in parent.meta && !isParent) {
-        this.expandMenu({
-          item: parent,
-          expanded: true,
-        })
-      }
-    }
-
-    generatePath(item, subItem) {
-      return `${item.component ? `${item.path}/` : ''}${subItem.path}`
-    }
-
-    findParentFromMenu(route) {
-      const { menu } = this
-      for (let i = 0, l = menu.length; i < l; i++) {
-        const item = menu[i]
-        const k = item.children && item.children.length
-        if (k) {
-          for (let j = 0; j < k; j++) {
-            if (item.children[j].name === route.name) {
-              return item
-            }
-          }
-        }
-      }
-      return true
-    }
+  findParentFromMenu(route: Route): any {
+    // const { menu: any } = this
+    // for (let i = 0, l = menu.length; i < l; i++) {
+    //   const item = menu[i]
+    //   const k = item.children && item.children.length
+    //   if (k) {
+    //     for (let j = 0; j < k; j++) {
+    //       if (item.children[j].name === route.name) {
+    //         return item
+    //       }
+    //     }
+    //   }
+    // }
+    // return true
+  }
 
   @Watch('$route')
   private onRouteChange(route: Route) {
     this.isReady = true
     this.shouldExpandMatchItem(route)
   }
-
 }
 </script>
 

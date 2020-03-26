@@ -1,7 +1,7 @@
 <template lang="pug">
   section.app-main
     .container.is-fluid.is-marginless.app-content
-      levelbar
+
       transition(
         mode="out-in",
         enter-active-class="fadeIn",
@@ -13,13 +13,11 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Levelbar from '@/components/Levelbar.vue'
+
 
   @Component({
     name: 'AppMain',
-    components: {
-      Levelbar,
-    },
+
 
   })
 export default class extends Vue {

@@ -10,7 +10,8 @@
             strong {{item.name}}
             small №{{item.user}}
             span {{item.subject}}
-              br {{item.message}}
+              br
+            span {{item.message}}
 
 </template>
 

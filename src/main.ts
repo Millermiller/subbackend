@@ -4,9 +4,9 @@ import VueProgressBar from 'vue-progressbar'
 // import VueFroala from 'vue-froala-wysiwyg'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { store } from './store'
 import 'buefy/dist/buefy.css'
-
+import './assets/css/style.css'
 
 require('froala-editor/js/froala_editor.pkgd.min')
 // Require Froala Editor css files.

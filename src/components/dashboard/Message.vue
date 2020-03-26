@@ -1,15 +1,14 @@
-<template>
-    <li class="columns">
-        <p :class="['column', 'is-3', 'is-small']">{{item.name}}</p>
+<template lang="pug">
+  li.columns
+    p.column.is-3.is-small {{item.name}}
 
-        <span v-if="item.readed" class="tag is-success  is-3" @click="openModalBasic">прочитано</span>
-        <span v-if="!item.readed" class="tag is-success  is-3" @click="openModalBasic">не прочитано</span>
+    span.tag.is-success.is-3(v-if="item.readed", @click="openModalBasic") прочитано
+    span.tag.is-success.is-3(v-if="!item.readed", @click="openModalBasic") не прочитано
 
-        <p :class="['column']">{{item.subject}}</p>
-        <p :class="['column']">{{item.created_at}}</p>
-        <a class="delete" @click="$emit('deleteMessage', item.id)"></a>
-        <modal :visible="showModal" :item="item" @close="closeModalBasic"></modal>
-    </li>
+    p.column {{item.subject}}
+    p.column {{item.created_at}}
+    a.delete(@click="$emit('deleteMessage', item.id)")
+    modal(:visible="showModal", :item="item", @close="closeModalBasic")
 </template>
 
 <script lang="ts">
@@ -24,7 +23,7 @@ import Modal from '@/components/dashboard/modals/Modal.vue'
     Modal,
   },
 })
-export default class extends Vue {
+export default class Message extends Vue {
   @Prop({ required: true })
   private item!: any
 

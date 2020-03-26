@@ -1,71 +1,49 @@
-<template>
-    <div class="tile is-ancestor">
-        <div class="tile is-parent">
-            <div class="tile is-child box">
+<template lang="pug">
+  .tile.is-ancestor
+    .tile.is-parent
+      .tile.is-child.box
+        .header Intro №{{form.id}}
 
-                <div class="header">Intro №{{form.id}}</div>
+        froala(:tag="'textarea'", :config="config", v-model="form.content")
 
-                <froala :tag="'textarea'" :config="config" v-model="form.content"></froala>
+        b-field(label="Страница")
+          b-select(placeholder="Выберите страницу", v-model="form.page")
+            option(v-for="page in pages", :value="page", :key="page").
+              {{ page }}
 
-                <b-field label="Страница">
-                    <b-select placeholder="Выберите страницу" v-model="form.page">
-                        <option
-                                v-for="page in pages"
-                                :value="page"
-                                :key="page">
-                            {{ page }}
-                        </option>
-                    </b-select>
-                </b-field>
+        b-field(label="element")
+          b-input(v-model="form.element")
 
+        b-field(label="position")
+          b-select placeholder=" - " v-model="form.position">
+            option(
+              v-for="position in positions",
+              :value="position",
+              :key="position") {{ position }}
 
-                <b-field label="element">
-                    <b-input v-model="form.element"></b-input>
-                </b-field>
+        b-field(label="sort")
+          b-input(v-model="form.sort")
 
-                <b-field label="position">
-                    <b-select placeholder=" - " v-model="form.position">
-                        <option
-                                v-for="position in positions"
-                                :value="position"
-                                :key="position">
-                            {{ position }}
-                        </option>
-                    </b-select>
-                </b-field>
+        b-field(label="tooltipClass")
+          b-input(v-model="form.tooltipClass")
 
-                <b-field label="sort">
-                    <b-input v-model="form.sort"></b-input>
-                </b-field>
+        div.active
+          b-checkbox(v-model="form.active", true-value="1", false-value="0") active
 
-                <b-field label="tooltipClass">
-                    <b-input v-model="form.tooltipClass"></b-input>
-                </b-field>
-
-                <div class="active">
-                    <b-checkbox v-model="form.active"
-                                true-value="1"
-                                false-value="0"> active</b-checkbox>
-                </div>
-
-                <p class="control">
-                    <button class="button  is-success" @click="save()">Сохранить</button>
-                    <button class="button  is-light" @click="back()">Назад</button>
-                </p>
-            </div>
-        </div>
-    </div>
+        p.control
+          button.button.is-success(@click="save()") Сохранить
+          button.button.is-light(@click="back()") Назад
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import introAPI from "@/api/introAPI"
+import introAPI from '@/api/introAPI'
 
 @Component({
   name: 'Edit',
 })
-export default class extends Vue {
+export default class Edit extends Vue {
   private form: any = {
     id: 0,
     page: '',

@@ -1,34 +1,23 @@
-<template>
-  <div class="columns">
-    <div class="column is-6">
-      <div class="tile is-child box" style="position: relative;">
-        <vue-progress-bar></vue-progress-bar>
-        <p v-html="output" class="content"></p>
-        <div>
-          <template v-for="extra in extras">
-            <div class="col-md-6">
-              <p class="pointer">
-                                <span v-on:mouseover="showExtra(extra)"
-                                      v-on:mouseout="clearExtra">{{extra.orig}}</span> -
-                {{extra.extra}}
-              </p>
-            </div>
-          </template>
-        </div>
-      </div>
-    </div>
-    <div class="column is-6">
-                <textarea
-                  style="height: 280px; width: 100%;"
-                  class="tile is-parent content"
-                  id="transarea"
-                  placeholder="Поле для перевода"
-                  v-model="input"
-                  v-on:input="separate"
-                ></textarea>
-      <button @click="clear" class="button is-primary">Очистить</button>
-    </div>
-  </div>
+<template lang="pug">
+  .columns
+    .column.is-6
+      .tile.is-child.box(style="position: relative;")
+        vue-progress-bar
+        p.content(v-html="output")
+        div
+          template(v-for="extra in extras")
+            div.col-md-6
+              p.pointer
+                 span(v-on:mouseover="showExtra(extra)" v-on:mouseout="clearExtra") {{extra.orig}} - {{extra.extra}}
+
+    div.column.is-6#transarea
+      textarea.tile.is-parent.content(
+        style="height: 280px; width: 100%;",
+        placeholder="Поле для перевода",
+        v-model="input",
+        v-on:input="separate")
+
+      button @click="clear" class="button is-primary">Очистить</button>
 </template>
 
 <script lang="ts">
@@ -39,7 +28,7 @@ import { Prop } from 'vue-property-decorator'
 @Component({
   name: 'Test',
 })
-export default class extends Vue {
+export default class Test extends Vue {
     @Prop({ required: true })
     private textdata!: any
 

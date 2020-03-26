@@ -1,24 +1,17 @@
-<template>
-  <section class="hero is-bold app-navbar animated" :class="{ slideInDown: show, slideOutDown: !show }">
-    <div class="hero-head">
-      <nav class="nav">
-        <div class="nav-left">
-          <a class="nav-item is-hidden-tablet" @click="toggleSidebar(!sidebar.opened)">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="nav-center">
-          <a class="nav-item hero-brand" href="/">
-            <img src="../assets/logo.png">
+<template lang="pug">
+  section.hero.is-bold.app-navbar.animated(:class="{ slideInDown: show, slideOutDown: !show }")
+    .hero-head
+      nav.nav
+        .nav-left
+          a.nav-item.is-hidden-tablet(@click="toggleSidebar(!sidebar.opened)")
+            i.fa.fa-bars(aria-hidden="true")
 
-          </a>
-        </div>
-        <div class="nav-right is-flex">
-          <a @click="logout" class="nav-item">Logout</a>
-        </div>
-      </nav>
-    </div>
-  </section>
+        .nav-center
+          a.nav-item.hero-brand
+            img(src="../assets/logo.png")
+
+        .nav-right.is-flex
+          a.nav-item(@click="logout") Logout
 </template>
 
 <script>

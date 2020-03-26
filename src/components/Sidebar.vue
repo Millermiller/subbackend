@@ -1,43 +1,39 @@
-<template>
-  <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }">
-    <p class="menu-label">
-      General
-    </p>
-    <ul class="menu-list">
-      <li v-for="(item, index) in menu" :key="index">
-        <router-link
-          :to="item.path"
-          :exact="true"
-          :aria-expanded="isExpanded(item) ? 'true' : 'false'"
-          :class="{'is-active':  item.name ==='Тексты' && $route.name === 'textedit'}"
-          v-if="item.path"
-          @click.native="toggle(index, item)">
-          <span class="icon is-small"><i :class="['fa', item.meta.icon]"></i></span>
-          {{ item.meta.label || item.name }}
-          <span class="icon is-small is-angle" v-if="item.children && item.children.length">
-            <i class="fa fa-angle-down"></i>
-          </span>
-        </router-link>
-        <a :aria-expanded="isExpanded(item)" v-else @click="toggle(index, item)">
-          <span class="icon is-small"><i :class="['fa', item.meta.icon]"></i></span>
-          {{ item.meta.label || item.name }}
-          <span class="icon is-small is-angle" v-if="item.children && item.children.length">
-            <i class="fa fa-angle-down"></i>
-          </span>
-        </a>
+<template lang="pug">
+  aside.menu.app-sidebar.animated(:class="{ slideInLeft: show, slideOutLeft: !show }")
+    p.menu-label General
 
-        <expanding v-if="item.children && item.children.length">
-          <ul v-show="isExpanded(item)">
-            <li v-for="(subItem, index) in item.children" :key="index">
-              <router-link :to="generatePath(item, subItem)">
+    ul.menu-list
+      li(v-for="(item, index) in menu", :key="index")
+        router-link(
+          :to="item.path",
+          :exact="true",
+          :aria-expanded="isExpanded(item) ? 'true' : 'false'",
+          :class="{'is-active':  item.name ==='Тексты' && $route.name === 'textedit'}",
+          v-if="item.path",
+          @click.native="toggle(index, item)")
+
+          span.icon.is-small
+            i.fa.item.meta.icon
+
+          span {{ item.meta.label || item.name }}
+
+          span.icon.is-small.is-angle(v-if="item.children && item.children.length")
+            i.fa.fa-angle-down
+
+        a(:aria-expanded="isExpanded(item)", v-else @click="toggle(index, item)")
+          span.icon.is-small
+            i.fa.item.meta.icon
+
+          span {{ item.meta.label || item.name }}
+
+          span.icon.is-small.is-angle(v-if="item.children && item.children.length")
+            i.fa.fa-angle-down
+
+        expanding(v-if="item.children && item.children.length")
+          ul(v-show="isExpanded(item)")
+            li(v-for="(subItem, index) in item.children" :key="index")
+              router-link(:to="generatePath(item, subItem)").
                 {{ subItem.meta && subItem.meta.label || subItem.name }}
-              </router-link>
-            </li>
-          </ul>
-        </expanding>
-      </li>
-    </ul>
-  </aside>
 </template>
 
 <script lang="ts">
@@ -52,7 +48,7 @@ import {Prop} from 'vue-property-decorator'
     Expanding
   },
 })
-export default class extends Vue {
+export default class Sidebar extends Vue {
   @Prop({ required: true })
   private show!: any
 

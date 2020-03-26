@@ -1,55 +1,41 @@
-<template>
-  <div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <form enctype="multipart/form-data" action="" method="post">
-            <input type="file" name="file" @change="bindFile"/>
-            <a class="button is-success" @click="upload">Загрузить</a>
-          </form>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <div class="block">
-            <div class="control is-horizontal">
-              <div class="control-label">
-                <label class="label">Добавить</label>
+<template lang="pug">
+  div
+    .tile.is-ancestor
+      .tile.is-parent
+        article.tile.is-child.box
+          form(enctype="multipart/form-data", method="post")
+            input(type="file" name="file" @change="bindFile")
+            a.button.is-success(@click="upload") Загрузить
 
-              </div>
-              <div class="control is-grouped">
-                <p class="control is-expanded">
-                  <input class="input" type="text" v-model="orig" placeholder="icelandic">
-                </p>
-                <p class="control is-expanded">
-                  <input class="input" type="email" v-model="translate" placeholder="перевод">
-                </p>
-                <button class="button is-success" @click="add">Добавить</button>
-              </div>
-            </div>
+      .tile.is-parent
+        article.tile.is-child.box
+          .block
+            .control.is-horizontal
+              .control-label
+                label.label Добавить
 
-            <div class="field">
-              <b-switch v-model="issentence"
-                        true-value="1"
-                        false-value="0">
+              .control.is-grouped
+                p.control.is-expanded
+                  input.input(type="text", v-model="orig", placeholder="icelandic")
+
+                p.control.is-expanded
+                  input.input(type="email" v-model="translate" placeholder="перевод")
+
+                button.button.is-success(@click="add") Добавить
+
+            div(class="field")
+              b-switch(v-model="issentence", true-value="1", false-value="0").
                 {{ switchStat }}
-              </b-switch>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import fileAPI from "@/api/fileAPI"
-import assetAPI from "@/api/assetAPI"
+import fileAPI from '@/api/fileAPI'
+import assetAPI from '@/api/assetAPI'
 
 @Component({})
-export default class extends Vue {
+export default class Index extends Vue {
     fileUploadFormData: FormData = new FormData()
     orig: string = ''
     translate: string = ''

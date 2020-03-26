@@ -1,10 +1,10 @@
-<template>
-  <div class="box">
-    <p class="control content">
-      <textarea class="textarea" placeholder="Textarea" v-model="form.content"></textarea>
-    </p>
-    <button class="button is-success" @click="save">Сохранить</button>
-    <button class="button is-warning" @click="clear">Очистить</button>
+<template lang="pug">
+  .box
+    p.control.content
+      textarea.textarea(placeholder="Textarea" v-model="form.content")
+
+    button.button.is-success(@click="save") Сохранить
+    button.button.is-warning(@click="clear") Очистить
   </div>
 </template>
 
@@ -12,12 +12,12 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
-import textAPI from "@/api/textAPI"
+import textAPI from '@/api/textAPI'
 
 @Component({
   name: 'Index',
 })
-export default class extends Vue {
+export default class Index extends Vue {
     @Prop({ required: true })
     private item!: any
 

@@ -1,23 +1,17 @@
-<template>
-    <div class="columns" v-on:mouseover="$emit('show', item)" v-on:mouseout="$emit('clear')">
-        <div class="column is-5">
-            <p class="control">
-                <input class="input" type="text" placeholder="orig" v-model="item.orig">
-            </p>
-        </div>
-        <div class="column is-5">
-            <p class="control">
-                <input class="input" type="text" placeholder="extra" v-model="item.extra">
-            </p>
-        </div>
-        <div class="column is-2">
-            <a :class="['button', 'is-danger']" @click="$emit('remove', index)">
-                <span class="icon">
-                      <i class="fa fa-trash-o"></i>
-                </span>
-            </a>
-        </div>
-    </div>
+<template lang="pug">
+  .columns(v-on:mouseover="$emit('show', item)" v-on:mouseout="$emit('clear')")
+    .column.is-5
+      p.control
+        input.input(type="text" placeholder="orig" v-model="item.orig")
+
+    .column.is-5
+      p.control
+        input.input(type="text" placeholder="extra" v-model="item.extra")
+
+    .column.is-2
+      a.button.is-danger(@click="$emit('remove', index)")
+        span.icon
+          i.fa.fa-trash-o
 </template>
 
 <script lang="ts">
@@ -28,7 +22,7 @@ import { Prop } from 'vue-property-decorator'
 @Component({
   name: 'Extra',
 })
-export default class extends Vue {
+export default class Extra extends Vue {
   @Prop({ required: true })
   private item!: any
   @Prop({ required: true })

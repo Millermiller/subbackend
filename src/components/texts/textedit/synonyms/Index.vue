@@ -1,62 +1,44 @@
-<template>
-    <div>
-        <div class="columns">
-            <div class="column is-12">
-                <b-tabs>
-                    <template v-for="(sentence, index) in sentences">
-                        <b-tab-item
-                                :label="index.toString()"
-                                :selected="index == 0">
-                            <div class="">
-                                <span
-                                        :class="['tag',  word.id == wordId ? 'is-success' : '']"
-                                        style="cursor: pointer"
-                                        @click="setActive(word)"
-                                        v-for="(word, index) in sentence">
-                                    {{word.word}}&nbsp;
-                                </span>
-                            </div>
-                        </b-tab-item>
-                    </template>
-                </b-tabs>
-                <hr>
-            </div>
-        </div>
-        <div class="columns">
-            <div class="column">
-                <p class="control is-expanded has-addons">
-                    <a :class="['button', 'is-success']" @click="add">Добавить синоним</a>
-                    <input class="input" type="text" v-model="newSynonym" :placeholder="activePlaceholder">
-                </p>
-            </div>
-        </div>
-        <div class="columns is-multiline">
-            <div class="column">
-                <template v-for="(synonym, index) in synonyms">
-                    <p class="control is-expanded has-addons">
-                        <a class="button">{{synonym.synonym}}</a>
-                        <a :class="['button', 'is-danger']" @click="remove(synonym.id)">
-                                <span class="icon">
-                                      <i class="fa fa-trash-o"></i>
-                                </span>
-                        </a>
-                    </p>
-                </template>
-            </div>
-        </div>
-    </div>
+<template lang="pug">
+  div
+    .columns
+      .column.is-12
+        b-tabs
+          template(v-for="(sentence, index) in sentences")
+            b-tab-item(:label="index.toString()", :selected="index === 0")
+              div
+                span(
+                  :class="['tag',  word.id === wordId ? 'is-success' : '']",
+                    style="cursor: pointer",
+                    @click="setActive(word)",
+                    v-for="(word, index) in sentence") {{word.word}}&nbsp;
+        hr
+
+    .columns
+      .column
+        p.control.is-expanded.has-addons
+          a.button.is-success(@click="add") Добавить синоним
+          input.input(type="text", v-model="newSynonym", :placeholder="activePlaceholder")
+
+    div.columns.is-multiline
+      .column
+        template(v-for="(synonym, index) in synonyms")
+          p.control.is-expanded.has-addons
+            a.button {{synonym.synonym}}
+            a.button.is-danger(@click="remove(synonym.id)")
+              span.icon
+                 i.fa.fa-trash-o
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
-import textAPI from "@/api/textAPI"
+import textAPI from '@/api/textAPI'
 
 @Component({
   name: 'Index',
 })
-export default class extends Vue {
+export default class Index extends Vue {
   @Prop({ required: true })
   private sentences!: any
 

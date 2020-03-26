@@ -1,13 +1,10 @@
-<template>
-    <div class="tile is-parent">
-        <article class="tile is-child box">
-            <div v-if="loading" id="nprogress">
-                <div class="spinner-icon"></div>
-            </div>
-            <p class="title">{{audiofiles}}</p>
-            <p class="subtitle">Аудиозаписей</p>
-        </article>
-    </div>
+<template lang="pug">
+  .tile.is-parent
+    article.tile.is-child.box
+      div#nprogress(v-if="loading")
+        .spinner-icon
+      p.title {{audiofiles}}
+      p.subtitle Аудиозаписей
 </template>
 
 <script lang="ts">
@@ -17,7 +14,7 @@ import Component from 'vue-class-component'
 @Component({
   name: 'Audio',
 })
-export default class extends Vue {
+export default class Audio extends Vue {
 
 }
 </script>

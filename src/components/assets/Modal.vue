@@ -1,65 +1,52 @@
-<template>
-  <b-modal :active.sync="visible" @close="close" :width="960" class="w960">
-    <div class="box">
-      <div class="header">{{card.id}} - {{card.word.word}}</div>
-      <div class="translate-section">
-        <p class="control">
-          <input class="input" type="text" placeholder="text" v-model="text" :value="card.word.word"
-                 style="width: 490px;">
-        </p>
-        <hr>
-        <div class="variants">
-          <h2 class="subtitle is-5">Варианты перевода:</h2>
-          <ul>
-            <li v-for="word in values"
-                @click="setActive(word)"
-                :class="['variant', {'is-success': word.active }]">
-              {{word.value}}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <hr>
-      <div class="example-section">
-        <h2 class="subtitle is-5">
-          Примеры:
-          <button class="colorbutton red" @click="color('#e13c4c')"></button>
-          #e13c4c
-          <button class="colorbutton green" @click="color('#4c7737')"></button>
-          #4c7737
-          <button class="colorbutton blue" @click="color('#3f4bb8')"></button>
-          #3f4bb8
-          <span @click="addExample" class="button is-success pull-right">добавить</span>
-        </h2>
-        <div>
-          <example
-            v-for="(item, index) in examples"
-            :item="item"
-            :index="index"
-            :key="item.id"
-            v-on:remove="removeExample"
-          >
-          </example>
-        </div>
-      </div>
-      <hr>
-      <div class="audio-section">
-        <audio ref="audio" :src="card.word.audio" preload="auto"></audio>
-        <a :class="['button', 'is-small']" @click="play">
-                    <span class="icon">
-                          <i class="fa fa-volume-up"></i>
-                    </span>
-        </a>
+<template lang="pug">
+  b-modal.w960(:active.sync="visible", @close="close", :width="960")
+    .box
+      .header {{card.id}} - {{card.word.word}}
+      .translate-section
+        .control
+          input.input(type="text",
+            placeholder="text",
+            v-model="text",
+            :value="card.word.word",
+            style="width: 490px;")
 
-        <form enctype="multipart/form-data" action="" method="post" name="addAudio" ref="audioform">
-          <input type="file" name="audiofile" @change="bindFile"/>
-          <a class="button is-success" @click="updateAudio">Загрузить аудио</a>
-          <a class="button is-success" @click="updateTranslate">Сохранить</a>
-          <a class="button is-warning" @click="close">Отмена</a>
-        </form>
-      </div>
-    </div>
-  </b-modal>
+        hr
+        .variants
+          h2.subtitleis-5 Варианты перевода:
+          ul
+            li(
+              v-for="word in values",
+              @click="setActive(word)",
+              :class="['variant', {'is-success': word.active }]") {{word.value}}
+
+      hr
+      .example-section
+        h2.subtitle.is-5 Примеры:
+          button.colorbutton.red(@click="color('#e13c4c')") #e13c4c
+          button.colorbutton.green(@click="color('#4c7737')") #4c7737
+          button.colorbutton.blue(@click="color('#3f4bb8')") #3f4bb8
+          span.button.is-success.pull-right(@click="addExample") добавить
+
+        div
+          example(
+            v-for="(item, index) in examples",
+            :item="item",
+            :index="index",
+            :key="item.id",
+            v-on:remove="removeExample")
+
+      hr
+      .audio-section
+        audio(ref="audio", :src="card.word.audio", preload="auto")
+        a.button.is-small(@click="play")
+          span.icon
+            i.fa.fa-volume-up
+
+        form(enctype="multipart/form-data", method="post", name="addAudio", ref="audioform")
+          input(type="file", name="audiofile", @change="bindFile")
+          a.button.is-success(@click="updateAudio") Загрузить аудио
+          a.button.is-success(@click="updateTranslate") Сохранить
+          a.button.is-warning(@click="close") Отмена
 </template>
 
 <script lang="ts">
@@ -76,7 +63,7 @@ import assetAPI from '@/api/assetAPI'
       Example,
     },
   })
-export default class extends Vue {
+export default class Modal extends Vue {
     @Prop({ required: true })
     private visible!: any
 

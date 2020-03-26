@@ -1,9 +1,8 @@
-<template>
-  <li :class="['columns', 'log', item.type, {'today': item.hours < 10}]">
-    <p :class="['column', 'is-3', 'is-small']">{{item.created_at}}</p>
-    <p :class="['column']">{{item.message}}</p>
-    <a class="delete" @click="$emit('deleteLog', item.id)"></a>
-  </li>
+<template lang="pug">
+  li(:class="['columns', 'log', item.type, {'today': item.hours < 10}]")
+    p.column.is-3.is-small {{item.created_at}}
+    p.column {{item.message}}
+    a.delete(@click="$emit('deleteLog', item.id)")
 </template>
 
 <script lang="ts">

@@ -1,13 +1,10 @@
-<template>
-  <div class="tile is-parent">
-    <article class="tile is-child box">
-      <div v-if="loading" id="nprogress">
-        <div class="spinner-icon"></div>
-      </div>
-      <p class="title">{{words}}</p>
-      <p class="subtitle">Слов</p>
-    </article>
-  </div>
+<template lang="pug">
+  .tile.is-parent
+    article.tile.is-child.box
+      div#nprogress(v-if="loading")
+        .spinner-icon
+      p.title {{words}}
+      p.subtitle Слов
 </template>
 
 <script lang="ts">
@@ -17,7 +14,7 @@ import Component from 'vue-class-component'
   @Component({
     name: 'Words',
   })
-export default class extends Vue {
+export default class Words extends Vue {
     private count: number = 0
     private loading: boolean = false
 }

@@ -33,11 +33,11 @@ import assetAPI from '@/api/assetAPI'
 import forvoAPI from '@/api/forvoAPI'
 
   @Component({
-    name: 'Asset',
+    name: 'AssetComponent',
     components: {
     },
   })
-export default class Asset extends Vue {
+export default class AssetComponent extends Vue {
     @Prop({ required: true })
     private item!: any
 

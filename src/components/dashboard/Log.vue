@@ -9,12 +9,13 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
+import Log from '@/models/Log';
 
 @Component({
   name: 'Log',
 })
 export default class extends Vue {
     @Prop({ required: true })
-    private item!: any
+    private item!: Log
 }
 </script>

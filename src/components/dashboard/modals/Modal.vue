@@ -20,13 +20,14 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 import messageAPI from '@/api/messageAPI'
+import Message from "@/models/Message";
 
 @Component({
   name: 'Modal',
 })
 export default class Modal extends Vue {
   @Prop({ required: true })
-  private item!: any
+  private item!: Message
   @Prop({ required: true })
   private visible!: any
 

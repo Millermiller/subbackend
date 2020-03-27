@@ -64,20 +64,21 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Asset from '@/components/assets/Asset.vue'
+import AssetComponent from '@/components/assets/AssetComponent.vue'
 import Card from '@/components/assets/Card.vue'
 import Translate from '@/components/assets/Translate.vue'
 import assetAPI from '@/api/assetAPI'
+import { Asset } from '@/models/Asset';
 
   @Component({
     name: 'AssetsView',
     components: {
-      Asset,
+      AssetComponent,
       Card,
       Translate,
     },
   })
-export default class extends Vue {
+export default class AssetsView extends Vue {
     private words: [] = []
     private sentences: [] = []
     private text: string = ''
@@ -94,12 +95,12 @@ export default class extends Vue {
       title: '',
     }
 
-    assetEdit(item: any) {
+    assetEdit(item: Asset): void {
       this.editedAsset = item
       this.isComponentModalActive = true
     }
 
-    load() {
+    load(): void {
       assetAPI.getAssets().then((response) => {
         this.words = response.data.words
         this.sentences = response.data.sentences
@@ -129,26 +130,27 @@ export default class extends Vue {
       })
     }
 
-    search(): any {
-      if (this.text === '') return false
-      this.searchloaded = true
-      assetAPI.getTranslate(this.text, this.sentence).then(
-        (response) => {
-          if (!response.data.length) {
-            console.log(response.data.message)
-            this.translates = []
+    search(): void {
+      if (this.text !== '') {
+        this.searchloaded = true
+        assetAPI.getTranslate(this.text, this.sentence).then(
+          (response) => {
+            if (!response.data.length) {
+              console.log(response.data.message)
+              this.translates = []
+              this.searchloaded = false
+            }
+            this.translates = response.data
             this.searchloaded = false
-          }
-          this.translates = response.data
-          this.searchloaded = false
-        },
-        (response) => {
-          console.log(response)
-        },
-      )
+          },
+          (response) => {
+            console.log(response)
+          },
+        )
+      }
     }
 
-    searchsentences() {
+    searchsentences(): void {
       this.sentencesloaded = true
       assetAPI.sentences().then(
         (response) => {
@@ -161,7 +163,7 @@ export default class extends Vue {
       )
     }
 
-    removeTranslate(data: any) {
+    removeTranslate(data: any): void {
       assetAPI.removeTranslate(data.item.id).then(
         (response) => {
           if (response.data.success) {
@@ -174,7 +176,7 @@ export default class extends Vue {
       )
     }
 
-    increment(id: any) {
+    increment(): void {
       const aid = this.$store.getters.activeAssetId
 
       this.words.forEach((item: any, i) => {
@@ -182,7 +184,7 @@ export default class extends Vue {
       })
     }
 
-    decrement() {
+    decrement(): void {
       const aid = this.$store.getters.activeAssetId
 
       this.words.forEach((item: any, i) => {

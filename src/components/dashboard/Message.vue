@@ -16,16 +16,17 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
 import Modal from '@/components/dashboard/modals/Modal.vue'
+import Message from '@/models/Message';
 
 @Component({
-  name: 'Message',
+  name: 'MessageComponent',
   components: {
     Modal,
   },
 })
-export default class Message extends Vue {
+export default class MessageComponent extends Vue {
   @Prop({ required: true })
-  private item!: any
+  private item!: Message
 
   private showModal: boolean = false
   private cardModal: any = null

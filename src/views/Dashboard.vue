@@ -14,7 +14,7 @@
           h4.title Log
           .content
             ul
-              log(v-for="item in log" :item="item" v-on:deleteLog="deleteLog(item)")
+              LogComponent(v-for="item in log" :item="item" v-on:deleteLog="deleteLog(item)")
 
       .tile.is-parent.is-4
         .article.tile.is-child.box
@@ -23,7 +23,7 @@
           h4.title Messages
           .content
             ul
-              message(
+              MessageComponent(
                 v-for="item in messages",
                 :item="item",
                 v-on:deleteMessage="deleteMessage(item)")
@@ -32,20 +32,22 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Message from '@/components/dashboard/Message.vue'
-import Log from '@/components/dashboard/Log.vue'
+import MessageComponent from '@/components/dashboard/Message.vue'
+import LogComponent from '@/components/dashboard/Log.vue'
 import Words from '@/components/dashboard/widgets/Words.vue'
 import Assets from '@/components/dashboard/widgets/Assets.vue'
 import Audio from '@/components/dashboard/widgets/Audio.vue'
 import Texts from '@/components/dashboard/widgets/Texts.vue'
 import messageAPI from '@/api/messageAPI'
 import logAPI from '@/api/logAPI'
+import Log from '@/models/Log';
+import Message from '@/models/Message';
 
   @Component({
     name: 'DashboardView',
     components: {
-      Message,
-      Log,
+      MessageComponent,
+      LogComponent,
       Words,
       Assets,
       Audio,
@@ -57,11 +59,11 @@ export default class DashboardView extends Vue {
     private assets: string = ''
     private audiofiles: string = ''
     private texts: string = ''
-    private log: {} = {}
+    private log: Log[] = []
     private messages: {} = {}
     private loading: boolean = false
 
-    deleteLog(log: any) {
+    deleteLog(log: Log) {
       logAPI.delete(log.id).then((response) => {
         if (response.data.success) {
           this.log = response.data.log
@@ -74,7 +76,7 @@ export default class DashboardView extends Vue {
       })
     }
 
-    deleteMessage(message: any) {
+    deleteMessage(message: Message) {
       messageAPI.delete(message.id).then((response) => {
         if (response.data.success) {
           this.messages = response.data.messages

@@ -1,18 +1,17 @@
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 
-
 export default {
   all(): Promise<AxiosResponse> {
-    return request.get(`/admin/intro`)
+    return request.get('/intro')
   },
   load(id: number): Promise<AxiosResponse> {
-    return request.get(`/admin/intro/${id}`)
+    return request.get(`/intro/${id}`)
   },
   save(id: number, form: any): Promise<AxiosResponse> {
-    return request.put(`/admin/intro/${id}`, form)
+    return request.put(`/intro/${id}`, form)
   },
   destroy(id: number): Promise<AxiosResponse> {
-    return request.delete(`/admin/intro/${id}`)
+    return request.delete(`/intro/${id}`)
   },
 }

@@ -1,0 +1,35 @@
+<div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-12">
+      <div class="tile is-child box">
+        <div class="block is-flex">
+          <b-tabs>
+            <b-tab-item label="Tooltips" selected="selected">
+              <tooltips :item="text" :extras="extras" :sentences="sentences" @update="updateTooltips"></tooltips>
+            </b-tab-item>
+            <b-tab-item label="Перевод">
+              <translate
+                :text="text"
+                :cleartext="cleartext"
+                :sentences="sentences"
+                @update="updateSentences"
+              ></translate>
+            </b-tab-item>
+            <b-tab-item label="Синонимы">
+              <synonyms :sentences="sentences"></synonyms>
+            </b-tab-item>
+            <b-tab-item label="Изображение">
+              <images :item="text"></images>
+            </b-tab-item>
+            <b-tab-item label="Описание">
+              <description :item="text"></description>
+            </b-tab-item>
+            <b-tab-item label="Тест">
+              <test :textdata="text" :dictionary="dictionary" :extras="extras" :cleartext="cleartext"></test>
+            </b-tab-item>
+          </b-tabs>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

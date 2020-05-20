@@ -49,4 +49,12 @@ export default class AppActions extends Actions<AppState, AppGetters, AppMutatio
       console.log(response)
     })
   }
+
+  setDashboard(data: any) {
+    this.commit('setWordsCount', data.words)
+    this.commit('setAssetsCount', data.assets)
+    this.commit('setAudioCount', data.audio)
+    this.commit('setUsersCount', data.users.length)
+    this.commit('setTextsCount', data.texts)
+  }
 }

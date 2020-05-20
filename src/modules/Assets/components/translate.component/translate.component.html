@@ -1,0 +1,20 @@
+<div class="columns">
+  <div class="column">
+    <span class="asset_title">{{ item.word.word }}</span>
+  </div>
+  <div class="column">
+    <span class="asset_title">{{ item.value }}</span>
+  </div>
+  <div class="column">
+    <a :class="['button', 'is-success', 'is-small']" @click="add">
+      <span class="icon">
+        <i class="fa fa-plus" style="color: #fff"></i>
+      </span>
+    </a>
+    <a :class="['button', 'is-danger', 'is-small']" @click="$emit('remove', { item: item, index: index })">
+      <span class="icon">
+        <i class="fa fa-trash-o"></i>
+      </span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="tile is-ancestor box">
+  <div class="tile is-parent is-4">
+    <article class="tile is-child">
+      <b-datepicker v-model="date" inline="inline"></b-datepicker>
+      <button class="button is-success" @click="save()">Сохранить</button>
+      <button class="button is-light" @click="back()">Назад</button>
+    </article>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child">
+      <section>
+        <b-field label="Login">
+          <b-input v-model="user.login"></b-input>
+        </b-field>
+        <b-field label="E-mail">
+          <b-input v-model="user.email"></b-input>
+        </b-field>
+        <b-field label="Name">
+          <b-input v-model="user.name"></b-input>
+        </b-field>
+      </section>
+    </article>
+  </div>
+</div>

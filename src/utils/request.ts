@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import Vue from 'vue'
+import { store } from '@/store'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -10,8 +11,11 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
-    // @ts-ignore
-    axios.defaults.headers.common.Authorization = document.querySelector('meta[name="csrf-token"]').content
+    const language = store.getters.language
+    if(language !== null) {
+      config.baseURL += `/${language}`
+    }
+    config.headers.common.Authorization = Vue.$cookies.get('authfrontend._token.local')
     return config
   },
   (error) => {

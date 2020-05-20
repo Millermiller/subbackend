@@ -22,4 +22,24 @@ export default class UserMutations extends Mutations<AppState> {
       this.state.effect[name] = effectItem[name]
     }
   }
+
+  setWordsCount(data: number) {
+    this.state.wordsCount = data
+  }
+
+  setAssetsCount(data: number) {
+    this.state.assetsCount = data
+  }
+
+  setAudioCount(data: number) {
+    this.state.audioCount = data
+  }
+
+  setUsersCount(data: number) {
+    this.state.usersCount = data
+  }
+
+  setTextsCount(data: number) {
+    this.state.textsCount = data
+  }
 }

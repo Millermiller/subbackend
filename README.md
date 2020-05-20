@@ -32,3 +32,15 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+generator:
+vgc --help
+
+Change the default file types for html, style, script, and spec
+sudo vgc --html jade --style less --script ts --spec ts
+
+Create new component single file inside new folder
+vgc home --folder
+
+
+component -> service -> repo -> action -> api -> store

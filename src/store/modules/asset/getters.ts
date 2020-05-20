@@ -1,7 +1,7 @@
 import { Getters } from 'vuex-smart-module'
 import AssetState from '@/store/modules/asset/state'
 
-export default class UserGetters extends Getters<AssetState> {
+export default class AssetGetters extends Getters<AssetState> {
   get cards() {
     return this.state.activeAsset
   }

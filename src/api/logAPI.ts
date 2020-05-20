@@ -3,10 +3,19 @@ import request from '@/utils/request'
 
 
 export default {
-  read(id: number): Promise<AxiosResponse> {
+  all(): Promise<AxiosResponse> {
+    return request.get(`/admin/log`)
+  },
+  destroy(id: number): Promise<AxiosResponse> {
+    return request.delete(`/admin/log/${id}`)
+  },
+  load(id: number): Promise<AxiosResponse> {
     return request.get(`/admin/log/${id}`)
   },
-  delete(id: number): Promise<AxiosResponse> {
-    return request.delete(`/admin/log/${id}`)
+  save(id: number, form: any): Promise<AxiosResponse> {
+    return request.put(`/admin/log/${id}`, form)
+  },
+  search(query: string): Promise<AxiosResponse> {
+    return request.get(`/admin/log/search?q=${query}`)
   },
 }

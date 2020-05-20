@@ -1,0 +1,26 @@
+<div class="tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <b-field label="Название">
+        <b-input v-model="page.url"></b-input>
+      </b-field>
+
+      <b-field label="Название">
+        <b-input v-model="page.title"></b-input>
+      </b-field>
+
+      <b-field label="Анонс">
+        <b-input v-model="page.description" type="textarea"></b-input>
+      </b-field>
+
+      <b-field label="keywords">
+        <b-input v-model="page.keywords" type="textarea"></b-input>
+      </b-field>
+
+      <p class="control">
+        <button class="button  is-success" @click="save()">Сохранить</button>
+        <button class="button  is-light" @click="back()">Назад</button>
+      </p>
+    </div>
+  </div>
+</div>

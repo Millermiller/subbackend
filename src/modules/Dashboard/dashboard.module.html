@@ -1,0 +1,91 @@
+<div>
+  <div class="tile is-ancestor">
+    <UsersWidget />
+    <WordsWidget />
+    <AssetsWidget />
+    <AudioWidget />
+    <TextsWidget />
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-12">
+      <article class="tile is-child box">
+        <div id="nprogress" v-if="loading">
+          <div class="spinner-icon"></div>
+        </div>
+        <h4 class="title">Log</h4>
+        <b-table
+          :data="log"
+          paginated="paginated"
+          narrowed=""
+          :loading="loading"
+          :default-sort-direction="defaultSortDirection"
+          default-sort="id"
+          per-page="20"
+          ><template slot-scope="props">
+            <b-table-column field="id" label="ID" width="40" sortable="sortable" numeric="numeric">
+              {{ props.row.id }}
+            </b-table-column>
+            <b-table-column field="description" label="Title" sortable="sortable">
+              {{ props.row.description }}
+            </b-table-column>
+
+            <b-table-column field="subject" label="subject" sortable="sortable">
+              {{ (props.row.subject) ? '' : '' }}
+            </b-table-column>
+
+            <b-table-column field="causer" label="causer" sortable="sortable">
+              {{ (props.row.causer) ? props.row.causer.login : '' }}
+            </b-table-column>
+
+            <b-table-column field="created_at" label="created_at" sortable="sortable" centered="centered">
+              <span class="tag light">
+                {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new
+                Date(props.row.created_at).toLocaleTimeString()}}
+              </span>
+            </b-table-column>
+            <b-table-column custom-key="actions">
+              <button class="button is-success" @click="see(props.row)">
+                <b-icon icon="eye-outline" size="is-small"></b-icon>
+              </button>
+              <button class="button is-danger" @click="remove(props.row)">
+                <b-icon icon="close-circle" size="is-small"></b-icon>
+              </button>
+            </b-table-column>
+          </template>
+        </b-table>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-8">
+      <article class="tile is-child box">
+        <div v-if="loading" id="nprogress">
+          <div class="spinner-icon"></div>
+        </div>
+        <h4 class="title">Log</h4>
+        <div class="content">
+          <ul>
+            <LogComponent v-for="item in log" :item="item" v-on:deleteLog="deleteLog"></LogComponent>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div class="tile is-parent is-4">
+      <article class="tile is-child box">
+        <div v-if="loading" id="nprogress">
+          <div class="spinner-icon"></div>
+        </div>
+        <h4 class="title">Messages</h4>
+        <div class="content">
+          <ul>
+            <MessageComponent
+              v-for="item in messages"
+              :item="item"
+              v-on:deleteMessage="deleteMessage"
+            ></MessageComponent>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

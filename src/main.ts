@@ -1,20 +1,24 @@
 import Vue from 'vue'
-import Buefy from 'buefy'
-import VueProgressBar from 'vue-progressbar'
-// import VueFroala from 'vue-froala-wysiwyg'
 import App from './App.vue'
-import router from './router'
+import { router } from './router'
+import Buefy from 'buefy'
+import VueCookies from 'vue-cookies'
 import { store } from './store'
+import VueProgressBar from 'vue-progressbar'
+import VueI18n from 'vue-i18n'
+import { messages } from '@/locales/ru'
+// import VueFroala from 'vue-froala-wysiwyg'
 import 'buefy/dist/buefy.css'
 import './assets/css/style.css'
+import './assets/scss/app.scss'
 
 require('froala-editor/js/froala_editor.pkgd.min')
-// Require Froala Editor css files.
 require('froala-editor/css/froala_editor.pkgd.min.css')
-// require('font-awesome/css/font-awesome.css')
 require('froala-editor/css/froala_style.min.css')
 
 Vue.use(Buefy)
+Vue.use(VueCookies)
+Vue.use(VueI18n)
 // Vue.use(VueFroala)
 Vue.use(VueProgressBar, {
   color: '#7957d5',
@@ -24,9 +28,16 @@ Vue.use(VueProgressBar, {
     opacity: '0.1s',
   },
 })
+const i18n = new VueI18n({
+  locale: 'ru',
+  messages: {
+    ru: messages,
+  },
+})
 Vue.config.productionTip = false
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App),

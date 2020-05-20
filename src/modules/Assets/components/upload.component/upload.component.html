@@ -1,0 +1,38 @@
+<div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <form enctype="multipart/form-data" action="" method="post">
+          <input type="file" name="file" @change="bindFile" />
+          <a class="button is-success" @click="upload">{{$t('upload')}}</a>
+        </form>
+      </article>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <div class="block">
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">{{$t('add')}}</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="orig" placeholder="icelandic" />
+              </p>
+              <p class="control is-expanded">
+                <input class="input" type="email" v-model="translate" placeholder="перевод" />
+              </p>
+              <button class="button is-success" @click="add">{{$t('add')}}</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <b-switch v-model="issentence" true-value="1" false-value="0">
+              {{ switchStat }}
+            </b-switch>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

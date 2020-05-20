@@ -11,7 +11,7 @@
             img(src="../assets/logo.png")
 
         .nav-right.is-flex
-          a.nav-item(@click="logout") Logout
+          a.nav-item(@click="logout") {{$t('logout')}}
 </template>
 
 <script>

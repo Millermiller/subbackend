@@ -9,6 +9,7 @@ import Modal from './components/modal.component/index.vue'
   },
 })
 export default class TranslatesModule extends Vue {
+  private loading: boolean = false
   private form: {} = {
     title: '',
     origtext: '',
@@ -92,6 +93,10 @@ export default class TranslatesModule extends Vue {
 
   closeSettingsModal() {
     this.isComponentModalActive = false
+  }
+
+  close() {
+
   }
 
   mounted() {

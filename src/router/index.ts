@@ -1,282 +1,316 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+import i18n from '@/utils/i18n'
 Vue.use(VueRouter)
 
-const routes1: Array<RouteConfig> = [
+export const routes1: Array<RouteConfig> = [
   {
-    name: 'Dashboard',
+    name: 'dashboard',
     path: '/',
     meta: {
-      icon: 'fa-tachometer',
-      link: 'dashboard/index.vue',
+      icon: 'monitor-dashboard',
       menuitem: true,
+      label: 'Dashboard',
     },
-    component: require('@/modules/Dashboard/dashboard.module.vue'),
+    component: require('@/modules/Dashboard/dashboard.module.vue').default,
+   // component: () => import('@/modules/Dashboard/dashboard.module.vue'),
   },
   {
-    name: 'Словари',
+    name: 'assets',
     path: '/assets',
     meta: {
-      icon: 'fa-book',
-      link: 'assets/index.vue',
+      icon: 'database',
       menuitem: true,
+      label: i18n.t('assets')
     },
-    component: require('@/modules/Assets/assets.module.vue'),
+    //component: () => import('@/modules/Assets/assets.module.vue'),
+    component: require('@/modules/Assets/assets.module.vue').default,
   },
   {
-    name: 'Загрузка',
+    name: 'upload',
     path: '/upload',
     meta: {
-      icon: 'fa-upload',
-      link: 'upload/index.vue',
+      icon: 'upload',
       menuitem: true,
+      label: 'Загрузка'
     },
-    component: require('@/modules/Assets/components/upload.component/upload.component.vue'),
+    //component: () => import('@/modules/Assets/components/upload.component/upload.component.vue'),
+     component: require('@/modules/Assets/components/upload.component/upload.component.vue').default,
   },
   {
-    name: 'Тексты',
+    name: 'texts',
     path: '/texts',
     meta: {
-      icon: 'fa-file-text',
-      link: 'texts/index.vue',
+      icon: 'card-text-outline',
       menuitem: true,
+      label: i18n.t('texts')
     },
-    component: require('@/modules/Translates/translates.module.vue'),
+    component: require('@/modules/Translates/translates.module.vue').default,
+    // component: () => import('@/modules/Translates/translates.module.vue'),
     children: [
       {
-        name: 'textedit',
-        path: '/text/:id',
+        name: 'list',
+        path: '',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'texts/textedit/index.vue',
+          icon: 'format-list-bulleted',
+          label: i18n.t('list'),
           menuitem: true,
         },
-        component:  require('@/modules/Translates/components/edit.component/index.vue'),
+        component: require('@/modules/Translates/translates.module.vue').default,
+        //component: () => import('@/modules/Translates/translates.module.vue'),
+      },
+      {
+        name: 'edit-text',
+        path: '/text/:id',
+        meta: {
+          menuitem: false,
+        },
+        //component: () => import('@/modules/Translates/components/edit.component/index.vue'),
+        component:  require('@/modules/Translates/components/edit.component/index.vue').default,
+      },
+      {
+        name: 'text-settings',
+        path: '/text/settings',
+        meta: {
+          icon: 'tune',
+          menuitem: true,
+          label: i18n.t('settings'),
+        },
+        component:  require('@/modules/Translates/components/edit.component/index.vue').default,
       },
     ]
   },
   {
-    name: 'Паззлы',
+    name: 'Puzzles',
     path: '/puzzles',
     meta: {
-      icon: 'fa-puzzle-piece ',
-      link: 'puzzles/index.vue',
+      icon: 'puzzle',
       menuitem: true,
+      label: 'Puzzles',
     },
-    component: require('@/modules/Puzzles/puzzles.module.vue'),
+    component: require('@/modules/Puzzles/puzzles.module.vue').default,
+    // component: () => import('@/modules/Puzzles/puzzles.module.vue'),
   },
   {
     name: 'Introjs',
     path: '/intro',
     meta: {
-      icon: 'fa-info',
-      link: 'intro/index.vue',
+      icon: 'tooltip-text',
       menuitem: true,
+      label: 'Introjs',
     },
-    component: require('@/modules/Intro/intro.module.vue'),
+    component: require('@/modules/Intro/intro.module.vue').default,
+    // component: () => import('@/modules/Intro/intro.module.vue'),
     children: [
       {
         name: 'Intro',
         path: '/intro/:id',
         meta: {
           icon: 'fa-tachometer',
-          link: 'intro/edit.vue',
-          menuitem: true,
+          menuitem: false,
         },
-        component: require('@/modules/Intro/components/edit-intro.component/index.vue'),
+        component: require('@/modules/Intro/components/edit-intro.component/index.vue').default,
       },
     ]
   },
   {
-    name: 'Настройки',
+    name: 'settings',
     path: '/settings',
     meta: {
-      icon: 'fa-sliders',
-      link: 'settings/index.vue',
+      icon: 'tune',
       menuitem: true,
+      label: i18n.t('settings'),
     },
-    component: require('@/modules/Settings/settings.module.vue'),
+    component: require('@/modules/Settings/settings.module.vue').default,
+    // component: () => import('@/modules/Settings/settings.module.vue'),
   },
-
-
   {
     path: '*',
     redirect: '/',
     meta: {
       icon: 'fa-sliders',
-      link: '/',
     },
   },
 ]
 
-const routes2: Array<RouteConfig> = [
+export const routes2: Array<RouteConfig> = [
   {
-    name: 'Юзеры',
+    name: 'users',
     path: '/users',
     meta: {
-      icon: 'fa-users',
-      link: 'users/index.vue',
+      icon: 'account-group',
       menuitem: true,
+      label: i18n.t('users'),
     },
-    component: require('@/modules/Users/users.module.vue'),
+    //component: () => import('@/modules/Users/users.module.vue'),
+    component: require('@/modules/Users/users.module.vue').default,
     children: [
       {
-        name: 'Юзер',
-        path: '/user/:id',
+        name: 'user',
+        path: ':id',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'users/edit.vue',
+          menuitem: false,
         },
-        component: require('@/modules/Users/components/edit-user.component/index.vue'),
+        //component: () => import('@/modules/Users/components/edit-user.component/index.vue'),
+        component: require('@/modules/Users/components/edit-user.component/index.vue').default,
       },
     ]
   },
   {
-    name: 'Статьи',
-    path: '/articles',
+    name: 'posts',
+    path: '/post',
     meta: {
-      icon: 'fa-book',
+      icon: 'post-outline',
       menuitem: true,
+      label:  i18n.t('posts'),
     },
-    component: require('@/modules/Blog/blog.module.vue'),
+    component: require('@/modules/Blog/blog.module.vue').default,
     children: [
       {
-        name: 'Статья',
+        name: 'list-post',
+        path: 'list',
+        meta: {
+          icon: 'format-list-bulleted',
+          menuitem: true,
+          label:  i18n.t('list'),
+        },
+        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
+        component: require('@/modules/Blog/components/list-post.component/index.vue').default,
+      },
+      {
+        name: 'add-post',
+        path: 'add',
+        //component: () => import('@/modules/Blog/components/add-post.component/index.vue'),
+        component: require('@/modules/Blog/components/add-post.component/index.vue').default,
+        meta: {
+          menuitem: true,
+          label: i18n.t('addPost'),
+          icon: 'book-plus-multiple'
+        },
+      },
+      {
+        name: 'categories',
+        path: 'category',
+        //component: () => import('@/modules/Blog/components/edit-category.component/index.vue'),
+        component: require('@/modules/Blog/components/edit-category.component/index.vue').default,
+        meta: {
+          menuitem: true,
+          label: i18n.t('categories'),
+          icon: 'shape-outline'
+        },
+      },
+      {
+        name: 'post',
         path: ':id',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'articles/edit.vue',
+          menuitem: false,
         },
-        component: require('@/modules/Blog/components/edit-post.component/index.vue'),
+        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
+        component: require('@/modules/Blog/components/edit-post.component/index.vue').default,
       },
       {
-        name: 'Добавить статью',
-        path: 'add',
-        component: require('@/modules/Blog/components/add-post.component/index.vue'),
-        meta: {
-          link: 'articles/add.vue',
-          menuitem: true,
-        },
-      },
-      {
-        name: 'Категории',
-        path: 'category',
-        component: require('@/modules/Blog/components/edit-category.component/index.vue'),
-        meta: {
-          link: 'articles/category.vue',
-          menuitem: true,
-        },
-      },
-      {
-        name: 'Комментарии',
+        name: 'comments',
         path: 'comments',
-        component: require('@/modules/Blog/components/comments.component/index.vue'),
+        // component: () => import('@/modules/Blog/components/comments.component/index.vue'),
+        component: require('@/modules/Blog/components/comments.component/index.vue').default,
         meta: {
-          link: 'articles/comments.vue',
           menuitem: true,
+          label: i18n.t('comments'),
+          icon: 'comment-text-multiple-outline'
         },
       },
     ],
   },
   {
-    name: 'Страницы',
+    name: 'pages',
     path: '/pages',
     meta: {
-      icon: 'fa-file-text',
-      link: 'pages/index.vue',
+      icon: 'book-open-page-variant',
       menuitem: true,
+      label: i18n.t('pages'),
     },
-    component: require('@/modules/Pages/pages.module.vue'),
+    component: require('@/modules/Pages/pages.module.vue').default,
     children: [
       {
-        name: 'Страница',
+        name: 'page',
         path: '/page/:id',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'pages/edit.vue',
+          menuitem: false,
         },
-        component: require('@/modules/Pages/components/edit-page.component/index.vue'),
+        component: require('@/modules/Pages/components/edit-page.component/index.vue').default,
       },
       {
-        name: 'Добавить страницу',
+        name: 'add-page',
         path: '/page/add',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'pages/add.vue',
+          icon: 'file-plus',
           menuitem: true,
+          label: i18n.t('addPage'),
         },
-        component: require('@/modules/Pages/components/add-page.component/index.vue'),
+        component: require('@/modules/Pages/components/add-page.component/index.vue').default,
       },
     ]
   },
   {
-    name: 'Тарифы',
+    name: 'tariffs',
     path: '/plans',
     meta: {
-      icon: 'fa-tachometer',
-      link: 'plans/add.vue',
+      icon: 'cash-multiple',
       menuitem: true,
+      label: i18n.t('tariffs'),
     },
-    component: require('@/modules/Plan/plan.module.vue'),
+    component: require('@/modules/Plan/plan.module.vue').default,
     children: [
       {
-        name: 'Добавить тариф',
-        path: '/plans/add',
+        name: 'list-post',
+        path: '/plans',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'plans/add.vue',
+          icon: 'format-list-bulleted',
           menuitem: true,
+          label:  i18n.t('list'),
         },
-        component: require('@/modules/Plan/components/add-plan.component/index.vue'),
+        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
+        component: require('@/modules/Blog/components/edit-post.component/index.vue').default,
       },
       {
-        name: 'Тариф',
+        name: 'add-tariff',
+        path: '/plans/add',
+        meta: {
+          icon: 'shape-square-plus',
+          menuitem: true,
+          label: i18n.t('addTariff'),
+        },
+        component: require('@/modules/Plan/components/add-plan.component/index.vue').default,
+      },
+      {
+        name: 'edit-tariff',
         path: '/plans/:id',
         meta: {
-          icon: 'fa-tachometer',
-          link: 'plans/edit.vue',
+          menuitem: false,
         },
-        component: require('@/modules/Plan/components/edit-plan.component/index.vue'),
+        component: require('@/modules/Plan/components/edit-plan.component/index.vue').default,
       },
     ]
-  },
-  {
-    name: 'Настройки',
-    path: '/settings',
-    meta: {
-      icon: 'fa-sliders',
-      link: 'settings/index.vue',
-      menuitem: true,
-    },
-    component: require('@/modules/Settings/settings.module.vue'),
   },
   //{
   //  name: 'Почта',
   //  path: '/mails',
   //  meta: {
   //    icon: 'fa-sliders',
-  //    link: 'mails/index.vue',
   //    menuitem: true,
   //  },
   //  component: require('@/modules/Settings/settings.module.vue'),
   //},
   {
-    name: 'Сообщения',
+    name: 'messages',
     path: '/messages',
     meta: {
-      icon: 'fa-sliders',
-      link: 'messages/index.vue',
+      icon: 'message-settings-outline',
       menuitem: true,
+      label: i18n.t('messages'),
     },
-    component: require('@/modules/Messages/messages.module.vue'),
-  },
-  {
-    path: '*',
-    meta: {
-      icon: 'fa-sliders',
-      link: '/',
-    },
-  },
+    component: require('@/modules/Messages/messages.module.vue').default,
+  }
 ]
 
 export const routes = routes1.concat(routes2);

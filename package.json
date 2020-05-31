@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@mdi/font": "^5.1.45",
+    "@tinymce/tinymce-vue": "^3.2.2",
     "axios": "^0.19.2",
     "buefy": "^0.8.10",
     "canvas": "^2.6.1",
     "core-js": "^3.4.4",
     "fibers": "^4.0.2",
-    "froala-editor": "^3.1.0",
     "sass": "^1.25.0",
     "vue": "^2.6.10",
     "vue-bulma-breadcrumb": "^1.0.1",

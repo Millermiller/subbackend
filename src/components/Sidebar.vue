@@ -1,34 +1,63 @@
 <template lang="pug">
-  aside.menu.app-sidebar.animated(:class="{ slideInLeft: show, slideOutLeft: !show }")
+  aside.menu.app-sidebar.animated.slideInLeft
     p.menu-label General
 
     ul.menu-list
-      li(v-for="(item, index) in menu", :key="index")
+      li(v-for="(item, index) in mainMenu", :key="index")
         router-link(
           :to="item.path",
           :exact="true",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
-          :class="{'is-active':  item.name ==='Тексты' && $route.name === 'textedit'}",
           v-if="!isParent(item)",
           @click.native="toggle(item)")
 
-          b-icon(icon="account", size="is-small")
+          b-icon(:icon="item.meta.icon", size="is-small")
 
-          span {{ item.meta.label || item.name }}
+          span {{ item.meta.label}}
 
-          b-icon(icon="chevron-down", size="is-small", v-if="item.children && item.children.length")
+          b-icon(icon="chevron-down", size="is-small", v-if="isParent(item)")
 
         a(:aria-expanded="isExpanded(item)", v-else @click="toggle(item)")
-          b-icon(icon="account", size="is-small")
+          b-icon(:icon="item.meta.icon", size="is-small")
           span {{ item.meta.label || item.name }}
 
           b-icon(icon="chevron-down", size="is-small", v-if="item.children && item.children.length")
 
-        expanding(v-if="item.children && item.children.length")
+        expanding(v-if="isParent(item)")
           ul(v-show="isExpanded(item)")
             li(v-for="(subItem, index) in item.children" :key="index")
-              router-link(:to="generatePath(item, subItem)", v-if="isMenuItem(subItem)").
-                {{ subItem.meta && subItem.meta.label || subItem.name }}
+              router-link(:to="generatePath(item, subItem)", v-if="isMenuItem(subItem)")
+                b-icon(:icon="subItem.meta.icon", size="is-small")
+                span {{ subItem.meta && subItem.meta.label || subItem.name }}
+
+    p.menu-label Sub
+    ul.menu-list
+      li(v-for="(item, index) in subMenu", :key="index")
+        router-link(
+          :to="item.path",
+          :exact="true",
+          :aria-expanded="isExpanded(item) ? 'true' : 'false'",
+          v-if="!isParent(item)",
+          @click.native="toggle(item)")
+
+          b-icon(:icon="item.meta.icon", size="is-small")
+
+          span {{ item.meta.label}}
+
+          b-icon(icon="chevron-down", size="is-small", v-if="isParent(item)")
+
+        a(:aria-expanded="isExpanded(item)", v-else @click="toggle(item)")
+          b-icon(:icon="item.meta.icon", size="is-small")
+          span {{ item.meta.label || item.name }}
+
+          b-icon(icon="chevron-down", size="is-small", v-if="item.children && item.children.length")
+
+        expanding(v-if="isParent(item)")
+          ul(v-show="isExpanded(item)")
+            li(v-for="(subItem, index) in item.children" :key="index")
+              router-link(:to="generatePath(item, subItem)", v-if="isMenuItem(subItem)")
+                b-icon(:icon="subItem.meta.icon", size="is-small")
+                span {{ subItem.meta && subItem.meta.label || subItem.name }}
 </template>
 
 <script lang="ts">
@@ -37,7 +66,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 import { Route, RouteConfig } from 'vue-router'
-import { routes } from '@/router'
+import { routes1 } from '@/router'
+import { routes2 } from '@/router'
 
 @Component({
   name: 'Sidebar',
@@ -48,8 +78,10 @@ import { routes } from '@/router'
 export default class Sidebar extends Vue {
   @Prop({ required: true })
   private show!: any
-  private menu: Array<RouteConfig> = routes.filter((item) => item.meta.menuitem)
+  private mainMenu: Array<RouteConfig> = routes2.filter((item) => item.meta.menuitem)
+  private subMenu: Array<RouteConfig> = routes1.filter((item) => item.meta.menuitem)
   private isReady: boolean = false
+  private menu = this.mainMenu.concat(this.subMenu)
 
   mounted() {
     const route = this.$route
@@ -64,7 +96,7 @@ export default class Sidebar extends Vue {
   }
 
   isParent(item: RouteConfig) {
-    return item.children && item.children.length > 0
+    return item.children && item.children.some(item => item.meta.menuitem)
   }
 
   isMenuItem(item: RouteConfig): boolean {
@@ -129,7 +161,7 @@ export default class Sidebar extends Vue {
   left: 0;
   bottom: 0;
   padding: 20px 0 50px;
-  width: 180px;
+  width: 220px;
   min-width: 45px;
   max-height: 100vh;
   height: calc(100% - 50px);
@@ -141,6 +173,7 @@ export default class Sidebar extends Vue {
 
   .icon {
     vertical-align: baseline;
+    margin-right: 5px;
 
     &.is-angle {
       position: absolute;

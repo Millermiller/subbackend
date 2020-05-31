@@ -10,6 +10,7 @@ export default class PuzzlesModule extends Vue {
   }
   private puzzles: [] = []
   private isComponentModalActive: boolean = false
+  private loading: boolean = false
 
   mounted() {
     this.load()

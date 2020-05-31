@@ -2,16 +2,26 @@ import { Component, Vue } from 'vue-property-decorator'
 import articleAPI from '@/api/articleAPI'
 import categoryAPI from '@/api/categoryAPI'
 import Post from '@/modules/Blog/models/Post'
+import Editor from '@tinymce/tinymce-vue'
 
 @Component({
-  components: {},
+  components: {
+    Editor
+  },
 })
 export default class AddPostComponent extends Vue {
-  post: Post
-  categories: []
+  post: Post = new Post()
+  categories: [] = []
   seotitle: ''
   seodescription: ''
   keywords: ''
+  editorConfig = {
+    events: {
+      initialized: function() {
+        console.log('initialized')
+      }
+    }
+  }
 
   save() {
     if (this.post.content === '') {

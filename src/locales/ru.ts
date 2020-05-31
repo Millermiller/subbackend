@@ -41,5 +41,17 @@ export const messages = {
   upload: 'Загрузить',
   forvoConfirm: 'Загрузить аудио?',
   forvoComplete: 'Завершено! {count} из {all}',
-  variants: 'Варианты перевода:'
+  variants: 'Варианты перевода:',
+  list: 'Список',
+  settings: 'Настройки',
+  users: 'Пользователи',
+  posts: 'Статьи',
+  addPost: 'Новая статья',
+  categories: 'Категории',
+  comments: 'Комментарии',
+  pages: 'Страницы',
+  addPage: 'Новая страница',
+  tariffs: 'Тарифы',
+  addTariff: 'Новый тариф',
+  messages: 'Сообщения',
 }

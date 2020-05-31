@@ -11,6 +11,7 @@ import { messages } from '@/locales/ru'
 import 'buefy/dist/buefy.css'
 import './assets/css/style.css'
 import './assets/scss/app.scss'
+import i18n from '@/utils/i18n'
 
 require('froala-editor/js/froala_editor.pkgd.min')
 require('froala-editor/css/froala_editor.pkgd.min.css')
@@ -28,12 +29,7 @@ Vue.use(VueProgressBar, {
     opacity: '0.1s',
   },
 })
-const i18n = new VueI18n({
-  locale: 'ru',
-  messages: {
-    ru: messages,
-  },
-})
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -44,3 +44,4 @@ vgc home --folder
 
 
 component -> service -> repo -> action -> api -> store
+component -> service -> repo -> api

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode development --host admin.scandinaver.local",
     "build production": "vue-cli-service build",
     "build development": "vue-cli-service build --mode development",
     "test:unit": "vue-cli-service test:unit",

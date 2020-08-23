@@ -1,11 +1,13 @@
+import 'reflect-metadata'
 import Vue from 'vue'
 import App from './App.vue'
 import { router } from './router'
 import Buefy from 'buefy'
 import VueCookies from 'vue-cookies'
-import { store } from './store'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import VueProgressBar from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
+import VueTypedi from 'vue-typedi'
 import { messages } from '@/locales/ru'
 // import VueFroala from 'vue-froala-wysiwyg'
 import 'buefy/dist/buefy.css'
@@ -20,6 +22,7 @@ require('froala-editor/css/froala_style.min.css')
 Vue.use(Buefy)
 Vue.use(VueCookies)
 Vue.use(VueI18n)
+Vue.use(VueTypedi);
 // Vue.use(VueFroala)
 Vue.use(VueProgressBar, {
   color: '#7957d5',

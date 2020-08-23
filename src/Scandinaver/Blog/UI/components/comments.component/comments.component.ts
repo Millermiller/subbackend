@@ -1,0 +1,36 @@
+import { Component, Vue } from 'vue-property-decorator'
+import { Inject } from 'vue-typedi'
+import CommentService from '@/Scandinaver/Blog/Application/CommentService'
+import Comment from '@/Scandinaver/Blog/Domain/Comment'
+
+@Component({
+  components: {},
+})
+export default class CommentsComponent extends Vue {
+
+  @Inject()
+  private service: CommentService
+
+  comments: Comment[] = []
+  search: string
+
+  mounted() {
+    this.load()
+  }
+
+  async load() {
+    this.comments = await this.service.getAll()
+  }
+
+  async remove(comment: Comment) {
+    if (confirm('Удалить?')) {
+      await this.service.destroy(comment)
+      this.$snackbar.open(this.$tc('removedComments'))
+      await this.load()
+    }
+  }
+
+  async find() {
+    this.comments = await this.service.search(this.search)
+  }
+}

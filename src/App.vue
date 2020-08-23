@@ -1,16 +1,16 @@
 <template lang="pug">
   #app
     navbar(:show="true")
-    sidebar(:show="true")
+    sidebar
     app-main
 </template>
 
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Navbar from '@/components/Navbar.vue'
-import Sidebar from '@/components/Sidebar.vue'
-import AppMain from '@/components/AppMain.vue'
+import Navbar from '@/Scandinaver/Core/UI/Navbar.vue'
+import Sidebar from '@/Scandinaver/Core/UI/Sidebar.vue'
+import AppMain from '@/Scandinaver/Core/UI/AppMain.vue'
 
 @Component({
   name: 'App',

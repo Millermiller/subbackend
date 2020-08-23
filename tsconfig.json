@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "target": "esnext",

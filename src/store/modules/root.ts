@@ -1,6 +1,6 @@
 import { Getters, Mutations, Actions, Module, Context } from 'vuex-smart-module'
 import { Store } from 'vuex'
-import app from '@/store/modules/app'
+import app from '@/Scandinaver/Core/Infrastructure/store/app'
 import asset from '@/store/modules/asset'
 
 class State {

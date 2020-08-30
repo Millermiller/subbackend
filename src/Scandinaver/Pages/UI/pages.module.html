@@ -1,46 +1,7 @@
 <div>
   <div class="tile is-ancestor">
     <div class="tile is-parent">
-      <article class="tile is-child box">
-        <div class="tile is-parent">
-          <a class="button is-success" @click="add">Добавить</a>
-          <a class="button is-success" @click="find">Найти</a>
-        </div>
-        <b-table :data="pages" paginated="paginated" narrowed="" :loading="loading" per-page="10">
-          <template slot-scope="props">
-
-            <b-table-column field="id" label="ID" width="40" sortable="sortable" numeric="numeric">
-              {{ props.row.id }}
-            </b-table-column>
-
-            <b-table-column field="url" label="url" sortable="sortable">
-              {{ props.row.url }}
-            </b-table-column>
-
-            <b-table-column field="title" label="title" sortable="sortable">
-              {{ props.row.title }}
-            </b-table-column>
-
-            <b-table-column field="description" label="description" sortable="sortable">
-              {{ props.row.description }}
-            </b-table-column>
-
-            <b-table-column field="keywords" label="keywords" sortable="sortable">
-              {{ props.row.keywords }}
-            </b-table-column>
-
-            <b-table-column custom-key="actions">
-              <button class="button is-warning" @click="edit(props.row)">
-                <b-icon icon="account-edit" size="is-small"></b-icon>
-              </button>
-              <button class="button is-danger" @click="remove(props.row)">
-                <b-icon icon="account-remove" size="is-small"></b-icon>
-              </button>
-
-            </b-table-column>
-          </template>
-        </b-table>
-      </article>
+        <router-view></router-view>
     </div>
   </div>
 </div>

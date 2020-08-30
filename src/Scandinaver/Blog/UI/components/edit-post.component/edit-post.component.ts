@@ -4,25 +4,26 @@ import Category from '@/Scandinaver/Blog/Domain/Category'
 import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
 import CategoryService from '@/Scandinaver/Blog/Application/CategoryService'
+import { Editor } from '@tinymce/tinymce-vue/lib/cjs/main/ts/components/Editor'
 
 @Component({
-  components: {},
+  components: {
+    'editor': Editor
+  },
 })
 export default class EditPostComponent extends Vue {
-
   @Inject()
   private blogService: BlogService
 
   @Inject()
   private categoryService: CategoryService
 
-  post: Post
-  id: number
-  meta_id: number
-  categories: Category[]
-  seotitle: string
-  seodescription: string
-  keywords: string
+  private post: Post = new Post()
+  private categories: Category[] = []
+  private seotitle: string = ''
+  private seodescription: string = ''
+  private keywords: string = ''
+  private config = {}
 
   async load(id: number) {
     this.post = await this.blogService.getOne(id)

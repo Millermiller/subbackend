@@ -3,8 +3,23 @@ import Login from '@/Scandinaver/Core/UI/Login.vue'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
+import { LoginService } from '@/Scandinaver/Core/Application/login.service'
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {},
+    beforeEnter(to: any, from: any, next: any) {
+      LoginService.checkAuth()
+        .then(
+          () => next({ name: 'MainPage' }),
+          () => next(),
+        )
+        .catch(() => next())
+    },
+  },
   {
     path: '/',
     name: 'MainPage',
@@ -12,22 +27,8 @@ const routes = [
       title: 'page401',
       noCache: true,
     },
-    // component: DashboardModule,
     component: () => import('@/Scandinaver/Dashboard/UI/dashboard.module.vue'),
     beforeEnter: requireAuth,
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: {},
-    beforeEnter(to: any, from: any, next: any) {
-      if (store.getters.auth) {
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    },
   },
   {
     name: 'messages',
@@ -39,6 +40,7 @@ const routes = [
       label: i18n.t('messages'),
     },
     component: require('@/Scandinaver/Core/UI/messages.module.vue').default,
+    beforeEnter: requireAuth,
   }
 ]
 

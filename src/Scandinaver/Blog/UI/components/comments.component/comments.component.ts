@@ -12,14 +12,17 @@ export default class CommentsComponent extends Vue {
   private service: CommentService
 
   comments: Comment[] = []
-  search: string
+  search: string = ''
+  loading: boolean = false
 
   mounted() {
     this.load()
   }
 
   async load() {
+    this.loading = true
     this.comments = await this.service.getAll()
+    this.loading = false
   }
 
   async remove(comment: Comment) {
@@ -32,5 +35,9 @@ export default class CommentsComponent extends Vue {
 
   async find() {
     this.comments = await this.service.search(this.search)
+  }
+
+  edit(row: any) {
+    //
   }
 }

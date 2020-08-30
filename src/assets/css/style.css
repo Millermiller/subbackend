@@ -345,7 +345,7 @@ span[tooltip]:hover:after {
 }
 
 .avatar-small {
-    height: 60px;
+    height: 40px;
     border-radius: 100%;
 }
 
@@ -472,4 +472,7 @@ table td {
 }
 .pointer{
     cursor: pointer !important;
+}
+.ml-10 {
+    margin-left: 10px;
 }

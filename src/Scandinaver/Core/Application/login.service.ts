@@ -30,10 +30,11 @@ export class LoginService {
     return new Promise((resolve, reject) => {
       const cookieName = process.env.VUE_APP_COOKIE_NAME as string || 'authfrontend._token.local'
       const token = Vue.$cookies.get(cookieName)
-      if (Vue.$user !== undefined) {
+      const { auth } = store.getters
+      if (auth !== false) {
         resolve()
       }
-      if (Vue.$user === undefined) {
+      if (auth === false) {
         if (token !== null) {
           this.fetchUser(token).then(
             () => resolve(),
@@ -51,6 +52,7 @@ export class LoginService {
     const token = Vue.$cookies.get(cookieName)
     return UserAPI.logout(token).then((response) => {
       store.commit('setAuth', false)
+      store.commit('resetUser')
       Vue.$cookies.remove(cookieName, '/', process.env.VUE_APP_COOKIE_DOMAIN || '.scandinaver.org')
     })
   }
@@ -63,6 +65,7 @@ export class LoginService {
         .then(
           (response) => {
             Vue.$user = response.data
+            store.commit('setUser', response.data)
               resolve()
           },
           () => reject(),

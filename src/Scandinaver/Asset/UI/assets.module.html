@@ -38,7 +38,7 @@
         <p class="control has-addons">
           <input class="input" type="text" placeholder="rus" v-model="text" />
           <a :class="['button', {'is-loading': searchloaded }]" @click="search">{{$t('search')}}</a>
-          <a :class="['button', {'is-loading': sentencesloaded }]" @click="searchsentences">{{$t('inSentences')}}</a>
+          <a :class="['button', {'is-loading': sentencesloaded }]" @click="searchSentences()">{{$t('inSentences')}}</a>
         </p>
       </div>
       <div class="block">

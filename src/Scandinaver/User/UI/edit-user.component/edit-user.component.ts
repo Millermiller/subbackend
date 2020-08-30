@@ -11,8 +11,8 @@ export default class EditUserComponent extends Vue {
   @Inject()
   private service: UserService
 
-  user: User
-  date: Date
+  private user: User = new User()
+  private date: Date = new Date()
 
   mounted() {
     this.load(Number(this.$route.params.id))

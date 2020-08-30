@@ -10,6 +10,16 @@ export default class UserMutations extends Mutations<State> {
     this.state.user.login = user.login
   }
 
+  resetUser() {
+    this.state.user.id = 0
+    this.state.user.authenticated = false
+    this.state.user.avatar = ''
+    this.state.user.active = false
+    this.state.user.active_to = ''
+    this.state.user.login = ''
+    this.state.user.email = ''
+  }
+
   setAuth(auth: boolean) {
     this.state.user.authenticated = auth
   }

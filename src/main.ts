@@ -9,21 +9,17 @@ import VueProgressBar from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
 import VueTypedi from 'vue-typedi'
 import { messages } from '@/locales/ru'
-// import VueFroala from 'vue-froala-wysiwyg'
+import Editor from '@tinymce/tinymce-vue'
 import 'buefy/dist/buefy.css'
 import './assets/css/style.css'
 import './assets/scss/app.scss'
 import i18n from '@/utils/i18n'
 
-require('froala-editor/js/froala_editor.pkgd.min')
-require('froala-editor/css/froala_editor.pkgd.min.css')
-require('froala-editor/css/froala_style.min.css')
 
 Vue.use(Buefy)
 Vue.use(VueCookies)
 Vue.use(VueI18n)
 Vue.use(VueTypedi);
-// Vue.use(VueFroala)
 Vue.use(VueProgressBar, {
   color: '#7957d5',
   failedColor: '#ff3860',

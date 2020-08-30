@@ -1,5 +1,5 @@
 <template lang="pug">
-  section.app-main
+  section.app-main(:class="{'is-marginless': !auth }")
     .container.is-fluid.is-marginless.app-content
 
       transition(
@@ -19,7 +19,11 @@ import FooterBar from '@/Scandinaver/Core/UI/FooterBar.vue'
   name: 'AppMain',
   components: { FooterBar }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  get auth(): boolean {
+    return this.$store.getters.auth
+  }
+}
 </script>
 
 <style lang="scss">

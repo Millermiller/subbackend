@@ -9,7 +9,8 @@ const routes = [
       icon: 'card-text-outline',
       menuitem: true,
       label: i18n.t('texts'),
-      type: 'sub'
+      type: 'sub',
+      language: true,
     },
     component: require('@/Scandinaver/Translate/UI/translates.module.vue').default,
     // component: () => import('@/modules/Translates/translates.module.vue'),

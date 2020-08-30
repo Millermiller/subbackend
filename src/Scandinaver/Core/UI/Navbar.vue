@@ -3,6 +3,14 @@
     .hero-head
       nav.nav
         .nav-left
+          .nav-item
+            b-field
+              b-select(placeholder="Select a name", v-model="selectedLanguage")
+                option(v-for="language in languages"
+                :value="language.label"
+                :key="language.label").
+                  {{ language.name }}
+
           a.nav-item.is-hidden-tablet(@click="toggleSidebar(!sidebar.opened)")
             i.fa.fa-bars(aria-hidden="true")
 
@@ -16,8 +24,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import {version} from '../../../../package.json';
+import { LoginService } from '@/Scandinaver/Core/Application/login.service'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 @Component({
   name: 'NavBarComponent'
@@ -29,8 +39,34 @@ export default class NavBarComponent extends Vue{
 
   private version: string = `v.${version}`
 
+  private languages = [
+    {
+      'label': 'is',
+      'name': 'Исландский'
+    },
+    {
+      'label': 'sw',
+      'name': 'Шведский'
+    },
+  ];
+
+  private selectedLanguage: string = 'is'
+
+  @Watch('selectedLanguage')
+  private onChange(val: any) {
+    store.commit('setLanguage', val)
+  }
+
+  created() {
+    store.commit('setLanguage', this.selectedLanguage)
+  }
+
   logout() {
-    console.log('logout!')
+    store.commit('setFullscreenLoading', true)
+    LoginService.logout().then((response) => {
+      this.$router.push({ path: '/login' })
+      store.commit('setFullscreenLoading', false)
+    })
   }
 }
 </script>

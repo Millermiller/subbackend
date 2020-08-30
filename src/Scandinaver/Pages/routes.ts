@@ -22,8 +22,7 @@ const routes = [
           type: 'main',
           label:  i18n.t('list'),
         },
-        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
-        component: require('@/Scandinaver/Blog/UI/components/list-post.component/index.vue').default,
+        component: require('@/Scandinaver/Pages/UI/components/list-page.component/index.vue').default,
       },
       {
         name: 'add-page',

@@ -32,6 +32,10 @@ export default class ListPostComponent extends Vue {
     }
   }
 
+  edit(row: any) {
+    this.$router.push({ name: 'post', params: { id: row.id } })
+  }
+
   async find() {
     this.articles = await this.service.search(this.search)
   }

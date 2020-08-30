@@ -1,7 +1,8 @@
 <template lang="pug">
   #app
-    navbar(:show="true")
-    sidebar
+    b-loading(:is-full-page="true" :active="fullscreenLoading" :can-cancel="true")
+    navbar(:show="true", v-if="auth")
+    sidebar(v-if="auth")
     app-main
 </template>
 
@@ -25,6 +26,14 @@ export default class extends Vue {
     const { body } = document
     const WIDTH = 768
     const RATIO = 3
+  }
+
+  get fullscreenLoading(): boolean {
+    return this.$store.getters.fullscreenLoading
+  }
+
+  get auth(): boolean {
+    return this.$store.getters.auth
   }
 }
 </script>

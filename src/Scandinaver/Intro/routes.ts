@@ -1,5 +1,4 @@
 import { requireAuth } from '@/router'
-import i18n from '@/utils/i18n'
 
 const routes = [
   {
@@ -12,7 +11,7 @@ const routes = [
       type: 'main'
     },
     component: require('@/Scandinaver/Intro/UI/intro.module.vue').default,
-    // component: () => import('@/modules/Intro/intro.module.vue'),
+    beforeEnter: requireAuth,
     children: [
       {
         name: 'Intro',

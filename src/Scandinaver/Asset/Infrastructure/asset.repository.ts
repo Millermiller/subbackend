@@ -11,7 +11,7 @@ export default class AssetRepository extends BaseRepository<Asset> {
   private api: AssetApi
 
   public async all(): Promise<Asset[]> {
-    throw new Error('method not implemented')
+    return this.api.getAssets().then(response => plainToClass(Asset, response.data))
   }
 
   public async one(assetId: number): Promise<Asset> {

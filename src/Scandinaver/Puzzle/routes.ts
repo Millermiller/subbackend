@@ -8,7 +8,8 @@ const routes = [
       icon: 'puzzle',
       menuitem: true,
       label: 'Puzzles',
-      type: 'sub'
+      type: 'sub',
+      language: true,
     },
     component: require('@/Scandinaver/Puzzle/UI/puzzles.module.vue').default,
     // component: () => import('@/modules/Puzzles/puzzles.module.vue'),

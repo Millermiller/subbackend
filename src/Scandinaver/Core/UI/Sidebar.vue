@@ -44,6 +44,9 @@
 
           span {{ item.meta.label}}
 
+          span.is-pulled-right(v-if="item.meta.language")
+            b-tag(type="is-info") {{language}}
+
           b-icon(icon="chevron-down", size="is-small", v-if="isParent(item)")
 
         a(:aria-expanded="isExpanded(item)", v-else @click="toggle(item)")
@@ -67,6 +70,7 @@ import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 import { Route, RouteConfig } from 'vue-router'
 import { routes }  from '@/router'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 @Component({
   name: 'Sidebar',
@@ -87,6 +91,10 @@ export default class Sidebar extends Vue {
       this.isReady = true
       this.shouldExpandMatchItem(route)
     }
+  }
+
+  get language(): string {
+    return store.getters.language
   }
 
   isExpanded(item: any): boolean {

@@ -11,7 +11,7 @@ export namespace API {
       return request.get(`/asset/${id}`)
     }
 
-    getAssets(): Promise<AxiosResponse> {
+    getAssets(): Promise<AxiosResponse<Asset[]>> {
       return request.get('/assets')
     }
 

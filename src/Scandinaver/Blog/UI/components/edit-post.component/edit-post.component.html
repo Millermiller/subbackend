@@ -7,7 +7,27 @@
       <b-field label="Анонс">
         <b-input v-model="post.anonse" type="textarea"></b-input>
       </b-field>
-      <froala :tag="'textarea'" :config="config" v-model="post.content"></froala>
+
+      <editor api-key="xqajoloqnmeovh9embntxbexkao8fyl1ca1rje0ygh1x981g"
+              v-model="post.content"
+              :init="{
+        height: 500,
+        menubar: false,
+                 plugins: [
+           'advlist autolink lists link image charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime media table paste code help wordcount'
+         ],
+        image_uploadtab: true,
+        images_upload_url: 'postAcceptor.php',
+        images_upload_base_path: '/some/basepath',
+        images_upload_credentials: true,
+        toolbar:
+           'undo redo | image | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+      }" />
+
       <b-field :label="$t('category')">
         <b-select :placeholder="$t('selectCategory')" v-model="post.category_id">
           <option v-for="category in categories" :value="category.id" :key="category.id">

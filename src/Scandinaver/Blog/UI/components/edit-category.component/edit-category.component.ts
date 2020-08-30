@@ -12,7 +12,7 @@ export default class EditCategoryComponent extends Vue {
   private categoryService: CategoryService
 
   private edited: Category = new Category()
-  private categories: Category[] = []
+  private categories: Category[] = [new Category()]
   private newcategory: string = ''
   private isComponentModalActive: boolean = false
   private loading: boolean = false
@@ -24,7 +24,6 @@ export default class EditCategoryComponent extends Vue {
   async load() {
     this.loading = true
     this.categories = await this.categoryService.getAll()
-    console.log(this.categories)
     this.loading = false
   }
 

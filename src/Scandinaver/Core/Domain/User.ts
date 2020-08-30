@@ -18,6 +18,7 @@ export class User implements IUser {
   email!: string
   id!: number
   login!: string
+  name!: string
   active_to: any
   active!: boolean
   plan!: Plan

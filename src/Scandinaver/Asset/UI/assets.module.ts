@@ -35,7 +35,7 @@ export default class AssetsModule extends Vue {
     level: '',
     title: '',
   }
-  private translates: any[]
+  private translates: any[] = []
 
   mounted() {
     this.load()

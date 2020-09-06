@@ -6,15 +6,15 @@ import { Service } from 'typedi'
 export namespace API {
   @Service()
   export class PuzzleAPI {
-    getPuzzles(): Promise<AxiosResponse<Puzzle[]>> {
-      return request.get('/puzzle')
+    getPuzzles(language: string): Promise<AxiosResponse<Puzzle[]>> {
+      return request.get(`/${language}/puzzle`)
     }
 
     processPuzzle(puzzle: Puzzle): Promise<AxiosResponse> {
       return request.put(`/puzzle/${puzzle.id}`)
     }
 
-    all(): Promise<AxiosResponse> {
+    all(): Promise<AxiosResponse<Puzzle[]>> {
       return request.get(`/puzzle`)
     }
 

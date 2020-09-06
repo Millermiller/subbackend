@@ -1,12 +1,12 @@
 <div class="columns">
   <div class="column">
-    <span class="asset_title">{{ card.word.word }}</span>
+    <span class="asset_title">{{ card.word.getValue() }}</span>
   </div>
   <div class="column">
     <p class="is-pulled-left has-text-dark" v-if="card.translate">
       {{ card.translate.value }}
     </p>
-    <span class="is-pulled-right has-text-light" v-if="card.word.variants &gt; 1">({{ card.word.variants }})</span>
+    <!-- <span class="is-pulled-right has-text-light" v-if="card.word.variants &gt; 1">({{ card.word.variants }})</span> -->
   </div>
   <div class="column">
     <audio ref="audio" :src="card.word.audio" preload="auto"></audio>
@@ -16,7 +16,7 @@
       class="is-danger"
       size="is-small"
       icon-right="close-circle"
-      @click="$emit('remove', { card: card, index: index })"
+      @click="removeCard"
     ></b-button>
   </div>
   <modal :visible="settingsModal" :card="card" :index="index" @close="closeSettingsModal"></modal>

@@ -11,7 +11,11 @@ export default class PuzzleRepository extends BaseRepository<Puzzle> {
   private api: PuzzleAPI
 
   async all(): Promise<Puzzle[]> {
-    return this.api.getPuzzles().then(response => plainToClass(Puzzle, response.data))
+    return this.api.all().then(response => plainToClass(Puzzle, response.data))
+  }
+
+  async allByLanguage(language: string): Promise<Puzzle[]> {
+    return this.api.getPuzzles(language).then(response => plainToClass(Puzzle, response.data))
   }
 
   async one(id: number): Promise<Puzzle> {

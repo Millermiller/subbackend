@@ -1,8 +1,8 @@
 import { Getters, Mutations, Actions, Module, Context } from 'vuex-smart-module'
 import { Store } from 'vuex'
-import { text } from '@/Scandinaver/Translate/Infrastructure/store'
-import { user } from '@/Scandinaver/Core/Infrastructure/store/user'
-import { test } from '@/Scandinaver/Asset/Infrastructure/store/test'
+import { textModule } from '@/Scandinaver/Translate/Infrastructure/store'
+import { userModule } from '@/Scandinaver/Core/Infrastructure/store/user'
+import { testModule } from '@/Scandinaver/Asset/Infrastructure/store/test'
 import { assetModule } from '@/Scandinaver/Asset/Infrastructure/store/asset'
 import { puzzleModule } from '@/Scandinaver/Puzzle/Infrastructure/store'
 import { dashboardModule } from '@/Scandinaver/Dashboard/Infrastructure/store'
@@ -79,16 +79,16 @@ class CommonMutations extends Mutations<State> {
 }
 
 class CommonActions extends Actions<State, CommonGetters, CommonMutations, CommonActions> {
-  userstore!: Context<typeof user>
+  userstore!: Context<typeof userModule>
   assetstore!: Context<typeof assetModule>
-  textstore!: Context<typeof text>
+  textstore!: Context<typeof textModule>
   puzzleStore!: Context<typeof puzzleModule>
   dashboardStore!: Context<typeof dashboardModule>
 
   $init(store: Store<any>): void {
-    this.userstore = user.context(store)
+    this.userstore = userModule.context(store)
     this.assetstore = assetModule.context(store)
-    this.textstore = text.context(store)
+    this.textstore = textModule.context(store)
     this.puzzleStore = puzzleModule.context(store)
     this.dashboardStore = dashboardModule.context(store)
   }
@@ -115,10 +115,10 @@ export const root = new Module({
   mutations: CommonMutations,
   actions: CommonActions,
   modules: {
-    user,
+    userModule,
     assetModule,
-    text,
-    test,
+    textModule,
+    testModule,
     puzzleModule,
     dashboardModule
   },

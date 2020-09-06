@@ -1,17 +1,18 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Card } from '@/Scandinaver/Asset/Domain/Card'
 
 @Component({
   //components: { ModalExaple },
 })
 export default class ModalComponent extends Vue {
   @Prop({ required: true })
-  private visible!: any
+  private visible!: boolean
 
   @Prop({ required: true })
-  private card!: any
+  private card!: Card
 
   @Prop({ required: true })
-  private index!: any
+  private index!: number
 
   private fileUploadFormData: FormData = new FormData()
   private text: string = ''
@@ -21,7 +22,7 @@ export default class ModalComponent extends Vue {
   bindFile(e: any) {
     e.preventDefault()
     this.fileUploadFormData.append('audiofile', e.target.files[0])
-    this.fileUploadFormData.append('id', this.card.word.id)
+    // this.fileUploadFormData.append('id', this.card.word.getId())
   }
 
   close() {

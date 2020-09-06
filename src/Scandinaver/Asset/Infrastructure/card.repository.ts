@@ -5,8 +5,7 @@ import IDictionaryForm from '@/Scandinaver/Core/Domain/Contract/IDictionaryForm'
 import { plainToClass } from 'class-transformer'
 import { BaseRepository } from '@/Scandinaver/Core/Infrastructure/base.repository'
 import CardApi = API.CardApi
-import { AxiosResponse } from 'axios'
-import request from '@/utils/request'
+import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 
 @Service()
 export default class CardRepository extends BaseRepository<Card> {
@@ -39,5 +38,15 @@ export default class CardRepository extends BaseRepository<Card> {
 
   public async saveAudioFile(fileUploadFormData: FormData) {
     return this.api.uploadWordFile(fileUploadFormData)
+  }
+
+  public async add(language: string, card: Card): Promise<Card> {
+    return this.api
+      .addCardToAsset(language, card)
+      .then(response => plainToClass(Card, response.data))
+  }
+
+  async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
+    return this.api.removeCard(language, card, asset).then(response => response)
   }
 }

@@ -4,7 +4,7 @@ import TestGetters from '@/Scandinaver/Asset/Infrastructure/store/test/getters'
 import TestActions from '@/Scandinaver/Asset/Infrastructure/store/test/actions'
 import TestMutations from '@/Scandinaver/Asset/Infrastructure/store/test/mutations'
 
-export const test = new Module({
+export const testModule = new Module({
   namespaced: false,
   state: State,
   getters: TestGetters,

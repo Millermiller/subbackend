@@ -1,4 +1,5 @@
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 import { Inject } from 'vue-typedi'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
@@ -16,10 +17,10 @@ export default class AssetComponent extends Vue {
   private loaded: boolean = false
 
   async load(id: number) {
-    this.loaded = true
+    this.$eventHub.$emit('setCardsLoading', true)
     const asset = await this.service.getAsset(id)
     this.$store.commit('setActiveAsset', asset)
-    this.loaded = false
+    this.$eventHub.$emit('setCardsLoading')
   }
 
   async forvo(asset: Asset) {
@@ -34,7 +35,9 @@ export default class AssetComponent extends Vue {
     }
   }
 
-  get activeAssetId() {
-    return this.$store.getters.activeAssetId
+  get activeAssetId(): number {
+    const asset: Asset|never = this.$store.getters.getActiveAsset
+    // console.log(asset)
+    return 0
   }
 }

@@ -2,6 +2,7 @@ import { Inject, Service } from 'typedi'
 import { Puzzle } from '@/Scandinaver/Puzzle/Domain/Puzzle'
 import PuzzleRepository from '@/Scandinaver/Puzzle/Infrastructure/puzzle.repository'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 @Service()
 export default class PuzzleService extends BaseService<Puzzle> {
@@ -21,8 +22,8 @@ export default class PuzzleService extends BaseService<Puzzle> {
   }
 
   async getPuzzles() {
-    const puzzles = await this.repository.all()
-    return puzzles.map(puzzle => puzzle.setActive(false))
+    const language = store.getters.language
+    return await this.repository.allByLanguage(language)
   }
 
   async destroy(puzzle: Puzzle) {

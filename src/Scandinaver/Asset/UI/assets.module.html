@@ -1,13 +1,19 @@
 <div class="columns">
   <div class="column is-4 asset-column">
     <div class="box">
+      <b-loading :is-full-page="false" :active="assetsLoading" :can-cancel="true"></b-loading>
       <b-tabs>
         <b-tab-item :label="$t('words')">
           <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">
             {{$t('add')}}
           </button>
           <ul>
-            <AssetComponent v-for="word in words" :item="word" @edit="assetEdit" @remove="removeAsset">
+            <AssetComponent
+                    v-for="(word, index) in words"
+                    :item="word"
+                    :key="index"
+                    @edit="assetEdit"
+                    @remove="removeAsset">
             </AssetComponent>
           </ul>
         </b-tab-item>
@@ -17,8 +23,9 @@
           </button>
           <ul>
             <AssetComponent
-              v-for="sentence in sentences"
+              v-for="(sentence, index) in sentences"
               :item="sentence"
+              :key="index"
               @edit="assetEdit"
               @remove="removeAsset"
             ></AssetComponent>
@@ -29,7 +36,13 @@
   </div>
   <div class="column is-4 cards-column">
     <div class="box">
-      <card v-for="(card, index) in cards" :card="card" :index="index" :key="card.id" @remove="removeCard"> </card>
+      <b-loading :is-full-page="false" :active="cardsLoading" :can-cancel="true"></b-loading>
+      <CardComponent
+              v-for="(card, index) in cards"
+              :card="card"
+              :index="index"
+              :key="card.id"
+              @remove="removeCard"> </CardComponent>
     </div>
   </div>
   <div class="column is-4 translate-column">
@@ -43,9 +56,10 @@
       </div>
       <div class="block">
         <translate
-          v-for="(item, index) in translates"
-          :item="item"
+          v-for="(card, index) in translates"
+          :card="card"
           :index="index"
+          :key="card.getId()"
           @increment="increment"
           @remove="removeTranslate"
         ></translate>

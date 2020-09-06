@@ -32,8 +32,8 @@ export namespace API {
       return request.get(`/text/${id}`)
     }
 
-    getTexts(): Promise<AxiosResponse> {
-      return request.get('/texts')
+    getTexts(language: string): Promise<AxiosResponse<Translate[]>> {
+      return request.get(`/${language}/texts`)
     }
 
     saveExtra(data: any): Promise<AxiosResponse> {

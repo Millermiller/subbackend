@@ -34,11 +34,15 @@ export default class PuzzlesModule extends Vue {
     this.closeSettingsModal()
   }
 
-  async remove(row: Puzzle) {
+  async remove(puzzle: Puzzle) {
     if (confirm('удалить?')) {
-      await this.service.destroy(row)
+      await this.service.destroy(puzzle)
       await this.load()
     }
+  }
+
+  edit(puzzle: Puzzle) {
+    // TODO: implement
   }
 
   showSettingsModal() {

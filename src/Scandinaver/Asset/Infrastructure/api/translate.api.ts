@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
+import { Card } from '@/Scandinaver/Asset/Domain/Card'
 
 export namespace API{
   export class TranslateApi {
@@ -8,12 +9,12 @@ export namespace API{
       return request.delete(`/translate/${id}`)
     }
 
-    search(query: string, sentence: boolean): Promise<AxiosResponse> {
+    search(query: string, sentence: boolean): Promise<AxiosResponse<Card[]>> {
       return request.get('/translate', { params: { query, sentence } })
     }
 
-    sentences(): Promise<AxiosResponse> {
-      return request.get('/sentences')
+    sentences(language: string): Promise<AxiosResponse<Card[]>> {
+      return request.get(`/${language}/cards/sentence`)
     }
   }
 }

@@ -12,25 +12,30 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 
 @Service()
 export default class CardService extends BaseService<Card> {
+
   @Inject()
   private cardRepository: CardRepository
 
-  create(input: any): Promise<Card> {
-    const card = new Card()
-
-    card.word = new Word(input.word)
-    card.translate = new Translate(input.translate)
-    card.sentence = input.issentence
-    card.asset = new Asset()
-    card.asset.id = input.assetId
-
-    const response = this.cardRepository.save(card)
-    store.commit('addCard', response)
-    return response
-  }
-
   @Inject()
   private favouriteRepository: FavouriteRepository
+
+  create(input: any): Promise<Card> {
+    throw new Error('Method not implemented.')
+  }
+
+  public async addCardToAsset(card: Card): Promise<Card> {
+    const language = store.getters.language
+    await this.cardRepository.add(language, card)
+    store.commit('addCard', card)
+    return card
+  }
+
+  public async removeFromAsset(card: Card, asset: Asset): Promise<Card> {
+    const language = store.getters.language
+    await this.cardRepository.removeFromAsset(language, card, asset)
+    await store.commit('removeCard', card)
+    return card
+  }
 
   public async createCard(card: Card): Promise<Card> {
     return this.cardRepository.save(card)

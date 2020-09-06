@@ -7,6 +7,7 @@ import { TranslateForm } from '@/Scandinaver/Translate/UI/translates.module'
 import { Word } from '@/Scandinaver/Asset/Domain/Word'
 import SynonymRepository from '@/Scandinaver/Translate/Infrastructure/synonym.repository'
 import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 @Service()
 export default class TextService extends BaseService<Translate>{
@@ -25,7 +26,8 @@ export default class TextService extends BaseService<Translate>{
   }
 
   public async all(): Promise<Translate[]> {
-    return this.textRepository.all();
+    const language = store.getters.language
+    return this.textRepository.allByLanguage(language);
   }
 
   public async getText(id: number) {

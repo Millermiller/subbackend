@@ -65,7 +65,11 @@
         <h4 class="title">Log</h4>
         <div class="content">
           <ul>
-            <LogComponent v-for="item in log" :item="item" v-on:deleteLog="deleteLog"></LogComponent>
+            <LogComponent
+                    v-for="(item, index) in log"
+                    :item="item"
+                    :key="index"
+                    v-on:deleteLog="deleteLog"></LogComponent>
           </ul>
         </div>
       </article>

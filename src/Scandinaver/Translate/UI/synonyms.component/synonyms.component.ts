@@ -21,7 +21,7 @@ export default class SynonymsComponent extends Vue {
   private word: Word
 
   setActive(word: Word) {
-    this.activePlaceholder = word.word
+    this.activePlaceholder = word.getValue()
     this.load(word)
     this.newSynonym = ''
   }

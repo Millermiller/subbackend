@@ -1,17 +1,19 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import AssetComponent from './asset.component/index.vue'
-import Card from './card.component/index.vue'
+import CardComponent from './card.component/index.vue'
 import Translate from './translate.component/index.vue'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { Inject } from 'vue-typedi'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
-import { AssetType } from '@/Scandinaver/Asset/Domain/Enum/AssetType'
+import { Card } from '@/Scandinaver/Asset/Domain/Card'
+import * as events from '@/events/events.type'
+import CardService from '@/Scandinaver/Asset/Application/card.service'
 
 @Component({
   components: {
     AssetComponent,
-    Card,
+    CardComponent,
     Translate,
   },
 })
@@ -20,10 +22,15 @@ export default class AssetsModule extends Vue {
   @Inject()
   private service: AssetService
 
+  @Inject()
+  private cardService: CardService
+
   private words: Asset[] = []
   private sentences: Asset[] = []
   private text: string = ''
 
+  private cardsLoading: boolean = false
+  private assetsLoading: boolean = false
   private sentence: number = 0
   private searchloaded: boolean = false
   private sentencesloaded: boolean = false
@@ -35,14 +42,25 @@ export default class AssetsModule extends Vue {
     level: '',
     title: '',
   }
-  private translates: any[] = []
+  translates: Card[] = []
 
   mounted() {
     this.load()
   }
 
+  created() {
+    this.$eventHub.$on(events.ADD_CART_TO_ASSET, this.add)
+    this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
+    this.$eventHub.$on('setCardsLoading', this.changeCardsLoading)
+    this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
+  }
+
   get cards() {
     return this.$store.getters.cards
+  }
+
+  changeCardsLoading(state: boolean) {
+    this.cardsLoading = state
   }
 
   assetEdit(item: Asset): void {
@@ -51,19 +69,26 @@ export default class AssetsModule extends Vue {
   }
 
   async load() {
+    this.assetsLoading = true
     const assets = await this.service.getAll()
-    this.words = assets.filter((item) => item.type === AssetType.WORDS)
-    this.sentences = assets.filter((item) => item.type === AssetType.SENTENCES)
+    this.words = assets.words
+    this.sentences = assets.sentences
+    this.assetsLoading = false
   }
 
-  removeCard(data: any): void {
-    this.$store.dispatch('removeCard', data)
-    this.decrement()
+  async removeCard(data: any) {
+    this.cardsLoading = true
+    await this.cardService.removeFromAsset(data.card, data.asset)
+    this.cardsLoading = false
+    this.$buefy.snackbar.open('карточка удалена')
   }
 
-  async removeAsset(item: any) {
-    await this.service.destroyAsset(item)
+  async removeAsset(asset: Asset) {
+    this.assetsLoading = true
+    await this.service.destroyAsset(asset)
     await this.load()
+    this.assetsLoading = false
+    this.$buefy.snackbar.open('словарь удален')
   }
 
   async addAsset(type: any) {
@@ -114,5 +139,20 @@ export default class AssetsModule extends Vue {
 
   close() {
     this.isComponentModalActive = false
+  }
+
+  async add(card: Card) {
+    const asset = this.$store.getters.activeAssets
+
+    if (!asset) {
+      this.$buefy.snackbar.open('не выбран словарь')
+    }
+    if (asset) {
+      this.assetsLoading = true
+      card.asset = asset
+      await this.cardService.addCardToAsset(card)
+      this.assetsLoading = false
+      this.$buefy.snackbar.open('карточка добалена')
+    }
   }
 }

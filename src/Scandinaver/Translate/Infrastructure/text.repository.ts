@@ -15,6 +15,10 @@ export default class TextRepository extends BaseRepository<Translate> {
     throw new Error('method not implemented')
   }
 
+  async allByLanguage(language: string): Promise<Translate[]> {
+    return this.api.getTexts(language).then(response => plainToClass(Translate, response.data))
+  }
+
   async one(id: number): Promise<Translate> {
     return this.api.getText(id).then(response => plainToClass(Translate, response.data))
   }

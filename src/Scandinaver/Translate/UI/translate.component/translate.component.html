@@ -14,6 +14,7 @@
                 v-for="(word, index) in sentence"
                 :word="word"
                 :index="index"
+                :key="index"
                 @remove="removeWord"
                 @add="addWord"
               ></ItemComponent>

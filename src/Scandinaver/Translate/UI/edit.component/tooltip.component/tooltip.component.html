@@ -14,6 +14,7 @@
           v-for="(extra, index) in extras"
           :item="extra"
           :index="index"
+          :key="index"
           v-on:show="showExtra"
           v-on:clear="clearExtra"
           v-on:remove="removeExtra"

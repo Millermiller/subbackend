@@ -8,28 +8,25 @@ import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 export class Card extends Entity {
   id!: number
   asset_id!: number
-  word: Word
   sentence: boolean
-
-  @Type(() => Translate)
-  translate!: Translate
-
   nocontrols?: boolean
-  audio: string
-
-  @Type(() => User)
-  user: User
-
   favourite?: boolean
   asset: Asset
   exist: boolean
+
+  @Type(() => Word)
+  word: Word
+  @Type(() => Translate)
+  translate!: Translate
+  @Type(() => User)
+  user: User
 
   getId(): number | string {
     return this.id
   }
 
   get subject(): string {
-    return this.word.word
+    return this.word.getValue()
   }
 
   get value(): string {

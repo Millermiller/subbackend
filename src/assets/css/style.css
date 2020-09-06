@@ -476,3 +476,6 @@ table td {
 .ml-10 {
     margin-left: 10px;
 }
+.loading-overlay.is-active {
+    z-index: 1;
+}

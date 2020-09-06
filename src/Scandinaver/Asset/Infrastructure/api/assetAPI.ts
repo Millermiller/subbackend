@@ -7,20 +7,20 @@ import { Responses } from '../../../Core/Domain/Contract/Responses'
 export namespace API {
   @Service()
   export class AssetApi {
-    getAsset(id: number): Promise<AxiosResponse<Responses.GetAssetResponse>> {
-      return request.get(`/asset/${id}`)
+    getAsset(language: string, id: number): Promise<AxiosResponse<Responses.GetAssetResponse>> {
+      return request.get(`/${language}/asset/${id}`)
     }
 
-    getAssets(): Promise<AxiosResponse<Asset[]>> {
-      return request.get('/assets')
+    getAssets(language: string): Promise<AxiosResponse<Responses.GetAssetsResponse>> {
+      return request.get(`/${language}/assets`)
     }
 
     updateAsset(asset: Asset, title: string): Promise<AxiosResponse> {
       return request.put(`/asset/${asset.id}`, { title })
     }
 
-    destroyAsset(asset: Asset): Promise<AxiosResponse> {
-      return request.delete(`/asset/${asset.id}`)
+    destroyAsset(language: string, asset: Asset): Promise<AxiosResponse> {
+      return request.delete(`/${language}/asset/${asset.id}`)
     }
 
     addAsset(type: any): Promise<AxiosResponse> {

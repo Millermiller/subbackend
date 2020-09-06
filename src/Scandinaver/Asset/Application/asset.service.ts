@@ -7,6 +7,7 @@ import ForvoAPI = API.ForvoAPI
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import TranslateRepository from '@/Scandinaver/Asset/Infrastructure/translate.repository'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
+import { Card } from '@/Scandinaver/Asset/Domain/Card'
 
 @Service()
 export default class AssetService extends BaseService<Asset>{
@@ -31,12 +32,14 @@ export default class AssetService extends BaseService<Asset>{
     store.commit('setActiveAsset', data)
   }
 
-  public async getAll(): Promise<Asset[]> {
-    return this.repository.all()
+  public async getAll(): Promise<any> {
+    const language = store.getters.language
+    return this.repository.allByLanguage(language)
   }
 
   public async getAsset(assetId: number): Promise<Asset> {
-    return await this.repository.one(assetId)
+    const language = store.getters.language
+    return await this.repository.oneByLanguage(language, assetId)
   }
 
   public async updateAsset(asset: Asset, data: any) {
@@ -45,7 +48,8 @@ export default class AssetService extends BaseService<Asset>{
   }
 
   public async destroyAsset(asset: Asset) {
-    await this.repository.delete(asset)
+    const language = store.getters.language
+    await this.repository.destroy(language, asset)
   }
 
   public async forvoAction(asset: Asset): Promise<{count: number, all: number}> {
@@ -61,11 +65,12 @@ export default class AssetService extends BaseService<Asset>{
     return this.translateRepository.delete(data)
   }
 
-  async searchWords(query: string, sentence: boolean): Promise<Translate[]> {
+  async searchWords(query: string, sentence: boolean): Promise<Card[]> {
     return this.translateRepository.find(query, sentence)
   }
 
-  async getSentences(): Promise<Translate[]> {
-    return this.translateRepository.getSentences()
+  async getSentences(): Promise<Card[]> {
+    const language = store.getters.language
+    return this.translateRepository.getSentences(language)
   }
 }

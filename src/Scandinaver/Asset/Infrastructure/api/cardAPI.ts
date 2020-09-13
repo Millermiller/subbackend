@@ -13,9 +13,7 @@ export namespace API {
     }
 
     addCardToAsset(language: string, card: Card): Promise<AxiosResponse<Card>> {
-      return request.post(
-        `${language}/card/${card.getId()}/${card.asset.getId()}`,
-      )
+      return request.post(`${language}/card/${card.getId()}/${card.asset.getId()}`)
     }
 
     removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {
@@ -26,11 +24,16 @@ export namespace API {
       return request.delete(`/card/${card.id}`)
     }
 
+    updateCard(id: number|string, data: any): Promise<AxiosResponse> {
+      return request.put(`/card/${id}`, data)
+    }
+
     translate(word: string, sentence: boolean): Promise<AxiosResponse> {
       return request.get('/translate', { params: { word, sentence: +sentence } })
     }
 
-    addAdminCard(data: any): Promise<AxiosResponse> { // TODO: ???
+    addAdminCard(data: any): Promise<AxiosResponse> {
+      // TODO: ???
       return request.post('/card', data)
     }
 

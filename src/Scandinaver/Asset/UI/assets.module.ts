@@ -1,24 +1,25 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import AssetComponent from './asset.component/index.vue'
-import CardComponent from './card.component/index.vue'
-import Translate from './translate.component/index.vue'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { Inject } from 'vue-typedi'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import * as events from '@/events/events.type'
 import CardService from '@/Scandinaver/Asset/Application/card.service'
+import draggable from 'vuedraggable'
+import Translate from './translate.component/index.vue'
+import AssetComponent from './asset.component/index.vue'
+import CardComponent from './card.component/index.vue'
 
 @Component({
   components: {
     AssetComponent,
     CardComponent,
     Translate,
+    draggable,
   },
 })
 export default class AssetsModule extends Vue {
-
   @Inject()
   private service: AssetService
 
@@ -52,11 +53,30 @@ export default class AssetsModule extends Vue {
     this.$eventHub.$on(events.ADD_CART_TO_ASSET, this.add)
     this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
     this.$eventHub.$on('setCardsLoading', this.changeCardsLoading)
-    this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
   }
 
   get cards() {
     return this.$store.getters.cards
+  }
+
+  async updateAssetOrder(el: any) {
+    const asset: Asset = el.moved.element
+    const level = el.moved.newIndex + 1
+
+    this.words.forEach((word, index) => {
+      word.level = index + 1
+    })
+
+    this.sentences.forEach((sentence, index) => {
+      sentence.level = index + 1
+    })
+
+    asset.level = level
+    await this.service.updateAsset(asset, asset)
+  }
+
+  updateCardOrder(el: any) {
+    // TODO: implement
   }
 
   changeCardsLoading(state: boolean) {
@@ -100,6 +120,7 @@ export default class AssetsModule extends Vue {
     await this.service.updateTitle(this.editedAsset, this.editedAsset.title)
     this.$buefy.snackbar.open(this.$tc('updated'))
     await this.load()
+    this.isComponentModalActive = false
   }
 
   async search() {

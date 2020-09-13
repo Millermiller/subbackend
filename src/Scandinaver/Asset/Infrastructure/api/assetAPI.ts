@@ -15,8 +15,12 @@ export namespace API {
       return request.get(`/${language}/assets`)
     }
 
-    updateAsset(asset: Asset, title: string): Promise<AxiosResponse> {
-      return request.put(`/asset/${asset.id}`, { title })
+    updateAsset(asset: Asset, data: any): Promise<AxiosResponse> {
+      return request.put(`/asset/${asset.getId()}`, data)
+    }
+
+    save(asset: Asset): Promise<AxiosResponse> {
+      return request.put(`/asset/${asset.getId()}`, asset)
     }
 
     destroyAsset(language: string, asset: Asset): Promise<AxiosResponse> {

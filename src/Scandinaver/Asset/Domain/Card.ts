@@ -4,12 +4,11 @@ import { User } from '@/Scandinaver/Core/Domain/User'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { Type } from 'class-transformer'
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
+import Example from '@/Scandinaver/Asset/Domain/Example'
 
 export class Card extends Entity {
   id!: number
-  asset_id!: number
   sentence: boolean
-  nocontrols?: boolean
   favourite?: boolean
   asset: Asset
   exist: boolean
@@ -20,6 +19,8 @@ export class Card extends Entity {
   translate!: Translate
   @Type(() => User)
   user: User
+  @Type(() => Example)
+  examples: Example[]
 
   getId(): number | string {
     return this.id

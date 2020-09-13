@@ -7,5 +7,6 @@
     <b-button size="is-small" icon-right="eye-outline" @click="load(item.id)"></b-button>
     <b-button size="is-small" :loading="loaded" @click="forvo(item)">Forvo</b-button>
     <b-button class="is-danger" size="is-small" icon-right="close-circle" @click="$emit('remove', item)"></b-button>
+    <b-button class="handle" size="is-small" icon-right="cursor-move"></b-button>
   </p>
 </li>

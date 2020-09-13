@@ -1,63 +1,79 @@
 <b-modal :active.sync="visible" @close="close" :width="960" class="w960">
-  <div class="box">
-    <div class="header">{{ card.id }} - {{ card.word.word }}</div>
-    <div class="translate-section">
-      <p class="control">
-        <input class="input" type="text" placeholder="text" v-model="text" style="width: 490px;" />
-      </p>
-      <hr />
-      <div class="variants">
-        <h2 class="subtitle is-5">{{ $t('variants') }}</h2>
-        <ul>
-          <li
-            v-for="word in values"
-            :key="word.id"
-            @click="setActive(word)"
-            :class="['variant', {'is-success': word.active }]"
-          >
-            {{ word.value }}
-          </li>
-        </ul>
+  <section class="box">
+    <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
+    <div class="header">
+      <b-field grouped group-multiline>
+        <div class="control">
+          <b-taglist attached>
+            <b-tag type="is-dark">Card</b-tag>
+            <b-tag type="is-info">{{ editedCard.id }}</b-tag>
+          </b-taglist>
+        </div>
+        <div class="control">
+          <b-taglist attached>
+            <b-tag type="is-dark">Word</b-tag>
+            <b-tag type="is-info">{{ editedCard.word.id }}</b-tag>
+          </b-taglist>
+        </div>
+        <div class="control">
+          <b-taglist attached>
+            <b-tag type="is-dark">Translate</b-tag>
+            <b-tag type="is-info">{{ editedCard.translate.id }}</b-tag>
+          </b-taglist>
+        </div>
+      </b-field>
+    </div>
+    <div class="columns">
+      <div class="column is-5">
+        <b-field label="Word">
+          <b-input type="textarea"
+                   placeholder="text"
+                   v-model="editedCard.word.value"
+                   style="width: 300px;height: 100px;" />
+        </b-field>
+      </div>
+      <div class="column is-5">
+        <b-field label="Translate">
+          <b-input type="textarea"
+                   placeholder="text"
+                   v-model="editedCard.translate.value"
+                   style="width: 300px;" />
+        </b-field>
       </div>
     </div>
-    <hr />
     <div class="example-section">
       <h2 class="subtitle is-5">
         Примеры:
-        <button class="colorbutton red" @click="color('#e13c4c')"></button>
-        #e13c4c
-        <button class="colorbutton green" @click="color('#4c7737')"></button>
-        #4c7737
-        <button class="colorbutton blue" @click="color('#3f4bb8')"></button>
-        #3f4bb8
         <span @click="addExample" class="button is-success pull-right">{{ $t('add') }}</span>
       </h2>
       <div>
-        <example
-          v-for="(item, index) in examples"
+        <ModalExampleComponent
+          v-for="(item, index) in editedCard.examples"
           :item="item"
           :index="index"
           :key="item.id"
           v-on:remove="removeExample"
         >
-        </example>
+        </ModalExampleComponent>
       </div>
     </div>
-    <hr />
+    <!--
     <div class="audio-section">
-      <audio ref="audio" :src="card.word.audio" preload="auto"></audio>
+      <audio ref="audio" :src="editedCard.word.audio" preload="auto"></audio>
       <a :class="['button', 'is-small']" @click="play">
         <span class="icon">
           <i class="fa fa-volume-up"></i>
         </span>
       </a>
-
       <form enctype="multipart/form-data" action="" method="post" name="addAudio" ref="audioform">
         <input type="file" name="audiofile" @change="bindFile" />
         <a class="button is-success" @click="updateAudio">{{ $t('uploadAudio') }}</a>
-        <a class="button is-success" @click="updateTranslate">{{ $t('save') }}</a>
-        <a class="button is-warning" @click="close">{{ $t('cancel') }}</a>
       </form>
     </div>
-  </div>
+    -->
+    <div class="actions mt-10">
+      <a class="button is-success" @click="save">{{ $t('save') }}</a>
+      <a class="button is-warning" @click="close">{{ $t('cancel') }}</a>
+    </div>
+  </section>
 </b-modal>

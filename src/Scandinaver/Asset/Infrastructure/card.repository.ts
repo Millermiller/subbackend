@@ -4,8 +4,8 @@ import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import IDictionaryForm from '@/Scandinaver/Core/Domain/Contract/IDictionaryForm'
 import { plainToClass } from 'class-transformer'
 import { BaseRepository } from '@/Scandinaver/Core/Infrastructure/base.repository'
-import CardApi = API.CardApi
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
+import CardApi = API.CardApi
 
 @Service()
 export default class CardRepository extends BaseRepository<Card> {
@@ -41,12 +41,14 @@ export default class CardRepository extends BaseRepository<Card> {
   }
 
   public async add(language: string, card: Card): Promise<Card> {
-    return this.api
-      .addCardToAsset(language, card)
-      .then(response => plainToClass(Card, response.data))
+    return this.api.addCardToAsset(language, card).then(response => plainToClass(Card, response.data))
   }
 
   async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
     return this.api.removeCard(language, card, asset).then(response => response)
+  }
+
+  public async update(id: number|string, card: Card) {
+    return this.api.updateCard(id, card).then(response => response)
   }
 }

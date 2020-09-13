@@ -3,15 +3,14 @@ import { Inject, Service } from 'typedi'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { API } from '@/Scandinaver/Asset/Infrastructure/api/forvoAPI'
-import ForvoAPI = API.ForvoAPI
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import TranslateRepository from '@/Scandinaver/Asset/Infrastructure/translate.repository'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
+import ForvoAPI = API.ForvoAPI
 
 @Service()
-export default class AssetService extends BaseService<Asset>{
-
+export default class AssetService extends BaseService<Asset> {
   @Inject()
   private repository: AssetRepository
 
@@ -33,13 +32,14 @@ export default class AssetService extends BaseService<Asset>{
   }
 
   public async getAll(): Promise<any> {
-    const language = store.getters.language
+    const { language } = store.getters
     return this.repository.allByLanguage(language)
   }
 
-  public async getAsset(assetId: number): Promise<Asset> {
-    const language = store.getters.language
-    return await this.repository.oneByLanguage(language, assetId)
+  public async getAsset(assetId: number): Promise<any> {
+    const { language } = store.getters
+    const asset = await this.repository.oneByLanguage(language, assetId)
+    store.commit('setActiveAsset', asset)
   }
 
   public async updateAsset(asset: Asset, data: any) {
@@ -48,11 +48,11 @@ export default class AssetService extends BaseService<Asset>{
   }
 
   public async destroyAsset(asset: Asset) {
-    const language = store.getters.language
+    const { language } = store.getters
     await this.repository.destroy(language, asset)
   }
 
-  public async forvoAction(asset: Asset): Promise<{count: number, all: number}> {
+  public async forvoAction(asset: Asset): Promise<{ count: number; all: number }> {
     return this.forvoApi.getAudio(asset.id).then(response => response.data)
   }
 
@@ -70,7 +70,7 @@ export default class AssetService extends BaseService<Asset>{
   }
 
   async getSentences(): Promise<Card[]> {
-    const language = store.getters.language
+    const { language } = store.getters
     return this.translateRepository.getSentences(language)
   }
 }

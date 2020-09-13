@@ -44,7 +44,7 @@ export default class AssetRepository extends BaseRepository<Asset> {
     return this.api.destroyAsset(language, asset).then(response => response)
   }
 
-  public async save(entity: Asset): Promise<Asset> {
-    return Promise.resolve(new Asset())
+  public async save(asset: Asset): Promise<any> {
+    return this.api.save(asset).then(response => response)
   }
 }

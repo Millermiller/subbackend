@@ -8,7 +8,6 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
   components: {},
 })
 export default class AssetComponent extends Vue {
-
   @Inject()
   private service: AssetService
 
@@ -18,25 +17,27 @@ export default class AssetComponent extends Vue {
 
   async load(id: number) {
     this.$eventHub.$emit('setCardsLoading', true)
-    const asset = await this.service.getAsset(id)
-    this.$store.commit('setActiveAsset', asset)
+    await this.service.getAsset(id)
     this.$eventHub.$emit('setCardsLoading')
   }
 
   async forvo(asset: Asset) {
+    // eslint-disable-next-line no-restricted-globals
     if (confirm(this.$tc('forvoConfirm'))) {
       this.loaded = true
       const result = await this.service.forvoAction(asset)
       this.loaded = false
-      this.$buefy.snackbar.open(this.$t('forvoComplete', {
-        count: result.count,
-        all: result.all
-      }).toString())
+      this.$buefy.snackbar.open(
+        this.$t('forvoComplete', {
+          count: result.count,
+          all: result.all,
+        }).toString(),
+      )
     }
   }
 
   get activeAssetId(): number {
-    const asset: Asset|never = this.$store.getters.getActiveAsset
+    const asset: Asset | never = this.$store.getters.getActiveAsset
     // console.log(asset)
     return 0
   }

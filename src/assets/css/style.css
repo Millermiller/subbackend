@@ -447,26 +447,7 @@ table td {
 .app-main{
     height: 100vh;
 }
-.colorbutton{
-    height: 30px;
-    width: 30px;
-    display: inline-block;
-    cursor: pointer;
-    outline: none;
-    border: none;
-}
-.colorbutton.red{
-    background-color: #e13c4c;
-    border-color: #e13c4c;
-}
-.colorbutton.green{
-    background-color: #4c7737;
-    border-color: #4c7737;
-}
-.colorbutton.blue{
-    background-color: #3f4bb8;
-    border-color: #3f4bb8;
-}
+
 .w960 .modal-content{
     width: 960px;
 }
@@ -476,6 +457,12 @@ table td {
 .ml-10 {
     margin-left: 10px;
 }
+.mt-10 {
+    margin-top: 10px;
+}
 .loading-overlay.is-active {
     z-index: 1;
+}
+textarea.textarea {
+    min-height: 70px !important;
 }

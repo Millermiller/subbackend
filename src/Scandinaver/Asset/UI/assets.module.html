@@ -8,13 +8,21 @@
             {{$t('add')}}
           </button>
           <ul>
-            <AssetComponent
-                    v-for="(word, index) in words"
-                    :item="word"
-                    :key="index"
-                    @edit="assetEdit"
-                    @remove="removeAsset">
-            </AssetComponent>
+            <draggable
+                    group="1"
+                    :list="words"
+                    @start="drag=true"
+                    @end="drag=false"
+                    @change="updateAssetOrder"
+                    handle=".handle">
+              <AssetComponent
+                      v-for="(word, index) in words"
+                      :item="word"
+                      :key="index"
+                      @edit="assetEdit"
+                      @remove="removeAsset">
+              </AssetComponent>
+            </draggable>
           </ul>
         </b-tab-item>
         <b-tab-item :label="$t('sentences')">
@@ -22,13 +30,21 @@
             {{$t('add')}}
           </button>
           <ul>
-            <AssetComponent
-              v-for="(sentence, index) in sentences"
-              :item="sentence"
-              :key="index"
-              @edit="assetEdit"
-              @remove="removeAsset"
-            ></AssetComponent>
+            <draggable
+                    group="1"
+                    :list="sentences"
+                    @start="drag=true"
+                    @end="drag=false"
+                    @change="updateAssetOrder"
+                    handle=".handle">
+              <AssetComponent
+                v-for="(sentence, index) in sentences"
+                :item="sentence"
+                :key="index"
+                @edit="assetEdit"
+                @remove="removeAsset">
+              </AssetComponent>
+            </draggable>
           </ul>
         </b-tab-item>
       </b-tabs>
@@ -37,12 +53,21 @@
   <div class="column is-4 cards-column">
     <div class="box">
       <b-loading :is-full-page="false" :active="cardsLoading" :can-cancel="true"></b-loading>
-      <CardComponent
-              v-for="(card, index) in cards"
-              :card="card"
-              :index="index"
-              :key="card.id"
-              @remove="removeCard"> </CardComponent>
+      <draggable
+              group="1"
+              :list="cards"
+              @start="drag=true"
+              @end="drag=false"
+              @change="updateCardOrder"
+              handle=".handle">
+        <CardComponent
+                v-for="(card, index) in cards"
+                :card="card"
+                :index="index"
+                :key="card.id"
+                @remove="removeCard">
+        </CardComponent>
+      </draggable>
     </div>
   </div>
   <div class="column is-4 translate-column">

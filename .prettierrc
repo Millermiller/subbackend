@@ -3,7 +3,8 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
-  "arrowParens": "always",
+  "arrowParens": "avoid",
   "printWidth": 120,
-  "proseWrap": "always"
+  "proseWrap": "never",
+  "jsxBracketSameLine": true
 }

@@ -20,7 +20,7 @@ export class Card extends Entity {
   @Type(() => User)
   user: User
   @Type(() => Example)
-  examples: Example[]
+  examples: Example[] = []
 
   getId(): number | string {
     return this.id

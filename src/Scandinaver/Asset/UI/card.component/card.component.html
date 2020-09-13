@@ -18,6 +18,7 @@
       icon-right="close-circle"
       @click="removeCard"
     ></b-button>
+    <span class="danger ml-10" v-if="card.examples.length === 0">examples</span>
   </div>
   <modal :visible="settingsModal" :card="card" :index="index" @close="closeSettingsModal"></modal>
 </div>

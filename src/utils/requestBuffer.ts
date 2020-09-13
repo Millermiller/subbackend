@@ -1,21 +1,21 @@
 import axios from 'axios'
 import Vue from 'vue'
-import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { SnackbarProgrammatic as Snackbar } from 'buefy'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
-const service = axios.create({
+const requestBuffer = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000,
-  // withCredentials: true // send cookies when cross-domain requests
 })
 
 // Request interceptors
-service.interceptors.request.use(
+requestBuffer.interceptors.request.use(
   (config) => {
     const { language } = store.getters
     if (language !== null) {
-      // config.baseURL += `/${language}`
+      config.baseURL += `/${language}`
     }
+    config.responseType = 'arraybuffer'
     config.headers.common.Authorization = Vue.$cookies.get('authfrontend._token.local')
     return config
   },
@@ -24,11 +24,11 @@ service.interceptors.request.use(
   },
 )
 
-service.interceptors.response.use(undefined, (error) => {
+requestBuffer.interceptors.response.use(undefined, (error) => {
   if (error.response) {
-    Snackbar.open(error.response.data)
+    Snackbar.open('Ошибка')
   }
   return Promise.reject(error.response.data)
 })
 
-export default service
+export default requestBuffer

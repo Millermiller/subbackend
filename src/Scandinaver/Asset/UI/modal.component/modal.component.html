@@ -9,13 +9,13 @@
             <b-tag type="is-info">{{ editedCard.id }}</b-tag>
           </b-taglist>
         </div>
-        <div class="control">
+        <div class="control" v-if="editedCard.word">
           <b-taglist attached>
             <b-tag type="is-dark">Word</b-tag>
             <b-tag type="is-info">{{ editedCard.word.id }}</b-tag>
           </b-taglist>
         </div>
-        <div class="control">
+        <div class="control" v-if="editedCard.translate">
           <b-taglist attached>
             <b-tag type="is-dark">Translate</b-tag>
             <b-tag type="is-info">{{ editedCard.translate.id }}</b-tag>
@@ -24,7 +24,7 @@
       </b-field>
     </div>
     <div class="columns">
-      <div class="column is-5">
+      <div class="column is-5" v-if="editedCard.word">
         <b-field label="Word">
           <b-input type="textarea"
                    placeholder="text"
@@ -32,7 +32,7 @@
                    style="width: 300px;height: 100px;" />
         </b-field>
       </div>
-      <div class="column is-5">
+      <div class="column is-5" v-if="editedCard.translate">
         <b-field label="Translate">
           <b-input type="textarea"
                    placeholder="text"

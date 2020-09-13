@@ -12,8 +12,8 @@ export namespace API {
       return request.post(`/card/${card.word.id}/${card.translate.id}/${card.asset.id}`)
     }
 
-    addCardToAsset(language: string, card: Card): Promise<AxiosResponse<Card>> {
-      return request.post(`${language}/card/${card.getId()}/${card.asset.getId()}`)
+    addCardToAsset(language: string, card: Card, asset: Asset): Promise<AxiosResponse<Card>> {
+      return request.post(`${language}/card/${card.getId()}/${asset.getId()}`)
     }
 
     removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {

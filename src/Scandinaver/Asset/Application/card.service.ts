@@ -26,9 +26,9 @@ export default class CardService extends BaseService<Card> {
     await this.cardRepository.update(id, card)
   }
 
-  public async addCardToAsset(card: Card): Promise<Card> {
+  public async addCardToAsset(card: Card, asset: Asset): Promise<Card> {
     const { language } = store.getters
-    await this.cardRepository.add(language, card)
+    await this.cardRepository.add(language, card, asset)
     store.commit('addCard', card)
     return card
   }

@@ -170,10 +170,14 @@ export default class AssetsModule extends Vue {
     }
     if (asset) {
       this.assetsLoading = true
-      card.asset = asset
-      await this.cardService.addCardToAsset(card)
-      this.assetsLoading = false
-      this.$buefy.snackbar.open('карточка добалена')
+      try {
+        await this.cardService.addCardToAsset(card, asset)
+        this.$buefy.snackbar.open('карточка добавлена')
+      } catch (e) {
+        //
+      } finally {
+        this.assetsLoading = false
+      }
     }
   }
 }

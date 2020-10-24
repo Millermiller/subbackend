@@ -7,7 +7,6 @@ import Comment from '@/Scandinaver/Blog/Domain/Comment'
   components: {},
 })
 export default class CommentsComponent extends Vue {
-
   @Inject()
   private service: CommentService
 
@@ -26,11 +25,14 @@ export default class CommentsComponent extends Vue {
   }
 
   async remove(comment: Comment) {
-    if (confirm('Удалить?')) {
-      await this.service.destroy(comment)
-      this.$snackbar.open(this.$tc('removedComments'))
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Are you sure?',
+      onConfirm: async () => {
+        await this.service.destroy(comment)
+        this.$buefy.snackbar.open(this.$tc('removedComments'))
+        await this.load()
+      },
+    })
   }
 
   async find() {

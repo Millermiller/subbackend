@@ -48,7 +48,6 @@ class CommonGetters extends Getters<State> {
 // Mutations
 // Extend 'Mutations' class with 'FooState' type
 class CommonMutations extends Mutations<State> {
-
   setFullscreenLoading(loading: boolean): void {
     this.state.fullscreenLoading = loading
   }
@@ -120,6 +119,6 @@ export const root = new Module({
     textModule,
     testModule,
     puzzleModule,
-    dashboardModule
+    dashboardModule,
   },
 })

@@ -22,8 +22,8 @@ export default class CardService extends BaseService<Card> {
     throw new Error('Method not implemented.')
   }
 
-  async update(id: number|string, card: Card) {
-    await this.cardRepository.update(id, card)
+  async update(card: Card, data: any) {
+    await this.cardRepository.update(card, data)
   }
 
   public async addCardToAsset(card: Card, asset: Asset): Promise<Card> {
@@ -41,7 +41,7 @@ export default class CardService extends BaseService<Card> {
   }
 
   public async createCard(card: Card): Promise<Card> {
-    return this.cardRepository.save(card)
+    return this.cardRepository.create(card)
     // store.commit(INCREMENT_PERSONAL_COUNTER, card.id)
   }
 
@@ -67,6 +67,6 @@ export default class CardService extends BaseService<Card> {
     card.word = new Word(param.word)
     card.translate = new Translate(param.translate)
     card.sentence = param.issentence
-    return this.cardRepository.save(card)
+    return this.cardRepository.create(card)
   }
 }

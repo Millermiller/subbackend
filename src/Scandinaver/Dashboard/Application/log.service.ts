@@ -5,12 +5,11 @@ import LogRepository from '@/Scandinaver/Dashboard/Infrastructure/log.repository
 
 @Service()
 export default class LogService extends BaseService<Log> {
-
   @Inject()
   private repository: LogRepository
 
   create(input: any): Log {
-    return new Log('message');
+    return new Log()
   }
 
   async getAll(): Promise<Log[]> {

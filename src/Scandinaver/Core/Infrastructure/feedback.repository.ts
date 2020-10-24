@@ -18,8 +18,12 @@ export default class FeedbackRepository extends BaseRepository<IFeedbackForm> {
     throw new Error('method not implemented')
   }
 
-  async save(form: IFeedbackForm): Promise<IFeedbackForm> {
-    return this.api.create(form).then(response => plainToClass(FeedbackForm, response.data))
+  async create(data: any): Promise<IFeedbackForm> {
+    return this.api.create(data).then(response => plainToClass(FeedbackForm, response.data))
+  }
+
+  async update(entity: IFeedbackForm, data: any): Promise<IFeedbackForm> {
+    throw new Error('method not implemented')
   }
 
   async delete(entity: IFeedbackForm): Promise<any> {

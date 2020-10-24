@@ -69,7 +69,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 import { Route, RouteConfig } from 'vue-router'
-import { routes }  from '@/router'
+import { routes } from '@/router'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 @Component({
@@ -80,8 +80,8 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
 })
 export default class Sidebar extends Vue {
   private routes = routes
-  private mainMenu: Array<RouteConfig> = routes.filter((item) => item.meta.menuitem && item.meta.type == 'main')
-  private subMenu: Array<RouteConfig> = routes.filter((item) => item.meta.menuitem && item.meta.type == 'sub')
+  private mainMenu: Array<RouteConfig> = routes.filter(item => item.meta.menuitem && item.meta.type === 'main')
+  private subMenu: Array<RouteConfig> = routes.filter(item => item.meta.menuitem && item.meta.type === 'sub')
   private isReady: boolean = false
   private menu = this.mainMenu.concat(this.subMenu)
 
@@ -126,10 +126,11 @@ export default class Sidebar extends Vue {
         parent = p
       }
     }
-
-    if (parent.meta && 'expanded' in parent.meta && !isParent) {
-      Vue.set(parent, 'expanded', true)
+    const item = this.menu.find(el => el.path === parent.path)
+    if (item) {
+      Vue.set(item, 'expanded', true)
     }
+    this.menu.filter(el => el.path !== parent.path).forEach(el => Vue.set(el, 'expanded', false))
   }
 
   generatePath(item: any, subItem: any): string {
@@ -137,7 +138,7 @@ export default class Sidebar extends Vue {
   }
 
   findParentFromMenu(route: Route): any {
-    const menu = this.menu
+    const { menu } = this
     for (let i = 0, l = menu.length; i < l; i++) {
       const item = menu[i]
       const k = item.children && item.children.length

@@ -7,7 +7,6 @@ import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
 export namespace API {
   @Service()
   export class TextAPI {
-
     saveDescription(id: number, form: any): Promise<AxiosResponse> {
       return request.put(`/text/description/${id}`, form)
     }
@@ -57,7 +56,7 @@ export namespace API {
     }
 
     all(): Promise<AxiosResponse> {
-      return request.get(`/text`)
+      return request.get('/text')
     }
 
     load(id: number): Promise<AxiosResponse> {

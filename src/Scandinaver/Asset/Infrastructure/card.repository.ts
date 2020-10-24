@@ -20,12 +20,16 @@ export default class CardRepository extends BaseRepository<Card> {
     throw new Error('method not implemented')
   }
 
-  public async delete(card: Card): Promise<any> {
-    return this.api.destroyCard(card).then(response => response)
+  async create(card: Card): Promise<Card> {
+    return this.api.createCard(card).then(response => plainToClass(Card, response.data))
   }
 
-  public async save(card: Card): Promise<Card> {
-    return this.api.createCard(card).then(response => plainToClass(Card, response.data))
+  public async update(card: Card, data: any): Promise<any> {
+    return this.api.updateCard(card, data).then(response => response)
+  }
+
+  public async delete(card: Card): Promise<any> {
+    return this.api.destroyCard(card).then(response => response)
   }
 
   public async translate(word: string, sentence: boolean) {
@@ -46,9 +50,5 @@ export default class CardRepository extends BaseRepository<Card> {
 
   async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
     return this.api.removeCard(language, card, asset).then(response => response)
-  }
-
-  public async update(id: number|string, card: Card) {
-    return this.api.updateCard(id, card).then(response => response)
   }
 }

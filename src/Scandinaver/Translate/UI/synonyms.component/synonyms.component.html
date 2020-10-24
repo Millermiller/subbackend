@@ -3,10 +3,10 @@
     <div class="column is-12">
       <b-tabs>
         <template v-for="(sentence, index) in sentences">
-          <b-tab-item :label="index.toString()" :selected="index == 0">
+          <b-tab-item :label="index.toString()" :selected="index === 0">
             <div class="">
               <span
-                :class="['tag', word.id == wordId ? 'is-success' : '']"
+                :class="['tag', word.id === wordId ? 'is-success' : '']"
                 style="cursor: pointer"
                 @click="setActive(word)"
                 v-for="(word, index) in sentence"

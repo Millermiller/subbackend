@@ -1,4 +1,5 @@
 export const messages = {
+  dashboard: 'Дашборд',
   sentences: 'Предложения',
   sentence: 'Предложение',
   words: 'Слова',

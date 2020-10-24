@@ -11,11 +11,11 @@ export namespace API {
     }
 
     loadDashboard(): Promise<AxiosResponse> {
-      return request.get(`/dashboard`)
+      return request.get('/dashboard')
     }
 
     sendMail(): Promise<AxiosResponse> {
-      return request.post(`/send`)
+      return request.post('/send')
     }
   }
 }

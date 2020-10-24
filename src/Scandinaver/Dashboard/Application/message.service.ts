@@ -5,7 +5,6 @@ import MessageRepository from '@/Scandinaver/Dashboard/Infrastructure/message.re
 
 @Service()
 export default class MessageService extends BaseService<Message> {
-
   @Inject()
   private repository: MessageRepository
 
@@ -26,7 +25,6 @@ export default class MessageService extends BaseService<Message> {
   }
 
   async read(message: Message): Promise<Message> {
-    message.readed = true
-    return this.repository.save(message)
+    return this.repository.update(message, { readed: true })
   }
 }

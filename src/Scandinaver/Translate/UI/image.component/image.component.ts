@@ -24,7 +24,7 @@ export default class ImageComponent extends Vue {
       this.fileUploadFormData.append('file', input.files[0])
       const vm = this
 
-      reader.onload = function(e: any) {
+      reader.onload = function (e: any) {
         vm.item.image = e.target.result
       }
 

@@ -32,8 +32,9 @@ export default class TestComponent extends Vue {
 
     this.inputWords.forEach((el: any) => {
       el = el.toLowerCase()
-      if (el !== '' && el in this.dictionary)
+      if (el !== '' && el in this.dictionary) {
         origs = origs.concat(this.dictionary[el].map((item: any) => `${item}|${el}`))
+      }
     })
 
     origs = origs.filter((v, i, a) => a.indexOf(v) === i)
@@ -50,7 +51,7 @@ export default class TestComponent extends Vue {
       c++
     }
 
-    if (this.showedExtra != '') {
+    if (this.showedExtra !== '') {
       this.textdata.computed = this.textdata.computed.replace(
         new RegExp(`(^|\\s|>)(${this.showedExtra.trim()})([^\\w]|$|<)`, 'gi'),
         '$1<span class="extra">$2</span>$3',
@@ -70,7 +71,7 @@ export default class TestComponent extends Vue {
     this.inputWords = this.input
       .replace(/\s+/g, ' ')
       .replace(/\./g, '')
-      .replace(/\,/g, '')
+      .replace(/,/g, '')
       .trim()
       .split(' ')
   }

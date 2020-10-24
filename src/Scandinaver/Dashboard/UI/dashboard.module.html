@@ -16,65 +16,55 @@
         <b-table
           :data="log"
           paginated="paginated"
-          narrowed=""
+          :narrowed=true
           :loading="loading"
           :default-sort-direction="defaultSortDirection"
+          :row-class="(row, index) => row.level"
+          :has-detailed-visible="(row, index) => row.extra.length > 0"
           default-sort="id"
-          per-page="20"
-          ><template slot-scope="props">
-            <b-table-column field="id" label="ID" width="40" sortable="sortable" numeric="numeric">
+          detailed
+          detail-key="id"
+          per-page="10">
+            <b-table-column field="id" label="ID" width="40" sortable="sortable" numeric="numeric" v-slot="props">
               {{ props.row.id }}
             </b-table-column>
-            <b-table-column field="description" label="Title" sortable="sortable">
-              {{ props.row.description }}
+
+            <b-table-column field="description" label="message" sortable="sortable" v-slot="props">
+              {{ props.row.message }}
             </b-table-column>
 
-            <b-table-column field="subject" label="subject" sortable="sortable">
-              {{ (props.row.subject) ? '' : '' }}
+            <b-table-column field="owner" label="user" sortable="sortable"  width="40" v-slot="props">
+              {{ (props.row.owner.login) }}
             </b-table-column>
 
-            <b-table-column field="causer" label="causer" sortable="sortable">
-              {{ (props.row.causer) ? props.row.causer.login : '' }}
-            </b-table-column>
-
-            <b-table-column field="created_at" label="created_at" sortable="sortable" centered="centered">
+            <b-table-column field="created_at" label="created_at" sortable centered v-slot="props">
               <span class="tag light">
                 {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new
                 Date(props.row.created_at).toLocaleTimeString()}}
               </span>
             </b-table-column>
-            <b-table-column custom-key="actions">
-              <button class="button is-success" @click="see(props.row)">
+            <b-table-column custom-key="actions"  width="100" v-slot="props">
+              <button class="button is-success is-small" @click="see(props.row)">
                 <b-icon icon="eye-outline" size="is-small"></b-icon>
               </button>
-              <button class="button is-danger" @click="remove(props.row)">
+              <button class="button is-danger is-small ml-1" @click="remove(props.row)">
                 <b-icon icon="close-circle" size="is-small"></b-icon>
               </button>
             </b-table-column>
-          </template>
+            <template slot="detail" slot-scope="props">
+              <article class="media">
+                <div class="media-content">
+                  <div class="content">
+                    <p v-html="props.row.extra.toString().replace(/\n/g, '<br>')">
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </template>
         </b-table>
       </article>
     </div>
-  </div>
-  <div class="tile is-ancestor">
-    <div class="tile is-parent is-8">
-      <article class="tile is-child box">
-        <div v-if="loading" id="nprogress">
-          <div class="spinner-icon"></div>
-        </div>
-        <h4 class="title">Log</h4>
-        <div class="content">
-          <ul>
-            <LogComponent
-                    v-for="(item, index) in log"
-                    :item="item"
-                    :key="index"
-                    v-on:deleteLog="deleteLog"></LogComponent>
-          </ul>
-        </div>
-      </article>
-    </div>
-    <div class="tile is-parent is-4">
+    <div class="tile is-parent is-12">
       <article class="tile is-child box">
         <div v-if="loading" id="nprogress">
           <div class="spinner-icon"></div>

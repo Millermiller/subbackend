@@ -1,9 +1,9 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Modal from './modal.component/index.vue'
 import { Inject } from 'vue-typedi'
 import TextService from '@/Scandinaver/Translate/Application/text.service'
 import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
+import Modal from './modal.component/index.vue'
 
 export class TranslateForm {
   title: string;
@@ -57,8 +57,7 @@ export default class TranslatesModule extends Vue {
   async setVisibility(item: any) {
     if (item.published) {
       await this.service.unPublishText(item)
-    }
-    else {
+    } else {
       await this.service.publishText(item)
     }
 

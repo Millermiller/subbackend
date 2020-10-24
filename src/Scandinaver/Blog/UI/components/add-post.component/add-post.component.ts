@@ -8,11 +8,10 @@ import Category from '@/Scandinaver/Blog/Domain/Category'
 
 @Component({
   components: {
-    Editor
+    Editor,
   },
 })
 export default class AddPostComponent extends Vue {
-
   @Inject()
   private blogService: BlogService
 
@@ -26,20 +25,18 @@ export default class AddPostComponent extends Vue {
   keywords: ''
   editorConfig = {
     events: {
-      initialized: function() {
+      initialized() {
         console.log('initialized')
-      }
-    }
+      },
+    },
   }
 
   async save() {
     if (this.post.content === '') {
-      this.$snackbar.open(this.$tc('enterText'))
-      return false
+      this.$buefy.snackbar.open(this.$tc('enterText'))
     }
     if (this.post.title === '') {
-      this.$snackbar.open(this.$tc('enterTitle'))
-      return false
+      this.$buefy.snackbar.open(this.$tc('enterTitle'))
     }
     await this.blogService.create(this.post)
     this.$router.go(-1)

@@ -1,7 +1,7 @@
 import { User } from '@/Scandinaver/Core/Domain/User'
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 
-export class Word extends Entity{
+export class Word extends Entity {
   active!: boolean
   id!: number
   value!: string

@@ -93,7 +93,7 @@ export default class ModalComponent extends Vue {
 
   async save() {
     this.loading = true
-    await this.cardService.update(this.editedCard.id, this.editedCard)
+    await this.cardService.update(this.editedCard, this.editedCard)
     const asset = this.$store.getters.activeAssets
     await this.assetService.getAsset(asset.getId())
     this.$emit('close')

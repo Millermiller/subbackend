@@ -66,7 +66,7 @@ export class LoginService {
           (response) => {
             Vue.$user = response.data
             store.commit('setUser', response.data)
-              resolve()
+            resolve()
           },
           () => reject(),
         )

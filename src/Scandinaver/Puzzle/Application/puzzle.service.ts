@@ -9,21 +9,16 @@ export default class PuzzleService extends BaseService<Puzzle> {
   @Inject()
   private repository: PuzzleRepository
 
- // create(puzzle: Puzzle): Puzzle {
- //   puzzle.generate().pieces.shuffle()
- //   return puzzle
- // }
-
   async create(data: any): Promise<Puzzle> {
     const puzzle = new Puzzle()
     puzzle.text = data.text
     puzzle.translate = data.translate
-    return await this.repository.save(puzzle)
+    return this.repository.create(puzzle)
   }
 
   async getPuzzles() {
-    const language = store.getters.language
-    return await this.repository.allByLanguage(language)
+    const { language } = store.getters
+    return this.repository.allByLanguage(language)
   }
 
   async destroy(puzzle: Puzzle) {

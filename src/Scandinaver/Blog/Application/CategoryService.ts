@@ -5,14 +5,13 @@ import CategoryRepository from '@/Scandinaver/Blog/Infrastructure/CategoryReposi
 
 @Service()
 export default class CategoryService extends BaseService<Category> {
-
   @Inject()
   private repository: CategoryRepository
 
   async create(input: any): Promise<Category> {
     const category = new Category();
     category.name = input
-    return await this.repository.save(category)
+    return this.repository.create(category)
   }
 
   async getAll(): Promise<Category[]> {
@@ -28,6 +27,6 @@ export default class CategoryService extends BaseService<Category> {
   }
 
   async update(category: Category): Promise<Category> {
-    return this.repository.save(category)
+    return this.repository.update(category, category)
   }
 }

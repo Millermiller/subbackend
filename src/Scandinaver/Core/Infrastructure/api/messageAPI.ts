@@ -7,7 +7,7 @@ export namespace API {
   @Service()
   export class MessageAPI {
     all(): Promise<AxiosResponse<Message[]>> {
-      return request.get(`/message`)
+      return request.get('/message')
     }
 
     destroy(id: number): Promise<AxiosResponse> {
@@ -18,7 +18,7 @@ export namespace API {
       return request.get(`/message/${id}`)
     }
 
-    save(id: number, form: any): Promise<AxiosResponse> {
+    save(id: number|string, form: any): Promise<AxiosResponse> {
       return request.put(`/message/${id}`, form)
     }
 

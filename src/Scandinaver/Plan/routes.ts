@@ -1,4 +1,4 @@
-import { requireAuth } from '@/router'
+
 import i18n from '@/utils/i18n'
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
       menuitem: true,
       label: i18n.t('tariffs'),
     },
-    component: require('@/Scandinaver/Plan/UI/plan.module.vue').default,
+    component: () => import('@/Scandinaver/Plan/UI/plan.module.vue'),
     children: [
       {
         name: 'list-post',
@@ -18,10 +18,9 @@ const routes = [
         meta: {
           icon: 'format-list-bulleted',
           menuitem: true,
-          label:  i18n.t('list'),
+          label: i18n.t('list'),
         },
-        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
-        component: require('@/Scandinaver/Blog/UI/components/edit-post.component/index.vue').default,
+        component: () => import('@/Scandinaver/Blog/UI/components/edit-post.component/index.vue'),
       },
       {
         name: 'add-tariff',
@@ -31,7 +30,7 @@ const routes = [
           menuitem: true,
           label: i18n.t('addTariff'),
         },
-        component: require('@/Scandinaver/Plan/UI/components/add-plan.component/index.vue').default,
+        component: () => import('@/Scandinaver/Plan/UI/components/add-plan.component/index.vue'),
       },
       {
         name: 'edit-tariff',
@@ -39,9 +38,9 @@ const routes = [
         meta: {
           menuitem: false,
         },
-        component: require('@/Scandinaver/Plan/UI/components/edit-plan.component/index.vue').default,
+        component: () => import('@/Scandinaver/Plan/UI/components/edit-plan.component/index.vue'),
       },
-    ]
+    ],
   },
 ]
 

@@ -37,7 +37,7 @@ export const routes: RouteConfig[] = [
   {
     path: '*',
     redirect: '/is',
-    meta: {menuitem: false},
+    meta: { menuitem: false },
   },
 ]
 
@@ -45,5 +45,5 @@ export const router = new VueRouter({
   mode: 'hash',
   linkActiveClass: 'is-active',
   base: process.env.BASE_URL,
-  routes: routes
+  routes,
 })

@@ -2,28 +2,36 @@ import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 import { Service } from 'typedi'
 import Log from '@/Scandinaver/Dashboard/Domain/Log'
+import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
+import { ClassType } from 'class-transformer/ClassTransformer'
 
 export namespace API {
   @Service()
-  export class LogAPI{
-    all(): Promise<AxiosResponse> {
-      return request.get(`/log`)
+  export class LogAPI extends BaseAPI<Log> {
+    protected type: ClassType<Log> = Log
+
+    all(): Promise<AxiosResponse<Log[]>> {
+      return request.get('/log')
     }
 
-    destroy(id: number): Promise<AxiosResponse> {
-      return request.delete(`/log/${id}`)
+    delete(log: Log): Promise<AxiosResponse> {
+      return request.delete(`/log/${log.getId()}`)
     }
 
-    load(id: number): Promise<AxiosResponse<Log>> {
+    one(id: number): Promise<AxiosResponse<Log>> {
       return request.get(`/log/${id}`)
     }
 
-    save(id: number, form: any): Promise<AxiosResponse<Log>> {
-      return request.put(`/log/${id}`, form)
+    update(log: Log, form: any): Promise<AxiosResponse<Log>> {
+      return request.put(`/log/${log.getId()}`, form)
     }
 
     search(query: string): Promise<AxiosResponse> {
       return request.get(`/log/search?q=${query}`)
+    }
+
+    create(data: any): Promise<AxiosResponse<Log>> {
+      throw new Error('Method not implemented.')
     }
   }
 }

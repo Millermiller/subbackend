@@ -2,7 +2,6 @@ import { Getters } from 'vuex-smart-module'
 import DashboardState from '@/Scandinaver/Dashboard/Infrastructure/store/state'
 
 export default class DashboardGetters extends Getters<DashboardState> {
-
   get wordsCount() {
     return this.state.wordsCount
   }

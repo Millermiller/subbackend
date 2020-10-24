@@ -5,8 +5,8 @@ import request from '@/utils/request'
 export namespace API {
   @Service()
   export class DashboardApi {
-    load(): Promise<AxiosResponse> {
-      return request.get(`/dashboard`)
+    load(language: string): Promise<AxiosResponse> {
+      return request.get(`/${language}/dashboard`)
     }
   }
 }

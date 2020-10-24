@@ -9,7 +9,7 @@ export default class PageService extends BaseService<Page> {
   private repository: PageRepository
 
   async create(page: Page): Promise<Page> {
-    return await this.repository.save(page)
+    return this.repository.create(page)
   }
 
   async getOne(id: number): Promise<Page> {
@@ -29,6 +29,6 @@ export default class PageService extends BaseService<Page> {
   }
 
   async update(page: Page) {
-    return this.repository.save(page)
+    return this.repository.update(page, page)
   }
 }

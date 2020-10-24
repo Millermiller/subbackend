@@ -11,8 +11,8 @@ const routes = [
       type: 'sub',
       language: true,
     },
-    component: require('@/Scandinaver/Puzzle/UI/puzzles.module.vue').default,
-    // component: () => import('@/modules/Puzzles/puzzles.module.vue'),
+    component: () => import('@/Scandinaver/Puzzle/UI/puzzles.module.vue'),
+    beforeEnter: requireAuth,
   },
 ]
 

@@ -31,11 +31,14 @@ export default class ListPageComponent extends Vue {
   }
 
   async remove(row: any) {
-    if (confirm('Удалить?')) {
-      await this.service.destroy(row);
-      this.$snackbar.open('Страница удалена!')
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(row);
+        this.$buefy.snackbar.open('Страница удалена!')
+        await this.load()
+      },
+    })
   }
 
   edit(row: any) {

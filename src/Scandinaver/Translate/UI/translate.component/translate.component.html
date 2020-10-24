@@ -8,7 +8,7 @@
     <div class="column is-12">
       <b-tabs>
         <template v-for="(sentence, index) in sentences">
-          <b-tab-item :label="index.toString()" :selected="index == 0">
+          <b-tab-item :label="index.toString()" :selected="index === 0">
             <div class="columns is-multiline" style="padding-top: 10px;">
               <ItemComponent
                 v-for="(word, index) in sentence"

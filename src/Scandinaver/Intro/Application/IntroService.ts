@@ -5,13 +5,12 @@ import IntroRepository from '@/Scandinaver/Intro/Infrastructure/IntroRepository'
 
 @Service()
 export default class IntroService extends BaseService<Intro> {
-
   @Inject()
   private repository: IntroRepository
 
   create(input: any): Promise<Intro> | Intro {
     const intro = new Intro();
-    return this.repository.save(intro)
+    return this.repository.create(intro)
   }
 
   async getOne(id: number): Promise<Intro> {
@@ -27,6 +26,6 @@ export default class IntroService extends BaseService<Intro> {
   }
 
   async update(intro: Intro): Promise<Intro> {
-    return this.repository.save(intro)
+    return this.repository.update(intro, intro)
   }
 }

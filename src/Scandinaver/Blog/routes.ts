@@ -9,9 +9,9 @@ const routes = [
       icon: 'post-outline',
       menuitem: true,
       type: 'main',
-      label:  i18n.t('posts'),
+      label: i18n.t('posts'),
     },
-    component: require('@/Scandinaver/Blog/UI/blog.module.vue').default,
+    component: () => import('@/Scandinaver/Blog/UI/blog.module.vue'),
     beforeEnter: requireAuth,
     children: [
       {
@@ -21,21 +21,19 @@ const routes = [
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',
-          label:  i18n.t('list'),
+          label: i18n.t('list'),
         },
-        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
-        component: require('@/Scandinaver/Blog/UI/components/list-post.component/index.vue').default,
+        component: () => import('@/Scandinaver/Blog/UI/components/list-post.component/index.vue'),
       },
       {
         name: 'add-post',
         path: 'add',
-        //component: () => import('@/modules/Blog/components/add-post.component/index.vue'),
-        component: require('@/Scandinaver/Blog/UI/components/add-post.component/index.vue').default,
+        component: () => import('@/Scandinaver/Blog/UI/components/add-post.component/index.vue'),
         meta: {
           menuitem: true,
           type: 'main',
           label: i18n.t('addPost'),
-          icon: 'book-plus-multiple'
+          icon: 'book-plus-multiple',
         },
       },
       {
@@ -46,7 +44,7 @@ const routes = [
           menuitem: true,
           type: 'main',
           label: i18n.t('categories'),
-          icon: 'shape-outline'
+          icon: 'shape-outline',
         },
       },
       {
@@ -57,7 +55,7 @@ const routes = [
           menuitem: true,
           type: 'main',
           label: i18n.t('comments'),
-          icon: 'comment-text-multiple-outline'
+          icon: 'comment-text-multiple-outline',
         },
       },
       {
@@ -66,8 +64,7 @@ const routes = [
         meta: {
           menuitem: false,
         },
-        // component: () => import('@/modules/Blog/components/edit-post.component/index.vue'),
-        component: require('@/Scandinaver/Blog/UI/components/edit-post.component/index.vue').default,
+        component: () => import('@/Scandinaver/Blog/UI/components/edit-post.component/index.vue'),
       },
     ],
   },

@@ -8,7 +8,7 @@ import { Editor } from '@tinymce/tinymce-vue/lib/cjs/main/ts/components/Editor'
 
 @Component({
   components: {
-    'editor': Editor
+    editor: Editor,
   },
 })
 export default class EditPostComponent extends Vue {
@@ -31,12 +31,10 @@ export default class EditPostComponent extends Vue {
 
   async save() {
     if (this.post.content === '') {
-      this.$snackbar.open(this.$tc('enterText'))
-      return false
+      this.$buefy.snackbar.open(this.$tc('enterText'))
     }
     if (this.post.title === '') {
-      this.$snackbar.open(this.$tc('enterTitile'))
-      return false
+      this.$buefy.snackbar.open(this.$tc('enterTitile'))
     }
     await this.blogService.update(this.post)
     this.$router.go(-1)

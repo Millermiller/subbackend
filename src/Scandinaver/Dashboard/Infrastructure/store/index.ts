@@ -11,4 +11,3 @@ export const dashboardModule = new Module({
   mutations: DashboardMutations,
   actions: DashboardActions,
 })
-

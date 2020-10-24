@@ -1,4 +1,3 @@
-import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
 
 const routes = [
@@ -11,7 +10,7 @@ const routes = [
       type: 'main',
       label: i18n.t('pages'),
     },
-    component: require('@/Scandinaver/Pages/UI/pages.module.vue').default,
+    component: () => import('@/Scandinaver/Pages/UI/pages.module.vue'),
     children: [
       {
         name: 'list-pages',
@@ -20,9 +19,9 @@ const routes = [
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',
-          label:  i18n.t('list'),
+          label: i18n.t('list'),
         },
-        component: require('@/Scandinaver/Pages/UI/components/list-page.component/index.vue').default,
+        component: () => import('@/Scandinaver/Pages/UI/components/list-page.component/index.vue'),
       },
       {
         name: 'add-page',
@@ -33,7 +32,7 @@ const routes = [
           type: 'main',
           label: i18n.t('addPage'),
         },
-        component: require('@/Scandinaver/Pages/UI/components/add-page.component/index.vue').default,
+        component: () => import('@/Scandinaver/Pages/UI/components/add-page.component/index.vue'),
       },
       {
         name: 'page',
@@ -41,9 +40,9 @@ const routes = [
         meta: {
           menuitem: false,
         },
-        component: require('@/Scandinaver/Pages/UI/components/edit-page.component/index.vue').default,
+        component: () => import('@/Scandinaver/Pages/UI/components/edit-page.component/index.vue'),
       },
-    ]
+    ],
   },
 ]
 

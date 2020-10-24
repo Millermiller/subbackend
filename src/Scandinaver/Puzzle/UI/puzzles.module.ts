@@ -6,7 +6,6 @@ import { Puzzle } from '@/Scandinaver/Puzzle/Domain/Puzzle'
 
 @Component({})
 export default class PuzzlesModule extends Vue {
-
   @Inject()
   private service: PuzzleService
 
@@ -27,7 +26,7 @@ export default class PuzzlesModule extends Vue {
     this.puzzles = await this.service.getPuzzles()
   }
 
-  async add() {
+  async addPuzzle() {
     await this.service.create({ text: this.edited.text, translate: this.edited.translate })
     await this.load()
     this.$buefy.snackbar.open('Загружено!')
@@ -35,10 +34,13 @@ export default class PuzzlesModule extends Vue {
   }
 
   async remove(puzzle: Puzzle) {
-    if (confirm('удалить?')) {
-      await this.service.destroy(puzzle)
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(puzzle)
+        await this.load()
+      },
+    })
   }
 
   edit(puzzle: Puzzle) {

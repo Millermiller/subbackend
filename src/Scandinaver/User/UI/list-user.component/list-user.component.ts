@@ -30,15 +30,18 @@ export default class ListUserComponent extends Vue {
   }
 
   async create() {
-
+    //
   }
 
   async remove(row: User) {
-    if (confirm('Удалить?')) {
-      await this.service.destroy(row)
-      this.$snackbar.open('Пользователь удален!')
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(row)
+        this.$buefy.snackbar.open('Пользователь удален!')
+        await this.load()
+      },
+    })
   }
 
   async find() {
@@ -48,9 +51,8 @@ export default class ListUserComponent extends Vue {
   type(value: any): string {
     if (new Date(value) < new Date()) {
       return 'is-warning'
-    } else {
-      return 'is-success'
     }
+    return 'is-success'
   }
 
   color(value: any): string {
@@ -59,8 +61,7 @@ export default class ListUserComponent extends Vue {
     }
     if (value === 2) {
       return 'red-plan'
-    } else {
-      return 'blue-plan'
     }
+    return 'blue-plan'
   }
 }

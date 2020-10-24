@@ -7,7 +7,7 @@ export namespace API {
   @Service()
   export class PlanAPI {
     all(): Promise<AxiosResponse<Plan[]>> {
-      return request.get(`/plan`)
+      return request.get('/plan')
     }
 
     destroy(id: number): Promise<AxiosResponse> {
@@ -27,7 +27,7 @@ export namespace API {
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.put(`/plan`, form)
+      return request.put('/plan', form)
     }
   }
 }

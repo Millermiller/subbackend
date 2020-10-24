@@ -1,6 +1,7 @@
 import User from '@/Scandinaver/User/Domain/User'
+import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 
-export default class Message {
+export default class Message extends Entity {
   id: number
   name: string
   readed: boolean
@@ -8,4 +9,8 @@ export default class Message {
   user: User
   message: string
   created_at: number
+
+  getId(): number | string {
+    return this.id;
+  }
 }

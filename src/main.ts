@@ -1,22 +1,23 @@
 import 'reflect-metadata'
 import Vue from 'vue'
-import App from './App.vue'
-import { router } from './router'
 import Buefy from 'buefy'
 import VueCookies from 'vue-cookies'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import VueProgressBar from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
 import VueTypedi from 'vue-typedi'
-import { messages } from '@/locales/ru'
-import Editor from '@tinymce/tinymce-vue'
 import 'buefy/dist/buefy.css'
 import './assets/css/style.css'
 import './assets/scss/app.scss'
 import i18n from '@/utils/i18n'
+import { router } from './router'
+import App from './App.vue'
 
 
-Vue.use(Buefy)
+Vue.use(Buefy, {
+  defaultSnackbarDuration: 2000,
+  defaultNoticeQueue: false,
+})
 Vue.use(VueCookies)
 Vue.use(VueI18n)
 Vue.use(VueTypedi);

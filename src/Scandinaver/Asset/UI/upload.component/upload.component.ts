@@ -1,12 +1,11 @@
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 import { Inject } from 'vue-typedi'
 import CardService from '@/Scandinaver/Asset/Application/card.service'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class UploadComponent extends Vue {
-
   @Inject()
   private cardService: CardService
 
@@ -28,13 +27,13 @@ export default class UploadComponent extends Vue {
     await this.cardService.addAdminCard({
       word: this.orig,
       translate: this.translate,
-      issentence: this.issentence
+      issentence: this.issentence,
     })
-    this.orig = this.translate = ''
+    this.orig = ''
+    this.translate = ''
   }
 
   get switchStat() {
     return this.issentence ? this.$tc('sentence') : this.$tc('word')
   }
 }
-

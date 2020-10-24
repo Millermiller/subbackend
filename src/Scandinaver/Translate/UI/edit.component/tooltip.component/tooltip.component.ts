@@ -2,7 +2,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Extra from './extra.component/index.vue'
 
 @Component({
-  components: {Extra}
+  components: { Extra },
 })
 export default class TooltipComponent extends Vue {
   @Prop({ required: true })
@@ -42,7 +42,7 @@ export default class TooltipComponent extends Vue {
       const sentence = this.sentences[k]
       for (let i = 0; i < sentence.length; i++) {
         computed = `${computed} ${sentence[i].word}`
-        if (i == sentence.length - 1) {
+        if (i === sentence.length - 1) {
           computed += '. '
         }
       }
@@ -50,7 +50,7 @@ export default class TooltipComponent extends Vue {
 
     this.text.computed = computed
 
-    if (this.showedExtra != '') {
+    if (this.showedExtra !== '') {
       this.text.computed = this.text.computed.replace(
         new RegExp(`(^|\\s|>)(${this.showedExtra})([^\\w]|$|<)`, 'gi'),
         '$1<span class="extra">$2</span>$3',
@@ -87,4 +87,3 @@ export default class TooltipComponent extends Vue {
     }
   }
 }
-

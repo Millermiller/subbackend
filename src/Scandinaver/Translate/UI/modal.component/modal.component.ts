@@ -2,7 +2,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class ModalComponent extends Vue {
   @Prop({ required: true })
@@ -18,4 +18,3 @@ export default class ModalComponent extends Vue {
     this.$emit('close')
   }
 }
-

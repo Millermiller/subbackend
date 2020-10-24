@@ -7,7 +7,7 @@ export namespace API {
   @Service()
   export class MetaAPI {
     all(): Promise<AxiosResponse<Page[]>> {
-      return request.get(`/meta`)
+      return request.get('/meta')
     }
 
     destroy(id: number): Promise<AxiosResponse> {

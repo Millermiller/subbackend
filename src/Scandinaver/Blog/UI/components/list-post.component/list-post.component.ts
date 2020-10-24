@@ -5,10 +5,9 @@ import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class ListPostComponent extends Vue {
-
   @Inject()
   private service: BlogService
 
@@ -25,11 +24,14 @@ export default class ListPostComponent extends Vue {
   }
 
   async remove(row: any) {
-    if (confirm('Удалить?')) {
-      await this.service.destroy(row)
-      this.$snackbar.open('Статья удалена!')
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(row)
+        this.$buefy.snackbar.open('Статья удалена!')
+        await this.load()
+      },
+    })
   }
 
   edit(row: any) {
@@ -40,4 +42,3 @@ export default class ListPostComponent extends Vue {
     this.articles = await this.service.search(this.search)
   }
 }
-

@@ -2,9 +2,11 @@ import QuestionCollection from '@/Scandinaver/Asset/Domain/QuestionCollection'
 import CardsCollection from '@/Scandinaver/Asset/Domain/CardsCollection'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import Question from '@/Scandinaver/Asset/Domain/Question'
+import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 
-export class Test {
+export class Test extends Entity {
   constructor(asset: Asset) {
+    super()
     this.asset = asset
     const translates = asset.cards.map(card => card.translate)
     const questions = this.asset.cards.map(card => new Question(card, translates))
@@ -37,5 +39,9 @@ export class Test {
 
   get percent(): number {
     return Math.floor((this.success * 100) / this.quantity)
+  }
+
+  getId(): number | string {
+    return this.id;
   }
 }

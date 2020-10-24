@@ -2,28 +2,33 @@ import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 import { Service } from 'typedi'
 import Category from '@/Scandinaver/Blog/Domain/Category'
+import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
+import { ClassType } from 'class-transformer/ClassTransformer'
+import Comment from '@/Scandinaver/Blog/Domain/Comment'
 
 export namespace API {
   @Service()
-  export class CategoryAPI {
+  export class CategoryAPI extends BaseAPI<Category> {
+    protected type: ClassType<Category> = Category
+
     all(): Promise<AxiosResponse<Category[]>> {
-      return request.get(`/categories`)
+      return request.get('/categories')
     }
 
-    destroy(id: number): Promise<AxiosResponse> {
-      return request.delete(`/categories/${id}`)
-    }
-
-    load(id: number): Promise<AxiosResponse> {
+    one(id: number): Promise<AxiosResponse> {
       return request.get(`/categories/${id}`)
     }
 
-    save(id: number, form: any): Promise<AxiosResponse> {
-      return request.post(`/categories/${id}`, form)
+    create(form: any): Promise<AxiosResponse> {
+      return request.post('/categories', form)
     }
 
-    create(form: any): Promise<AxiosResponse> {
-      return request.put(`/categories`, form)
+    delete(category: Category): Promise<AxiosResponse> {
+      return request.delete(`/categories/${category.getId()}`)
+    }
+
+    update(category: Category, form: any): Promise<AxiosResponse<Category>> {
+      return request.put(`/categories/${category.getId()}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Category[]>> {

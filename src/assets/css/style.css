@@ -460,6 +460,9 @@ table td {
 .mt-10 {
     margin-top: 10px;
 }
+.mt-5 {
+    margin-top: 5px;
+}
 .loading-overlay.is-active {
     z-index: 1;
 }

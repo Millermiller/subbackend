@@ -9,7 +9,7 @@ const routes = [
       icon: 'monitor-dashboard',
       menuitem: true,
       label: 'Dashboard',
-      type: 'main'
+      type: 'main',
     },
     component: require('@/Scandinaver/Dashboard/UI/dashboard.module').default,
     // component: () => import('@/modules/Dashboard/dashboard.module.vue'),

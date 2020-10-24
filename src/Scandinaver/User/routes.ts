@@ -1,4 +1,5 @@
 import i18n from '@/utils/i18n'
+import { requireAuth } from '@/router'
 
 const routes = [
   {
@@ -11,6 +12,7 @@ const routes = [
       label: i18n.t('users'),
     },
     component: () => import('@/Scandinaver/User/UI/users.module.vue'),
+    beforeEnter: requireAuth,
     children: [
       {
         name: 'list-user',
@@ -28,7 +30,7 @@ const routes = [
         },
         component: () => import('@/Scandinaver/User/UI/edit-user.component/index.vue'),
       },
-    ]
+    ],
   },
 ]
 

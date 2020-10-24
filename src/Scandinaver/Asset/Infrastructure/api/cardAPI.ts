@@ -21,11 +21,11 @@ export namespace API {
     }
 
     destroyCard(card: Card): Promise<AxiosResponse> {
-      return request.delete(`/card/${card.id}`)
+      return request.delete(`/card/${card.getId()}`)
     }
 
-    updateCard(id: number|string, data: any): Promise<AxiosResponse> {
-      return request.put(`/card/${id}`, data)
+    updateCard(card: Card, data: any): Promise<AxiosResponse> {
+      return request.put(`/card/${card.getId()}`, data)
     }
 
     translate(word: string, sentence: boolean): Promise<AxiosResponse> {

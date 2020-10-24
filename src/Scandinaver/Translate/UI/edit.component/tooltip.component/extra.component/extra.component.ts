@@ -2,7 +2,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class ExtraComponent extends Vue {
   @Prop({ required: true })
@@ -10,4 +10,3 @@ export default class ExtraComponent extends Vue {
   @Prop({ required: true })
   private index!: any
 }
-

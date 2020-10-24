@@ -5,12 +5,11 @@ import PlanRepository from '@/Scandinaver/Plan/Infrastructure/plan.repository'
 
 @Service()
 export default class PlanService extends BaseService<Plan> {
-
   @Inject()
   private repository: PlanRepository
 
   create(input: any): Promise<Plan> | Plan {
-    return this.repository.save(input)
+    return this.repository.create(input)
   }
 
   async getAll(): Promise<Plan[]> {
@@ -26,6 +25,6 @@ export default class PlanService extends BaseService<Plan> {
   }
 
   async update(plan: Plan): Promise<Plan> {
-    return this.repository.save(plan)
+    return this.repository.update(plan, plan)
   }
 }

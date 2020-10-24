@@ -8,7 +8,6 @@ import * as events from '@/events/events.type'
   components: {},
 })
 export default class TranslateComponent extends Vue {
-
   @Inject()
   private cardService: CardService
 

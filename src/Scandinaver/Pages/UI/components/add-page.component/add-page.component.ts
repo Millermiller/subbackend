@@ -7,7 +7,6 @@ import PageService from '@/Scandinaver/Pages/Application/page.service'
   components: {},
 })
 export default class AddPageComponent extends Vue {
-
   @Inject()
   private service: PageService
 

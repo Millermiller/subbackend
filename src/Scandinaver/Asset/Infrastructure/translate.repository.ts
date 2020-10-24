@@ -2,26 +2,32 @@ import { BaseRepository } from '@/Scandinaver/Core/Infrastructure/base.repositor
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Inject, Service } from 'typedi'
 import { API } from '@/Scandinaver/Asset/Infrastructure/api/translate.api'
-import TranslateApi = API.TranslateApi
 import { plainToClass } from 'class-transformer'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
+import TranslateApi = API.TranslateApi
 
 @Service()
 export default class TranslateRepository extends BaseRepository<Translate> {
-
   @Inject()
   private api: TranslateApi
 
-  all(): Promise<Translate[]> {
+  async all(): Promise<Translate[]> {
+    throw new Error('method not implemented')
+  }
+  async one(id: number): Promise<Translate> {
+    throw new Error('method not implemented')
+  }
+
+  async create(data: any): Promise<Translate> {
+    throw new Error('method not implemented')
+  }
+
+  async update(entity: Translate, data: any): Promise<Translate> {
     throw new Error('method not implemented')
   }
 
   async delete(entity: Translate): Promise<any> {
     return this.api.destroy(entity.getId())
-  }
-
-  async one(id: number): Promise<Translate> {
-    throw new Error('method not implemented')
   }
 
   async save(entity: Translate): Promise<Translate> {

@@ -5,12 +5,11 @@ import CommentRepository from '@/Scandinaver/Blog/Infrastructure/CommentReposito
 
 @Service()
 export default class CommentService extends BaseService<Comment> {
-
   @Inject()
   private repository: CommentRepository
 
   async create(input: any): Promise<Comment> {
-   return new Comment()
+    return new Comment()
   }
 
   async getAll(): Promise<Comment[]> {
@@ -26,6 +25,6 @@ export default class CommentService extends BaseService<Comment> {
   }
 
   async update(comment: Comment): Promise<Comment> {
-    return this.repository.save(comment)
+    return this.repository.update(comment, comment)
   }
 }

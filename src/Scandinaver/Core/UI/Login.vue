@@ -75,8 +75,7 @@ export default class Login extends Vue {
           this.loginerror = error.errors.login[0] || ''
           this.passerror = error.errors.password[0] || ''
           this.error = ''
-        }
-        else {
+        } else {
           this.error = error
           this.loginerror = ''
           this.passerror = ''

@@ -2,7 +2,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class ItemComponent extends Vue {
   @Prop({ required: true })
@@ -12,4 +12,3 @@ export default class ItemComponent extends Vue {
 
   private translate: string = ''
 }
-

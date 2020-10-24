@@ -1,14 +1,13 @@
 
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 import Page from '@/Scandinaver/Pages/Domain/Page'
 import { Inject } from 'vue-typedi'
 import PageService from '@/Scandinaver/Pages/Application/page.service'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class EditPageComponent extends Vue {
-
   @Inject()
   private service: PageService
 
@@ -18,7 +17,7 @@ export default class EditPageComponent extends Vue {
     this.load(Number(this.$route.params.id))
   }
 
-  async load(id: number){
+  async load(id: number) {
     this.page = await this.service.getOne(id)
   }
 
@@ -27,8 +26,7 @@ export default class EditPageComponent extends Vue {
     this.$router.go(-1)
   }
 
-  back(){
+  back() {
     this.$router.go(-1)
   }
 }
-

@@ -5,12 +5,12 @@ import UserRepository from '@/Scandinaver/User/Infrastructure/user.repository'
 
 @Service()
 export default class UserService extends BaseService<User> {
-
   @Inject()
   private userRepository: UserRepository
 
   create(input: any): Promise<User> | User {
-    return new User();
+    const user = new User()
+    return this.userRepository.create(user)
   }
 
   async getAll(): Promise<User[]> {
@@ -30,6 +30,6 @@ export default class UserService extends BaseService<User> {
   }
 
   async update(user: User): Promise<User> {
-    return this.userRepository.save(user)
+    return this.userRepository.update(user, user)
   }
 }

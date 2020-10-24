@@ -1,6 +1,5 @@
 import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
-import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 const routes = [
   {
@@ -11,10 +10,10 @@ const routes = [
       menuitem: true,
       type: 'sub',
       language: true,
-      label: i18n.t('assets')
+      label: i18n.t('assets'),
     },
     beforeEnter: requireAuth,
-    component: require('@/Scandinaver/Asset/UI/assets.module.vue').default,
+    component: () => import('@/Scandinaver/Asset/UI/assets.module.vue'),
   },
   {
     name: 'upload',
@@ -27,7 +26,7 @@ const routes = [
       language: true,
     },
     beforeEnter: requireAuth,
-    component: require('@/Scandinaver/Asset/UI/upload.component/upload.component.vue').default,
+    component: () => import('@/Scandinaver/Asset/UI/upload.component/upload.component.vue'),
   },
 ]
 

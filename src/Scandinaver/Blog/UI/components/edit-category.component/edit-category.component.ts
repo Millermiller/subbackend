@@ -7,7 +7,6 @@ import CategoryService from '@/Scandinaver/Blog/Application/CategoryService'
   components: {},
 })
 export default class EditCategoryComponent extends Vue {
-
   @Inject()
   private categoryService: CategoryService
 
@@ -35,7 +34,7 @@ export default class EditCategoryComponent extends Vue {
   async update() {
     await this.categoryService.update(this.edited)
     this.isComponentModalActive = false
-    this.$snackbar.open(this.$tc('updated'))
+    this.$buefy.snackbar.open(this.$tc('updated'))
     await this.load()
   }
 
@@ -45,10 +44,13 @@ export default class EditCategoryComponent extends Vue {
   }
 
   async remove(category: Category) {
-    if (confirm('Удалить?')) {
-      await this.categoryService.destroy(category)
-      this.$snackbar.open(this.$tc('removedCategory'))
-      await this.load()
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Are you sure?',
+      onConfirm: async () => {
+        await this.categoryService.destroy(category)
+        this.$buefy.snackbar.open(this.$tc('removedCategory'))
+        await this.load()
+      },
+    })
   }
 }

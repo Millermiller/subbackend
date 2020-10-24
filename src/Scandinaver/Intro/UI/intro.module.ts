@@ -6,7 +6,6 @@ import Intro from '@/Scandinaver/Intro/Domain/Intro'
 
 @Component({})
 export default class IntroModule extends Vue {
-
   @Inject()
   private service: IntroService
 
@@ -22,9 +21,12 @@ export default class IntroModule extends Vue {
   }
 
   async remove(row: any) {
-    if (confirm('удалить?')) {
-      await this.service.destroy(row)
-    }
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(row)
+      },
+    })
   }
 
   mounted() {

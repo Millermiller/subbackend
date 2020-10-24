@@ -55,6 +55,12 @@ export default class AssetsModule extends Vue {
     this.$eventHub.$on('setCardsLoading', this.changeCardsLoading)
   }
 
+  beforeDestroy() {
+    this.$eventHub.$off(events.ADD_CART_TO_ASSET)
+    this.$eventHub.$off(events.DELETE_CART_FROM_ASSET)
+    this.$eventHub.$off('setCardsLoading')
+  }
+
   get cards() {
     return this.$store.getters.cards
   }
@@ -98,9 +104,15 @@ export default class AssetsModule extends Vue {
 
   async removeCard(data: any) {
     this.cardsLoading = true
-    await this.cardService.removeFromAsset(data.card, data.asset)
-    this.cardsLoading = false
-    this.$buefy.snackbar.open('карточка удалена')
+    try {
+      await this.cardService.removeFromAsset(data.card, data.asset)
+      this.cardsLoading = false
+      this.$buefy.snackbar.open('карточка удалена')
+    } catch (e) {
+      //
+    } finally {
+      this.cardsLoading = false
+    }
   }
 
   async removeAsset(asset: Asset) {
@@ -111,7 +123,7 @@ export default class AssetsModule extends Vue {
     this.$buefy.snackbar.open('словарь удален')
   }
 
-  async addAsset(type: any) {
+  async addAsset(type: number) {
     await this.service.create(type)
     await this.load()
   }

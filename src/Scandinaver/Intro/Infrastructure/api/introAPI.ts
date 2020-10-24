@@ -5,13 +5,17 @@ import Intro from '@/Scandinaver/Intro/Domain/Intro'
 
 export namespace API {
   @Service()
-  export class IntroAPI{
+  export class IntroAPI {
     all(): Promise<AxiosResponse<Intro[]>> {
       return request.get('/intro')
     }
 
     load(id: number): Promise<AxiosResponse> {
       return request.get(`/intro/${id}`)
+    }
+
+    create(form: any): Promise<AxiosResponse> {
+      return request.post('/intro/', form)
     }
 
     save(id: number, form: any): Promise<AxiosResponse> {

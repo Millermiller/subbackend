@@ -2,12 +2,18 @@ import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 import { Service } from 'typedi'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
+import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
+import { ClassType } from 'class-transformer/ClassTransformer'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { Responses } from '../../../Core/Domain/Contract/Responses'
 
 export namespace API {
   @Service()
-  export class AssetApi {
-    getAsset(language: string, id: number): Promise<AxiosResponse<Responses.GetAssetResponse>> {
+  export class AssetApi extends BaseAPI<Asset> {
+    protected type: ClassType<Asset> = Asset
+
+    one(id: number): Promise<AxiosResponse<Asset>> {
+      const { language } = store.getters
       return request.get(`/${language}/asset/${id}`)
     }
 
@@ -27,8 +33,8 @@ export namespace API {
       return request.delete(`/${language}/asset/${asset.id}`)
     }
 
-    addAsset(type: any): Promise<AxiosResponse> {
-      return request.post('/level', { asset_id: type })
+    addAsset(language: string, type: any): Promise<AxiosResponse> {
+      return request.post(`/${language}/level`, { asset_id: type })
     }
 
     updateAudio(formdata: FormData): Promise<AxiosResponse> {
@@ -69,6 +75,22 @@ export namespace API {
 
     updateTitle(id: number, data: any): Promise<AxiosResponse> {
       return request.post(`/asset/${id}`, data)
+    }
+
+    all(): Promise<AxiosResponse<Asset[]>> {
+      throw new Error('Method not implemented.')
+    }
+
+    create(data: any): Promise<AxiosResponse<Asset>> {
+      throw new Error('Method not implemented.')
+    }
+
+    delete(entity: Asset): Promise<any> {
+      throw new Error('Method not implemented.')
+    }
+
+    update(entity: Asset, data: any): Promise<AxiosResponse<Asset>> {
+      throw new Error('Method not implemented.')
     }
   }
 }

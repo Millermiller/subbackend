@@ -42,10 +42,9 @@ import { Inject } from 'vue-typedi'
 
 @Component({
   name: 'MessagesPage',
-  components: {}
+  components: {},
 })
 export default class MessagesPage extends Vue {
-
   @Inject()
   private service: MessageService
 
@@ -65,7 +64,7 @@ export default class MessagesPage extends Vue {
 
   async remove(row: any) {
     await this.service.destroy(row)
-    this.$snackbar.open('Сообщение удалено!')
+    this.$buefy.snackbar.open('Сообщение удалено!')
     this.load()
   }
 }

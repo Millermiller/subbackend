@@ -6,7 +6,6 @@ import IntroService from '@/Scandinaver/Intro/Application/IntroService'
   components: {},
 })
 export default class EditIntroComponent extends Vue {
-
   @Inject()
   private service: IntroService
 
@@ -25,7 +24,7 @@ export default class EditIntroComponent extends Vue {
   config: any = {
     imageUploadURL: '/admin/articles/upload',
     events: {
-      'froalaEditor.initialized': function() {
+      'froalaEditor.initialized': function () {
         console.log('initialized')
       },
     },

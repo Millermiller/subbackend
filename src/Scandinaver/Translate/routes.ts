@@ -1,5 +1,5 @@
-import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
+import { requireAuth } from '@/router'
 
 const routes = [
   {
@@ -12,8 +12,8 @@ const routes = [
       type: 'sub',
       language: true,
     },
-    component: require('@/Scandinaver/Translate/UI/translates.module.vue').default,
-    // component: () => import('@/modules/Translates/translates.module.vue'),
+    component: () => import('@/Scandinaver/Translate/UI/translates.module.vue'),
+    beforeEnter: requireAuth,
     children: [
       {
         name: 'list',
@@ -23,8 +23,7 @@ const routes = [
           label: i18n.t('list'),
           menuitem: true,
         },
-        component: require('@/Scandinaver/Translate/UI/translates.module.vue').default,
-        //component: () => import('@/modules/Translates/translates.module.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/translates.module.vue'),
       },
       {
         name: 'edit-text',
@@ -32,8 +31,7 @@ const routes = [
         meta: {
           menuitem: false,
         },
-        //component: () => import('@/modules/Translates/components/edit.component/index.vue'),
-        component:  require('@/Scandinaver/Translate/UI/edit.component/index.vue').default,
+        component: () => import('@/Scandinaver/Translate/UI/edit.component/index.vue'),
       },
       {
         name: 'text-settings',
@@ -43,9 +41,9 @@ const routes = [
           menuitem: true,
           label: i18n.t('settings'),
         },
-        component:  require('@/Scandinaver/Translate/UI/edit.component/index.vue').default,
+        component: () => import('@/Scandinaver/Translate/UI/edit.component/index.vue'),
       },
-    ]
+    ],
   },
 ]
 

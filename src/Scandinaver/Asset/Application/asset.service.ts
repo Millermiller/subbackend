@@ -20,10 +20,8 @@ export default class AssetService extends BaseService<Asset> {
   @Inject()
   private forvoApi: ForvoAPI
 
-  async create(type: any): Promise<Asset> {
-    const asset = new Asset()
-    asset.type = type
-    return this.repository.save(asset)
+  async create(type: number): Promise<Asset> {
+    return this.repository.create(type)
   }
 
   public async reload(asset: Asset) {
@@ -32,13 +30,11 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   public async getAll(): Promise<any> {
-    const { language } = store.getters
-    return this.repository.allByLanguage(language)
+    return this.repository.allByLanguage()
   }
 
   public async getAsset(assetId: number): Promise<any> {
-    const { language } = store.getters
-    const asset = await this.repository.oneByLanguage(language, assetId)
+    const asset = await this.repository.one(assetId)
     store.commit('setActiveAsset', asset)
   }
 
@@ -48,8 +44,7 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   public async destroyAsset(asset: Asset) {
-    const { language } = store.getters
-    await this.repository.destroy(language, asset)
+    await this.repository.delete(asset)
   }
 
   public async forvoAction(asset: Asset): Promise<{ count: number; all: number }> {
@@ -57,8 +52,7 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   async updateTitle(asset: Asset, title: string): Promise<Asset> {
-    asset.title = title
-    return this.repository.save(asset)
+    return this.repository.update(asset, { title })
   }
 
   async removeTranslate(data: Translate) {

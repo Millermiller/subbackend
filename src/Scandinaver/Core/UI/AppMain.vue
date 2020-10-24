@@ -17,7 +17,7 @@ import FooterBar from '@/Scandinaver/Core/UI/FooterBar.vue'
 
 @Component({
   name: 'AppMain',
-  components: { FooterBar }
+  components: { FooterBar },
 })
 export default class extends Vue {
   get auth(): boolean {

@@ -22,23 +22,24 @@ export default class AssetComponent extends Vue {
   }
 
   async forvo(asset: Asset) {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm(this.$tc('forvoConfirm'))) {
-      this.loaded = true
-      const result = await this.service.forvoAction(asset)
-      this.loaded = false
-      this.$buefy.snackbar.open(
-        this.$t('forvoComplete', {
-          count: result.count,
-          all: result.all,
-        }).toString(),
-      )
-    }
+    await this.$buefy.dialog.confirm({
+      message: this.$tc('forvoConfirm'),
+      onConfirm: async () => {
+        this.loaded = true
+        const result = await this.service.forvoAction(asset)
+        this.loaded = false
+        this.$buefy.snackbar.open(
+          this.$t('forvoComplete', {
+            count: result.count,
+            all: result.all,
+          }).toString(),
+        )
+      },
+    })
   }
 
   get activeAssetId(): number {
     const asset: Asset | never = this.$store.getters.getActiveAsset
-    // console.log(asset)
     return 0
   }
 }

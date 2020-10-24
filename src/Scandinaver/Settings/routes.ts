@@ -1,5 +1,5 @@
-import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
+import { requireAuth } from '@/router'
 
 const routes = [
   {
@@ -9,10 +9,10 @@ const routes = [
       icon: 'tune',
       menuitem: true,
       label: i18n.t('settings'),
-      type: 'main'
+      type: 'main',
     },
-    component: require('@/Scandinaver/Settings/UI/settings.module.vue').default,
-    // component: () => import('@/modules/Settings/settings.module.vue'),
+    component: () => import('@/Scandinaver/Settings/UI/settings.module.vue'),
+    beforeEnter: requireAuth,
   },
 ]
 

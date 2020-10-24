@@ -9,7 +9,6 @@ import MessageService from '@/Scandinaver/Dashboard/Application/message.service'
   components: {},
 })
 export default class MessageModalComponent extends Vue {
-
   @Prop({ required: true })
   private item!: Message
 

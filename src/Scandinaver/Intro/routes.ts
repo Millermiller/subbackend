@@ -8,9 +8,9 @@ const routes = [
       icon: 'tooltip-text',
       menuitem: true,
       label: 'Introjs',
-      type: 'main'
+      type: 'main',
     },
-    component: require('@/Scandinaver/Intro/UI/intro.module.vue').default,
+    component: () => import('@/Scandinaver/Intro/UI/intro.module.vue'),
     beforeEnter: requireAuth,
     children: [
       {
@@ -20,9 +20,9 @@ const routes = [
           icon: 'fa-tachometer',
           menuitem: false,
         },
-        component: require('@/Scandinaver/Intro/UI/components/edit-intro.component/index.vue').default,
+        component: () => import('@/Scandinaver/Intro/UI/components/edit-intro.component/index.vue'),
       },
-    ]
+    ],
   },
 ]
 

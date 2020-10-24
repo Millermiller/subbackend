@@ -25,15 +25,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import {version} from '../../../../package.json';
 import { LoginService } from '@/Scandinaver/Core/Application/login.service'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { version } from '../../../../package.json';
 
 @Component({
-  name: 'NavBarComponent'
+  name: 'NavBarComponent',
 })
-export default class NavBarComponent extends Vue{
-
+export default class NavBarComponent extends Vue {
   @Prop()
   private show: Boolean
 
@@ -41,12 +40,12 @@ export default class NavBarComponent extends Vue{
 
   private languages = [
     {
-      'label': 'is',
-      'name': 'Исландский'
+      label: 'is',
+      name: 'Исландский',
     },
     {
-      'label': 'sw',
-      'name': 'Шведский'
+      label: 'sw',
+      name: 'Шведский',
     },
   ];
 

@@ -19,16 +19,20 @@ export default class TestRepository extends BaseRepository<Test> {
     throw new Error('method not implemented')
   }
 
+  async create(data: any): Promise<Test> {
+    throw new Error('Method not implemented.')
+  }
+
+  async update(test: Test, result: number): Promise<any> {
+    this.api.saveResult(test, result).then(response => response)
+  }
+
   async save(entity: Test): Promise<Test> {
     throw new Error('method not implemented')
   }
 
   async delete(entity: Test): Promise<any> {
     return Promise.resolve(undefined)
-  }
-
-  async update(test: Test, result: number): Promise<any> {
-    this.api.saveResult(test, result).then(response => response)
   }
 
   async getNextLevel(test: Test): Promise<Test> {

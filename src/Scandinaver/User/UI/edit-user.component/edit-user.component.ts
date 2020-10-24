@@ -1,13 +1,12 @@
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 import User from '@/Scandinaver/User/Domain/User'
 import { Inject } from 'vue-typedi'
 import UserService from '@/Scandinaver/User/Application/user.service'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class EditUserComponent extends Vue {
-
   @Inject()
   private service: UserService
 
@@ -32,4 +31,3 @@ export default class EditUserComponent extends Vue {
     this.$router.go(-1)
   }
 }
-

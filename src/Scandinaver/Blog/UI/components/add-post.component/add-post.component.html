@@ -7,29 +7,29 @@
       <b-field label="Анонс">
         <b-input v-model="post.anonse" type="textarea"></b-input>
       </b-field>
-      <editor
+      <editor v-model="post.content"
               api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
               :init="{
-        file_browser_callback_types: 'file image media',
-    automatic_uploads: true,
-    paste_data_images: true,
-    images_upload_url: '/handleidingen/upload',
-    images_upload_credentials: true,
-         height: 500,
-         menubar: false,
-         plugins: [
-           'imagetools image advlist autolink lists link image charmap print preview anchor',
-           'searchreplace visualblocks code fullscreen',
-           'insertdatetime media table paste code help wordcount'
-         ],
-         toolbar:
-           'image insertfile |  undo redo | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help'
+                  file_browser_callback_types: 'file image media',
+                  automatic_uploads: true,
+                  paste_data_images: true,
+                  images_upload_url: '/handleidingen/upload',
+                  images_upload_credentials: true,
+                  height: 500,
+                  menubar: false,
+                   plugins: [
+                     'imagetools image advlist autolink lists link image charmap print preview anchor',
+                     'searchreplace visualblocks code fullscreen',
+                     'insertdatetime media table paste code help wordcount'
+                   ],
+                   toolbar:
+                     'image insertfile |  undo redo | formatselect | bold italic backcolor | \
+                     alignleft aligncenter alignright alignjustify | \
+                     bullist numlist outdent indent | removeformat | help'
        }"
       />
       <b-field :label="$t('category')">
-        <b-select :placeholder="$t('selectCategory')" v-model="post.category_id">
+        <b-select :placeholder="$t('selectCategory')" v-model="post.category">
           <option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</option>
         </b-select>
       </b-field>

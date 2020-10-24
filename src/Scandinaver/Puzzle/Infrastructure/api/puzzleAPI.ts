@@ -7,15 +7,11 @@ export namespace API {
   @Service()
   export class PuzzleAPI {
     getPuzzles(language: string): Promise<AxiosResponse<Puzzle[]>> {
-      return request.get(`/${language}/puzzle`)
-    }
-
-    processPuzzle(puzzle: Puzzle): Promise<AxiosResponse> {
-      return request.put(`/puzzle/${puzzle.id}`)
+      return request.get(`/${language}/puzzle/all`)
     }
 
     all(): Promise<AxiosResponse<Puzzle[]>> {
-      return request.get(`/puzzle`)
+      return request.get('/puzzle')
     }
 
     load(id: number): Promise<AxiosResponse> {
@@ -26,8 +22,9 @@ export namespace API {
       return request.put(`/puzzle/${id}`, form)
     }
 
-    create(entity: Puzzle): Promise<AxiosResponse<Puzzle>> {
-      return request.post('/puzzle', entity)
+    create(language: string, entity: Puzzle): Promise<AxiosResponse<Puzzle>> {
+      console.log(language)
+      return request.post(`/${language}/puzzle`, entity)
     }
 
     destroy(id: number): Promise<AxiosResponse> {

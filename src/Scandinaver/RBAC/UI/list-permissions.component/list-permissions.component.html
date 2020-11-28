@@ -1,0 +1,61 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <b-field>
+      <b-input placeholder="Поиск..." type="search" icon="magnify" v-model="search"></b-input>
+      <p class="control">
+        <button class="button is-info" @click="find">Search</button>
+      </p>
+      <button class="button is-success ml-10" @click="showCreateModal()">Новое разрешение</button>
+    </b-field>
+    <b-field> </b-field>
+    <b-table :data="permissions" paginated narrowed :loading="loading" per-page="10">
+      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+        {{ props.row.id }}
+      </b-table-column>
+      <b-table-column field="title" label="Title" sortable v-slot="props">
+        {{ props.row.title }}
+      </b-table-column>
+      <b-table-column field="slug" label="Slug" sortable v-slot="props">
+        {{ props.row.slug }}
+      </b-table-column>
+      <b-table-column field="description" label="Description" sortable v-slot="props">
+        {{ props.row.description }}
+      </b-table-column>
+      <b-table-column custom-key="actions" v-slot="props">
+        <button class="button is-warning is-small" @click="edit(props.row)">
+          <b-icon icon="pencil" size="is-small"></b-icon>
+        </button>
+        <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+          <b-icon icon="close-circle" size="is-small"></b-icon>
+        </button>
+      </b-table-column>
+    </b-table>
+  </article>
+  <b-modal :active.sync="isComponentModalActive" has-modal-card="has-modal-card">
+    <div class="modal-card" style="width: 400px">
+      <section class="modal-card-body">
+        <b-field label="Title">
+          <b-input type="text" v-model="edited.title"></b-input>
+        </b-field>
+      </section>
+      <section class="modal-card-body">
+        <b-field label="Slug">
+          <b-input type="text" v-model="edited.slug"></b-input>
+        </b-field>
+      </section>
+      <section class="modal-card-body">
+        <b-field label="Description">
+          <b-input type="textarea" v-model="edited.description"></b-input>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="isComponentModalActive = false">
+          Закрыть
+        </button>
+        <button class="button is-primary" @click="create()">
+          Сохранить
+        </button>
+      </footer>
+    </div>
+  </b-modal>
+</div>

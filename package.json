@@ -19,7 +19,7 @@
     "canvas": "^2.6.1",
     "class-transformer": "^0.2.3",
     "core-js": "^3.4.4",
-    "fibers": "^4.0.2",
+    "fibers": "^5.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "sass": "^1.25.0",
@@ -85,6 +85,7 @@
       "@vue/typescript"
     ],
     "rules": {
+      "no-underscore-dangle": "off",
       "object-curly-newline": "off",
       "no-restricted-imports": "off",
       "no-param-reassign": "off",

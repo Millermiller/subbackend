@@ -40,10 +40,6 @@ export default class CardRepository extends BaseRepository<Card> {
     return this.api.addWord(form).then(response => plainToClass<Card, Card>(Card, response.data))
   }
 
-  public async saveAudioFile(fileUploadFormData: FormData) {
-    return this.api.uploadWordFile(fileUploadFormData)
-  }
-
   public async add(language: string, card: Card, asset: Asset): Promise<Card> {
     return this.api.addCardToAsset(language, card, asset).then(response => plainToClass(Card, response.data))
   }

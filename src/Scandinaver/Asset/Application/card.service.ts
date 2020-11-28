@@ -9,6 +9,8 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Word } from '@/Scandinaver/Asset/Domain/Word'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
+import { API } from '@/Scandinaver/Asset/Infrastructure/api/cardAPI'
+import CardApi = API.CardApi
 
 @Service()
 export default class CardService extends BaseService<Card> {
@@ -17,6 +19,9 @@ export default class CardService extends BaseService<Card> {
 
   @Inject()
   private favouriteRepository: FavouriteRepository
+
+  @Inject()
+  private api: CardApi
 
   create(input: any): Promise<Card> {
     throw new Error('Method not implemented.')
@@ -59,14 +64,15 @@ export default class CardService extends BaseService<Card> {
   }
 
   async uploadWordFile(fileUploadFormData: FormData) {
-    return this.cardRepository.saveAudioFile(fileUploadFormData)
+    const { language } = store.getters
+    return this.api.uploadWordFile(language, fileUploadFormData)
   }
 
-  async addAdminCard(param: { issentence: boolean; word: string; translate: string }) {
+  async addAdminCard(param: { isSentence: any; word: string; translate: string }) {
     const card = new Card()
     card.word = new Word(param.word)
     card.translate = new Translate(param.translate)
-    card.sentence = param.issentence
+    card.sentence = param.isSentence
     return this.cardRepository.create(card)
   }
 }

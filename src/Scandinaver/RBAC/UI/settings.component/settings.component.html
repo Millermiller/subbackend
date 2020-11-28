@@ -1,0 +1,17 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <b-loading :is-full-page="false" v-model="loading" :can-cancel="false"></b-loading>
+    <table class="table is-bordered is-hoverable">
+      <tr>
+        <td></td>
+        <td v-for="role in roles">{{role.title}}</td>
+      </tr>
+      <tr v-for="permission in permissions">
+        <td>{{permission.title}}</td>
+        <td v-for="role in roles">
+          <b-checkbox v-model="model[role.getId()][permission.getId()]" @input="change(role, permission, $event)"></b-checkbox>
+        </td>
+      </tr>
+    </table>
+  </article>
+</div>

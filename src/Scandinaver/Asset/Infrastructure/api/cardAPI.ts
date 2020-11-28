@@ -49,8 +49,8 @@ export namespace API {
       return request.delete(`/favourite/${item.word.id}`)
     }
 
-    uploadWordFile(data: any): Promise<AxiosResponse> {
-      return request.post('/wordfile', data)
+    uploadWordFile(language: string, data: any): Promise<AxiosResponse> {
+      return request.post(`/${language}/wordfile`, data)
     }
   }
 }

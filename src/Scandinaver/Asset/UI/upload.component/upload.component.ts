@@ -8,11 +8,10 @@ import CardService from '@/Scandinaver/Asset/Application/card.service'
 export default class UploadComponent extends Vue {
   @Inject()
   private cardService: CardService
-
-  fileUploadFormData: FormData = new FormData()
-  orig: string = ''
-  translate: string = ''
-  issentence: boolean = false
+  public fileUploadFormData: FormData = new FormData()
+  public orig: string = ''
+  public translate: string = ''
+  public isSentence: any = '0'
 
   bindFile(e: any) {
     e.preventDefault()
@@ -27,13 +26,13 @@ export default class UploadComponent extends Vue {
     await this.cardService.addAdminCard({
       word: this.orig,
       translate: this.translate,
-      issentence: this.issentence,
+      isSentence: this.isSentence,
     })
     this.orig = ''
     this.translate = ''
   }
 
   get switchStat() {
-    return this.issentence ? this.$tc('sentence') : this.$tc('word')
+    return this.isSentence === '1' ? this.$tc('sentence') : this.$tc('word')
   }
 }

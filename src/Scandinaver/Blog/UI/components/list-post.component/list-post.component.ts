@@ -20,10 +20,12 @@ export default class ListPostComponent extends Vue {
   }
 
   async load() {
+    this.loading = true
     this.articles = await this.service.getAll()
+    this.loading = false
   }
 
-  async remove(row: any) {
+  async remove(row: Post) {
     await this.$buefy.dialog.confirm({
       message: 'Удалить?',
       onConfirm: async () => {

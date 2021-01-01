@@ -66,7 +66,10 @@ export class LoginService {
           (response) => {
             Vue.$user = response.data
             store.commit('setUser', response.data)
-            resolve()
+            store.commit('setAuth', true)
+            store.dispatch('initialiseRBAC', response.data).then(() => {
+              resolve()
+            })
           },
           () => reject(),
         )

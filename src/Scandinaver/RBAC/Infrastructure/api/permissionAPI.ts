@@ -22,12 +22,12 @@ export namespace API {
       return request.post('/permission/', form)
     }
 
-    delete(entity: Permission): Promise<any> {
-      return request.delete(`/permission/${entity.getId()}`)
+    delete(id: number|string): Promise<any> {
+      return request.delete(`/permission/${id}`)
     }
 
-    update(entity: Permission, form: any): Promise<AxiosResponse> {
-      return request.post(`/permission/${entity.getId()}`, form)
+    update(id: number|string, form: any): Promise<AxiosResponse> {
+      return request.put(`/permission/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Permission[]>> {

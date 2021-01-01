@@ -2,6 +2,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import Category from '@/Scandinaver/Blog/Domain/Category'
 import { Inject } from 'vue-typedi'
 import CategoryService from '@/Scandinaver/Blog/Application/CategoryService'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -15,6 +16,13 @@ export default class EditCategoryComponent extends Vue {
   private newcategory: string = ''
   private isComponentModalActive: boolean = false
   private loading: boolean = false
+
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   mounted() {
     this.load()

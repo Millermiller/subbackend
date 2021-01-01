@@ -1,9 +1,8 @@
-import DashboardModule from '@/Scandinaver/Dashboard/UI/dashboard.module.vue'
 import Login from '@/Scandinaver/Core/UI/Login.vue'
-import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
 import { LoginService } from '@/Scandinaver/Core/Application/login.service'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
@@ -28,6 +27,8 @@ const routes = [
       menuitem: true,
       title: 'page401',
       noCache: true,
+      icon: 'monitor-dashboard',
+      permission: permissions.VIEW_DASHBOARD,
       label: i18n.t('dashboard'),
     },
     component: () => import('@/Scandinaver/Dashboard/UI/dashboard.module.vue'),
@@ -37,6 +38,7 @@ const routes = [
     name: 'messages',
     path: '/messages',
     meta: {
+      permission: permissions.VIEW_MESSAGES,
       icon: 'message-settings-outline',
       menuitem: true,
       type: 'main',

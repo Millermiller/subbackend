@@ -12,6 +12,7 @@ import Vue from 'vue'
 import Navbar from '@/Scandinaver/Core/UI/Navbar.vue'
 import Sidebar from '@/Scandinaver/Core/UI/Sidebar.vue'
 import AppMain from '@/Scandinaver/Core/UI/AppMain.vue'
+import { permissions } from './permissions/permission.type'
 
 @Component({
   name: 'App',
@@ -33,7 +34,7 @@ export default class extends Vue {
   }
 
   get auth(): boolean {
-    return this.$store.getters.auth
+    return this.$ability.can(permissions.ACCESS_ADMIN_PAGE)
   }
 }
 </script>

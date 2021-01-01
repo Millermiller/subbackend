@@ -19,7 +19,7 @@ export default class CategoryService extends BaseService<Category> {
   }
 
   async destroy(category: Category) {
-    return this.repository.delete(category)
+    return this.repository.delete(category.getId())
   }
 
   async search(query: string): Promise<Category[]> {
@@ -27,6 +27,6 @@ export default class CategoryService extends BaseService<Category> {
   }
 
   async update(category: Category): Promise<Category> {
-    return this.repository.update(category, category)
+    return this.repository.update(category.getId(), category)
   }
 }

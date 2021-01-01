@@ -14,6 +14,7 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import FooterBar from '@/Scandinaver/Core/UI/FooterBar.vue'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   name: 'AppMain',
@@ -21,7 +22,7 @@ import FooterBar from '@/Scandinaver/Core/UI/FooterBar.vue'
 })
 export default class extends Vue {
   get auth(): boolean {
-    return this.$store.getters.auth
+    return this.$ability.can(permissions.ACCESS_ADMIN_PAGE)
   }
 }
 </script>

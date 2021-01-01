@@ -8,7 +8,7 @@
           :to="item.path",
           :exact="true",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
-          v-if="!isParent(item)",
+          v-if="!isParent(item) && $can(item.meta.permission)",
           @click.native="toggle(item)")
 
           b-icon(:icon="item.meta.icon", size="is-small")
@@ -17,7 +17,9 @@
 
           b-icon(icon="chevron-down", size="is-small", v-if="isParent(item)")
 
-        a(:aria-expanded="isExpanded(item)", v-else @click="toggle(item)")
+        a(:aria-expanded="isExpanded(item)"
+          @click="toggle(item)"
+          v-if="isParent(item) && item.children.some(childrenItem => $can(childrenItem.meta.permission))")
           b-icon(:icon="item.meta.icon", size="is-small")
           span {{ item.meta.label || item.name }}
 
@@ -25,7 +27,7 @@
 
         expanding(v-if="isParent(item)")
           ul(v-show="isExpanded(item)")
-            li(v-for="(subItem, index) in item.children" :key="index")
+            li(v-for="(subItem, index) in item.children" :key="index" v-if="$can(subItem.meta.permission)")
               router-link(:to="generatePath(item, subItem)", v-if="isMenuItem(subItem)")
                 b-icon(:icon="subItem.meta.icon", size="is-small")
                 span {{ subItem.meta && subItem.meta.label || subItem.name }}
@@ -37,7 +39,7 @@
           :to="item.path",
           :exact="true",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
-          v-if="!isParent(item)",
+          v-if="!isParent(item) && $can(item.meta.permission)",
           @click.native="toggle(item)")
 
           b-icon(:icon="item.meta.icon", size="is-small")
@@ -49,7 +51,9 @@
 
           b-icon(icon="chevron-down", size="is-small", v-if="isParent(item)")
 
-        a(:aria-expanded="isExpanded(item)", v-else @click="toggle(item)")
+        a(:aria-expanded="isExpanded(item)"
+          @click="toggle(item)"
+          v-if="isParent(item) && item.children.some(childrenItem => $can(childrenItem.meta.permission))")
           b-icon(:icon="item.meta.icon", size="is-small")
           span {{ item.meta.label || item.name }}
 
@@ -57,7 +61,7 @@
 
         expanding(v-if="isParent(item)")
           ul(v-show="isExpanded(item)")
-            li(v-for="(subItem, index) in item.children" :key="index")
+            li(v-for="(subItem, index) in item.children" :key="index" v-if="$can(subItem.meta.permission)")
               router-link(:to="generatePath(item, subItem)", v-if="isMenuItem(subItem)")
                 b-icon(:icon="subItem.meta.icon", size="is-small")
                 span {{ subItem.meta && subItem.meta.label || subItem.name }}

@@ -1,0 +1,86 @@
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Inject } from 'vue-typedi'
+import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
+import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
+import { PermissionGroupForm } from '@/Scandinaver/RBAC/Domain/PermissionGroupForm'
+import { permissions } from '@/permissions/permission.type'
+
+@Component({
+  components: {},
+})
+export default class ListGroupsComponent extends Vue {
+  @Inject()
+  private service: PermissionGroupService
+
+  permissionGroups: PermissionGroup[] = []
+  search: string = ''
+  loading: boolean = false
+  private isComponentModalActive: boolean = false
+  private edited: PermissionGroupForm = {
+    id: null,
+    name: '',
+    slug: '',
+    description: '',
+  }
+  permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
+
+  async mounted() {
+    await this.load()
+  }
+
+  async load() {
+    this.loading = true
+    this.permissionGroups = await this.service.getAll()
+    this.loading = false
+  }
+
+  edit(permissionGroup: PermissionGroup) {
+    this.edited = permissionGroup.toDTO()
+    this.showCreateModal()
+  }
+
+  async create() {
+    if (this.edited.id) {
+      await this.service.update(this.edited.id, this.edited)
+    } else {
+      await this.service.create(this.edited)
+    }
+    await this.load()
+    this.closeCreateModal()
+  }
+
+  showCreateModal() {
+    this.isComponentModalActive = true
+  }
+
+  closeCreateModal() {
+    this.edited = {
+      id: null,
+      name: '',
+      slug: '',
+      description: '',
+    };
+    this.isComponentModalActive = false
+  }
+
+  async remove(row: PermissionGroup) {
+    await this.$buefy.dialog.confirm({
+      message: 'Удалить?',
+      onConfirm: async () => {
+        await this.service.destroy(row)
+        this.$buefy.snackbar.open('Группа удалена')
+        await this.load()
+      },
+    })
+  }
+
+  async find() {
+    this.permissionGroups = await this.service.search(this.search)
+  }
+}

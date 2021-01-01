@@ -4,9 +4,11 @@
       <b-loading :is-full-page="false" :active="assetsLoading" :can-cancel="true"></b-loading>
       <b-tabs>
         <b-tab-item :label="$t('words')">
-          <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">
-            {{$t('add')}}
-          </button>
+          <Can :do="permissions.CREATE_ASSET">
+            <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">
+              {{$t('add')}}
+            </button>
+          </Can>
           <ul>
             <draggable
                     group="1"
@@ -26,9 +28,11 @@
           </ul>
         </b-tab-item>
         <b-tab-item :label="$t('sentences')">
-          <button class="button is-small" style="margin: 10px 0;" @click="addAsset(2)">
-            {{$t('add')}}
-          </button>
+          <Can :do="permissions.CREATE_ASSET">
+            <button class="button is-small" style="margin: 10px 0;" @click="addAsset(2)">
+              {{$t('add')}}
+            </button>
+          </Can>
           <ul>
             <draggable
                     group="1"

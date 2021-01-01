@@ -17,6 +17,6 @@ export default class LogService extends BaseService<Log> {
   }
 
   async destroy(log: Log) {
-    return this.repository.delete(log)
+    return this.repository.delete(log.getId())
   }
 }

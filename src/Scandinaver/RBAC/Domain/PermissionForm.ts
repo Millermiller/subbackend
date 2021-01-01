@@ -1,5 +1,8 @@
+
 export interface PermissionForm {
-  title: string
+  id: number | null
+  name: string
   slug: string
   description: string
+  group: number | null
 }

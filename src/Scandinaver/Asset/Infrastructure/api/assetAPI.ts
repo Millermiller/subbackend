@@ -21,16 +21,16 @@ export namespace API {
       return request.get(`/${language}/assets`)
     }
 
-    updateAsset(asset: Asset, data: any): Promise<AxiosResponse> {
-      return request.put(`/asset/${asset.getId()}`, data)
+    updateAsset(id: number|string, data: any): Promise<AxiosResponse> {
+      return request.put(`/asset/${id}`, data)
     }
 
     save(asset: Asset): Promise<AxiosResponse> {
       return request.put(`/asset/${asset.getId()}`, asset)
     }
 
-    destroyAsset(language: string, asset: Asset): Promise<AxiosResponse> {
-      return request.delete(`/${language}/asset/${asset.id}`)
+    destroyAsset(language: string, id: number|string): Promise<AxiosResponse> {
+      return request.delete(`/${language}/asset/${id}`)
     }
 
     addAsset(language: string, type: any): Promise<AxiosResponse> {
@@ -85,11 +85,11 @@ export namespace API {
       throw new Error('Method not implemented.')
     }
 
-    delete(entity: Asset): Promise<any> {
+    delete(id: number): Promise<any> {
       throw new Error('Method not implemented.')
     }
 
-    update(entity: Asset, data: any): Promise<AxiosResponse<Asset>> {
+    update(id: number, data: any): Promise<AxiosResponse<Asset>> {
       throw new Error('Method not implemented.')
     }
   }

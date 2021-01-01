@@ -3,9 +3,11 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
         <h4 class="title text-center">Тексты</h4>
-        <button class="button is-small" style="margin: 10px 0;" @click="showSettingsModal">
-          Добавить
-        </button>
+        <Can :do="permissions.CREATE_TEXT">
+          <button class="button is-small" style="margin: 10px 0;" @click="showSettingsModal">
+            Добавить
+          </button>
+        </Can>
         <b-table :data="texts" paginated narrowed :loading="loading" per-page="10">
           <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
             {{ props.row.id }}
@@ -23,15 +25,21 @@
             <img class="avatar-small" :src="props.row.image" />
           </b-table-column>
           <b-table-column custom-key="actions" v-slot="props">
-            <button class="button is-warning is-small" @click="edit(props.row)">
-              <b-icon icon="pencil" size="is-small"></b-icon>
-            </button>
-            <button class="button is-warning is-small ml-1" @click="setVisibility(props.row)">
-              <b-icon :icon="icon(props.row)" size="is-small"></b-icon>
-            </button>
-            <button class="button is-danger is-small ml-1" @click="remove(props.row)">
-              <b-icon icon="close-circle" size="is-small"></b-icon>
-            </button>
+            <Can :do="permissions.UPDATE_TEXT">
+              <button class="button is-warning is-small" @click="edit(props.row)">
+                <b-icon icon="pencil" size="is-small"></b-icon>
+              </button>
+            </Can>
+            <Can :do="permissions.UPDATE_TEXT">
+              <button class="button is-warning is-small ml-1" @click="setVisibility(props.row)">
+                <b-icon :icon="icon(props.row)" size="is-small"></b-icon>
+              </button>
+            </Can>
+            <Can :do="permissions.DELETE_TEXT">
+              <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+                <b-icon icon="close-circle" size="is-small"></b-icon>
+              </button>
+            </Can>
           </b-table-column>
         </b-table>
       </article>

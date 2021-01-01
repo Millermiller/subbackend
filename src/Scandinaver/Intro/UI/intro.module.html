@@ -3,11 +3,13 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
         <h4 class="title text-center">Intro.vue</h4>
-        <b-field>
-          <p class="control">
-            <button class="button is-success" @click="add">Добавить</button>
-          </p>
-        </b-field>
+        <Can :do="permissions.CREATE_INTRO">
+          <b-field>
+            <p class="control">
+              <button class="button is-success" @click="add">Добавить</button>
+            </p>
+          </b-field>
+        </Can>
         <b-table :data="intros" paginated narrowed :loading="loading" per-page="10" striped hoverable>
           <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
             {{ props.row.id }}
@@ -34,12 +36,16 @@
           </b-table-column>
 
           <b-table-column custom-key="actions" width="100" v-slot="props">
-            <button class="button is-warning is-small" @click="edit(props.row)">
-              <b-icon icon="pencil" size="is-small"></b-icon>
-            </button>
-            <button class="button is-danger is-small ml-1" @click="remove(props.row)">
-              <b-icon icon="close-circle" size="is-small"></b-icon>
-            </button>
+            <Can :do="permissions.UPDATE_INTRO">
+              <button class="button is-warning is-small" @click="edit(props.row)">
+                <b-icon icon="pencil" size="is-small"></b-icon>
+              </button>
+            </Can>
+            <Can :do="permissions.DELETE_INTRO">
+              <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+                <b-icon icon="close-circle" size="is-small"></b-icon>
+              </button>
+            </Can>
           </b-table-column>
         </b-table>
       </article>

@@ -4,22 +4,36 @@ import { Inject } from 'vue-typedi'
 import PermissionService from '@/Scandinaver/RBAC/Application/permission.service'
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import { PermissionForm } from '@/Scandinaver/RBAC/Domain/PermissionForm'
+import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
+import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
 })
 export default class ListPermissionsComponent extends Vue {
   @Inject()
-  private service: PermissionService
+  private permissionService: PermissionService
+
+  @Inject()
+  private permissionGroupService: PermissionGroupService
 
   permissions: Permission[] = []
-  search: string = ''
-  loading: boolean = false
+  private groups: PermissionGroup[] = []
+  private loading: boolean = false
   private isComponentModalActive: boolean = false
   private edited: PermissionForm = {
-    title: '',
+    id: null,
+    name: '',
     slug: '',
     description: '',
+    group: null,
+  }
+  permissionsList: {}
+
+  constructor() {
+    super();
+    this.permissionsList = permissions;
   }
 
   async mounted() {
@@ -28,16 +42,22 @@ export default class ListPermissionsComponent extends Vue {
 
   async load() {
     this.loading = true
-    this.permissions = await this.service.getAll()
+    this.permissions = await this.permissionService.getAll()
+    this.groups = await this.permissionGroupService.getAll()
     this.loading = false
   }
 
-  edit(row: any) {
-    this.$router.push({ name: 'permission', params: { id: row.id } })
+  edit(permission: Permission) {
+    this.edited = permission.toDTO()
+    this.showCreateModal()
   }
 
   async create() {
-    await this.service.create(this.edited)
+    if (this.edited.id) {
+      await this.permissionService.update(this.edited.id, this.edited)
+    } else {
+      await this.permissionService.create(this.edited)
+    }
     await this.load()
     this.closeCreateModal()
   }
@@ -47,6 +67,13 @@ export default class ListPermissionsComponent extends Vue {
   }
 
   closeCreateModal() {
+    this.edited = {
+      id: null,
+      name: '',
+      slug: '',
+      description: '',
+      group: null,
+    };
     this.isComponentModalActive = false
   }
 
@@ -54,14 +81,10 @@ export default class ListPermissionsComponent extends Vue {
     await this.$buefy.dialog.confirm({
       message: 'Удалить?',
       onConfirm: async () => {
-        await this.service.destroy(row)
+        await this.permissionService.destroy(row)
         this.$buefy.snackbar.open('Разрешение удалено')
         await this.load()
       },
     })
-  }
-
-  async find() {
-    this.permissions = await this.service.search(this.search)
   }
 }

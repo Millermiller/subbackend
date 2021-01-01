@@ -7,6 +7,7 @@ import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import * as events from '@/events/events.type'
 import CardService from '@/Scandinaver/Asset/Application/card.service'
 import draggable from 'vuedraggable'
+import { permissions } from '@/permissions/permission.type'
 import Translate from './translate.component/index.vue'
 import AssetComponent from './asset.component/index.vue'
 import CardComponent from './card.component/index.vue'
@@ -44,6 +45,12 @@ export default class AssetsModule extends Vue {
     title: '',
   }
   translates: Card[] = []
+  permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   mounted() {
     this.load()

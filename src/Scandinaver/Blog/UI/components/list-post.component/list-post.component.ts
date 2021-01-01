@@ -3,6 +3,7 @@ import Post from '@/Scandinaver/Blog/Domain/Post'
 import Vue from 'vue'
 import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -11,9 +12,15 @@ export default class ListPostComponent extends Vue {
   @Inject()
   private service: BlogService
 
-  articles: Post[] = []
-  search: string = ''
-  loading: boolean = false
+  private articles: Post[] = []
+  private search: string = ''
+  private loading: boolean = false
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   created() {
     this.load()
@@ -38,6 +45,10 @@ export default class ListPostComponent extends Vue {
 
   edit(row: any) {
     this.$router.push({ name: 'post', params: { id: row.id } })
+  }
+
+  create() {
+    this.$router.push({ name: 'add-post' })
   }
 
   async find() {

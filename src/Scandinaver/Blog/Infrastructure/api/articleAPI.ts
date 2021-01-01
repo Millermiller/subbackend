@@ -14,16 +14,16 @@ export namespace API {
       return request.get('/post')
     }
 
-    delete(entity: Post): Promise<AxiosResponse> {
-      return request.delete(`/post/${entity.getId()}`)
+    delete(id: number): Promise<AxiosResponse> {
+      return request.delete(`/post/${id}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
       return request.get(`/post/${id}`)
     }
 
-    update(entity: Post, form: any): Promise<AxiosResponse> {
-      return request.post(`/post/${entity.getId()}`, form)
+    update(id: number, form: any): Promise<AxiosResponse> {
+      return request.post(`/post/${id}`, form)
     }
 
     create(data: any) {

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import { Inject } from 'vue-typedi'
 import TextService from '@/Scandinaver/Translate/Application/text.service'
 import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
+import { permissions } from '@/permissions/permission.type'
 import Modal from './modal.component/index.vue'
 
 export class TranslateForm {
@@ -29,6 +30,12 @@ export default class TranslatesModule extends Vue {
 
   private texts: Translate[] = []
   private isComponentModalActive: boolean = false
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   icon(row: any) {
     return row.published ? 'eye' : 'eye-off'

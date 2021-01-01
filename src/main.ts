@@ -10,17 +10,20 @@ import 'buefy/dist/buefy.css'
 import './assets/css/style.css'
 import './assets/scss/app.scss'
 import i18n from '@/utils/i18n'
+import { abilitiesPlugin, Can } from '@casl/vue'
 import { router } from './router'
 import App from './App.vue'
 
 
+Vue.use(abilitiesPlugin, store.getters.ability)
+Vue.component('Can', Can)
 Vue.use(Buefy, {
   defaultSnackbarDuration: 2000,
   defaultNoticeQueue: false,
 })
 Vue.use(VueCookies)
 Vue.use(VueI18n)
-Vue.use(VueTypedi);
+Vue.use(VueTypedi)
 Vue.use(VueProgressBar, {
   color: '#7957d5',
   failedColor: '#ff3860',

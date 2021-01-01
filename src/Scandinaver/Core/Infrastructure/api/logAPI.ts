@@ -14,16 +14,16 @@ export namespace API {
       return request.get('/log')
     }
 
-    delete(log: Log): Promise<AxiosResponse> {
-      return request.delete(`/log/${log.getId()}`)
+    delete(id: number): Promise<AxiosResponse> {
+      return request.delete(`/log/${id}`)
     }
 
     one(id: number): Promise<AxiosResponse<Log>> {
       return request.get(`/log/${id}`)
     }
 
-    update(log: Log, form: any): Promise<AxiosResponse<Log>> {
-      return request.put(`/log/${log.getId()}`, form)
+    update(id: number, form: any): Promise<AxiosResponse<Log>> {
+      return request.put(`/log/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse> {

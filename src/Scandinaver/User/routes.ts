@@ -1,5 +1,6 @@
 import i18n from '@/utils/i18n'
 import { requireAuth } from '@/router'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
@@ -7,6 +8,7 @@ const routes = [
     path: '/users',
     meta: {
       icon: 'account-group',
+      permission: permissions.VIEW_USERS,
       menuitem: true,
       type: 'main',
       label: i18n.t('users'),
@@ -18,6 +20,7 @@ const routes = [
         name: 'list-user',
         path: '',
         meta: {
+          permission: permissions.VIEW_USERS,
           menuitem: false,
         },
         component: () => import('@/Scandinaver/User/UI/list-user.component/index.vue'),
@@ -26,6 +29,7 @@ const routes = [
         name: 'user',
         path: ':id',
         meta: {
+          permission: permissions.UPDATE_USER,
           menuitem: false,
         },
         component: () => import('@/Scandinaver/User/UI/edit-user.component/index.vue'),

@@ -1,14 +1,16 @@
 import { requireAuth } from '@/router'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
     name: 'Introjs',
     path: '/intro',
     meta: {
+      permission: permissions.VIEW_INTRO,
       icon: 'tooltip-text',
       menuitem: true,
-      label: 'Introjs',
       type: 'main',
+      label: 'Introjs',
     },
     component: () => import('@/Scandinaver/Intro/UI/intro.module.vue'),
     beforeEnter: requireAuth,
@@ -17,7 +19,7 @@ const routes = [
         name: 'Intro',
         path: ':id',
         meta: {
-          icon: 'fa-tachometer',
+          permission: permissions.UPDATE_INTRO,
           menuitem: false,
         },
         component: () => import('@/Scandinaver/Intro/UI/components/edit-intro.component/index.vue'),

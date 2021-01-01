@@ -1,5 +1,6 @@
 <div>
   <div class="tile is-ancestor">
-    <router-view></router-view>
+    <router-view v-if="access"></router-view>
+    <template v-if="!access">Forbidden</template>
   </div>
 </div>

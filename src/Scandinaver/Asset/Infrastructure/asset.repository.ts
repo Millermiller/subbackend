@@ -2,14 +2,14 @@ import { Inject, Service } from 'typedi'
 import { plainToClass } from 'class-transformer'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { API } from '@/Scandinaver/Asset/Infrastructure/api/assetAPI'
-import { BaseRepository } from '@/Scandinaver/Core/Infrastructure/base.repository'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import AssetApi = API.AssetApi
+import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repository'
 
 @Service()
-export default class AssetRepository extends BaseRepository<Asset> {
+export default class AssetRepository extends CommonRepository<Asset> {
   @Inject()
-  private api: AssetApi
+  protected api: AssetApi
 
   public all(): Promise<Asset[]> {
     throw new Error('Method not implemented.')
@@ -22,15 +22,6 @@ export default class AssetRepository extends BaseRepository<Asset> {
   public async create(type: number): Promise<any> {
     const { language } = store.getters
     return this.api.addAsset(language, type).then(response => response)
-  }
-
-  public async update(asset: Asset, data: any): Promise<Asset> {
-    return this.api.updateAsset(asset, data).then(response => plainToClass(Asset, response.data))
-  }
-
-  public async delete(asset: Asset): Promise<any> {
-    const { language } = store.getters
-    return this.api.destroyAsset(language, asset).then(response => response)
   }
 
   public async allByLanguage(): Promise<{ words: Asset[]; sentences: Asset[] }> {

@@ -6,6 +6,7 @@ import { testModule } from '@/Scandinaver/Asset/Infrastructure/store/test'
 import { assetModule } from '@/Scandinaver/Asset/Infrastructure/store/asset'
 import { puzzleModule } from '@/Scandinaver/Puzzle/Infrastructure/store'
 import { dashboardModule } from '@/Scandinaver/Dashboard/Infrastructure/store'
+import { rbacModule } from '@/Scandinaver/RBAC/Infrastructure/store'
 
 // State
 class State {
@@ -120,5 +121,6 @@ export const root = new Module({
     testModule,
     puzzleModule,
     dashboardModule,
+    rbacModule,
   },
 })

@@ -4,7 +4,6 @@ import { Service } from 'typedi'
 import Category from '@/Scandinaver/Blog/Domain/Category'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
-import Comment from '@/Scandinaver/Blog/Domain/Comment'
 
 export namespace API {
   @Service()
@@ -12,27 +11,27 @@ export namespace API {
     protected type: ClassType<Category> = Category
 
     all(): Promise<AxiosResponse<Category[]>> {
-      return request.get('/categories')
+      return request.get('/category')
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/categories/${id}`)
+      return request.get(`/category/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/categories', form)
+      return request.post('/category', form)
     }
 
-    delete(category: Category): Promise<AxiosResponse> {
-      return request.delete(`/categories/${category.getId()}`)
+    delete(id: number): Promise<AxiosResponse> {
+      return request.delete(`/category/${id}`)
     }
 
-    update(category: Category, form: any): Promise<AxiosResponse<Category>> {
-      return request.put(`/categories/${category.getId()}`, form)
+    update(id: number, form: any): Promise<AxiosResponse<Category>> {
+      return request.put(`/category/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Category[]>> {
-      return request.get(`/categories/search?q=${query}`)
+      return request.get(`/category/search?q=${query}`)
     }
   }
 }

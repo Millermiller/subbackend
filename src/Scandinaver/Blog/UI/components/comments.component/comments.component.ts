@@ -2,6 +2,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Inject } from 'vue-typedi'
 import CommentService from '@/Scandinaver/Blog/Application/CommentService'
 import Comment from '@/Scandinaver/Blog/Domain/Comment'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -13,6 +14,12 @@ export default class CommentsComponent extends Vue {
   comments: Comment[] = []
   search: string = ''
   loading: boolean = false
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   mounted() {
     this.load()

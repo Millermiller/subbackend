@@ -12,7 +12,7 @@ export default class RoleService extends BaseService<Role> {
 
   create(input: RoleForm): Promise<Role> | Role {
     const role = new Role()
-    role.title = input.title
+    role.name = input.name
     role.slug = input.slug
     role.description = input.description
     return this.roleRepository.create(role.toDTO())
@@ -27,14 +27,14 @@ export default class RoleService extends BaseService<Role> {
   }
 
   async destroy(role: Role) {
-    return this.roleRepository.delete(role)
+    return this.roleRepository.delete(role.getId())
   }
 
   async search(query: string): Promise<Role[]> {
     return this.roleRepository.find(query)
   }
 
-  async update(roleId: any, role: RoleForm): Promise<Role> {
+  async update(roleId: number|string, role: RoleForm): Promise<Role> {
     return this.roleRepository.update(roleId, role)
   }
 

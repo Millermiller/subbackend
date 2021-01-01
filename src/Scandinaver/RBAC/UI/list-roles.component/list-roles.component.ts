@@ -4,6 +4,8 @@ import { Inject } from 'vue-typedi'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 import { RoleForm } from '@/Scandinaver/RBAC/Domain/RoleForm'
+import Permission from '@/Scandinaver/RBAC/Domain/Permission'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -18,9 +20,15 @@ export default class ListRolesComponent extends Vue {
   private isComponentModalActive: boolean = false
   private edited: RoleForm = {
     id: null,
-    title: '',
+    name: '',
     slug: '',
     description: '',
+  }
+  permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
   }
 
   async mounted() {
@@ -33,14 +41,14 @@ export default class ListRolesComponent extends Vue {
     this.loading = false
   }
 
-  edit(row: any) {
-    this.edited = row
+  edit(role: Role) {
+    this.edited = role.toDTO()
     this.showCreateModal()
   }
 
   async create() {
     if (this.edited.id) {
-      await this.service.update(this.edited, this.edited)
+      await this.service.update(this.edited.id, this.edited)
     } else {
       await this.service.create(this.edited)
     }
@@ -53,18 +61,29 @@ export default class ListRolesComponent extends Vue {
   }
 
   closeCreateModal() {
+    this.edited = {
+      id: null,
+      name: '',
+      slug: '',
+      description: '',
+    };
     this.isComponentModalActive = false
   }
 
-  async remove(row: Role) {
+  async remove(role: Role) {
     await this.$buefy.dialog.confirm({
       message: 'Удалить?',
       onConfirm: async () => {
-        await this.service.destroy(row)
+        await this.service.destroy(role)
         this.$buefy.snackbar.open('Роль удалена')
         await this.load()
       },
     })
+  }
+
+  async removePermission(role: Role, permission: Permission) {
+    await this.service.detachPermission(role, permission)
+    await this.load()
   }
 
   async find() {

@@ -1,5 +1,6 @@
 import { requireAuth } from '@/router'
 import i18n from '@/utils/i18n'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
         path: 'list',
         meta: {
           icon: 'format-list-bulleted',
+          permission: permissions.VIEW_POSTS,
           menuitem: true,
           type: 'main',
           label: i18n.t('list'),
@@ -31,6 +33,7 @@ const routes = [
         component: () => import('@/Scandinaver/Blog/UI/components/add-post.component/index.vue'),
         meta: {
           menuitem: true,
+          permission: permissions.CREATE_POST,
           type: 'main',
           label: i18n.t('addPost'),
           icon: 'book-plus-multiple',
@@ -42,6 +45,7 @@ const routes = [
         component: () => import('@/Scandinaver/Blog/UI/components/edit-category.component/index.vue'),
         meta: {
           menuitem: true,
+          permission: permissions.VIEW_CATEGORIES,
           type: 'main',
           label: i18n.t('categories'),
           icon: 'shape-outline',
@@ -53,6 +57,7 @@ const routes = [
         component: () => import('@/Scandinaver/Blog/UI/components/comments.component/index.vue'),
         meta: {
           menuitem: true,
+          permission: permissions.VIEW_COMMENTS,
           type: 'main',
           label: i18n.t('comments'),
           icon: 'comment-text-multiple-outline',
@@ -63,6 +68,7 @@ const routes = [
         path: ':id',
         meta: {
           menuitem: false,
+          permission: permissions.UPDATE_POST,
         },
         component: () => import('@/Scandinaver/Blog/UI/components/edit-post.component/index.vue'),
       },

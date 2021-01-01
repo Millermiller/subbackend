@@ -1,6 +1,8 @@
 <article class="tile is-child box">
   <div class="tile is-parent">
-    <a class="button is-success" @click="add">Добавить</a>
+    <Can :do="permissions.CREATE_PAGE">
+      <a class="button is-success" @click="add">Добавить</a>
+    </Can>
     <a class="button is-success" @click="find">Найти</a>
   </div>
   <b-table :data="pages" paginated narrowed :loading="loading" per-page="10">
@@ -25,12 +27,16 @@
     </b-table-column>
 
     <b-table-column custom-key="actions" v-slot="props">
-      <button class="button is-warning" @click="edit(props.row)">
-        <b-icon icon="account-edit" size="is-small"></b-icon>
-      </button>
-      <button class="button is-danger" @click="remove(props.row)">
-        <b-icon icon="account-remove" size="is-small"></b-icon>
-      </button>
+      <Can :do="permissions.UPDATE_PAGE">
+        <button class="button is-warning" @click="edit(props.row)">
+          <b-icon icon="account-edit" size="is-small"></b-icon>
+        </button>
+      </Can>
+      <Can :do="permissions.DELETE_PAGE">
+        <button class="button is-danger" @click="remove(props.row)">
+          <b-icon icon="account-remove" size="is-small"></b-icon>
+        </button>
+      </Can>
     </b-table-column>
   </b-table>
 </article>

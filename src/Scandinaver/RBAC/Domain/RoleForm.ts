@@ -1,6 +1,6 @@
 export interface RoleForm {
   id: number | null
-  title: string
+  name: string
   slug: string
   description: string
 }

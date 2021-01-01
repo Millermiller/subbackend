@@ -12,6 +12,6 @@ export abstract class BaseAPI<D extends Entity> {
   abstract all(): Promise<AxiosResponse<D[]>>
   abstract one(id: number): Promise<AxiosResponse<D>>
   abstract create(data: any): Promise<AxiosResponse<D>>
-  abstract update(entity: D, data: any): Promise<AxiosResponse<D>>
-  abstract delete(entity: D): Promise<any>
+  abstract update(id: number|string, data: any): Promise<AxiosResponse<D>>
+  abstract delete(id: number|string): Promise<any>
 }

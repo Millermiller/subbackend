@@ -18,12 +18,16 @@
       {{ props.row.text }}
     </b-table-column>
     <b-table-column custom-key="actions" v-slot="props">
-      <button class="button is-warning is-small" @click="edit(props.row)">
-        <b-icon icon="pencil" size="is-small"></b-icon>
-      </button>
-      <button class="button is-danger is-small ml-1" @click="remove(props.row)">
-        <b-icon icon="close-circle" size="is-small"></b-icon>
-      </button>
+      <Can :do="permissions.UPDATE_COMMENT">
+        <button class="button is-warning is-small" @click="edit(props.row)">
+          <b-icon icon="pencil" size="is-small"></b-icon>
+        </button>
+      </Can>
+      <Can :do="permissions.DELETE_COMMENT">
+        <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+          <b-icon icon="close-circle" size="is-small"></b-icon>
+        </button>
+      </Can>
     </b-table-column>
   </b-table>
 </article>

@@ -1,18 +1,17 @@
-import { requireAuth } from '@/router'
-import i18n from '@/utils/i18n'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
     name: 'dashboard',
     path: '/',
     meta: {
+      permission: permissions.VIEW_DASHBOARD,
       icon: 'monitor-dashboard',
       menuitem: true,
       label: 'Dashboard',
       type: 'main',
     },
-    component: require('@/Scandinaver/Dashboard/UI/dashboard.module').default,
-    // component: () => import('@/modules/Dashboard/dashboard.module.vue'),
+    component: () => import('@/Scandinaver/Dashboard/UI/dashboard.module.vue'),
   },
 ]
 

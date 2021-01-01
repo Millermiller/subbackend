@@ -1,39 +1,53 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
     <b-field>
-      <b-input placeholder="Поиск..." type="search" icon="magnify" v-model="search"></b-input>
-      <p class="control">
-        <button class="button is-info" @click="find">Search</button>
-      </p>
-      <button class="button is-success ml-10" @click="showCreateModal()">Новая роль</button>
+      <Can :do='permissions.CREATE_ROLE'>
+        <button class="button is-success ml-10" @click="showCreateModal()">Новая роль</button>
+      </Can>
     </b-field>
     <b-field> </b-field>
-    <b-table :data="roles" paginated narrowed :loading="loading" per-page="10" detailed detail-key="id">
+    <b-table :data="roles" paginated narrowed :loading="loading" per-page="10" detailed detail-key="_id">
       <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
-        {{ props.row.id }}
+        {{ props.row.getId() }}
       </b-table-column>
-      <b-table-column field="title" label="Title" sortable v-slot="props">
-        {{ props.row.title }}
+      <b-table-column field="name" label="Title" sortable searchable v-slot="props">
+        {{ props.row.name }}
       </b-table-column>
-      <b-table-column field="slug" label="Slug" sortable v-slot="props">
+      <b-table-column field="slug" label="Slug" sortable searchable v-slot="props">
         {{ props.row.slug }}
       </b-table-column>
       <b-table-column field="description" label="Description" sortable v-slot="props">
         {{ props.row.description }}
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">
-        <button class="button is-warning is-small" @click="edit(props.row)">
-          <b-icon icon="pencil" size="is-small"></b-icon>
-        </button>
-        <button class="button is-danger is-small ml-1" @click="remove(props.row)">
-          <b-icon icon="close-circle" size="is-small"></b-icon>
-        </button>
+        <Can :do='permissions.UPDATE_ROLE'>
+          <button class="button is-warning is-small"
+                  @click="edit(props.row)">
+            <b-icon icon="pencil" size="is-small"></b-icon>
+          </button>
+        </Can>
+        <Can :do='permissions.DELETE_ROLE'>
+          <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+            <b-icon icon="close-circle" size="is-small"></b-icon>
+          </button>
+        </Can>
       </b-table-column>
       <template slot="detail" slot-scope="props">
         <article class="media">
           <div class="media-content">
             <div class="content">
-              <p v-for="permission in props.row.permissions">{{permission.title}}</p>
+              <b-taglist>
+                <Can :do='permissions.UPDATE_ROLE'>
+                  <b-tag type="is-info"
+                         closable
+                         @close="removePermission(props.row, permission)"
+                         v-for="permission in props.row.permissions">{{permission.name}}</b-tag>
+                </Can>
+                <Can not :do='permissions.UPDATE_ROLE'>
+                  <b-tag type="is-info"
+                         v-for="permission in props.row.permissions">{{permission.name}}</b-tag>
+                </Can>
+              </b-taglist>
             </div>
           </div>
         </article>
@@ -44,7 +58,7 @@
     <div class="modal-card" style="width: 400px">
       <section class="modal-card-body">
         <b-field label="Title">
-          <b-input type="text" v-model="edited.title"></b-input>
+          <b-input type="text" v-model="edited.name"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">

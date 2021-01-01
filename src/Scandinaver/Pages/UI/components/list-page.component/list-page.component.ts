@@ -3,6 +3,7 @@ import PageService from '@/Scandinaver/Pages/Application/page.service'
 import Page from '@/Scandinaver/Pages/Domain/Page'
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -14,7 +15,13 @@ export default class ListPageComponent extends Vue {
   private pages: Page[] = []
   private newpage: Page = new Page()
   private search: string = ''
-  loading: boolean = false
+  private loading: boolean = false
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   mounted() {
     this.load()

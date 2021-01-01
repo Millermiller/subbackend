@@ -11,27 +11,27 @@ export namespace API {
     protected type: ClassType<Comment> = Comment
 
     all(): Promise<AxiosResponse<Comment[]>> {
-      return request.get('/comments')
+      return request.get('/comment')
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/comments/${id}`)
+      return request.get(`/comment/${id}`)
     }
 
     create(data: any) {
-      return request.post('/post', data)
+      return request.post('/comment', data)
     }
 
-    update(entity: Comment, form: any): Promise<AxiosResponse> {
-      return request.post(`/comments/${entity.getId()}`, form)
+    update(id: number, form: any): Promise<AxiosResponse> {
+      return request.post(`/comment/${id}`, form)
     }
 
-    delete(entity: Comment): Promise<AxiosResponse> {
-      return request.delete(`/comments/${entity.getId()}`)
+    delete(id: number): Promise<AxiosResponse> {
+      return request.delete(`/comment/${id}`)
     }
 
     search(query: string): Promise<AxiosResponse<Comment[]>> {
-      return request.get(`/comments/search?q=${query}`)
+      return request.get(`/comment/search?q=${query}`)
     }
   }
 }

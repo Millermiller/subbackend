@@ -17,7 +17,7 @@ export default class CommentService extends BaseService<Comment> {
   }
 
   async destroy(comment: Comment) {
-    return this.repository.delete(comment)
+    return this.repository.delete(comment.getId())
   }
 
   async search(query: string): Promise<Comment[]> {
@@ -25,6 +25,6 @@ export default class CommentService extends BaseService<Comment> {
   }
 
   async update(comment: Comment): Promise<Comment> {
-    return this.repository.update(comment, comment)
+    return this.repository.update(comment.getId(), comment)
   }
 }

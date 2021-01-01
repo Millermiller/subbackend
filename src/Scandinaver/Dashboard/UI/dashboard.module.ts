@@ -6,6 +6,8 @@ import LogService from '@/Scandinaver/Dashboard/Application/log.service'
 import { Inject } from 'vue-typedi'
 import MessageService from '@/Scandinaver/Dashboard/Application/message.service'
 import DashboardService from '@/Scandinaver/Dashboard/Application/dashboard.service'
+import { Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
 import MessageComponent from './message.component/index.vue'
 import LogComponent from './log.component/index.vue'
 import WordsWidget from './words-widget.component/index.vue'
@@ -43,6 +45,16 @@ export default class DashboardModule extends Vue {
   private messages: {} = {}
   private loading: boolean = false
   defaultSortDirection: string = 'desc'
+  private access: boolean = false
+
+  created() {
+    this.access = this.$ability.can(this.$route.meta.permission)
+  }
+
+  @Watch('$route')
+  private onRouteChange(route: Route) {
+    this.access = this.$ability.can(route.meta.permission)
+  }
 
   see(row: any) {}
 

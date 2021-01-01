@@ -39,12 +39,12 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   public async updateAsset(asset: Asset, data: any) {
-    await this.repository.update(asset, data)
+    await this.repository.update(asset.getId(), data)
     // store.commit(PATCH_PERSONAL, { asset: response.data, index: this.index })
   }
 
   public async destroyAsset(asset: Asset) {
-    await this.repository.delete(asset)
+    await this.repository.delete(asset.getId())
   }
 
   public async forvoAction(asset: Asset): Promise<{ count: number; all: number }> {
@@ -52,7 +52,7 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   async updateTitle(asset: Asset, title: string): Promise<Asset> {
-    return this.repository.update(asset, { title })
+    return this.repository.update(asset.getId(), { title })
   }
 
   async removeTranslate(data: Translate) {

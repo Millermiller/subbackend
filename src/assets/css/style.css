@@ -174,11 +174,6 @@ span[tooltip]:hover:after {
     background-color: #fff;
 }
 
-.tag {
-    cursor: pointer;
-    position: relative;
-}
-
 .slideInDown {
     animation-name: slideInDown;
 }

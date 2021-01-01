@@ -1,4 +1,4 @@
-import i18n from '@/utils/i18n'
+import { permissions } from '@/permissions/permission.type'
 import { requireAuth } from '@/router'
 
 const routes = [
@@ -18,6 +18,7 @@ const routes = [
         name: 'list-roles',
         path: 'roles',
         meta: {
+          permission: permissions.VIEW_ROLES,
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',
@@ -29,6 +30,7 @@ const routes = [
         name: 'list-permissions',
         path: 'permissions',
         meta: {
+          permission: permissions.VIEW_PERMISSIONS,
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',
@@ -37,9 +39,22 @@ const routes = [
         component: () => import('@/Scandinaver/RBAC/UI/list-permissions.component/index.vue'),
       },
       {
+        name: 'list-groups',
+        path: 'groups',
+        meta: {
+          permission: permissions.VIEW_PERMISSION_GROUP,
+          icon: 'format-list-bulleted',
+          menuitem: true,
+          type: 'main',
+          label: 'groups',
+        },
+        component: () => import('@/Scandinaver/RBAC/UI/list-groups.component/index.vue'),
+      },
+      {
         name: 'settings',
         path: 'settings',
         meta: {
+          permission: permissions.VIEW_RBAC_SETTINGS,
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',

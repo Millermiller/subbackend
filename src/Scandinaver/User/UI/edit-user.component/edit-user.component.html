@@ -1,4 +1,5 @@
 <div class="tile is-ancestor box">
+  <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
   <div class="tile is-parent is-4">
     <article class="tile is-child">
       <b-datepicker v-model="date" inline="inline"></b-datepicker>
@@ -6,7 +7,7 @@
       <button class="button is-light" @click="back()">Назад</button>
     </article>
   </div>
-  <div class="tile is-parent">
+  <div class="tile is-parent is-8 is-vertical">
     <article class="tile is-child">
       <section>
         <b-field label="Login">
@@ -19,6 +20,11 @@
           <b-input v-model="user.name"></b-input>
         </b-field>
       </section>
+    </article>
+    <article class="tile is-child">
+      <b-checkbox v-for="role in roles" v-model="user.roles" :native-value="role">
+        {{ role.name }}
+      </b-checkbox>
     </article>
   </div>
 </div>

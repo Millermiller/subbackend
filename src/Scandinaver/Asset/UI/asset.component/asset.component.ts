@@ -3,6 +3,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import { Inject } from 'vue-typedi'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   components: {},
@@ -14,6 +15,12 @@ export default class AssetComponent extends Vue {
   @Prop({ required: true })
   private item!: Asset
   private loaded: boolean = false
+  permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   async load(id: number) {
     this.$eventHub.$emit('setCardsLoading', true)

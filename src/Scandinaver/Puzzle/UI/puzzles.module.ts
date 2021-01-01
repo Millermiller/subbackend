@@ -3,6 +3,7 @@ import Vue from 'vue'
 import PuzzleService from '@/Scandinaver/Puzzle/Application/puzzle.service'
 import { Inject } from 'vue-typedi'
 import { Puzzle } from '@/Scandinaver/Puzzle/Domain/Puzzle'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({})
 export default class PuzzlesModule extends Vue {
@@ -17,6 +18,12 @@ export default class PuzzlesModule extends Vue {
   private puzzles: Puzzle[] = []
   private isComponentModalActive: boolean = false
   private loading: boolean = false
+  private permissions: {}
+
+  constructor() {
+    super();
+    this.permissions = permissions;
+  }
 
   mounted() {
     this.load()

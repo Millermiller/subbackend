@@ -9,21 +9,11 @@
               <small v-if="error" style="color:#ff4949">
                 {{ error }}
               </small>
-              <b-field
-                label="Login"
-                :type="{'is-danger': loginerror}"
-                :message="loginerror">
-                <b-input
-                  v-model="form.login"
-                  placeholder="Login"
-                  maxlength="30"
-                ></b-input>
+              <b-field label="Login" :type="{ 'is-danger': loginerror }" :message="loginerror">
+                <b-input v-model="form.login" placeholder="Login" maxlength="30"></b-input>
               </b-field>
 
-              <b-field
-                label="Password"
-                :type="{'is-danger': passerror}"
-                :message="passerror">
+              <b-field label="Password" :type="{ 'is-danger': passerror }" :message="passerror">
                 <b-input
                   v-model="form.password"
                   type="password"
@@ -48,28 +38,37 @@ import Component from 'vue-class-component'
 import Vue from 'vue'
 import ILoginForm from '@/Scandinaver/Core/Domain/Contract/ILoginForm'
 import { LoginService } from '@/Scandinaver/Core/Application/login.service'
+import { permissions } from '@/permissions/permission.type'
 
 @Component({
   name: 'Login',
   components: {},
 })
 export default class Login extends Vue {
-  isLoading: boolean = false
+  private isLoading: boolean = false
 
-  form: ILoginForm = {
+  private form: ILoginForm = {
     login: '',
     password: '',
   }
 
-  error: string = ''
-  loginerror: string = ''
-  passerror: string = ''
-  loading: boolean = false
+  private error: string = ''
+  private loginerror: string = ''
+  private passerror: string = ''
+  private loading: boolean = false
 
   submit() {
     this.isLoading = true
     LoginService.login(this.form)
-      .then(() => this.$router.push('/'))
+      .then(() => {
+        if (this.$ability.can(permissions.ACCESS_ADMIN_PAGE)) {
+          this.$router.push('/')
+        } else {
+          this.loginerror = 'FORBIDDEN'
+          LoginService.logout()
+          this.isLoading = false
+        }
+      })
       .catch((error: any) => {
         if (error.errors) {
           this.loginerror = error.errors.login[0] || ''

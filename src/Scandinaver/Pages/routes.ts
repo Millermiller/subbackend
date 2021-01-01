@@ -1,10 +1,12 @@
 import i18n from '@/utils/i18n'
+import { permissions } from '@/permissions/permission.type'
 
 const routes = [
   {
     name: 'pages',
     path: '/pages',
     meta: {
+      permission: permissions.VIEW_PAGES,
       icon: 'book-open-page-variant',
       menuitem: true,
       type: 'main',
@@ -16,6 +18,7 @@ const routes = [
         name: 'list-pages',
         path: 'list',
         meta: {
+          permission: permissions.VIEW_PAGES,
           icon: 'format-list-bulleted',
           menuitem: true,
           type: 'main',
@@ -27,6 +30,7 @@ const routes = [
         name: 'add-page',
         path: 'add',
         meta: {
+          permission: permissions.CREATE_PAGE,
           icon: 'file-plus',
           menuitem: true,
           type: 'main',
@@ -38,6 +42,7 @@ const routes = [
         name: 'page',
         path: ':id',
         meta: {
+          permission: permissions.UPDATE_PAGE,
           menuitem: false,
         },
         component: () => import('@/Scandinaver/Pages/UI/components/edit-page.component/index.vue'),

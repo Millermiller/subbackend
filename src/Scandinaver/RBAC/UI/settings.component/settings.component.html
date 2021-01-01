@@ -3,15 +3,29 @@
     <b-loading :is-full-page="false" v-model="loading" :can-cancel="false"></b-loading>
     <table class="table is-bordered is-hoverable">
       <tr>
-        <td></td>
-        <td v-for="role in roles">{{role.title}}</td>
-      </tr>
-      <tr v-for="permission in permissions">
-        <td>{{permission.title}}</td>
-        <td v-for="role in roles">
-          <b-checkbox v-model="model[role.getId()][permission.getId()]" @input="change(role, permission, $event)"></b-checkbox>
+        <td>
+          <b-button size="is-small" @click="toggle(null)">collapse</b-button>
         </td>
+        <td v-for="role in roles">{{role.name}}</td>
       </tr>
+      <template v-for="(group, index) in groups">
+        <tr>
+          <td :colspan="roles.length + 1" @click="toggle(group.getId())" class="pointer">
+            <span>{{group.name}}</span>
+              <b-icon
+                :icon="expanded === group.getId() ? 'menu-down' : 'menu-up'">
+              </b-icon>
+          </td>
+        </tr>
+        <template v-if="expanded === group.getId() || expanded === null">
+            <tr v-for="permission in permissions.filter(perm => perm.group.getId() === group.getId())">
+              <td>{{permission.name}} <p class="text-danger">{{permission.slug}}</p></td>
+              <td v-for="role in roles">
+                <b-checkbox v-model="model[role.getId()][permission.getId()]" @input="change(role, permission, $event)"></b-checkbox>
+              </td>
+            </tr>
+        </template>
+      </template>
     </table>
   </article>
 </div>

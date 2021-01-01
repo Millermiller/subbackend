@@ -21,7 +21,7 @@ export default class BlogService extends BaseService<Post> {
   }
 
   async destroy(post: Post) {
-    return this.repository.delete(post)
+    return this.repository.delete(post.getId())
   }
 
   async search(query: string): Promise<Post[]> {
@@ -29,6 +29,6 @@ export default class BlogService extends BaseService<Post> {
   }
 
   async update(post: Post): Promise<Post> {
-    return this.repository.update(post, post)
+    return this.repository.update(post.getId(), post)
   }
 }

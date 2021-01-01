@@ -1,6 +1,6 @@
 {
   "name": "subbackend",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode development --host admin.scandinaver.local --port 8181",
@@ -11,6 +11,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@casl/ability": "^4.1.6",
+    "@casl/vue": "^1.1.1",
     "@mdi/font": "^5.1.45",
     "@tinymce/tinymce-vue": "^3.2.2",
     "@types/reflect-metadata": "^0.1.0",
@@ -93,9 +95,11 @@
       "lines-between-class-members": "off",
       "import/no-unresolved": "off",
       "import/named": "off",
+      "import/first": "off",
       "no-shadow": "off",
       "max-len": "off",
       "no-nested-ternary": "off",
+      "no-lonely-if": "off",
       "semi": "off",
       "import/prefer-default-export": "off",
       "import/newline-after-import": "off",

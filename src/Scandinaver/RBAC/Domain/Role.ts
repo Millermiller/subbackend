@@ -4,11 +4,15 @@ import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import { Type } from 'class-transformer'
 
 export default class Role extends Entity {
-  private id: number
-  private _title: string
+  private _id: number
+  private _name: string
   private _slug: string
   private _description: string
   private _permissions: Permission[]
+
+  set id(value: number) {
+    this._id = value
+  }
 
   get description(): string {
     return this._description
@@ -26,21 +30,22 @@ export default class Role extends Entity {
     this._slug = value
   }
 
-  get title(): string {
-    return this._title
+  get name(): string {
+    return this._name
   }
 
-  set title(value: string) {
-    this._title = value
+  set name(value: string) {
+    this._name = value
   }
 
   getId(): number | string {
-    return this.id
+    return this._id
   }
 
   get permissions(): Permission[] {
     return this._permissions
   }
+
   @Type(() => Permission)
   set permissions(value: Permission[]) {
     this._permissions = value
@@ -48,7 +53,8 @@ export default class Role extends Entity {
 
   toDTO(): RoleForm {
     return {
-      title: this._title,
+      id: this._id,
+      name: this._name,
       slug: this._slug,
       description: this._description,
     }

@@ -1,11 +1,23 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import { PermissionForm } from '@/Scandinaver/RBAC/Domain/PermissionForm'
+import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
+import { Type } from 'class-transformer'
 
 export default class Permission extends Entity {
-  private id: number
-  private _title: string
+  private _id: number
+  private _name: string
   private _slug: string
   private _description: string
+  private _group: PermissionGroup | null
+
+  constructor() {
+    super();
+    this._group = null
+  }
+
+  set id(value: number) {
+    this._id = value
+  }
 
   get description(): string {
     return this._description
@@ -23,23 +35,34 @@ export default class Permission extends Entity {
     this._slug = value
   }
 
-  get title(): string {
-    return this._title
+  get name(): string {
+    return this._name
   }
 
-  set title(value: string) {
-    this._title = value
+  set name(value: string) {
+    this._name = value
+  }
+
+  get group(): PermissionGroup | null {
+    return this._group
+  }
+
+  @Type(() => PermissionGroup)
+  set group(value: PermissionGroup | null) {
+    this._group = value
   }
 
   getId(): number | string {
-    return this.id
+    return this._id
   }
 
   toDTO(): PermissionForm {
     return {
-      title: this._title,
+      id: this._id,
+      name: this._name,
       slug: this._slug,
       description: this._description,
+      group: this._group === null ? null : this._group.getId(),
     }
   }
 }

@@ -55,4 +55,5 @@ export const messages = {
   tariffs: 'Тарифы',
   addTariff: 'Новый тариф',
   messages: 'Сообщения',
+  passings: 'Прохождения',
 }

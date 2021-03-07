@@ -16,7 +16,7 @@ export default class UserService extends BaseService<User> {
     user.password = form.password
     user.roles = form.roles
     user._password_confirmation = form.password
-    return this.userRepository.create(user)
+    return this.userRepository.create(user.toDTO())
   }
 
   async getAll(): Promise<User[]> {

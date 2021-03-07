@@ -1,11 +1,11 @@
 import Plan from '@/Scandinaver/Plan/Domain/Plan'
-import Role from '@/Scandinaver/RBAC/Domain/Role'
+import { RoleForm } from '@/Scandinaver/RBAC/Domain/RoleForm'
 
 export default interface UserForm {
   id: number | null
   email: string
   login: string
   password: string
-  roles: Role[]
+  roles: RoleForm[]
   plan: Plan | null
 }

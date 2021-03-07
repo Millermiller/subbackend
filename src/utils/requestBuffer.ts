@@ -16,7 +16,8 @@ requestBuffer.interceptors.request.use(
       config.baseURL += `/${language}`
     }
     config.responseType = 'arraybuffer'
-    config.headers.common.Authorization = Vue.$cookies.get('authfrontend._token.local')
+    const cookieName = (process.env.VUE_APP_COOKIE_NAME as string) || 'authfrontend._token'
+    config.headers.common.Authorization = Vue.$cookies.get(cookieName)
     return config
   },
   (error) => {

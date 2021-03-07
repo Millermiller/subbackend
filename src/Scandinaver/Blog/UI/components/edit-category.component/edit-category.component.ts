@@ -13,7 +13,7 @@ export default class EditCategoryComponent extends Vue {
 
   private edited: Category = new Category()
   private categories: Category[] = [new Category()]
-  private newcategory: string = ''
+  public newcategory: string = ''
   private isComponentModalActive: boolean = false
   private loading: boolean = false
 

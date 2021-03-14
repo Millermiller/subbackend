@@ -34,6 +34,6 @@ export default class ImageComponent extends Vue {
 
   async upload() {
     await this.service.saveImage(this.item, this.fileUploadFormData)
-    this.$buefy.snackbar.open('Обновлено!')
+    this.$buefy.snackbar.open(this.$tc('updated'))
   }
 }

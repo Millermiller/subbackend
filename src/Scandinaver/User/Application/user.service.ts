@@ -3,6 +3,8 @@ import User from '@/Scandinaver/User/Domain/User'
 import { Inject, Service } from 'typedi'
 import UserRepository from '@/Scandinaver/User/Infrastructure/user.repository'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
+import RoleService from '@/Scandinaver/RBAC/Application/role.service'
+import Role from '@/Scandinaver/RBAC/Domain/Role'
 
 @Service()
 export default class UserService extends BaseService<User> {
@@ -14,7 +16,7 @@ export default class UserService extends BaseService<User> {
     user.login = form.login
     user.email = form.email
     user.password = form.password
-    user.roles = form.roles
+    user.roles = form.roles.map(roleForm => Role.fromDTO(roleForm))
     user._password_confirmation = form.password
     return this.userRepository.create(user.toDTO())
   }

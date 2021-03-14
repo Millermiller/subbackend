@@ -3,8 +3,8 @@
   <div class="tile is-parent is-4">
     <article class="tile is-child">
       <b-datepicker v-model="date" inline="inline"></b-datepicker>
-      <button class="button is-success" @click="save()">Сохранить</button>
-      <button class="button is-light" @click="back()">Назад</button>
+      <button class="button is-success" @click="save()">{{ $t('save') }}</button>
+      <button class="button is-light" @click="back()">{{ $t('back') }}</button>
     </article>
   </div>
   <div class="tile is-parent is-8 is-vertical">

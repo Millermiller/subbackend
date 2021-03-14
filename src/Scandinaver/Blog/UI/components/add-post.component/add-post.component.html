@@ -4,7 +4,7 @@
       <b-field :label="$t('title')">
         <b-input v-model="post.title" required="required"></b-input>
       </b-field>
-      <b-field label="Анонс">
+      <b-field :label="$t('preview')">
         <b-input v-model="post.anonse" type="textarea"></b-input>
       </b-field>
       <editor v-model="post.content"
@@ -46,7 +46,7 @@
       <b-field label="seotitle">
         <b-input v-model="post.seotitle"></b-input>
       </b-field>
-      <b-field label="Анонс">
+      <b-field label="seodescription">
         <b-input v-model="post.seodescription" type="textarea"></b-input>
       </b-field>
       <b-field label="keywords">

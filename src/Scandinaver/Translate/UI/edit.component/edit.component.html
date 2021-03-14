@@ -7,7 +7,7 @@
             <b-tab-item label="Tooltips" selected="selected">
               <tooltips :item="text" :extras="extras" :sentences="sentences" @update="updateTooltips"></tooltips>
             </b-tab-item>
-            <b-tab-item label="Перевод">
+            <b-tab-item :label="$t('translate')">
               <translate
                 :text="text"
                 :cleartext="cleartext"
@@ -15,16 +15,16 @@
                 @update="updateSentences"
               ></translate>
             </b-tab-item>
-            <b-tab-item label="Синонимы">
+            <b-tab-item :label="t('synonyms')">
               <synonyms :sentences="sentences"></synonyms>
             </b-tab-item>
-            <b-tab-item label="Изображение">
+            <b-tab-item :label="t('image')">
               <images :item="text"></images>
             </b-tab-item>
-            <b-tab-item label="Описание">
+            <b-tab-item :label="t('description')">
               <description :item="text"></description>
             </b-tab-item>
-            <b-tab-item label="Тест">
+            <b-tab-item :label="t('test')">
               <test :textdata="text" :dictionary="dictionary" :extras="extras" :cleartext="cleartext"></test>
             </b-tab-item>
           </b-tabs>

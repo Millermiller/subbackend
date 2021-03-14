@@ -5,7 +5,7 @@
       <b-tabs>
         <b-tab-item :label="$t('words')">
           <Can :do="permissions.CREATE_ASSET">
-            <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">
+            <button class="button is-small" style="margin: 10px 0;" @click="addAssetModal(1)">
               {{$t('add')}}
             </button>
           </Can>
@@ -99,14 +99,29 @@
     <div class="box">
       <div class="translate-section">
         <p>
-          Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}} level={{editedAsset.level}}
-          favorite={{editedAsset.favorite}}
+          Asset id={{assetForm.id}} basic={{assetForm.basic}} type={{assetForm.type}} level={{assetForm.level}}
+          favorite={{assetForm.favorite}}
         </p>
-        <div class="b-field">
-          <b-input type="text" placeholder="text" v-model="editedAsset.title" style="width: 380px;"></b-input>
-          <b-input type="text" placeholder="text" v-model="editedAsset.level" style="width: 80px;"></b-input>
+        <div>
+          <b-field :label="$t('title')">
+            <b-input type="text" :placeholder="$t('title')" v-model="assetForm.title" style="width: 380px;"></b-input>
+          </b-field>
+          <b-field :label="$t('level')">
+            <b-input type="text" :placeholder="$t('level')" v-model="assetForm.level" style="width: 80px;"></b-input>
+          </b-field>
+          <b-field :label="$t('type')">
+            <b-select v-model="assetForm.type">
+              <option
+                v-for="type in types"
+                :value="type.id"
+                :key="type.id">
+                {{ $t(type.title) }}
+              </option>
+            </b-select>
+          </b-field>
+
           <p class="control">
-            <button class="button is-success" @click="updateTitle">
+            <button class="button is-success" @click="save">
               {{$t('save')}}
             </button>
           </p>

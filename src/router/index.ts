@@ -12,6 +12,7 @@ import planRoutes from '@/Scandinaver/Plan/routes'
 import settingsRoutes from '@/Scandinaver/Settings/routes'
 import userRoutes from '@/Scandinaver/User/routes'
 import rbacRoutes from '@/Scandinaver/RBAC/routes'
+import passingRoutes from '@/Scandinaver/Test/routes'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,7 @@ export const routes: RouteConfig[] = [
   ...translateRoutes,
   ...userRoutes,
   ...rbacRoutes,
+  ...passingRoutes,
   {
     path: '*',
     redirect: '/is',

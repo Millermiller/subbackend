@@ -36,13 +36,13 @@ export default class PuzzlesModule extends Vue {
   async addPuzzle() {
     await this.service.create({ text: this.edited.text, translate: this.edited.translate })
     await this.load()
-    this.$buefy.snackbar.open('Загружено!')
+    this.$buefy.snackbar.open(this.$tc('uploaded'))
     this.closeSettingsModal()
   }
 
   async remove(puzzle: Puzzle) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(puzzle)
         await this.load()

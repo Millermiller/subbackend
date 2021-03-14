@@ -8,6 +8,8 @@ import * as events from '@/events/events.type'
 import CardService from '@/Scandinaver/Asset/Application/card.service'
 import draggable from 'vuedraggable'
 import { permissions } from '@/permissions/permission.type'
+import { AssetType } from '@/Scandinaver/Asset/Domain/Enum/AssetType'
+import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
 import Translate from './translate.component/index.vue'
 import AssetComponent from './asset.component/index.vue'
 import CardComponent from './card.component/index.vue'
@@ -37,15 +39,26 @@ export default class AssetsModule extends Vue {
   private searchloaded: boolean = false
   private sentencesloaded: boolean = false
   private isComponentModalActive: boolean = false
-  private editedAsset: any = {
-    id: '',
-    basic: '',
-    type: '',
-    level: '',
+  private editedAsset: Asset
+  private assetForm: AssetDTO = {
+    id: null,
+    basic: true,
+    type: 0,
+    level: 0,
     title: '',
   }
   translates: Card[] = []
   permissions: {}
+  private types: any = [
+    {
+      id: AssetType.WORDS,
+      title: 'words',
+    },
+    {
+      id: AssetType.SENTENCES,
+      title: 'sentences',
+    },
+  ]
 
   constructor() {
     super();
@@ -96,8 +109,9 @@ export default class AssetsModule extends Vue {
     this.cardsLoading = state
   }
 
-  assetEdit(item: Asset): void {
-    this.editedAsset = item
+  assetEdit(asset: Asset): void {
+    this.editedAsset = asset
+    this.assetForm = asset.toDTO()
     this.isComponentModalActive = true
   }
 
@@ -114,7 +128,7 @@ export default class AssetsModule extends Vue {
     try {
       await this.cardService.removeFromAsset(data.card, data.asset)
       this.cardsLoading = false
-      this.$buefy.snackbar.open('карточка удалена')
+      this.$buefy.snackbar.open(this.$tc('cardRemoved'))
     } catch (e) {
       //
     } finally {
@@ -127,16 +141,35 @@ export default class AssetsModule extends Vue {
     await this.service.destroyAsset(asset)
     await this.load()
     this.assetsLoading = false
-    this.$buefy.snackbar.open('словарь удален')
+    this.$buefy.snackbar.open(this.$tc('assetRemoved'))
   }
 
-  async addAsset(type: number) {
-    await this.service.create(type)
-    await this.load()
+  async addAssetModal(type: AssetType) {
+    this.isComponentModalActive = true
+    this.assetForm.type = type
+    this.assetForm.level = this.getMaxLevel(type) + 1
   }
 
-  async updateTitle() {
-    await this.service.updateTitle(this.editedAsset, this.editedAsset.title)
+  private getMaxLevel(type: AssetType): number {
+    let data: Asset[] = []
+
+    if (type === AssetType.WORDS) {
+      data = this.words
+    }
+
+    if (type === AssetType.SENTENCES) {
+      data = this.sentences
+    }
+
+    return data.reduce((prev, current) => ((prev.level > current.level) ? prev : current)).level
+  }
+
+  async save() {
+    if (this.assetForm.id) {
+      await this.service.updateAsset(this.editedAsset, this.assetForm)
+    } else {
+      await this.service.create(this.assetForm)
+    }
     this.$buefy.snackbar.open(this.$tc('updated'))
     await this.load()
     this.isComponentModalActive = false
@@ -185,13 +218,13 @@ export default class AssetsModule extends Vue {
     const asset = this.$store.getters.activeAssets
 
     if (!asset) {
-      this.$buefy.snackbar.open('не выбран словарь')
+      this.$buefy.snackbar.open(this.$tc('assetNotSelected'))
     }
     if (asset) {
       this.assetsLoading = true
       try {
         await this.cardService.addCardToAsset(card, asset)
-        this.$buefy.snackbar.open('карточка добавлена')
+        this.$buefy.snackbar.open(this.$tc('cardAdded'))
       } catch (e) {
         //
       } finally {

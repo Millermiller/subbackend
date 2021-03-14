@@ -1,12 +1,12 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
     <b-field>
-      <b-input placeholder="Поиск..." type="search" icon="magnify" v-model="search"></b-input>
+      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
       <p class="control">
         <button class="button is-info" @click="find">Search</button>
       </p>
       <Can :do="permissions.CREATE_PERMISSION_GROUP">
-        <button class="button is-success ml-10" @click="showCreateModal()">Новая группа</button>
+        <button class="button is-success ml-10" @click="showCreateModal()">{{ $t('newGroup') }}</button>
       </Can>
     </b-field>
     <b-field> </b-field>
@@ -56,10 +56,10 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="isComponentModalActive = false">
-          Закрыть
+          {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="create()">
-          Сохранить
+          {{ $t('save') }}
         </button>
       </footer>
     </div>

@@ -34,22 +34,22 @@ export default class ListPageComponent extends Vue {
   }
 
   add() {
-    this.$router.push({ name: 'Добавить страницу' })
+    this.$router.push({ name: 'add-page' })
   }
 
   async remove(row: any) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(row);
-        this.$buefy.snackbar.open('Страница удалена!')
+        this.$buefy.snackbar.open(this.$tc('pageRemoved'))
         await this.load()
       },
     })
   }
 
   edit(row: any) {
-    this.$router.push({ name: 'Страница', params: { id: row.id } })
+    this.$router.push({ name: 'page', params: { id: row.id } })
   }
 
   async find() {

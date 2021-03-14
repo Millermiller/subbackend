@@ -77,4 +77,8 @@ export const permissions = {
   VIEW_MESSAGES: 'view-messages',
   UPDATE_MESSAGE: 'update-message',
   DELETE_MESSAGE: 'delete-message',
+
+  VIEW_PASSINGS: 'view-passings',
+  UPDATE_PASSING: 'update-passing',
+  DELETE_PASSING: 'delete-passing',
 }

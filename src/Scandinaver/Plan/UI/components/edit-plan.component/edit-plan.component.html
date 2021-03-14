@@ -15,8 +15,8 @@
           <b-input v-model="plan.cost_per_month"></b-input>
         </b-field>
         <p class="control">
-          <button class="button is-success" @click="save()">Сохранить</button>
-          <button class="button is-light" @click="back()">Назад</button>
+          <button class="button is-success" @click="save()">{{ $t('save') }}</button>
+          <button class="button is-light" @click="back()">{{ $t('back') }}</button>
         </p>
       </section>
     </article>

@@ -1,12 +1,12 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
     <b-field>
-      <b-input placeholder="Поиск..." type="search" icon="magnify" v-model="search"></b-input>
+      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
       <p class="control">
         <button class="button is-info" @click="find">Search</button>
       </p>
       <Can :do="permissions.CREATE_USER">
-        <button class="button is-success ml-10" @click="showModal = true">Новый пользователь</button>
+        <button class="button is-success ml-10" @click="showModal = true">{{ $t('addUser') }}</button>
       </Can>
     </b-field>
     <b-table :data="users"
@@ -100,10 +100,10 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="closeModal()">
-          Закрыть
+          {{ $t('close') }}
         </button>
         <button class="button is-primary">
-          Сохранить
+          {{ $t('save') }}
         </button>
       </footer>
     </form>

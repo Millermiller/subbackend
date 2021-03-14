@@ -1,15 +1,15 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <b-field label="Название">
+      <b-field label="url">
         <b-input v-model="page.url"></b-input>
       </b-field>
 
-      <b-field label="Название">
+      <b-field :label="$t('title')">
         <b-input v-model="page.title"></b-input>
       </b-field>
 
-      <b-field label="Анонс">
+      <b-field :label="$t('preview')">
         <b-input v-model="page.description" type="textarea"></b-input>
       </b-field>
 
@@ -18,8 +18,8 @@
       </b-field>
 
       <p class="control">
-        <button class="button  is-success" @click="save()">Сохранить</button>
-        <button class="button  is-light" @click="back()">Назад</button>
+        <button class="button  is-success" @click="save()">{{ $t('save') }}</button>
+        <button class="button  is-light" @click="back()">{{ $t('back') }}</button>
       </p>
     </div>
   </div>

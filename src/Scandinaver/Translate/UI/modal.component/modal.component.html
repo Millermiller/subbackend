@@ -3,19 +3,19 @@
     <div class="columns">
       <div class="column">
         <p class="control">
-          <input class="input" type="text" v-model="form.title" placeholder="Название" />
+          <input class="input" type="text" v-model="form.title" :placeholder="$t('title')" />
         </p>
       </div>
     </div>
     <div class="columns">
       <div class="column is-6">
         <p class="control content">
-          <textarea class="textarea" placeholder="оригинал" v-model="form.origtext" style="height: 500px;"></textarea>
+          <textarea class="textarea" :placeholder="$t('original')" v-model="form.origtext" style="height: 500px;"></textarea>
         </p>
       </div>
       <div class="column is-6">
         <p class="control content">
-          <textarea class="textarea" placeholder="перевод" v-model="form.translate" style="height: 500px;"></textarea>
+          <textarea class="textarea" :placeholder="$t('translate')" v-model="form.translate" style="height: 500px;"></textarea>
         </p>
       </div>
     </div>

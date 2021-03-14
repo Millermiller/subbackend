@@ -19,7 +19,7 @@
     "axios": "^0.19.2",
     "buefy": "0.9.3",
     "canvas": "^2.6.1",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "core-js": "^3.4.4",
     "fibers": "^5.0.0",
     "moment": "^2.29.1",

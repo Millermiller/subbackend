@@ -71,10 +71,10 @@ export default class ListGroupsComponent extends Vue {
 
   async remove(row: PermissionGroup) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(row)
-        this.$buefy.snackbar.open('Группа удалена')
+        this.$buefy.snackbar.open(this.$tc('groupRemoved'))
         await this.load()
       },
     })

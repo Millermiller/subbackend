@@ -56,10 +56,10 @@ export default class ListPassingsComponent extends Vue {
 
   async remove(row: Passing) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.passingService.destroy(row)
-        this.$buefy.snackbar.open('Прохождение удалено')
+        this.$buefy.snackbar.open(this.$tc('passingRemoved'))
         await this.load()
       },
     })

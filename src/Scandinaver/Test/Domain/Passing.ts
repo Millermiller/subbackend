@@ -13,6 +13,7 @@ export default class Passing extends Entity {
   private _percent: number
   private _time: number
   private _errors: string[]
+  private _created: string
 
   getId(): number {
     return this._id;
@@ -74,6 +75,14 @@ export default class Passing extends Entity {
 
   set errors(value: string[]) {
     this._errors = value
+  }
+
+  get created(): string {
+    return this._created
+  }
+
+  set created(value: string) {
+    this._created = value
   }
 
   toDTO(): PassingForm {

@@ -19,11 +19,6 @@ export default class AssetRepository extends CommonRepository<Asset> {
     return this.api.one(assetId).then(response => plainToClass(Asset, response.data))
   }
 
-  public async create(type: number): Promise<any> {
-    const { language } = store.getters
-    return this.api.addAsset(language, type).then(response => response)
-  }
-
   public async allByLanguage(): Promise<{ words: Asset[]; sentences: Asset[] }> {
     const { language } = store.getters
     return this.api.getAssets(language).then(response => ({

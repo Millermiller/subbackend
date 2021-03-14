@@ -64,8 +64,8 @@ export default class MessagesPage extends Vue {
 
   async remove(row: any) {
     await this.service.destroy(row)
-    this.$buefy.snackbar.open('Сообщение удалено!')
-    this.load()
+    this.$buefy.snackbar.open(this.$tc('messageRemoved'))
+    await this.load()
   }
 }
 </script>

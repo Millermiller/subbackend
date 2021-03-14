@@ -3,7 +3,7 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
         <div class="tile is-parent">
-          <a class="button is-success" @click="add">Добавить</a>
+          <a class="button is-success" @click="add">{{ $t('add') }}</a>
         </div>
         <b-table :data="plans" paginated narrowed :loading="loading" per-page="10">
           <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">

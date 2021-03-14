@@ -13,8 +13,7 @@ export namespace API {
     protected type: ClassType<Asset> = Asset
 
     one(id: number): Promise<AxiosResponse<Asset>> {
-      const { language } = store.getters
-      return request.get(`/${language}/asset/${id}`)
+      return request.get(`/asset/${id}`)
     }
 
     getAssets(language: string): Promise<AxiosResponse<Responses.GetAssetsResponse>> {
@@ -29,23 +28,11 @@ export namespace API {
       return request.put(`/asset/${asset.getId()}`, asset)
     }
 
-    destroyAsset(language: string, id: number|string): Promise<AxiosResponse> {
-      return request.delete(`/${language}/asset/${id}`)
-    }
-
     addAsset(language: string, type: any): Promise<AxiosResponse> {
       return request.post(`/${language}/level`, { asset_id: type })
     }
 
-    updateAudio(formdata: FormData): Promise<AxiosResponse> {
-      return request.post('/audio', formdata)
-    }
-
     translate(data: any): Promise<AxiosResponse> {
-      return request.post('/translate', data)
-    }
-
-    changeUsedTranslate(data: any): Promise<AxiosResponse> {
       return request.post('/translate', data)
     }
 
@@ -53,24 +40,8 @@ export namespace API {
       return request.get(`/values/${card.word_id}`)
     }
 
-    getExamples(card: any): Promise<AxiosResponse> {
-      return request.get(`/examples/${card.id}`)
-    }
-
-    addCard(data: any): Promise<AxiosResponse> {
-      return request.post('/card', data)
-    }
-
     destroyCard(card: any): Promise<AxiosResponse> {
       return request.delete(`/card/${card.id}/${card.asset_id}`)
-    }
-
-    getTranslate(text: string, sentence: number): Promise<AxiosResponse> {
-      return request.get('/translate', { params: { word: text, sentence } })
-    }
-
-    reloadActiveAssets(id: any): Promise<AxiosResponse> {
-      return request.get(`/asset/${id}`)
     }
 
     updateTitle(id: number, data: any): Promise<AxiosResponse> {
@@ -82,11 +53,11 @@ export namespace API {
     }
 
     create(data: any): Promise<AxiosResponse<Asset>> {
-      throw new Error('Method not implemented.')
+      return request.post('/asset', data)
     }
 
     delete(id: number): Promise<any> {
-      throw new Error('Method not implemented.')
+      return request.delete(`/asset/${id}`)
     }
 
     update(id: number, data: any): Promise<AxiosResponse<Asset>> {

@@ -21,10 +21,10 @@
       style="height: 280px; width: 100%;"
       class="tile is-parent content"
       id="transarea"
-      placeholder="Поле для перевода"
+      :placeholder="$t('translate')"
       v-model="input"
       v-on:input="separate"
     ></textarea>
-    <button @click="clear" class="button is-primary">Очистить</button>
+    <button @click="clear" class="button is-primary">{{ $t('clear') }}</button>
   </div>
 </div>

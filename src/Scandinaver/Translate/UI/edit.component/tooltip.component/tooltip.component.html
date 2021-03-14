@@ -8,7 +8,7 @@
     <div class="column is-4">
       <div class="box" style="margin: 5px;">
         <button class="button is-small" style="margin: 10px 0;" @click="addExtra">
-          Добавить
+          {{ $t('add') }}
         </button>
         <extra
           v-for="(extra, index) in extras"
@@ -24,7 +24,7 @@
   </div>
   <div class="columns">
     <div class="column">
-      <button class="button is-primary" @click="$emit('update')">Сохранить</button>
+      <button class="button is-primary" @click="$emit('update')">{{ $t('save') }}</button>
     </div>
   </div>
 </div>

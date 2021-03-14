@@ -24,7 +24,7 @@ export default class DescriptionComponent extends Vue {
 
   async save() {
     await this.service.saveDescription(this.item, this.form.content)
-    this.$buefy.snackbar.open('Обновлено!')
+    this.$buefy.snackbar.open(this.$tc('updated'))
     this.$emit('reload')
   }
 

@@ -20,7 +20,7 @@
                 <input class="input" type="text" v-model="orig" placeholder="icelandic" />
               </p>
               <p class="control is-expanded">
-                <input class="input" type="email" v-model="translate" placeholder="перевод" />
+                <input class="input" type="email" v-model="translate" :placeholder="$t('translate')" />
               </p>
               <button class="button is-success" @click="add">{{$t('add')}}</button>
             </div>

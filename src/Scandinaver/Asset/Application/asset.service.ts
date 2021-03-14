@@ -8,6 +8,7 @@ import TranslateRepository from '@/Scandinaver/Asset/Infrastructure/translate.re
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import ForvoAPI = API.ForvoAPI
+import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
 
 @Service()
 export default class AssetService extends BaseService<Asset> {
@@ -20,8 +21,9 @@ export default class AssetService extends BaseService<Asset> {
   @Inject()
   private forvoApi: ForvoAPI
 
-  async create(type: number): Promise<Asset> {
-    return this.repository.create(type)
+  async create(data: AssetDTO): Promise<Asset> {
+    data.language = store.getters.language
+    return this.repository.create(data)
   }
 
   public async reload(asset: Asset) {

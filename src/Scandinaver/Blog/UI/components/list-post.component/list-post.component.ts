@@ -34,10 +34,10 @@ export default class ListPostComponent extends Vue {
 
   async remove(row: Post) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(row)
-        this.$buefy.snackbar.open('Статья удалена!')
+        this.$buefy.snackbar.open(this.$tc('postRemoved'))
         await this.load()
       },
     })

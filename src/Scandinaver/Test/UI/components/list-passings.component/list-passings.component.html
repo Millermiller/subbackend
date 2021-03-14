@@ -17,7 +17,9 @@
         {{ props.row.asset.title }}
       </b-table-column>
       <b-table-column field="user.login" label="User" sortable searchable v-slot="props">
-        {{ props.row.user.login }}
+        <router-link :to="{ name: 'user', params: { id: props.row.user.id }}">
+          {{ props.row.user.login }}
+        </router-link>
       </b-table-column>
       <b-table-column field="completed" label="Completed" sortable v-slot="props">
         <b-tag :type="tagClass(props.row.completed)">{{props.row.completed}}</b-tag>
@@ -26,10 +28,13 @@
         {{ props.row.percent }}
       </b-table-column>
       <b-table-column field="errors" label="Errors" sortable v-slot="props">
-        {{ props.row.errors.length }}
+        <span :class="{'danger': props.row.errors.length > 0}">{{ props.row.errors.length }}</span>
       </b-table-column>
       <b-table-column field="formattedTime" label="Time" sortable v-slot="props">
         {{ props.row.formattedTime }}
+      </b-table-column>
+      <b-table-column field="created" label="Created" sortable v-slot="props">
+        {{ props.row.created }}
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">
         <Can :do="permissions.UPDATE_PASSING">
@@ -71,10 +76,10 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="isComponentModalActive = false">
-          Закрыть
+          {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="save()">
-          Сохранить
+          {{ $t('save') }}
         </button>
       </footer>
     </div>

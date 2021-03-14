@@ -2,12 +2,12 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child box">
-        <h4 class="title text-center">Паззлы</h4>
+        <h4 class="title text-center">{{ $t('puzzles') }}</h4>
         <Can :do="permissions.CREATE_PUZZLE">
         <b-field>
             <p class="control">
               <button class="button is-success" @click="showSettingsModal">
-                Добавить
+                {{ $t('add') }}
               </button>
             </p>
           </b-field>
@@ -52,10 +52,10 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="isComponentModalActive = false">
-          Закрыть
+          {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="addPuzzle">
-          Сохранить
+          {{ $t('save') }}
         </button>
       </footer>
     </div>

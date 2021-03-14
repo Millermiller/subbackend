@@ -5,8 +5,8 @@
 
       <froala :tag="'textarea'" :config="config" v-model="form.content"></froala>
 
-      <b-field label="Страница">
-        <b-select placeholder="Выберите страницу" v-model="form.page">
+      <b-field :label="$t('page')">
+        <b-select :placeholder="$t('selectPage')" v-model="form.page">
           <option v-for="page in pages" :value="page" :key="page">
             {{ page }}
           </option>
@@ -38,8 +38,8 @@
       </div>
 
       <p class="control">
-        <button class="button  is-success" @click="save()">Сохранить</button>
-        <button class="button  is-light" @click="back()">Назад</button>
+        <button class="button  is-success" @click="save()">{{ $t('save') }}</button>
+        <button class="button  is-light" @click="back()">{{ $t('back') }}</button>
       </p>
     </div>
   </div>

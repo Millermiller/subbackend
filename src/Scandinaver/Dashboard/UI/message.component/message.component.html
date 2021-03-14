@@ -1,8 +1,8 @@
 <li class="columns">
   <p :class="['column', 'is-3', 'is-small']">{{ item.name }}</p>
 
-  <span v-if="item.readed" class="tag is-success  is-3" @click="openModalBasic">прочитано</span>
-  <span v-if="!item.readed" class="tag is-success  is-3" @click="openModalBasic">не прочитано</span>
+  <span v-if="item.readed" class="tag is-success  is-3" @click="openModalBasic">{{ $t('read') }}</span>
+  <span v-if="!item.readed" class="tag is-success  is-3" @click="openModalBasic">{{ $t('notRead') }}</span>
 
   <p :class="['column']">{{ item.subject }}</p>
   <p :class="['column']">{{ item.created_at }}</p>

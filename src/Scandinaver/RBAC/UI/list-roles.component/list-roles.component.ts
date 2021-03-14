@@ -72,10 +72,10 @@ export default class ListRolesComponent extends Vue {
 
   async remove(role: Role) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(role)
-        this.$buefy.snackbar.open('Роль удалена')
+        this.$buefy.snackbar.open(this.$tc('roleRemoved'))
         await this.load()
       },
     })

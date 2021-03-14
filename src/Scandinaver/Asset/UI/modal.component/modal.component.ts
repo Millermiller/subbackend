@@ -98,7 +98,7 @@ export default class ModalComponent extends Vue {
     await this.assetService.getAsset(asset.getId())
     this.$emit('close')
     this.loading = false
-    this.$buefy.snackbar.open('карточка обновлена')
+    this.$buefy.snackbar.open(this.$tc('cardUpdated'))
   }
 
   play() {

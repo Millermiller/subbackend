@@ -56,7 +56,7 @@ export default class TranslatesModule extends Vue {
 
   async add() {
     await this.service.create(this.form);
-    this.$buefy.snackbar.open('Загружено')
+    this.$buefy.snackbar.open(this.$tc('loaded'))
     await this.load()
     this.closeSettingsModal()
   }

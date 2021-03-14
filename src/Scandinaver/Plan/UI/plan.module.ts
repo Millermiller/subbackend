@@ -25,19 +25,19 @@ export default class PlanModule extends Vue {
   }
 
   edit(row: any) {
-    this.$router.push({ name: 'Тариф', params: { id: row.id } })
+    this.$router.push({ name: 'edit-plan', params: { id: row.id } })
   }
 
   add() {
-    this.$router.push({ name: 'Добавить тариф' })
+    this.$router.push({ name: 'add-plan' })
   }
 
   async remove(row: Plan) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(row)
-        this.$buefy.snackbar.open('Тариф удален!')
+        this.$buefy.snackbar.open(this.$tc('tariffRemoved'))
         await this.load()
       },
     })

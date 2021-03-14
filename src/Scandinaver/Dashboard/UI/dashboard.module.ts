@@ -61,12 +61,12 @@ export default class DashboardModule extends Vue {
   async remove(row: any) {
     await this.logService.destroy(row)
     this.log = await this.logService.getAll()
-    this.$buefy.snackbar.open('Запись удалена!')
+    this.$buefy.snackbar.open(this.$tc('messageRemoved'))
   }
 
   async deleteMessage(message: Message) {
     await this.messageService.destroy(message)
-    this.$buefy.snackbar.open('Запись удалена!')
+    this.$buefy.snackbar.open(this.$tc('messageRemoved'))
   }
 
   async mounted() {

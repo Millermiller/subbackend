@@ -41,15 +41,15 @@ export default class IntroModule extends Vue {
 
   async remove(row: any) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.service.destroy(row)
       },
     })
   }
 
-  mounted() {
-    this.load()
+  async mounted() {
+    await this.load()
   }
 
   add() {

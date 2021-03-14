@@ -25,7 +25,7 @@ const routes = [
       icon: 'upload',
       menuitem: true,
       type: 'sub',
-      label: 'Загрузка',
+      label: i18n.t('upload'),
       language: true,
     },
     beforeEnter: requireAuth,

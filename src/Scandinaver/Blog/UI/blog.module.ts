@@ -19,6 +19,6 @@ export default class BlogModule extends Vue {
   }
 
   edit(row: any) {
-    this.$router.push({ name: 'Статья', params: { id: row.id } })
+    this.$router.push({ name: 'post', params: { id: row.id } })
   }
 }

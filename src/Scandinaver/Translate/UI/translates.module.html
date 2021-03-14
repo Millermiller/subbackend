@@ -2,10 +2,10 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child box">
-        <h4 class="title text-center">Тексты</h4>
+        <h4 class="title text-center">{{ $t('texts') }}</h4>
         <Can :do="permissions.CREATE_TEXT">
           <button class="button is-small" style="margin: 10px 0;" @click="showSettingsModal">
-            Добавить
+            {{ $t('add') }}
           </button>
         </Can>
         <b-table :data="texts" paginated narrowed :loading="loading" per-page="10">
@@ -50,25 +50,25 @@
       <div class="columns">
         <div class="column">
           <p class="control">
-            <input class="input" type="text" v-model="form.title" placeholder="Название" />
+            <input class="input" type="text" v-model="form.title" :placeholder="$t('title')" />
           </p>
         </div>
       </div>
       <div class="columns">
         <div class="column is-6">
-          <b-field label="оригинал">
+          <b-field :label="t('original')">
             <b-input type="textarea" v-model="form.origtext" style="height: 500px;"></b-input>
           </b-field>
         </div>
         <div class="columns is-6">
-          <b-field label="перевод">
+          <b-field :label="t('translate')">
             <b-input type="textarea" v-model="form.translate" style="height: 500px;"></b-input>
           </b-field>
         </div>
       </div>
       <div class="columns">
         <div class="column">
-          <button class="button is-succes" @click="add">Сохранить</button>
+          <button class="button is-success" @click="add">{{ $t('save') }}</button>
         </div>
       </div>
     </div>

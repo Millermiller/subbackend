@@ -2,7 +2,7 @@
   <article class="tile is-child box">
     <b-field>
       <Can :do='permissions.CREATE_ROLE'>
-        <button class="button is-success ml-10" @click="showCreateModal()">Новая роль</button>
+        <button class="button is-success ml-10" @click="showCreateModal()">{{ $t('newRole') }}</button>
       </Can>
     </b-field>
     <b-field> </b-field>
@@ -73,10 +73,10 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="isComponentModalActive = false">
-          Закрыть
+          {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="create()">
-          Сохранить
+          {{ $t('save') }}
         </button>
       </footer>
     </div>

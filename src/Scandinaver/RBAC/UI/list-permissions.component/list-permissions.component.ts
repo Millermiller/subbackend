@@ -79,10 +79,10 @@ export default class ListPermissionsComponent extends Vue {
 
   async remove(row: Permission) {
     await this.$buefy.dialog.confirm({
-      message: 'Удалить?',
+      message: this.$tc('confirmRemove'),
       onConfirm: async () => {
         await this.permissionService.destroy(row)
-        this.$buefy.snackbar.open('Разрешение удалено')
+        this.$buefy.snackbar.open(this.$tc('permissionRemoved'))
         await this.load()
       },
     })

@@ -5,7 +5,7 @@
       <button class="button is-info" @click="find">{{ $t('search') }}</button>
     </p>
     <Can :do="permissions.CREATE_POST">
-      <button class="button is-success ml-10" @click="create()">Новая статья</button>
+      <button class="button is-success ml-10" @click="create()">{{ $t('newPost') }}</button>
     </Can>
   </b-field>
   <b-table :data="articles" paginated="paginated" narrowed="" :loading="loading" per-page="10" hoverable striped>

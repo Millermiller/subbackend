@@ -1,7 +1,6 @@
 import { Inject, Service } from 'typedi'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import CardRepository from '@/Scandinaver/Asset/Infrastructure/card.repository'
-import FavouriteRepository from '@/Scandinaver/Asset/Infrastructure/favourite.repository'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { AxiosResponse } from 'axios'
 import IDictionaryForm from '@/Scandinaver/Core/Domain/Contract/IDictionaryForm'
@@ -9,16 +8,13 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Word } from '@/Scandinaver/Asset/Domain/Word'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
-import { API } from '@/Scandinaver/Asset/Infrastructure/api/cardAPI'
+import { API } from '../Infrastructure/api/card.api'
 import CardApi = API.CardApi
 
 @Service()
 export default class CardService extends BaseService<Card> {
   @Inject()
   private cardRepository: CardRepository
-
-  @Inject()
-  private favouriteRepository: FavouriteRepository
 
   @Inject()
   private api: CardApi
@@ -53,10 +49,6 @@ export default class CardService extends BaseService<Card> {
   public async destroyCard(card: Card) {
     await this.cardRepository.delete(card)
     store.commit('removeCard', card)
-  }
-
-  public async translate(word: string, sentence: boolean): Promise<AxiosResponse> {
-    return this.cardRepository.translate(word, sentence)
   }
 
   async addWord(form: IDictionaryForm) {

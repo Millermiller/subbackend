@@ -3,8 +3,8 @@ import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
 import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
 import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
-import { PermissionGroupForm } from '@/Scandinaver/RBAC/Domain/PermissionGroupForm'
 import { permissions } from '@/permissions/permission.type'
+import { PermissionGroupForm } from '@/Scandinaver/RBAC/Domain/PermissionGroupForm'
 
 @Component({
   components: {},
@@ -41,13 +41,14 @@ export default class ListGroupsComponent extends Vue {
   }
 
   edit(permissionGroup: PermissionGroup) {
-    this.edited = permissionGroup.toDTO()
+    this.edited = permissionGroup
     this.showCreateModal()
   }
 
   async create() {
     if (this.edited.id) {
-      await this.service.update(this.edited.id, this.edited)
+      const group = PermissionGroup.fromDTO(this.edited)
+      await this.service.update(group, this.edited)
     } else {
       await this.service.create(this.edited)
     }

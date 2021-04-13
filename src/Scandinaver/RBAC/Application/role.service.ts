@@ -27,15 +27,15 @@ export default class RoleService extends BaseService<Role> {
   }
 
   async destroy(role: Role) {
-    return this.roleRepository.delete(role.getId())
+    return this.roleRepository.delete(role)
   }
 
   async search(query: string): Promise<Role[]> {
     return this.roleRepository.find(query)
   }
 
-  async update(roleId: number|string, role: RoleForm): Promise<Role> {
-    return this.roleRepository.update(roleId, role)
+  async update(role: Role, form: RoleForm): Promise<Role> {
+    return this.roleRepository.update(role, form)
   }
 
   attachPermission(role: Role, permission: Permission) {

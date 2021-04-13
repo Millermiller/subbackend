@@ -1,8 +1,8 @@
 import User from '@/Scandinaver/User/Domain/User'
-import { API } from '@/Scandinaver/User/Infrastructure/api/userAPI'
 import { Inject, Service } from 'typedi'
 import { plainToClass } from 'class-transformer'
 import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repository'
+import { API } from './api/user.api'
 import UserAPI = API.UserAPI
 
 @Service()

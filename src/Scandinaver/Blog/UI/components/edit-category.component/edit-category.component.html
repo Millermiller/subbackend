@@ -11,8 +11,8 @@
     <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
       {{ props.row.id }}
     </b-table-column>
-    <b-table-column field="name" label="Name" sortable v-slot="props">
-      {{ props.row.name }}
+    <b-table-column field="title" label="Name" sortable v-slot="props">
+      {{ props.row.title }}
     </b-table-column>
     <b-table-column custom-key="actions" v-slot="props">
       <Can :do="permissions.UPDATE_CATEGORY">
@@ -35,7 +35,7 @@
         </header>
         <section class="modal-card-body">
           <b-field :label="$t('title')">
-            <b-input type="text" v-model="edited.name"></b-input>
+            <b-input type="text" v-model="edited.title"></b-input>
           </b-field>
         </section>
         <footer class="modal-card-foot">

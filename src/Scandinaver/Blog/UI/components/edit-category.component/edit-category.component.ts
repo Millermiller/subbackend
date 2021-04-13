@@ -40,7 +40,7 @@ export default class EditCategoryComponent extends Vue {
   }
 
   async update() {
-    await this.categoryService.update(this.edited)
+    await this.categoryService.update(this.edited, this.edited.toDTO())
     this.isComponentModalActive = false
     this.$buefy.snackbar.open(this.$tc('updated'))
     await this.load()

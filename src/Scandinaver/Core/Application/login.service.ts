@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
-import { API, ILoginData } from '@/Scandinaver/Core/Infrastructure/api/userAPI'
 import Vue from 'vue'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { API, ILoginData } from '../Infrastructure/api/user.api'
 import UserAPI = API.UserAPI
 
 export class LoginService {

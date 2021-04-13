@@ -31,14 +31,14 @@ export default class PermissionService extends BaseService<Permission> {
   }
 
   async destroy(role: Permission) {
-    return this.permissionRepository.delete(role.getId())
+    return this.permissionRepository.delete(role)
   }
 
   async search(query: string): Promise<Permission[]> {
     return this.permissionRepository.find(query)
   }
 
-  async update(id: number, data: PermissionForm): Promise<Permission> {
-    return this.permissionRepository.update(id, data)
+  async update(permission: Permission, data: PermissionForm): Promise<Permission> {
+    return this.permissionRepository.update(permission, data)
   }
 }

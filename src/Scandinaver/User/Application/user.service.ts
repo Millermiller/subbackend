@@ -3,7 +3,6 @@ import User from '@/Scandinaver/User/Domain/User'
 import { Inject, Service } from 'typedi'
 import UserRepository from '@/Scandinaver/User/Infrastructure/user.repository'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
-import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
 
 @Service()
@@ -30,7 +29,7 @@ export default class UserService extends BaseService<User> {
   }
 
   async destroy(user: User) {
-    return this.userRepository.delete(user.getId())
+    return this.userRepository.delete(user)
   }
 
   async search(query: string): Promise<User[]> {
@@ -38,6 +37,6 @@ export default class UserService extends BaseService<User> {
   }
 
   async update(user: User): Promise<User> {
-    return this.userRepository.update(user.getId(), user.toDTO())
+    return this.userRepository.update(user, user.toDTO())
   }
 }

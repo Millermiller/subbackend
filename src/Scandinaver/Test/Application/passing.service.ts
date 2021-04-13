@@ -17,10 +17,10 @@ export default class PassingService extends BaseService<Passing> {
   }
 
   async destroy(passing: Passing) {
-    return this.passingRepository.delete(passing.getId())
+    return this.passingRepository.delete(passing)
   }
 
-  async update(passingId: number|string, passing: any): Promise<Passing> {
-    return this.passingRepository.update(passingId, passing)
+  async update(passing: Passing, data: any): Promise<Passing> {
+    return this.passingRepository.update(passing, data)
   }
 }

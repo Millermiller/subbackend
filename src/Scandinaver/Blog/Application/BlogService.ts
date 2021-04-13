@@ -1,7 +1,7 @@
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Post from '@/Scandinaver/Blog/Domain/Post'
 import { Inject, Service } from 'typedi'
-import PostRepository from '@/Scandinaver/Blog/Infrastructure/PostRepository'
+import PostRepository from '@/Scandinaver/Blog/Infrastructure/post.repository'
 
 @Service()
 export default class BlogService extends BaseService<Post> {
@@ -21,7 +21,7 @@ export default class BlogService extends BaseService<Post> {
   }
 
   async destroy(post: Post) {
-    return this.repository.delete(post.getId())
+    return this.repository.delete(post)
   }
 
   async search(query: string): Promise<Post[]> {
@@ -29,6 +29,6 @@ export default class BlogService extends BaseService<Post> {
   }
 
   async update(post: Post): Promise<Post> {
-    return this.repository.update(post.getId(), post)
+    return this.repository.update(post, post)
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "subbackend",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode development --host admin.scandinaver.local --port 8181",
@@ -89,25 +89,28 @@
     ],
     "rules": {
       "no-underscore-dangle": "off",
+      "comma-dangle": "off",
+      "import/order": "off",
       "object-curly-newline": "off",
-      "no-restricted-imports": "off",
+
       "no-param-reassign": "off",
       "class-methods-use-this": "off",
       "lines-between-class-members": "off",
       "import/no-unresolved": "off",
-      "import/named": "off",
-      "import/first": "off",
       "no-shadow": "off",
       "max-len": "off",
       "no-nested-ternary": "off",
-      "no-lonely-if": "off",
       "semi": "off",
-      "import/prefer-default-export": "off",
+      "import/named": "off",
       "import/newline-after-import": "off",
+      "import/prefer-default-export": "off",
       "import/no-cycle": "off",
       "camelcase": "off",
       "no-plusplus": "off",
-      "no-console": "off"
+      "no-console": "off",
+      "no-restricted-imports": "off",
+      "import/first": "off",
+      "no-lonely-if": "off"
     },
     "parserOptions": {
       "parser": "@typescript-eslint/parser"

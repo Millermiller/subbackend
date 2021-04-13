@@ -65,4 +65,13 @@ export default class Permission extends Entity {
       group: this._group === null ? null : this._group.getId(),
     }
   }
+
+  static fromDTO(dto: PermissionForm): Permission {
+    const permission = new Permission()
+    permission.id = dto.id || 0
+    permission.name = dto.name
+    permission.slug = dto.slug
+    permission.description = dto.description
+    return permission
+  }
 }

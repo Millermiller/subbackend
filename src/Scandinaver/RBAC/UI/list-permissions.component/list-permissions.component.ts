@@ -54,7 +54,8 @@ export default class ListPermissionsComponent extends Vue {
 
   async create() {
     if (this.edited.id) {
-      await this.permissionService.update(this.edited.id, this.edited)
+      const permission = Permission.fromDTO(this.edited)
+      await this.permissionService.update(permission, this.edited)
     } else {
       await this.permissionService.create(this.edited)
     }

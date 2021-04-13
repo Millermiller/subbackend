@@ -1,7 +1,7 @@
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Inject, Service } from 'typedi'
 import Comment from '@/Scandinaver/Blog/Domain/Comment'
-import CommentRepository from '@/Scandinaver/Blog/Infrastructure/CommentRepository'
+import CommentRepository from '@/Scandinaver/Blog/Infrastructure/comment.repository'
 
 @Service()
 export default class CommentService extends BaseService<Comment> {
@@ -17,7 +17,7 @@ export default class CommentService extends BaseService<Comment> {
   }
 
   async destroy(comment: Comment) {
-    return this.repository.delete(comment.getId())
+    return this.repository.delete(comment)
   }
 
   async search(query: string): Promise<Comment[]> {
@@ -25,6 +25,6 @@ export default class CommentService extends BaseService<Comment> {
   }
 
   async update(comment: Comment): Promise<Comment> {
-    return this.repository.update(comment.getId(), comment)
+    return this.repository.update(comment, comment)
   }
 }

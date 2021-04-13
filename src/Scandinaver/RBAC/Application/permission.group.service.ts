@@ -27,14 +27,14 @@ export default class PermissionGroupService extends BaseService<PermissionGroup>
   }
 
   async destroy(role: PermissionGroup) {
-    return this.permissionGroupRepository.delete(role.getId())
+    return this.permissionGroupRepository.delete(role)
   }
 
   async search(query: string): Promise<PermissionGroup[]> {
     return this.permissionGroupRepository.find(query)
   }
 
-  async update(id: number, data: PermissionGroupForm): Promise<PermissionGroup> {
-    return this.permissionGroupRepository.update(id, data)
+  async update(group: PermissionGroup, data: PermissionGroupForm): Promise<PermissionGroup> {
+    return this.permissionGroupRepository.update(group, data)
   }
 }

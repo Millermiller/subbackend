@@ -48,7 +48,8 @@ export default class ListRolesComponent extends Vue {
 
   async create() {
     if (this.edited.id) {
-      await this.service.update(this.edited.id, this.edited)
+      const role = Role.fromDTO(this.edited)
+      await this.service.update(role, this.edited)
     } else {
       await this.service.create(this.edited)
     }

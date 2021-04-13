@@ -1,11 +1,9 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { plainToClass } from 'class-transformer'
-import { ClassType } from 'class-transformer/ClassTransformer'
 
 export class CommonRepository<D extends Entity> {
   protected api: BaseAPI<D>
-  private type: ClassType<D>
 
   constructor(api: BaseAPI<D>) {
     this.api = api
@@ -20,14 +18,18 @@ export class CommonRepository<D extends Entity> {
   }
 
   public async create(data: any): Promise<D> {
-    return this.api.create(data).then(response => plainToClass(this.type, response.data))
+    return this.api.create(data).then(response => plainToClass(this.api.class, response.data))
   }
 
-  public async update(id: number|string, data: any): Promise<D> {
-    return this.api.update(id, data).then(response => plainToClass(this.type, response.data))
+  public async update(entity: D, data: any): Promise<D> {
+    return this.api.update(entity.getId(), data).then(response => plainToClass(this.api.class, response.data))
   }
 
-  public async delete(id: number|string): Promise<any> {
-    return this.api.delete(id).then(response => plainToClass(this.type, response.data))
+  public async delete(entity: D): Promise<any> {
+    return this.api.delete(entity.getId()).then(response => plainToClass(this.api.class, response.data))
+  }
+
+  public async find(query: string): Promise<D[]> {
+    return this.api.search(query).then(response => plainToClass(this.api.class, response.data))
   }
 }

@@ -11,14 +11,14 @@ import { rbacModule } from '@/Scandinaver/RBAC/Infrastructure/store'
 // State
 class State {
   fullscreenLoading: boolean = false
-  sites = []
+  sites: any = []
   currentsite = {}
   domain = ''
   info = {}
   backdrop = 0
   rightMenuOpen = false
   showDictionary = true
-  intro = []
+  intro: any = []
   language: string = ''
 }
 

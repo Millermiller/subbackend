@@ -14,4 +14,5 @@ export abstract class BaseAPI<D extends Entity> {
   abstract create(data: any): Promise<AxiosResponse<D>>
   abstract update(id: number|string, data: any): Promise<AxiosResponse<D>>
   abstract delete(id: number|string): Promise<any>
+  abstract search(data: any): Promise<AxiosResponse<D[]>>
 }

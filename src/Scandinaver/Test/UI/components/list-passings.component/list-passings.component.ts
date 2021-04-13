@@ -19,8 +19,8 @@ export default class ListPassingsComponent extends Vue {
   private edited: PassingForm = {
     id: null,
     errors: [],
-    percent: null,
-    completed: null,
+    percent: 0,
+    completed: false,
   }
   permissions: {}
 
@@ -46,7 +46,8 @@ export default class ListPassingsComponent extends Vue {
 
   async save() {
     if (this.edited.id) {
-      await this.passingService.update(this.edited.id, this.edited)
+      const passing = Passing.fromDTO(this.edited)
+      await this.passingService.update(passing, this.edited)
     } else {
       await this.passingService.create(this.edited)
     }
@@ -73,8 +74,8 @@ export default class ListPassingsComponent extends Vue {
     this.edited = {
       id: null,
       errors: [],
-      percent: null,
-      completed: null,
+      percent: 0,
+      completed: false,
     };
     this.isComponentModalActive = false
   }

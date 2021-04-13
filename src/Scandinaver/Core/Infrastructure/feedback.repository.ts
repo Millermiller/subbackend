@@ -1,32 +1,11 @@
 import { Inject, Service } from 'typedi'
-import { API } from '@/Scandinaver/Core/Infrastructure/api/feedbackAPI'
-import IFeedbackForm, { FeedbackForm } from '@/Scandinaver/Core/Domain/Contract/IFeedbackForm'
-import { BaseRepository } from '@/Scandinaver/Core/Infrastructure/base.repository'
-import { plainToClass } from 'class-transformer'
+import { API } from './api/feedback.api'
 import FeedbackAPI = API.FeedbackAPI
+import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repository'
+import { Feedback } from '@/Scandinaver/Core/Domain/Contract/IFeedbackForm'
 
 @Service()
-export default class FeedbackRepository extends BaseRepository<IFeedbackForm> {
+export default class FeedbackRepository extends CommonRepository<Feedback> {
   @Inject()
-  private api: FeedbackAPI
-
-  async all(): Promise<IFeedbackForm[]> {
-    return Promise.resolve([])
-  }
-
-  async one(id: number): Promise<IFeedbackForm> {
-    throw new Error('method not implemented')
-  }
-
-  async create(data: any): Promise<IFeedbackForm> {
-    return this.api.create(data).then(response => plainToClass(FeedbackForm, response.data))
-  }
-
-  async update(entity: IFeedbackForm, data: any): Promise<IFeedbackForm> {
-    throw new Error('method not implemented')
-  }
-
-  async delete(entity: IFeedbackForm): Promise<any> {
-    return Promise.resolve(undefined)
-  }
+  protected api: FeedbackAPI
 }

@@ -46,6 +46,7 @@ export default class AssetsModule extends Vue {
     type: 0,
     level: 0,
     title: '',
+    language: '',
   }
   translates: Card[] = []
   permissions: {}
@@ -176,17 +177,22 @@ export default class AssetsModule extends Vue {
   }
 
   async search() {
-    if (this.text !== '') {
-      this.searchloaded = true
-      this.translates = await this.service.searchWords(this.text, !!this.sentence)
-      this.searchloaded = false
-    }
+    this.searchloaded = true
+    this.translates = []
+    this.translates = await this.service.translate(this.text, false)
+    this.searchloaded = false
   }
 
   async searchSentences() {
     this.sentencesloaded = true
-    this.translates = await this.service.getSentences()
-    this.sentencesloaded = false
+    this.translates = []
+    try {
+      this.translates = await this.service.translate(this.text || '', true)
+    } catch (e) {
+      //
+    } finally {
+      this.sentencesloaded = false
+    }
   }
 
   async removeTranslate(data: any) {

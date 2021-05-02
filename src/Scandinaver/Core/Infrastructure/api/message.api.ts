@@ -9,17 +9,18 @@ export namespace API {
   @Service()
   export class MessageAPI extends BaseAPI<Message> {
     protected type: ClassType<Message> = Message
+    protected baseUrl = 'message'
 
     all(): Promise<AxiosResponse<Message[]>> {
-      return request.get('/message')
+      return request.get(`/${this.baseUrl}`)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/message/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/message/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(data: any): Promise<AxiosResponse<Message>> {
@@ -27,15 +28,15 @@ export namespace API {
     }
 
     update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/message/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse> {
-      return request.get(`/message/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
 
     read(id: number): Promise<AxiosResponse> {
-      return request.post(`/message/read?${id}`)
+      return request.post(`/${this.baseUrl}/read?${id}`)
     }
   }
 }

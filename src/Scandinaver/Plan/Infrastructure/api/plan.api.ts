@@ -9,29 +9,30 @@ export namespace API {
   @Service()
   export class PlanAPI extends BaseAPI<Plan> {
     protected type: ClassType<Plan>
+    protected baseUrl = 'plan'
 
     all(): Promise<AxiosResponse<Plan[]>> {
-      return request.get('/plan')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/plan/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.put('/plan', form)
+      return request.put(`/${this.baseUrl}`, form)
     }
 
     update(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/plan/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/plan/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(query: string): Promise<AxiosResponse<Plan[]>> {
-      return request.get(`/plan/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

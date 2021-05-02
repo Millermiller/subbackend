@@ -9,29 +9,30 @@ export namespace API {
   @Service()
   export class PermissionAPI extends BaseAPI<Permission> {
     protected type: ClassType<Permission> = Permission
+    protected baseUrl = 'permission'
 
     all(): Promise<AxiosResponse<Permission[]>> {
-      return request.get('/permission')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/permission/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/permission/', form)
+      return request.post(`/${this.baseUrl}/`, form)
     }
 
     delete(id: number|string): Promise<any> {
-      return request.delete(`/permission/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/permission/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Permission[]>> {
-      return request.get(`/permission/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

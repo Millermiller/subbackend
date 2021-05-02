@@ -9,25 +9,26 @@ export namespace API {
   @Service()
   export class LogAPI extends BaseAPI<Log> {
     protected type: ClassType<Log> = Log
+    protected baseUrl = 'log'
 
     all(): Promise<AxiosResponse<Log[]>> {
-      return request.get('/log')
+      return request.get(`/${this.baseUrl}`)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/log/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     one(id: number): Promise<AxiosResponse<Log>> {
-      return request.get(`/log/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     update(id: number, form: any): Promise<AxiosResponse<Log>> {
-      return request.put(`/log/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse> {
-      return request.get(`/log/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
 
     create(data: any): Promise<AxiosResponse<Log>> {

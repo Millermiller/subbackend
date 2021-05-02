@@ -9,29 +9,30 @@ export namespace API {
   @Service()
   export class UserAPI extends BaseAPI<User> {
     protected type: ClassType<User> = User
+    protected baseUrl = 'user'
 
     all(): Promise<AxiosResponse<User[]>> {
-      return request.get('/user')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/user/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/user/', form)
+      return request.post(`/${this.baseUrl}/`, form)
     }
 
     update(id: number|string, data: any): Promise<AxiosResponse<User>> {
-      return request.put(`/user/${id}`, data)
+      return request.put(`/${this.baseUrl}/${id}`, data)
     }
 
     delete(id: number|string): Promise<any> {
-      return request.delete(`/user/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(query: string): Promise<AxiosResponse<User[]>> {
-      return request.get(`/user/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

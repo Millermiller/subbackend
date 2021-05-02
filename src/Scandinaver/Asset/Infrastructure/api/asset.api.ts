@@ -10,9 +10,10 @@ export namespace API {
   @Service()
   export class AssetApi extends BaseAPI<Asset> {
     protected type: ClassType<Asset> = Asset
+    protected baseUrl = 'asset'
 
     one(id: number): Promise<AxiosResponse<Asset>> {
-      return request.get(`/asset/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     getAssets(language: string): Promise<AxiosResponse<Responses.GetAssetsResponse>> {
@@ -20,11 +21,11 @@ export namespace API {
     }
 
     update(id: number|string, data: any): Promise<AxiosResponse> {
-      return request.put(`/asset/${id}`, data)
+      return request.put(`/${this.baseUrl}/${id}`, data)
     }
 
     save(asset: Asset): Promise<AxiosResponse> {
-      return request.put(`/asset/${asset.getId()}`, asset)
+      return request.put(`/${this.baseUrl}/${asset.getId()}`, asset)
     }
 
     translate(data: any): Promise<AxiosResponse> {
@@ -40,7 +41,7 @@ export namespace API {
     }
 
     updateTitle(id: number, data: any): Promise<AxiosResponse> {
-      return request.post(`/asset/${id}`, data)
+      return request.post(`/${this.baseUrl}/${id}`, data)
     }
 
     all(): Promise<AxiosResponse<Asset[]>> {
@@ -48,11 +49,11 @@ export namespace API {
     }
 
     create(data: any): Promise<AxiosResponse<Asset>> {
-      return request.post('/asset', data)
+      return request.post(`/${this.baseUrl}`, data)
     }
 
     delete(id: number): Promise<any> {
-      return request.delete(`/asset/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(data: any): Promise<AxiosResponse<Asset[]>> {

@@ -9,13 +9,14 @@ export namespace API {
   @Service()
   export class MetaAPI extends BaseAPI<Page> {
     protected type: ClassType<Page> = Page
+    protected baseUrl = 'meta'
 
     all(): Promise<AxiosResponse<Page[]>> {
-      return request.get('/meta')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/meta/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(data: any): Promise<AxiosResponse<Page>> {
@@ -23,15 +24,15 @@ export namespace API {
     }
 
     update(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/meta/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/meta/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(query: string): Promise<AxiosResponse<Page[]>> {
-      return request.get(`/meta/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

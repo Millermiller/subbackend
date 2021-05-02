@@ -9,37 +9,38 @@ export namespace API {
   @Service()
   export class RoleAPI extends BaseAPI<Role> {
     protected type: ClassType<Role> = Role
+    protected baseUrl = 'role'
 
     all(): Promise<AxiosResponse<Role[]>> {
-      return request.get('/role')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/role/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/role/', form)
+      return request.post(`/${this.baseUrl}/`, form)
     }
 
     delete(id: number|string): Promise<any> {
-      return request.delete(`/role/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/role/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Role[]>> {
-      return request.get(`/role/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
 
     attachPermission(role: number | string, permission: number | string) {
-      return request.post(`/role/${role}/${permission}`)
+      return request.post(`/${this.baseUrl}/${role}/${permission}`)
     }
 
     detachPermission(role: number | string, permission: number | string) {
-      return request.delete(`/role/${role}/${permission}`)
+      return request.delete(`/${this.baseUrl}/${role}/${permission}`)
     }
   }
 }

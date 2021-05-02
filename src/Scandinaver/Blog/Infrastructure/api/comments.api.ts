@@ -9,29 +9,30 @@ export namespace API {
   @Service()
   export class CommentsAPI extends BaseAPI<Comment> {
     protected type: ClassType<Comment> = Comment
+    protected baseUrl = 'comment'
 
     all(): Promise<AxiosResponse<Comment[]>> {
-      return request.get('/comment')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/comment/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(data: any) {
-      return request.post('/comment', data)
+      return request.post(`/${this.baseUrl}`, data)
     }
 
     update(id: number, form: any): Promise<AxiosResponse> {
-      return request.post(`/comment/${id}`, form)
+      return request.post(`/${this.baseUrl}/${id}`, form)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/comment/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(query: string): Promise<AxiosResponse<Comment[]>> {
-      return request.get(`/comment/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

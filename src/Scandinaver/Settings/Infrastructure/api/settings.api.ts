@@ -1,17 +1,17 @@
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 import { Service } from 'typedi'
-import User from '@/Scandinaver/User/Domain/User'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
+import { Setting } from '@/Scandinaver/Settings/Domain/Setting'
 
 export namespace API {
   @Service()
-  export class UserAPI extends BaseAPI<User> {
-    protected type: ClassType<User> = User
-    protected baseUrl = 'user'
+  export class SettingsAPI extends BaseAPI<Setting> {
+    protected type: ClassType<Setting> = Setting
+    protected baseUrl = 'setting'
 
-    all(): Promise<AxiosResponse<User[]>> {
+    all(): Promise<AxiosResponse<Setting[]>> {
       return request.get(`/${this.baseUrl}`)
     }
 
@@ -23,16 +23,20 @@ export namespace API {
       return request.post(`/${this.baseUrl}/`, form)
     }
 
-    update(id: number|string, data: any): Promise<AxiosResponse<User>> {
-      return request.put(`/${this.baseUrl}/${id}`, data)
-    }
-
     delete(id: number|string): Promise<any> {
       return request.delete(`/${this.baseUrl}/${id}`)
     }
 
-    search(query: string): Promise<AxiosResponse<User[]>> {
-      return request.get(`/${this.baseUrl}/search?q=${query}`)
+    update(id: number|string, form: any): Promise<AxiosResponse> {
+      return request.put(`/${this.baseUrl}/${id}`, form)
+    }
+
+    search(data: any): Promise<AxiosResponse<Setting[]>> {
+      return Promise.resolve(undefined);
+    }
+
+    saveAll(data: any): Promise<AxiosResponse> {
+      return request.put(`/${this.baseUrl}/`, data)
     }
   }
 }

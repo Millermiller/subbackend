@@ -4,6 +4,7 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 
 export abstract class BaseAPI<D extends Entity> {
   protected type: ClassType<D>
+  protected baseUrl: string
 
   get class(): ClassType<D> {
     return this.type

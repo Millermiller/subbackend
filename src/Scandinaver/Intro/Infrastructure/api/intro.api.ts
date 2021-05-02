@@ -9,25 +9,26 @@ export namespace API {
   @Service()
   export class IntroAPI extends BaseAPI<Intro> {
     protected type: ClassType<Intro> = Intro
+    protected baseUrl = 'intro'
 
     all(): Promise<AxiosResponse<Intro[]>> {
-      return request.get('/intro')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/intro/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/intro/', form)
+      return request.post(`/${this.baseUrl}/`, form)
     }
 
     update(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/intro/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/intro/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     search(data: any): Promise<AxiosResponse<Intro[]>> {

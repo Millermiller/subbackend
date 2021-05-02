@@ -12,6 +12,7 @@ export namespace API {
   @Service()
   export class CardApi extends BaseAPI<Card> {
     protected type: ClassType<Card> = Card
+    protected baseUrl = 'card'
 
     all(): Promise<AxiosResponse<Card[]>> {
       throw new Error('Method not implemented.');
@@ -34,13 +35,13 @@ export namespace API {
     }
 
     translate(query: string, sentence: boolean): Promise<AxiosResponse<Card[]>> {
-      return request.get('/card/search', {
+      return request.get(`/${this.baseUrl}/search`, {
         params: { query, sentence: +sentence, lang: store.getters.language },
       })
     }
 
     createCard(card: Card): Promise<AxiosResponse<Card>> {
-      return request.post(`/card/${card.word.id}/${card.translate.id}/${card.asset.id}`)
+      return request.post(`/${this.baseUrl}/${card.word.id}/${card.translate.id}/${card.asset.id}`)
     }
 
     addCardToAsset(language: string, card: Card, asset: Asset): Promise<AxiosResponse<Card>> {
@@ -48,15 +49,15 @@ export namespace API {
     }
 
     removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {
-      return request.delete(`/${language}/card/${card.getId()}/${asset.getId()}`)
+      return request.delete(`/${language}/${this.baseUrl}/${card.getId()}/${asset.getId()}`)
     }
 
     destroyCard(card: Card): Promise<AxiosResponse> {
-      return request.delete(`/card/${card.getId()}`)
+      return request.delete(`/${this.baseUrl}/${card.getId()}`)
     }
 
     updateCard(card: Card, data: any): Promise<AxiosResponse> {
-      return request.put(`/card/${card.getId()}`, data)
+      return request.put(`/${this.baseUrl}/${card.getId()}`, data)
     }
 
     addWord(form: IDictionaryForm): Promise<AxiosResponse<Card>> {

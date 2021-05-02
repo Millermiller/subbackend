@@ -9,29 +9,30 @@ export namespace API {
   @Service()
   export class PermissionGroupAPI extends BaseAPI<PermissionGroup> {
     protected type: ClassType<PermissionGroup> = PermissionGroup
+    protected baseUrl = 'permission-group'
 
     all(): Promise<AxiosResponse<PermissionGroup[]>> {
-      return request.get('/permission-group')
+      return request.get(`/${this.baseUrl}`)
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/permission-group/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
-      return request.post('/permission-group/', form)
+      return request.post(`/${this.baseUrl}/`, form)
     }
 
     delete(id: number|string): Promise<any> {
-      return request.delete(`/permission-group/${id}`)
+      return request.delete(`/${this.baseUrl}${id}`)
     }
 
     update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/permission-group/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<PermissionGroup[]>> {
-      return request.get(`/permission-group/search?q=${query}`)
+      return request.get(`/${this.baseUrl}/search?q=${query}`)
     }
   }
 }

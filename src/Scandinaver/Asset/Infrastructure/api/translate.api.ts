@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { ClassType } from 'class-transformer/ClassTransformer'

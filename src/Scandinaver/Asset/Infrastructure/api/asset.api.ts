@@ -12,16 +12,16 @@ export namespace API {
     protected type: ClassType<Asset> = Asset
     protected baseUrl = 'asset'
 
-    one(id: number): Promise<AxiosResponse<Asset>> {
-      return request.get(`/${this.baseUrl}/${id}`)
+    all(): Promise<AxiosResponse<Asset[]>> {
+      throw new Error('Method not implemented.')
+    }
+
+    search(data: any): Promise<AxiosResponse<Asset[]>> {
+      throw new Error('Method not implemented.')
     }
 
     getAssets(language: string): Promise<AxiosResponse<Responses.GetAssetsResponse>> {
       return request.get(`/${language}/assets`)
-    }
-
-    update(id: number|string, data: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/${id}`, data)
     }
 
     save(asset: Asset): Promise<AxiosResponse> {
@@ -42,22 +42,6 @@ export namespace API {
 
     updateTitle(id: number, data: any): Promise<AxiosResponse> {
       return request.post(`/${this.baseUrl}/${id}`, data)
-    }
-
-    all(): Promise<AxiosResponse<Asset[]>> {
-      throw new Error('Method not implemented.')
-    }
-
-    create(data: any): Promise<AxiosResponse<Asset>> {
-      return request.post(`/${this.baseUrl}`, data)
-    }
-
-    delete(id: number): Promise<any> {
-      return request.delete(`/${this.baseUrl}/${id}`)
-    }
-
-    search(data: any): Promise<AxiosResponse<Asset[]>> {
-      throw new Error('Method not implemented.')
     }
   }
 }

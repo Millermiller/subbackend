@@ -122,7 +122,9 @@ export default class ListUserComponent extends Vue {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
+        this.loading = true
         await this.service.destroy(row)
+        this.loading = false
         this.$buefy.snackbar.open(this.$tc('userRemoved'))
         await this.load()
       },

@@ -342,6 +342,12 @@ span[tooltip]:hover:after {
 .avatar-small {
     height: 40px;
     border-radius: 100%;
+    width: 40px;
+    object-fit: cover;
+}
+
+.flag-small {
+    height: 40px;
 }
 
 table td {

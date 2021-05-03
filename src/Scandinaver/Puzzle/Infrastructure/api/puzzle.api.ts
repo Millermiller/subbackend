@@ -20,26 +20,6 @@ export namespace API {
       })
     }
 
-    all(): Promise<AxiosResponse<Puzzle[]>> {
-      return request.get(`/${this.baseUrl}`)
-    }
-
-    one(id: number): Promise<AxiosResponse> {
-      return request.get(`/${this.baseUrl}/${id}`)
-    }
-
-    create(entity: Puzzle): Promise<AxiosResponse<Puzzle>> {
-      return request.post(`/${this.baseUrl}`, entity)
-    }
-
-    update(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/${id}`, form)
-    }
-
-    delete(id: number): Promise<AxiosResponse> {
-      return request.delete(`/${this.baseUrl}/${id}`)
-    }
-
     search(data: any): Promise<AxiosResponse<Puzzle[]>> {
       throw new Error('method not implemented')
     }

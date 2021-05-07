@@ -16,7 +16,7 @@
     "@mdi/font": "^5.1.45",
     "@tinymce/tinymce-vue": "^3.2.2",
     "@types/reflect-metadata": "^0.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "buefy": "0.9.3",
     "canvas": "^2.6.1",
     "class-transformer": "^0.3.1",

@@ -6,6 +6,7 @@ export default interface UserForm {
   email: string
   login: string
   password: string
+  password_confirmation: string
   roles: RoleForm[]
   plan: Plan | null
 }

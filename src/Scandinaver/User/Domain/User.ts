@@ -106,7 +106,8 @@ export default class User extends Entity {
       id: this._id,
       email: this._email,
       login: this._login,
-      password: '',
+      password: this._password,
+      password_confirmation: this._password,
       roles: this._roles.map(role => role.toDTO()),
       plan: this._plan,
     }

@@ -7,9 +7,10 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API{
   export class TranslateApi extends BaseAPI<Translate> {
     protected type: ClassType<Translate> = Translate
+    protected baseUrl: string = 'translate'
 
     destroy(id: number): Promise<AxiosResponse> {
-      return request.delete(`/translate/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     all(): Promise<AxiosResponse<Translate[]>> {

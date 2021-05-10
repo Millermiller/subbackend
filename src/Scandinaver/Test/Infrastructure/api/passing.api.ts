@@ -10,6 +10,7 @@ export namespace API {
   @Service()
   export class PassingAPI extends BaseAPI<Passing> {
     protected type: ClassType<Passing> = Passing
+    protected baseUrl: string = 'test'
 
     all(): Promise<AxiosResponse<Passing[]>> {
       const { language } = store.getters
@@ -17,7 +18,7 @@ export namespace API {
     }
 
     one(id: number): Promise<AxiosResponse> {
-      return request.get(`/test/${id}`)
+      return request.get(`/${this.baseUrl}/${id}`)
     }
 
     create(form: any): Promise<AxiosResponse> {
@@ -25,11 +26,11 @@ export namespace API {
     }
 
     delete(id: number|string): Promise<any> {
-      return request.delete(`/test/${id}`)
+      return request.delete(`/${this.baseUrl}/${id}`)
     }
 
     update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/test/${id}`, form)
+      return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
     search(query: string): Promise<AxiosResponse<Passing[]>> {

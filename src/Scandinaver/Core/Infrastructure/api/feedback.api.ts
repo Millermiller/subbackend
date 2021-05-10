@@ -8,6 +8,7 @@ export namespace API {
   @Service()
   export class FeedbackAPI extends BaseAPI<Feedback> {
     protected type: ClassType<Feedback> = Feedback
+    protected baseUrl: string = 'feedback'
 
     all(): Promise<AxiosResponse<Feedback[]>> {
       throw new Error('Method not implemented.')

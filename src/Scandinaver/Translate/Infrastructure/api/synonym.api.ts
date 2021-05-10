@@ -8,6 +8,7 @@ export namespace API {
   @Service()
   export class SynonymAPI extends BaseAPI<Synonym> {
     protected type: ClassType<Synonym> = Synonym
+    protected baseUrl: string = ''
 
     all(): Promise<AxiosResponse> {
       throw new Error('Method not implemented.');

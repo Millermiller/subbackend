@@ -40,6 +40,7 @@ export default class ListUserComponent extends Vue {
     email: '',
     login: '',
     password: '',
+    password_confirmation: '',
     roles: [],
     plan: null,
   }
@@ -111,6 +112,7 @@ export default class ListUserComponent extends Vue {
       email: '',
       login: '',
       password: '',
+      password_confirmation: '',
       roles: [],
       plan: null,
     }

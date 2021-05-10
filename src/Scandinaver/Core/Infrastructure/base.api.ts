@@ -5,7 +5,7 @@ import request from '@/utils/request'
 
 export abstract class BaseAPI<D extends Entity> {
   protected type: ClassType<D>
-  protected baseUrl: string
+  protected abstract baseUrl: string
 
   get class(): ClassType<D> {
     return this.type

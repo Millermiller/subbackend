@@ -1,7 +1,9 @@
 <div>
   <div class="tile is-ancestor">
     <div class="tile is-parent">
-      <router-view v-if="access"></router-view>
+      <keep-alive>
+        <router-view v-if="access"></router-view>
+      </keep-alive>
       <template v-if="!access">Forbidden</template>
     </div>
   </div>

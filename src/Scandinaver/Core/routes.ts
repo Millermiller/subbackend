@@ -23,6 +23,7 @@ const routes = [
     path: '/',
     name: 'MainPage',
     meta: {
+      exact: true,
       type: 'main',
       menuitem: true,
       title: 'page401',

@@ -1,10 +1,30 @@
 <div class="tile is-ancestor">
+  <b-loading :is-full-page="false" v-model="loading" :can-cancel="false"></b-loading>
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <div class="header">Intro №{{ form.id }}</div>
-
-      <froala :tag="'textarea'" :config="config" v-model="form.content"></froala>
-
+      <div v-if="form.id !== undefined" class="header">Intro №{{ form.id }}</div>
+      <editor v-model="form.content"
+              v-if="active"
+              api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
+              :init="{
+                  file_browser_callback_types: 'file image media',
+                  automatic_uploads: true,
+                  paste_data_images: true,
+                  images_upload_url: '/handleidingen/upload',
+                  images_upload_credentials: true,
+                  height: 200,
+                  menubar: false,
+                   plugins: [
+                     'imagetools image advlist autolink lists link image charmap print preview anchor',
+                     'searchreplace visualblocks code fullscreen',
+                     'insertdatetime media table paste code help wordcount'
+                   ],
+                   toolbar:
+                     'image insertfile |  undo redo | formatselect | bold italic backcolor | \
+                     alignleft aligncenter alignright alignjustify | \
+                     bullist numlist outdent indent | removeformat | help'
+       }"
+      />
       <b-field :label="$t('page')">
         <b-select :placeholder="$t('selectPage')" v-model="form.page">
           <option v-for="page in pages" :value="page" :key="page">
@@ -13,8 +33,8 @@
         </b-select>
       </b-field>
 
-      <b-field label="element">
-        <b-input v-model="form.element"></b-input>
+      <b-field label="target">
+        <b-input v-model="form.target"></b-input>
       </b-field>
 
       <b-field label="position">
@@ -29,12 +49,12 @@
         <b-input v-model="form.sort"></b-input>
       </b-field>
 
-      <b-field label="tooltipClass">
-        <b-input v-model="form.tooltipClass"></b-input>
+      <b-field label="headerText">
+        <b-input v-model="form.headerText"></b-input>
       </b-field>
 
       <div class="active">
-        <b-checkbox v-model="form.active" true-value="1" false-value="0"> active</b-checkbox>
+        <b-checkbox v-model="form.active">active</b-checkbox>
       </div>
 
       <p class="control">

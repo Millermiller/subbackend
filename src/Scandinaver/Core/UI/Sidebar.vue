@@ -6,7 +6,7 @@
       li(v-for="(item, index) in mainMenu", :key="index")
         router-link(
           :to="item.path",
-          :exact="true",
+          :exact="item.meta.exact || false",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
           v-if="!isParent(item) && $can(item.meta.permission)",
           @click.native="toggle(item)")

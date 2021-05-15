@@ -27,11 +27,11 @@ export function requireAuth(to: any, _from: any, next: any): any {
 }
 
 export const routes: RouteConfig[] = [
+  ...coreRoutes,
   ...assetRoutes,
   ...blogRoutes,
-  ...coreRoutes,
   ...introRoutes,
-  ...pagesRoutes,
+  // ...pagesRoutes,
   ...planRoutes,
   ...puzzleRoutes,
   ...settingsRoutes,

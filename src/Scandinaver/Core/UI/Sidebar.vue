@@ -6,7 +6,7 @@
       li(v-for="(item, index) in mainMenu", :key="index")
         router-link(
           :to="item.path",
-          :exact="true",
+          :exact="item.meta.exact || false",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
           v-if="!isParent(item) && $can(item.meta.permission)",
           @click.native="toggle(item)")
@@ -132,7 +132,7 @@ export default class Sidebar extends Vue {
     }
     const item = this.menu.find(el => el.path === parent.path)
     if (item) {
-      Vue.set(item, 'expanded', true)
+      //  Vue.set(item, 'expanded', true)
     }
     this.menu.filter(el => el.path !== parent.path).forEach(el => Vue.set(el, 'expanded', false))
   }

@@ -1,0 +1,55 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <h4 class="title text-center">Intro.vue</h4>
+    <Can :do="permissions.CREATE_INTRO">
+      <b-field>
+        <p class="control">
+          <button class="button is-success" @click="add">{{ $t('add') }}</button>
+        </p>
+      </b-field>
+    </Can>
+    <b-table :data="intros" paginated narrowed :loading="loading" per-page="50" striped hoverable>
+      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+        {{ props.row.id }}
+      </b-table-column>
+
+      <b-table-column field="page" label="page" sortable searchable v-slot="props">
+        {{ props.row.page }}
+      </b-table-column>
+
+      <b-table-column field="target" label="target" width="200" sortable v-slot="props">
+        {{ props.row.target }}
+      </b-table-column>
+
+      <b-table-column field="content" label="content" v-slot="props">
+        {{ props.row.content }}
+      </b-table-column>
+
+      <b-table-column field="position" label="position" v-slot="props">
+        {{ props.row.position }}
+      </b-table-column>
+
+      <b-table-column field="sort" label="sort" sortable v-slot="props">
+        {{ props.row.sort }}
+      </b-table-column>
+
+      <b-table-column field="active" label="active" sortable v-slot="props">
+        <b-tag :type="tagClass(props.row.active)">{{props.row.active}}</b-tag>
+      </b-table-column>
+
+      <b-table-column custom-key="actions" width="100" v-slot="props">
+        <Can :do="permissions.UPDATE_INTRO">
+          <button class="button is-warning is-small" @click="edit(props.row)">
+            <b-icon icon="pencil" size="is-small"></b-icon>
+          </button>
+        </Can>
+        <Can :do="permissions.DELETE_INTRO">
+          <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+            <b-icon icon="close-circle" size="is-small"></b-icon>
+          </button>
+        </Can>
+      </b-table-column>
+    </b-table>
+  </article>
+</div>
+

@@ -9,10 +9,6 @@ import { permissions } from '@/permissions/permission.type'
 
 @Component({})
 export default class IntroModule extends Vue {
-  @Inject()
-  private service: IntroService
-
-  private intros: Intro[] = []
   private loading: boolean = false
   private access: boolean = false
   private permissions: {}
@@ -29,30 +25,5 @@ export default class IntroModule extends Vue {
   @Watch('$route')
   private onRouteChange(route: Route) {
     this.access = this.$ability.can(route.meta.permission)
-  }
-
-  async load() {
-    this.intros = await this.service.getAll()
-  }
-
-  edit(row: any) {
-    this.$router.push({ name: 'Intro', params: { id: row.id } })
-  }
-
-  async remove(row: any) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        await this.service.destroy(row)
-      },
-    })
-  }
-
-  async mounted() {
-    await this.load()
-  }
-
-  add() {
-
   }
 }

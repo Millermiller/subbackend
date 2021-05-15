@@ -54,4 +54,8 @@ export default class ListPostComponent extends Vue {
   async find() {
     this.articles = await this.service.search(this.search)
   }
+
+  async activated() {
+    await this.load()
+  }
 }

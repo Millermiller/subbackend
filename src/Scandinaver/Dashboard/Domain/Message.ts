@@ -8,7 +8,7 @@ export default class Message extends Entity {
   subject: string
   user: User
   message: string
-  created_at: number
+  createdAt: string
 
   getId(): number | string {
     return this.id;

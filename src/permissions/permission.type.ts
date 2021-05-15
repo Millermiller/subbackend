@@ -40,7 +40,7 @@ export const permissions = {
   DELETE_COMMENT: 'delete-comment',
 
   CREATE_INTRO: 'create-intro',
-  VIEW_INTRO: 'view-intro',
+  VIEW_INTRO: 'view-intros',
   UPDATE_INTRO: 'update-intro',
   DELETE_INTRO: 'delete-intro',
 

@@ -24,6 +24,7 @@ export default class EditPostComponent extends Vue {
   private seodescription: string = ''
   private keywords: string = ''
   private config = {}
+  private active: boolean = false
 
   async load(id: number) {
     this.post = await this.blogService.getOne(id)
@@ -51,5 +52,13 @@ export default class EditPostComponent extends Vue {
   async mounted() {
     await this.load(Number(this.$route.params.id))
     this.categories = await this.categoryService.getAll()
+  }
+
+  activated() {
+    this.active = true;
+  }
+
+  deactivated() {
+    this.active = false;
   }
 }

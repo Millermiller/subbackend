@@ -132,7 +132,7 @@ export default class Sidebar extends Vue {
     }
     const item = this.menu.find(el => el.path === parent.path)
     if (item) {
-      Vue.set(item, 'expanded', true)
+      //  Vue.set(item, 'expanded', true)
     }
     this.menu.filter(el => el.path !== parent.path).forEach(el => Vue.set(el, 'expanded', false))
   }

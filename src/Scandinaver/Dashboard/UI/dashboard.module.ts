@@ -9,7 +9,6 @@ import DashboardService from '@/Scandinaver/Dashboard/Application/dashboard.serv
 import { Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
 import MessageComponent from './message.component/index.vue'
-import LogComponent from './log.component/index.vue'
 import WordsWidget from './words-widget.component/index.vue'
 import AssetsWidget from './asset-widget.component/index.vue'
 import AudioWidget from './audio-widget.component/index.vue'
@@ -19,7 +18,6 @@ import UsersWidget from './users-widget.component/index.vue'
 @Component({
   components: {
     MessageComponent,
-    LogComponent,
     WordsWidget,
     AssetsWidget,
     AudioWidget,
@@ -55,8 +53,6 @@ export default class DashboardModule extends Vue {
   private onRouteChange(route: Route) {
     this.access = this.$ability.can(route.meta.permission)
   }
-
-  see(row: any) {}
 
   async remove(row: any) {
     await this.logService.destroy(row)

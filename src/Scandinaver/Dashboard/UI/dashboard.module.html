@@ -34,7 +34,7 @@
             </b-table-column>
 
             <b-table-column field="owner" label="user" sortable="sortable"  width="40" v-slot="props">
-              {{ (props.row.owner.login) }}
+              {{ props.row.owner ? props.row.owner.login : '' }}
             </b-table-column>
 
             <b-table-column field="created_at" label="created_at" sortable centered v-slot="props">

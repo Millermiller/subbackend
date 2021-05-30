@@ -2,10 +2,11 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import ModalExampleComponent from '@/Scandinaver/Asset/UI/modal-example.component/index.vue'
 import Example from '@/Scandinaver/Asset/Domain/Example'
-import { deepCopy } from '@/utils/helper'
 import { Inject } from 'vue-typedi'
 import CardService from '@/Scandinaver/Asset/Application/card.service'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
+import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
+import { HIDE_CARD_MODAL, LOAD_ASSET, RELOAD_ASSET } from '@/events/events.type'
 
 @Component({
   components: { ModalExampleComponent },
@@ -15,10 +16,7 @@ export default class ModalComponent extends Vue {
   private visible!: boolean
 
   @Prop({ required: true })
-  private card!: Card
-
-  @Prop({ required: true })
-  private index!: number
+  private card: Card
 
   @Inject()
   private cardService: CardService
@@ -29,7 +27,7 @@ export default class ModalComponent extends Vue {
   @Watch('visible')
   private async onChange(val: any) {
     if (val) {
-      this.editedCard = deepCopy(this.card)
+      this.editedCard = this.card.toDTO()
     }
   }
 
@@ -38,8 +36,13 @@ export default class ModalComponent extends Vue {
   private values: any[] = []
   private examples: { text: string; value: string }[] = []
   private loading: boolean = false
-  private editedCard: Card = new Card()
-
+  private editedCard: CardForm = {
+    examples: [],
+    id: 0,
+    translate: undefined,
+    user: undefined,
+    word: undefined
+  }
 
   created() {
     this.text = this.editedCard.translate ? this.editedCard.translate.value : ''
@@ -74,7 +77,7 @@ export default class ModalComponent extends Vue {
   }
 
   close() {
-    this.$emit('close')
+    this.$eventHub.$emit(HIDE_CARD_MODAL)
   }
 
   updateAudio() {
@@ -93,12 +96,16 @@ export default class ModalComponent extends Vue {
 
   async save() {
     this.loading = true
-    await this.cardService.update(this.editedCard, this.editedCard)
-    const asset = this.$store.getters.activeAssets
-    await this.assetService.getAsset(asset.getId())
-    this.$emit('close')
-    this.loading = false
-    this.$buefy.snackbar.open(this.$tc('cardUpdated'))
+    try {
+      await this.cardService.update(Card.fromDTO(this.editedCard), this.editedCard)
+      this.$buefy.snackbar.open(this.$tc('cardUpdated'))
+    } catch (error) {
+      this.$buefy.snackbar.open(error)
+    } finally {
+      this.$eventHub.$emit(RELOAD_ASSET)
+      this.$eventHub.$emit(HIDE_CARD_MODAL)
+      this.loading = false
+    }
   }
 
   play() {

@@ -1,3 +1,7 @@
 export const EVENT = 'event'
 export const ADD_CART_TO_ASSET = 'addCardToAsset'
 export const DELETE_CART_FROM_ASSET = 'deleteCardFromAsset'
+export const SHOW_CARD_MODAL = 'SHOW_CARD_MODAL'
+export const HIDE_CARD_MODAL = 'HIDE_CARD_MODAL'
+export const LOAD_ASSET = 'LOAD_ASSET'
+export const RELOAD_ASSET = 'RELOAD_ASSET'

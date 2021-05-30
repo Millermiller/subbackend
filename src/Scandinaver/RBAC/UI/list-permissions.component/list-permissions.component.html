@@ -38,6 +38,7 @@
   </article>
   <b-modal :active.sync="isComponentModalActive" has-modal-card="has-modal-card">
     <div class="modal-card" style="width: 400px">
+      <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
         <b-field label="Title">
           <b-input type="text" v-model="edited.name"></b-input>

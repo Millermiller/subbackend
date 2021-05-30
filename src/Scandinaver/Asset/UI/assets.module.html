@@ -18,9 +18,10 @@
                     @change="updateAssetOrder"
                     handle=".handle">
               <AssetComponent
-                      v-for="(word, index) in words"
-                      :item="word"
+                      v-for="(wordAsset, index) in words"
+                      :item="wordAsset"
                       :key="index"
+                      :selected="wordAsset.getId() === activeAsset.getId()"
                       @edit="assetEdit"
                       @remove="removeAsset">
               </AssetComponent>
@@ -42,9 +43,10 @@
                     @change="updateAssetOrder"
                     handle=".handle">
               <AssetComponent
-                v-for="(sentence, index) in sentences"
-                :item="sentence"
+                v-for="(sentenceAsset, index) in sentences"
+                :item="sentenceAsset"
                 :key="index"
+                :selected="sentenceAsset.getId() === activeAsset.getId()"
                 @edit="assetEdit"
                 @remove="removeAsset">
               </AssetComponent>
@@ -72,6 +74,7 @@
                 @remove="removeCard">
         </CardComponent>
       </draggable>
+      <modal :visible="settingsModal" :card="editedCard"></modal>
     </div>
   </div>
   <div class="column is-4 translate-column">

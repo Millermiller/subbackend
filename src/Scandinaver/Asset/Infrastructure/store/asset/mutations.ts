@@ -2,15 +2,10 @@ import { Mutations } from 'vuex-smart-module'
 import State from '@/Scandinaver/Asset/Infrastructure/store/asset/state'
 import {
 } from '@/Scandinaver/Asset/Infrastructure/store/asset/mutations.type'
-import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import Example from '@/Scandinaver/Asset/Domain/Example'
 
 export default class AssetMutations extends Mutations<State> {
-  setActiveAsset(asset: Asset) {
-    this.state.activeAsset = asset
-  }
-
   addExample(card: Card) {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')

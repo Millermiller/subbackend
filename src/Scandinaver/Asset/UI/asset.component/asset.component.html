@@ -1,5 +1,5 @@
 <li class="columns">
-  <p :class="['column', 'is-7', 'pointer', { info: item.id === activeAssetId }]" @click="load(item.id)">
+  <p :class="['column', 'is-7', 'pointer', { info: selected }]" @click="load()">
     {{ item.level }}. {{ item.title }}<span class="text-success">({{ item.count }})</span>
   </p>
   <p class="column control-block is-5">
@@ -7,7 +7,7 @@
       <b-button size="is-small" icon-right="circle-edit-outline" @click="$emit('edit', item)"></b-button>
     </Can>
     <Can :do="permissions.UPDATE_ASSET">
-      <b-button size="is-small" icon-right="eye-outline" @click="load(item.id)"></b-button>
+      <b-button size="is-small" icon-right="eye-outline" @click="load()"></b-button>
     </Can>
     <Can :do="permissions.UPDATE_ASSET">
       <b-button size="is-small" :loading="loaded" @click="forvo(item)">Forvo</b-button>

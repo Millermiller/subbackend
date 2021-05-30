@@ -40,8 +40,7 @@ export default class AssetService extends BaseService<Asset> {
   }
 
   public async getAsset(assetId: number): Promise<any> {
-    const asset = await this.repository.one(assetId)
-    store.commit('setActiveAsset', asset)
+    return this.repository.one(assetId)
   }
 
   public async updateAsset(asset: Asset, data: any) {

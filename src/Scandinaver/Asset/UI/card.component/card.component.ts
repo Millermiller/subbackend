@@ -1,13 +1,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import Modal from '@/Scandinaver/Asset/UI/modal.component/index.vue'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import * as events from '@/events/events.type'
 import { Inject } from 'vue-typedi'
 import ReaderService from '@/Scandinaver/Asset/Application/reader.service'
+import { SHOW_CARD_MODAL } from '@/events/events.type'
 
-@Component({
-  components: { Modal },
-})
+@Component({})
 export default class CardComponent extends Vue {
   @Prop({ required: true })
   private card!: Card
@@ -18,13 +16,8 @@ export default class CardComponent extends Vue {
   @Inject()
   private readerService: ReaderService
 
-  private settingsModal: boolean = false
-
   showSettingsModal() {
-    this.settingsModal = true
-  }
-  closeSettingsModal() {
-    this.settingsModal = false
+    this.$eventHub.$emit(SHOW_CARD_MODAL, this.card)
   }
 
   async play() {

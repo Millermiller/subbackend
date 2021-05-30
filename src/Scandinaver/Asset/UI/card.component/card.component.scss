@@ -1,2 +1,7 @@
-.card-component {
+@import '../../../../assets/scss/variables';
+
+.columns {
+  &:hover{
+    color: $info;
+  }
 }

@@ -10,6 +10,7 @@ import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { API } from '../Infrastructure/api/card.api'
 import CardApi = API.CardApi
+import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
 
 @Service()
 export default class CardService extends BaseService<Card> {
@@ -23,7 +24,8 @@ export default class CardService extends BaseService<Card> {
     throw new Error('Method not implemented.')
   }
 
-  async update(card: Card, data: any) {
+  async update(card: Card, data: CardForm) {
+    console.log(data)
     await this.cardRepository.update(card, data)
   }
 

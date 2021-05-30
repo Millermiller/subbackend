@@ -23,9 +23,7 @@ export namespace API {
     create(data: any): Promise<AxiosResponse<Card>> {
       throw new Error('Method not implemented.');
     }
-    update(id: string | number, data: any): Promise<AxiosResponse<Card>> {
-      throw new Error('Method not implemented.');
-    }
+
     delete(id: string | number): Promise<any> {
       throw new Error('Method not implemented.');
     }
@@ -54,10 +52,6 @@ export namespace API {
 
     destroyCard(card: Card): Promise<AxiosResponse> {
       return request.delete(`/${this.baseUrl}/${card.getId()}`)
-    }
-
-    updateCard(card: Card, data: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/${card.getId()}`, data)
     }
 
     addWord(form: IDictionaryForm): Promise<AxiosResponse<Card>> {

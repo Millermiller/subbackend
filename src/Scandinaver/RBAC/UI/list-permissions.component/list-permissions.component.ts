@@ -53,6 +53,7 @@ export default class ListPermissionsComponent extends Vue {
   }
 
   async create() {
+    this.loading = true
     if (this.edited.id) {
       const permission = Permission.fromDTO(this.edited)
       await this.permissionService.update(permission, this.edited)
@@ -61,6 +62,7 @@ export default class ListPermissionsComponent extends Vue {
     }
     await this.load()
     this.closeCreateModal()
+    this.loading = false
   }
 
   showCreateModal() {

@@ -4,16 +4,21 @@ import { Inject } from 'vue-typedi'
 import AssetService from '@/Scandinaver/Asset/Application/asset.service'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { permissions } from '@/permissions/permission.type'
+import { LOAD_ASSET } from '@/events/events.type'
 
 @Component({
   components: {},
 })
 export default class AssetComponent extends Vue {
   @Inject()
-  private service: AssetService
+  public service: AssetService
 
   @Prop({ required: true })
-  private item!: Asset
+  public item!: Asset
+
+  @Prop()
+  public selected: boolean
+
   private loaded: boolean = false
   permissions: {}
 
@@ -22,10 +27,8 @@ export default class AssetComponent extends Vue {
     this.permissions = permissions;
   }
 
-  async load(id: number) {
-    this.$eventHub.$emit('setCardsLoading', true)
-    await this.service.getAsset(id)
-    this.$eventHub.$emit('setCardsLoading')
+  async load() {
+    this.$eventHub.$emit(LOAD_ASSET, this.item)
   }
 
   async forvo(asset: Asset) {
@@ -43,10 +46,5 @@ export default class AssetComponent extends Vue {
         )
       },
     })
-  }
-
-  get activeAssetId(): number {
-    const asset: Asset | never = this.$store.getters.getActiveAsset
-    return 0
   }
 }

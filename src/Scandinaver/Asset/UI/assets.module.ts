@@ -13,6 +13,8 @@ import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
 import Translate from './translate.component/index.vue'
 import AssetComponent from './asset.component/index.vue'
 import CardComponent from './card.component/index.vue'
+import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
+import Modal from '@/Scandinaver/Asset/UI/modal.component/index.vue'
 
 @Component({
   components: {
@@ -20,6 +22,7 @@ import CardComponent from './card.component/index.vue'
     CardComponent,
     Translate,
     draggable,
+    Modal
   },
 })
 export default class AssetsModule extends Vue {
@@ -32,7 +35,7 @@ export default class AssetsModule extends Vue {
   private words: Asset[] = []
   private sentences: Asset[] = []
   private text: string = ''
-
+  public settingsModal: boolean = false
   private cardsLoading: boolean = false
   private assetsLoading: boolean = false
   private sentence: number = 0
@@ -40,6 +43,7 @@ export default class AssetsModule extends Vue {
   private sentencesloaded: boolean = false
   private isComponentModalActive: boolean = false
   private editedAsset: Asset
+  private activeAsset: Asset = new Asset()
   private assetForm: AssetDTO = {
     id: null,
     basic: true,
@@ -60,6 +64,7 @@ export default class AssetsModule extends Vue {
       title: 'sentences',
     },
   ]
+  private editedCard: Card = new Card()
 
   constructor() {
     super();
@@ -74,16 +79,49 @@ export default class AssetsModule extends Vue {
     this.$eventHub.$on(events.ADD_CART_TO_ASSET, this.add)
     this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
     this.$eventHub.$on('setCardsLoading', this.changeCardsLoading)
+    this.$eventHub.$on(events.SHOW_CARD_MODAL, this.openEditCardModal)
+    this.$eventHub.$on(events.HIDE_CARD_MODAL, this.closeEditCardModal)
+    this.$eventHub.$on(events.LOAD_ASSET, this.loadAsset)
+    this.$eventHub.$on(events.RELOAD_ASSET, this.reloadAsset)
   }
 
   beforeDestroy() {
     this.$eventHub.$off(events.ADD_CART_TO_ASSET)
     this.$eventHub.$off(events.DELETE_CART_FROM_ASSET)
     this.$eventHub.$off('setCardsLoading')
+    this.$eventHub.$off(events.SHOW_CARD_MODAL)
+    this.$eventHub.$off(events.HIDE_CARD_MODAL)
+    this.$eventHub.$off(events.LOAD_ASSET)
+    this.$eventHub.$off(events.RELOAD_ASSET)
   }
 
   get cards() {
-    return this.$store.getters.cards
+    return this.activeAsset.cards
+  }
+
+  private async loadAsset(asset: Asset) {
+    this.changeCardsLoading(true)
+    this.activeAsset = await this.service.getAsset(asset.id)
+    this.changeCardsLoading(false)
+  }
+
+  private async reloadAsset() {
+    await this.loadAsset(this.activeAsset)
+  }
+
+  private openEditCardModal(card: Card) {
+    console.log(card)
+    this.editedCard = card
+    this.showEditCardModal()
+  }
+
+  private showEditCardModal() {
+    this.settingsModal = true;
+  }
+
+  closeEditCardModal() {
+    this.editedCard = new Card()
+    this.settingsModal = false
   }
 
   async updateAssetOrder(el: any) {

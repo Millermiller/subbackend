@@ -1,9 +1,9 @@
 <div class="columns">
   <div class="column">
-    <span class="asset_title">{{ card.word.getValue() }}</span>
+    <span class="asset_title pointer" @click="showSettingsModal">{{ card.word.getValue() }}</span>
   </div>
   <div class="column">
-    <p class="is-pulled-left has-text-dark" v-if="card.translate">
+    <p class="is-pulled-left pointer" v-if="card.translate" @click="showSettingsModal">
       {{ card.translate.value }}
     </p>
     <!-- <span class="is-pulled-right has-text-light" v-if="card.word.variants &gt; 1">({{ card.word.variants }})</span> -->
@@ -20,5 +20,4 @@
     ></b-button>
     <span class="danger ml-10" v-if="card.examples.length === 0">examples</span>
   </div>
-  <modal :visible="settingsModal" :card="card" :index="index" @close="closeSettingsModal"></modal>
 </div>

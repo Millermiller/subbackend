@@ -13,9 +13,9 @@ import { IntroForm } from '@/Scandinaver/Intro/Domain/IntroForm'
 })
 export default class EditIntroComponent extends Vue {
   @Inject()
-  private service: IntroService
+  private readonly service: IntroService
 
-  private form: IntroForm = {
+  public form: IntroForm = {
     id: undefined,
     page: '',
     target: '',
@@ -25,7 +25,7 @@ export default class EditIntroComponent extends Vue {
     active: false,
     content: '',
   }
-  private pages: any = [
+  public readonly pages: any = [
     'MainPage',
     'AssetsPage',
     'TestsPage',
@@ -34,17 +34,17 @@ export default class EditIntroComponent extends Vue {
     'TextItem',
     'PuzzlePage'
   ]
-  private positions: any = ['top', 'right', 'bottom', 'left']
-  private active: boolean = false
-  private loading: boolean = false
+  public positions: any = ['top', 'right', 'bottom', 'left']
+  public active: boolean = false
+  public loading: boolean = false
 
-  async load(id: number) {
+  private async load(id: number): Promise<void> {
     this.loading = true
     this.form = await this.service.getOne(id)
     this.loading = false
   }
 
-  async save() {
+  public async save(): Promise<void> {
     this.loading = true
     if (this.form.id !== undefined) {
       const intro = Intro.fromDTO(this.form)
@@ -55,11 +55,11 @@ export default class EditIntroComponent extends Vue {
     await this.$router.go(-1)
   }
 
-  back() {
+  public back(): void {
     this.$router.go(-1)
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     const { id } = this.$route.params
     if (isNumeric(id)) {
       await this.load(parseInt(this.$route.params.id, 10))
@@ -68,11 +68,11 @@ export default class EditIntroComponent extends Vue {
     this.active = true;
   }
 
-  activated() {
+  activated(): void {
     this.active = true;
   }
 
-  deactivated() {
+  deactivated(): void {
     this.active = false;
   }
 }

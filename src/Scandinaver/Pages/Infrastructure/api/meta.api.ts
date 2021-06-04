@@ -7,10 +7,10 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API {
   @Service()
   export class MetaAPI extends BaseAPI<Page> {
-    protected type: ClassType<Page> = Page
-    protected baseUrl = 'meta'
+    protected readonly type: ClassType<Page> = Page
+    protected readonly baseUrl = 'meta'
 
-    create(data: any): Promise<AxiosResponse<Page>> {
+    public async create(data: any): Promise<AxiosResponse<Page>> {
       throw new Error('Method not implemented.')
     }
   }

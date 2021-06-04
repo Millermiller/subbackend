@@ -5,9 +5,9 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
   components: {},
 })
 export default class WordsWidgetComponent extends Vue {
-  private loading: boolean = false
+  public loading: boolean = false
 
-  get words() {
+  get words(): number {
     return store.getters.wordsCount
   }
 }

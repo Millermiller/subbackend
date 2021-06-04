@@ -14,23 +14,23 @@ import ForvoAPI = API.ForvoAPI
 @Service()
 export default class AssetService extends BaseService<Asset> {
   @Inject()
-  private repository: AssetRepository
+  private readonly repository: AssetRepository
 
   @Inject()
-  private translateRepository: TranslateRepository
+  private readonly translateRepository: TranslateRepository
 
   @Inject()
-  private cardRepository: CardRepository
+  private readonly cardRepository: CardRepository
 
   @Inject()
-  private forvoApi: ForvoAPI
+  private readonly forvoApi: ForvoAPI
 
-  async create(data: AssetDTO): Promise<Asset> {
+  public async create(data: AssetDTO): Promise<Asset> {
     data.language = store.getters.language
     return this.repository.create(data)
   }
 
-  public async reload(asset: Asset) {
+  public async reload(asset: Asset): Promise<void> {
     const data = await this.repository.one(asset.id)
     store.commit('setActiveAsset', data)
   }
@@ -43,12 +43,12 @@ export default class AssetService extends BaseService<Asset> {
     return this.repository.one(assetId)
   }
 
-  public async updateAsset(asset: Asset, data: any) {
+  public async updateAsset(asset: Asset, data: any): Promise<void> {
     await this.repository.update(asset, data)
     // store.commit(PATCH_PERSONAL, { asset: response.data, index: this.index })
   }
 
-  public async destroyAsset(asset: Asset) {
+  public async destroyAsset(asset: Asset): Promise<void> {
     await this.repository.delete(asset)
   }
 
@@ -56,15 +56,15 @@ export default class AssetService extends BaseService<Asset> {
     return this.forvoApi.getAudio(asset.id).then(response => response.data)
   }
 
-  async updateTitle(asset: Asset, title: string): Promise<Asset> {
+  public async updateTitle(asset: Asset, title: string): Promise<Asset> {
     return this.repository.update(asset, { title })
   }
 
-  async removeTranslate(data: Translate) {
+  public async removeTranslate(data: Translate): Promise<void> {
     return this.translateRepository.delete(data.getId())
   }
 
-  async translate(query: string, sentence: boolean): Promise<Card[]> {
+  public async translate(query: string, sentence: boolean): Promise<Card[]> {
     return this.cardRepository.translate(query, sentence)
   }
 }

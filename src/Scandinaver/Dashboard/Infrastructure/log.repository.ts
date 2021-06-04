@@ -7,5 +7,5 @@ import LogAPI = API.LogAPI
 @Service()
 export default class LogRepository extends CommonRepository<Log> {
   @Inject()
-  protected api: LogAPI
+  protected readonly api: LogAPI
 }

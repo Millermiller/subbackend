@@ -4,7 +4,7 @@
       <article class="tile is-child box">
         <h4 class="title text-center">{{ $t('texts') }}</h4>
         <Can :do="permissions.CREATE_TEXT">
-          <button class="button is-small" style="margin: 10px 0;" @click="showSettingsModal">
+          <button class="button is-small" style="margin: 10px 0;" @click="showSettingsModal()">
             {{ $t('add') }}
           </button>
         </Can>
@@ -68,7 +68,7 @@
       </div>
       <div class="columns">
         <div class="column">
-          <button class="button is-success" @click="add">{{ $t('save') }}</button>
+          <button class="button is-success" @click="add()">{{ $t('save') }}</button>
         </div>
       </div>
     </div>

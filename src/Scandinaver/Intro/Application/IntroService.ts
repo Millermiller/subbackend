@@ -7,25 +7,25 @@ import { IntroForm } from '@/Scandinaver/Intro/Domain/IntroForm'
 @Service()
 export default class IntroService extends BaseService<Intro> {
   @Inject()
-  private repository: IntroRepository
+  private readonly repository: IntroRepository
 
-  create(input: IntroForm): Promise<Intro> | Intro {
+  public async create(input: IntroForm): Promise<Intro> {
     return this.repository.create(input)
   }
 
-  async getOne(id: number): Promise<Intro> {
+  public async getOne(id: number): Promise<Intro> {
     return this.repository.one(id)
   }
 
-  async getAll(): Promise<Intro[]> {
+  public async getAll(): Promise<Intro[]> {
     return this.repository.all()
   }
 
-  async destroy(intro: Intro) {
+  public async destroy(intro: Intro): Promise<void> {
     return this.repository.delete(intro)
   }
 
-  async update(intro: Intro, data: IntroForm): Promise<Intro> {
+  public async update(intro: Intro, data: IntroForm): Promise<Intro> {
     return this.repository.update(intro, data)
   }
 }

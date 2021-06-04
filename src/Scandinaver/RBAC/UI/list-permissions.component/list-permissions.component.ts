@@ -13,46 +13,46 @@ import { permissions } from '@/permissions/permission.type'
 })
 export default class ListPermissionsComponent extends Vue {
   @Inject()
-  private permissionService: PermissionService
+  private readonly permissionService: PermissionService
 
   @Inject()
-  private permissionGroupService: PermissionGroupService
+  private readonly permissionGroupService: PermissionGroupService
 
-  permissions: Permission[] = []
-  private groups: PermissionGroup[] = []
-  private loading: boolean = false
-  private isComponentModalActive: boolean = false
-  private edited: PermissionForm = {
+  public permissions: Permission[] = []
+  public groups: PermissionGroup[] = []
+  public loading: boolean = false
+  public isComponentModalActive: boolean = false
+  public edited: PermissionForm = {
     id: null,
     name: '',
     slug: '',
     description: '',
     group: null,
   }
-  permissionsList: {}
+  public permissionsList: {}
 
   constructor() {
     super();
     this.permissionsList = permissions;
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.permissions = await this.permissionService.getAll()
     this.groups = await this.permissionGroupService.getAll()
     this.loading = false
   }
 
-  edit(permission: Permission) {
+  public edit(permission: Permission): void {
     this.edited = permission.toDTO()
     this.showCreateModal()
   }
 
-  async create() {
+  public async create(): Promise<void> {
     this.loading = true
     if (this.edited.id) {
       const permission = Permission.fromDTO(this.edited)
@@ -65,11 +65,11 @@ export default class ListPermissionsComponent extends Vue {
     this.loading = false
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeCreateModal() {
+  private closeCreateModal(): void {
     this.edited = {
       id: null,
       name: '',
@@ -80,7 +80,7 @@ export default class ListPermissionsComponent extends Vue {
     this.isComponentModalActive = false
   }
 
-  async remove(row: Permission) {
+  public async remove(row: Permission): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {

@@ -12,17 +12,13 @@ import { Translate } from '../Domain/Translate'
 @Service()
 export default class TextService extends BaseService<Translate> {
   @Inject()
-  private textRepository: TextRepository
+  private readonly textRepository: TextRepository
 
   @Inject()
-  private synonymRepository: SynonymRepository
+  private readonly synonymRepository: SynonymRepository
 
   public async create(form: TranslateForm): Promise<Translate> {
     return this.textRepository.create(form);
-  }
-
-  async getTranslate(id: number): Promise<Translate> {
-    return this.textRepository.one(id)
   }
 
   public async all(): Promise<Translate[]> {
@@ -30,54 +26,54 @@ export default class TextService extends BaseService<Translate> {
     return this.textRepository.allByLanguage(language);
   }
 
-  public async getText(id: number) {
+  public async getText(id: number): Promise<Translate> {
     return this.textRepository.one(id)
   }
 
-  public removeText(translate: Translate) {
+  public async removeText(translate: Translate): Promise<void> {
     return this.textRepository.delete(translate);
   }
 
-  public publishText(translate: Translate) {
+  public async publishText(translate: Translate): Promise<Translate> {
     translate.publish()
     return this.textRepository.update(translate, translate);
   }
 
-  public unPublishText(translate: Translate) {
+  public async unPublishText(translate: Translate): Promise<Translate> {
     translate.unpublish()
     return this.textRepository.update(translate, translate);
   }
 
-  async getSynonyms(word: Word): Promise<Synonym[]> {
+  public async getSynonyms(word: Word): Promise<Synonym[]> {
     return this.synonymRepository.getByWord(word)
   }
 
-  addSynonym(word: Word, value: string): Promise<Synonym> {
+  public async addSynonym(word: Word, value: string): Promise<Synonym> {
     const synonym = new Synonym()
     synonym.id = word.id
     synonym.value = value
     return this.synonymRepository.create(synonym)
   }
 
-  async deleteSynonym(synonym: Synonym) {
+  public async deleteSynonym(synonym: Synonym): Promise<void> {
     return this.synonymRepository.delete(synonym)
   }
 
-  saveImage(translate: Translate, data: FormData) {
+  public async saveImage(translate: Translate, data: FormData): Promise<any> {
     return this.textRepository.saveImage(translate, data)
   }
 
-  async saveExtra(translate: Translate, extra: any) {
+  public async saveExtra(translate: Translate, extra: any): Promise<any> {
     translate.extra = extra;
     await this.textRepository.update(translate, translate)
   }
 
-  async updateSentences(translate: Translate, sentences: any) {
+  public async updateSentences(translate: Translate, sentences: any): Promise<any> {
     translate.sentences = sentences
     await this.textRepository.update(translate, translate)
   }
 
-  async saveDescription(translate: Translate, description: string) {
+  public async saveDescription(translate: Translate, description: string): Promise<any> {
     translate.description = description
     await this.textRepository.update(translate, translate)
   }

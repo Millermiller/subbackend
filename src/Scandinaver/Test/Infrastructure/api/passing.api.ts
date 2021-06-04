@@ -9,31 +9,31 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
 export namespace API {
   @Service()
   export class PassingAPI extends BaseAPI<Passing> {
-    protected type: ClassType<Passing> = Passing
-    protected baseUrl: string = 'test'
+    protected readonly type: ClassType<Passing> = Passing
+    protected readonly baseUrl: string = 'test'
 
-    all(): Promise<AxiosResponse<Passing[]>> {
+    public async all(): Promise<AxiosResponse<Passing[]>> {
       const { language } = store.getters
       return request.get(`/${language}/test`)
     }
 
-    one(id: number): Promise<AxiosResponse> {
+    public async one(id: number): Promise<AxiosResponse> {
       return request.get(`/${this.baseUrl}/${id}`)
     }
 
-    create(form: any): Promise<AxiosResponse> {
+    public async create(form: any): Promise<AxiosResponse> {
       throw new Error('method not implemented')
     }
 
-    delete(id: number|string): Promise<any> {
+    public async delete(id: number|string): Promise<any> {
       return request.delete(`/${this.baseUrl}/${id}`)
     }
 
-    update(id: number|string, form: any): Promise<AxiosResponse> {
+    public async update(id: number|string, form: any): Promise<AxiosResponse> {
       return request.put(`/${this.baseUrl}/${id}`, form)
     }
 
-    search(query: string): Promise<AxiosResponse<Passing[]>> {
+    public async search(query: string): Promise<AxiosResponse<Passing[]>> {
       throw new Error('method not implemented')
     }
   }

@@ -11,43 +11,43 @@ import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
 })
 export default class ListLanguagesComponent extends Vue {
   @Inject()
-  private service: LanguageService
+  private readonly service: LanguageService
 
-  private languages: Language[] = []
-  private preview: any = null
-  private loading: boolean = false
-  private isComponentModalActive: boolean = false
-  public fileUploadFormData: FormData = new FormData()
-  private edited: LanguageForm = {
+  public languages: Language[] = []
+  public preview: any = null
+  public loading: boolean = false
+  public isComponentModalActive: boolean = false
+  private fileUploadFormData: FormData = new FormData()
+  public edited: LanguageForm = {
     id: null,
     title: '',
     letter: '',
     flag: '',
   }
-  permissions: {}
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.languages = await this.service.getAll()
     this.loading = false
   }
 
-  edit(language: Language) {
+  public edit(language: Language): void {
     this.edited = language.toDTO()
     this.preview = this.edited.flag
     this.isComponentModalActive = true
   }
 
-  async create() {
+  public async create(): Promise<void> {
     this.fileUploadFormData.append('title', this.edited.title)
     this.fileUploadFormData.append('letter', this.edited.letter)
     if (this.edited.id) {
@@ -61,7 +61,7 @@ export default class ListLanguagesComponent extends Vue {
     this.closeCreateModal()
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.edited = {
       id: null,
       title: '',
@@ -73,7 +73,7 @@ export default class ListLanguagesComponent extends Vue {
     this.isComponentModalActive = true
   }
 
-  closeCreateModal() {
+  public closeCreateModal(): void {
     this.edited = {
       id: null,
       title: '',
@@ -83,7 +83,7 @@ export default class ListLanguagesComponent extends Vue {
     this.isComponentModalActive = false
   }
 
-  async remove(language: Language) {
+  public async remove(language: Language): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -94,7 +94,7 @@ export default class ListLanguagesComponent extends Vue {
     })
   }
 
-  bindFile(e: any) {
+  public bindFile(e: any): void {
     this.fileUploadFormData.append('file', e)
     this.preview = URL.createObjectURL(e)
   }

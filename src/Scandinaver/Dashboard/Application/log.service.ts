@@ -6,17 +6,17 @@ import LogRepository from '@/Scandinaver/Dashboard/Infrastructure/log.repository
 @Service()
 export default class LogService extends BaseService<Log> {
   @Inject()
-  private repository: LogRepository
+  private readonly repository: LogRepository
 
-  create(input: any): Log {
+  public create(input: any): Log {
     return new Log()
   }
 
-  async getAll(): Promise<Log[]> {
+  public async getAll(): Promise<Log[]> {
     return this.repository.all()
   }
 
-  async destroy(log: Log) {
+  public async destroy(log: Log): Promise<void> {
     return this.repository.delete(log)
   }
 }

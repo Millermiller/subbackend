@@ -6,7 +6,7 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API {
   @Service()
   export class PlanAPI extends BaseAPI<Plan> {
-    protected type: ClassType<Plan>
-    protected baseUrl = 'plan'
+    protected readonly type: ClassType<Plan>
+    protected readonly baseUrl = 'plan'
   }
 }

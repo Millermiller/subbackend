@@ -6,15 +6,15 @@ import { Responses } from '../../Domain/Contract/Responses'
 export namespace API {
   @Service()
   export class CommonAPI {
-    static getState(): Promise<AxiosResponse<Responses.GetStateResponse>> {
+    public static async getState(): Promise<AxiosResponse<Responses.GetStateResponse>> {
       return request.get('/state')
     }
 
-    loadDashboard(): Promise<AxiosResponse> {
+    public async loadDashboard(): Promise<AxiosResponse> {
       return request.get('/dashboard')
     }
 
-    sendMail(): Promise<AxiosResponse> {
+    public async sendMail(): Promise<AxiosResponse> {
       return request.post('/send')
     }
   }

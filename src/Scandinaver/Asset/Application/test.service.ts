@@ -5,7 +5,7 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 
 @Service()
 export default class TestService extends BaseService<Test> {
-  create(asset: Asset): Test {
+  public create(asset: Asset): Test {
     return new Test(asset);
   }
 }

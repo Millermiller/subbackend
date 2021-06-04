@@ -7,5 +7,5 @@ import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repos
 @Service()
 export default class MessageRepository extends CommonRepository<Message> {
   @Inject()
-  protected api: MessageAPI
+  protected readonly api: MessageAPI
 }

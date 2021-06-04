@@ -10,32 +10,32 @@ import Role from '@/Scandinaver/RBAC/Domain/Role'
 })
 export default class EditUserComponent extends Vue {
   @Inject()
-  private userService: UserService
+  private readonly userService: UserService
 
   @Inject()
-  private roleService: RoleService
+  private readonly roleService: RoleService
 
-  private user: User = new User()
-  private date: Date = new Date()
-  private roles: Role[] = []
-  private loading: boolean = false
+  public user: User = new User()
+  public date: Date = new Date()
+  public roles: Role[] = []
+  public loading: boolean = false
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load(Number(this.$route.params.id))
   }
 
-  async load(id: number) {
+  private async load(id: number): Promise<void> {
     this.loading = true
     this.user = await this.userService.getOne(id)
     this.roles = await this.roleService.getAll()
     this.loading = false
   }
 
-  back() {
+  public back(): void {
     this.$router.go(-1)
   }
 
-  async save() {
+  public async save(): Promise<void> {
     this.user.active_to = this.date.toDateString()
     await this.userService.update(this.user)
     this.$router.go(-1)

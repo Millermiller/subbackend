@@ -3,9 +3,3 @@ export default interface IDictionaryForm {
   translate: string
   is_public: boolean | number
 }
-
-export class DictionaryForm implements IDictionaryForm {
-  is_public: boolean | number = false
-  orig: string = ''
-  translate: string = ''
-}

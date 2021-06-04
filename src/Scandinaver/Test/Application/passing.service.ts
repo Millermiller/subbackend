@@ -6,21 +6,21 @@ import PassingRepository from '@/Scandinaver/Test/Infrastructure/passing.reposit
 @Service()
 export default class PassingService extends BaseService<Passing> {
   @Inject()
-  private passingRepository: PassingRepository
+  private readonly passingRepository: PassingRepository
 
-  create(input: any): Promise<Passing> | Passing {
+  public async create(input: any): Promise<Passing> {
     return new Passing();
   }
 
-  async getAll(): Promise<Passing[]> {
+  public async getAll(): Promise<Passing[]> {
     return this.passingRepository.all()
   }
 
-  async destroy(passing: Passing) {
+  public async destroy(passing: Passing) {
     return this.passingRepository.delete(passing)
   }
 
-  async update(passing: Passing, data: any): Promise<Passing> {
+  public async update(passing: Passing, data: any): Promise<Passing> {
     return this.passingRepository.update(passing, data)
   }
 }

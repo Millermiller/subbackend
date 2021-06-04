@@ -8,21 +8,21 @@ import SynonymAPI = API.SynonymAPI
 @Service()
 export default class SynonymRepository extends CommonRepository<Synonym> {
   @Inject()
-  protected api: SynonymAPI
+  protected readonly api: SynonymAPI
 
-  async all(): Promise<Synonym[]> {
+  public async all(): Promise<Synonym[]> {
     throw new Error('method not implemented')
   }
 
-  async one(id: number): Promise<Synonym> {
+  public async one(id: number): Promise<Synonym> {
     throw new Error('method not implemented')
   }
 
-  async update(entity: Synonym, data: any): Promise<Synonym> {
+  public async update(entity: Synonym, data: any): Promise<Synonym> {
     throw new Error('Method not implemented.')
   }
 
-  async getByWord(word: Word): Promise<Synonym[]> {
+  public async getByWord(word: Word): Promise<Synonym[]> {
     throw new Error('Method not implemented.')
   }
 }

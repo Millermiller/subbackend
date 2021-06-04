@@ -19,49 +19,52 @@ export class TranslateForm {
 })
 export default class TranslatesModule extends Vue {
   @Inject()
-  private service: TextService
+  private readonly service: TextService
 
-  private loading: boolean = false
-  private form: TranslateForm = {
+  public loading: boolean = false
+  public form: TranslateForm = {
     title: '',
     origtext: '',
     translate: '',
   }
 
-  private texts: Translate[] = []
-  private isComponentModalActive: boolean = false
-  private permissions: {}
+  public texts: Translate[] = []
+  public isComponentModalActive: boolean = false
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  icon(row: any) {
+  public icon(row: any): string {
     return row.published ? 'eye' : 'eye-off'
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.texts = await this.service.all();
   }
 
-  async remove(row: any) {
+  async remove(row: any): Promise<void> {
     await this.service.removeText(row)
     await this.load();
   }
 
-  edit(row: any) {
-    this.$router.push({ name: 'textedit', params: { id: row.id } })
+  public async edit(row: any): Promise<void> {
+    await this.$router.push({
+      name: 'textedit',
+      params: { id: row.id }
+    })
   }
 
-  async add() {
+  public async add(): Promise<void> {
     await this.service.create(this.form);
     this.$buefy.snackbar.open(this.$tc('loaded'))
     await this.load()
     this.closeSettingsModal()
   }
 
-  async setVisibility(item: any) {
+  public async setVisibility(item: any): Promise<void> {
     if (item.published) {
       await this.service.unPublishText(item)
     } else {
@@ -71,19 +74,19 @@ export default class TranslatesModule extends Vue {
     await this.load()
   }
 
-  showSettingsModal() {
+  public showSettingsModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeSettingsModal() {
+  public closeSettingsModal(): void {
     this.isComponentModalActive = false
   }
 
-  close() {
+  public close(): void {
 
   }
 
-  mounted() {
-    this.load()
+  async mounted(): Promise<void> {
+    await this.load()
   }
 }

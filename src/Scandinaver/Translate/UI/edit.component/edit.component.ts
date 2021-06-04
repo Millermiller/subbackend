@@ -14,15 +14,15 @@ import Tooltips from './tooltip.component/index.vue'
 })
 export default class EditComponent extends Vue {
   @Inject()
-  private service: TextService
+  private readonly service: TextService
 
-  private text: any = {}
-  private cleartext: string = ''
-  private extras: {} = {}
-  private dictionary: Synonym[] = []
-  private sentences: any[] = []
+  public text: any = {}
+  public cleartext: string = ''
+  public extras: {} = {}
+  public dictionary: Synonym[] = []
+  public sentences: any[] = []
 
-  async load(id: number) {
+  async load(id: number): Promise<void> {
     const translate = await this.service.getText(id);
 
     this.text = translate
@@ -32,17 +32,17 @@ export default class EditComponent extends Vue {
     this.sentences = translate.sentences
   }
 
-  async updateTooltips() {
+  public async updateTooltips(): Promise<void> {
     await this.service.saveExtra(this.text, this.extras);
     await this.load(this.text.id)
   }
 
-  async updateSentences() {
+  public async updateSentences(): Promise<void> {
     await this.service.updateSentences(this.text, this.sentences);
     await this.load(this.text.id)
   }
 
-  mounted() {
-    this.load(parseInt(this.$route.params.id, 10))
+  async mounted(): Promise<void> {
+    await this.load(parseInt(this.$route.params.id, 10))
   }
 }

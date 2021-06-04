@@ -6,7 +6,7 @@
         <Can :do="permissions.CREATE_PUZZLE">
         <b-field>
             <p class="control">
-              <button class="button is-success" @click="showSettingsModal">
+              <button class="button is-success" @click="showSettingsModal()">
                 {{ $t('add') }}
               </button>
             </p>
@@ -54,7 +54,7 @@
         <button class="button" type="button" @click="isComponentModalActive = false">
           {{ $t('close') }}
         </button>
-        <button class="button is-primary" @click="addPuzzle">
+        <button class="button is-primary" @click="addPuzzle()">
           {{ $t('save') }}
         </button>
       </footer>

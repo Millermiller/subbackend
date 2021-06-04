@@ -6,7 +6,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 })
 export default class ExtraComponent extends Vue {
   @Prop({ required: true })
-  private item!: any
+  public item!: any
   @Prop({ required: true })
   private index!: any
 }

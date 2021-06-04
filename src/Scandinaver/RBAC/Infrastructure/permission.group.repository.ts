@@ -7,5 +7,5 @@ import PermissionGroupAPI = API.PermissionGroupAPI
 @Service()
 export default class PermissionGroupRepository extends CommonRepository<PermissionGroup> {
   @Inject()
-  protected api: PermissionGroupAPI
+  protected readonly api: PermissionGroupAPI
 }

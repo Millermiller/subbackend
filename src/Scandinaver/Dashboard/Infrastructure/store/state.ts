@@ -1,8 +1,8 @@
 
 export default class DashboardState {
-  wordsCount: number = 0
-  assetsCount: number = 0
-  audioCount: number = 0
-  usersCount: number = 0
-  textsCount: number = 0
+  public wordsCount: number = 0
+  public assetsCount: number = 0
+  public audioCount: number = 0
+  public usersCount: number = 0
+  public textsCount: number = 0
 }

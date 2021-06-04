@@ -7,5 +7,5 @@ import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repos
 @Service()
 export default class TranslateRepository extends CommonRepository<Translate> {
   @Inject()
-  protected api: TranslateApi
+  protected readonly api: TranslateApi
 }

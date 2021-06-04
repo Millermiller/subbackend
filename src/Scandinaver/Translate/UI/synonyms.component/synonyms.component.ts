@@ -9,35 +9,35 @@ import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
 })
 export default class SynonymsComponent extends Vue {
   @Prop({ required: true })
-  private sentences!: any
+  public sentences!: any
 
   @Inject()
-  private service: TextService
+  private readonly service: TextService
 
-  private synonyms: Synonym[] = []
-  private wordId: number = 0
-  private newSynonym: string = ''
-  private activePlaceholder: string = ''
-  private word: Word
+  public synonyms: Synonym[] = []
+  public wordId: number = 0
+  public newSynonym: string = ''
+  public activePlaceholder: string = ''
+  public word: Word
 
-  setActive(word: Word) {
+  public async setActive(word: Word): Promise<void> {
     this.activePlaceholder = word.getValue()
-    this.load(word)
+    await this.load(word)
     this.newSynonym = ''
   }
 
-  async load(word: Word) {
+  private async load(word: Word): Promise<void> {
     this.synonyms = await this.service.getSynonyms(word)
     this.wordId = word.id
     this.word = word
   }
 
-  async add() {
+  private async add(): Promise<void> {
     await this.service.addSynonym(this.word, this.newSynonym)
     await this.load(this.word)
   }
 
-  async remove(synonym: Synonym) {
+  private async remove(synonym: Synonym): Promise<void> {
     await this.service.deleteSynonym(synonym)
     await this.load(this.word)
   }

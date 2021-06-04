@@ -7,22 +7,26 @@ import CardService from '@/Scandinaver/Asset/Application/card.service'
 })
 export default class UploadComponent extends Vue {
   @Inject()
-  private cardService: CardService
-  public fileUploadFormData: FormData = new FormData()
+  private readonly cardService: CardService
+  private fileUploadFormData: FormData = new FormData()
   public orig: string = ''
   public translate: string = ''
-  public isSentence: any = '0'
+  private isSentence: any = '0'
 
-  bindFile(e: any) {
+  get switchStat(): string {
+    return this.isSentence === '1' ? this.$tc('sentence') : this.$tc('word')
+  }
+
+  public bindFile(e: any): void {
     e.preventDefault()
     this.fileUploadFormData.append('file', e.target.files[0])
   }
 
-  async upload() {
+  public async upload(): Promise<void> {
     await this.cardService.uploadWordFile(this.fileUploadFormData)
   }
 
-  async add() {
+  public async add(): Promise<void> {
     await this.cardService.addAdminCard({
       word: this.orig,
       translate: this.translate,
@@ -30,9 +34,5 @@ export default class UploadComponent extends Vue {
     })
     this.orig = ''
     this.translate = ''
-  }
-
-  get switchStat() {
-    return this.isSentence === '1' ? this.$tc('sentence') : this.$tc('word')
   }
 }

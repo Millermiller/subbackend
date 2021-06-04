@@ -6,21 +6,21 @@ import LanguageRepository from '@/Scandinaver/Languages/Infrastructure/language.
 @Service()
 export default class LanguageService extends BaseService<Language> {
   @Inject()
-  private languageRepository: LanguageRepository
+  private readonly languageRepository: LanguageRepository
 
-  create(input: any): Promise<Language> | Language {
+  public async create(input: any): Promise<Language> {
     return this.languageRepository.create(input)
   }
 
-  async getAll(): Promise<Language[]> {
+  public async getAll(): Promise<Language[]> {
     return this.languageRepository.all()
   }
 
-  async destroy(language: Language) {
+  public async destroy(language: Language) {
     return this.languageRepository.delete(language)
   }
 
-  async update(language: Language, form: any): Promise<Language> {
+  public async update(language: Language, form: any): Promise<Language> {
     return this.languageRepository.update(language, form)
   }
 }

@@ -12,26 +12,26 @@ import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.gr
 })
 export default class SettingsComponent extends Vue {
   @Inject()
-  private permissionService: PermissionService
+  private readonly permissionService: PermissionService
 
   @Inject()
-  private roleService: RoleService
+  private readonly roleService: RoleService
 
   @Inject()
-  private permissionGroupService: PermissionGroupService
+  private readonly permissionGroupService: PermissionGroupService
 
-  permissions: Permission[] = []
-  roles: Role[] = []
-  loading: boolean = false
-  model: any = {}
-  groups: any = []
-  expanded: number|null = null
+  public permissions: Permission[] = []
+  public roles: Role[] = []
+  public loading: boolean = false
+  public model: any = {}
+  public groups: any = []
+  public expanded: number|null = null
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.permissions = await this.permissionService.getAll()
     this.roles = await this.roleService.getAll()
@@ -44,7 +44,7 @@ export default class SettingsComponent extends Vue {
     this.loading = false
   }
 
-  async change(role: Role, permission: Permission, state: boolean) {
+  public async change(role: Role, permission: Permission, state: boolean): Promise<void> {
     if (state) {
       await this.roleService.attachPermission(role, permission)
     }
@@ -54,7 +54,7 @@ export default class SettingsComponent extends Vue {
     }
   }
 
-  public toggle(id: number|null) {
+  public toggle(id: number|null): void {
     if (id === null) {
       this.expanded = this.expanded === null ? null : 0
     }

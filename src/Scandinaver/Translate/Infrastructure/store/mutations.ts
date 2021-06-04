@@ -3,7 +3,7 @@ import State from '@/Scandinaver/Translate/Infrastructure/store/state'
 import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
 
 export default class TextMutations extends Mutations<State> {
-  setTexts(data: Translate[]) {
+  public setTexts(data: Translate[]): void {
     this.state.texts = data
   }
 }

@@ -1,8 +1,5 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import { Inject } from 'vue-typedi'
-import IntroService from '@/Scandinaver/Intro/Application/IntroService'
-import Intro from '@/Scandinaver/Intro/Domain/Intro'
 import { Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
 import { permissions } from '@/permissions/permission.type'
@@ -10,7 +7,7 @@ import { permissions } from '@/permissions/permission.type'
 @Component({})
 export default class IntroModule extends Vue {
   private loading: boolean = false
-  private access: boolean = false
+  public access: boolean = false
   private permissions: {}
 
   constructor() {
@@ -18,12 +15,12 @@ export default class IntroModule extends Vue {
     this.permissions = permissions;
   }
 
-  created() {
+  created(): void {
     this.access = this.$ability.can(this.$route.meta.permission)
   }
 
   @Watch('$route')
-  private onRouteChange(route: Route) {
+  private onRouteChange(route: Route): void {
     this.access = this.$ability.can(route.meta.permission)
   }
 }

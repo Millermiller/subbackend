@@ -27,45 +27,41 @@ import UsersWidget from './users-widget.component/index.vue'
 })
 export default class DashboardModule extends Vue {
   @Inject()
-  private logService: LogService
+  private readonly logService: LogService
 
   @Inject()
-  private messageService: MessageService
+  private readonly messageService: MessageService
 
   @Inject()
-  private dashboardService: DashboardService
+  private readonly dashboardService: DashboardService
 
-  private words: string = ''
-  private assets: string = ''
-  private audiofiles: string = ''
-  private texts: string = ''
-  private log: Log[] = []
-  private messages: {} = {}
-  private loading: boolean = false
-  defaultSortDirection: string = 'desc'
-  private access: boolean = false
+  public log: Log[] = []
+  public messages: {} = {}
+  public loading: boolean = false
+  public defaultSortDirection: string = 'desc'
+  public access: boolean = false
 
-  created() {
+  created(): void {
     this.access = this.$ability.can(this.$route.meta.permission)
   }
 
   @Watch('$route')
-  private onRouteChange(route: Route) {
+  private onRouteChange(route: Route): void {
     this.access = this.$ability.can(route.meta.permission)
   }
 
-  async remove(row: any) {
+  public async remove(row: any): Promise<void> {
     await this.logService.destroy(row)
     this.log = await this.logService.getAll()
     this.$buefy.snackbar.open(this.$tc('messageRemoved'))
   }
 
-  async deleteMessage(message: Message) {
+  public async deleteMessage(message: Message): Promise<void> {
     await this.messageService.destroy(message)
     this.$buefy.snackbar.open(this.$tc('messageRemoved'))
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     this.loading = true
     await this.dashboardService.loadDashboard()
     this.log = await this.logService.getAll()

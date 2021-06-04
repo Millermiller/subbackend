@@ -8,23 +8,23 @@ import { SHOW_CARD_MODAL } from '@/events/events.type'
 @Component({})
 export default class CardComponent extends Vue {
   @Prop({ required: true })
-  private card!: Card
+  public card!: Card
 
   @Prop({ required: true })
   private index!: number
 
   @Inject()
-  private readerService: ReaderService
+  private readonly readerService: ReaderService
 
-  showSettingsModal() {
+  public showSettingsModal(): void {
     this.$eventHub.$emit(SHOW_CARD_MODAL, this.card)
   }
 
-  async play() {
+  public async play(): Promise<void> {
     await this.readerService.read(this.card.word.getValue())
   }
 
-  removeCard() {
+  public removeCard(): void {
     const asset = this.$store.getters.activeAssets
     this.$eventHub.$emit(events.DELETE_CART_FROM_ASSET, {
       card: this.card,

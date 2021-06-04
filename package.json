@@ -1,6 +1,6 @@
 {
   "name": "subbackend",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "private": true,
   "scripts": {
     "run development": "vue-cli-service serve --mode development --host admin.scandinaver.local --port 8181",

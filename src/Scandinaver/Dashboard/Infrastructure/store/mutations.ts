@@ -2,23 +2,23 @@ import { Mutations } from 'vuex-smart-module';
 import DashboardState from '@/Scandinaver/Dashboard/Infrastructure/store/state'
 
 export default class DashboardMutations extends Mutations<DashboardState> {
-  setWordsCount(data: number) {
+  public setWordsCount(data: number): void {
     this.state.wordsCount = data
   }
 
-  setAssetsCount(data: number) {
+  public setAssetsCount(data: number): void {
     this.state.assetsCount = data
   }
 
-  setAudioCount(data: number) {
+  public setAudioCount(data: number): void {
     this.state.audioCount = data
   }
 
-  setUsersCount(data: number) {
+  public setUsersCount(data: number): void {
     this.state.usersCount = data
   }
 
-  setTextsCount(data: number) {
+  public setTextsCount(data: number): void {
     this.state.textsCount = data
   }
 }

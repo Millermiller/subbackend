@@ -4,34 +4,34 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 import request from '@/utils/request'
 
 export abstract class BaseAPI<D extends Entity> {
-  protected type: ClassType<D>
-  protected abstract baseUrl: string
+  protected readonly type: ClassType<D>
+  protected abstract readonly baseUrl: string
 
   get class(): ClassType<D> {
     return this.type
   }
 
-  all(): Promise<AxiosResponse<D[]>> {
+  public async all(): Promise<AxiosResponse<D[]>> {
     return request.get(`/${this.baseUrl}`)
   }
 
-  one(id: number): Promise<AxiosResponse<D>> {
+  public async one(id: number): Promise<AxiosResponse<D>> {
     return request.get(`/${this.baseUrl}/${id}`)
   }
 
-  create(form: any): Promise<AxiosResponse<D>> {
+  public async create(form: any): Promise<AxiosResponse<D>> {
     return request.post(`/${this.baseUrl}/`, form)
   }
 
-  delete(id: number|string): Promise<any> {
+  public async delete(id: number|string): Promise<any> {
     return request.delete(`/${this.baseUrl}/${id}`)
   }
 
-  update(id: number|string, form: any): Promise<AxiosResponse<D>> {
+  public async update(id: number|string, form: any): Promise<AxiosResponse<D>> {
     return request.put(`/${this.baseUrl}/${id}`, form)
   }
 
-  search(query: string): Promise<AxiosResponse<D[]>> {
+  public async search(query: string): Promise<AxiosResponse<D[]>> {
     return request.get(`/${this.baseUrl}/search?q=${query}`)
   }
 }

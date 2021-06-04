@@ -10,19 +10,19 @@ import { SettingForm } from '@/Scandinaver/Settings/Domain/SettingForm'
 })
 export default class ListSettingsComponent extends Vue {
   @Inject()
-  private settingsService: SettingService
+  private readonly settingsService: SettingService
 
-  private settings: Setting[] = []
-  private loading: boolean = false
-  private showModal: boolean = false
-  private errors: {
+  public settings: Setting[] = []
+  public loading: boolean = false
+  public showModal: boolean = false
+  public errors: {
     _title: string
     _slug: string
   } = {
     _title: '',
     _slug: '',
   }
-  private edited: SettingForm = {
+  public edited: SettingForm = {
     id: undefined,
     slug: '',
     title: '',
@@ -30,27 +30,27 @@ export default class ListSettingsComponent extends Vue {
     type: undefined
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.settings = await this.settingsService.getAll()
     this.loading = false
   }
 
-  async save() {
+  public async save(): Promise<void> {
     await this.settingsService.save(this.settings)
     this.$buefy.snackbar.open(this.$tc('saved'))
   }
 
-  edit(setting: Setting) {
+  public edit(setting: Setting): void {
     this.edited = setting.toDTO()
     this.showCreateModal()
   }
 
-  async remove(setting: Setting) {
+  public async remove(setting: Setting): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -61,7 +61,7 @@ export default class ListSettingsComponent extends Vue {
     })
   }
 
-  public closeModal() {
+  public closeModal(): void {
     this.edited = {
       id: undefined,
       slug: '',
@@ -72,11 +72,11 @@ export default class ListSettingsComponent extends Vue {
     this.showModal = false
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.showModal = true
   }
 
-  async create() {
+  public async create(): Promise<void> {
     let errors = false
     if (this.edited.title === '') {
       this.errors._title = 'Empty title'

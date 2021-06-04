@@ -5,14 +5,14 @@
         <div class="block is-flex">
           <b-tabs>
             <b-tab-item label="Tooltips" selected="selected">
-              <tooltips :item="text" :extras="extras" :sentences="sentences" @update="updateTooltips"></tooltips>
+              <tooltips :item="text" :extras="extras" :sentences="sentences" @update="updateTooltips()"></tooltips>
             </b-tab-item>
             <b-tab-item :label="$t('translate')">
               <translate
                 :text="text"
                 :cleartext="cleartext"
                 :sentences="sentences"
-                @update="updateSentences"
+                @update="updateSentences()"
               ></translate>
             </b-tab-item>
             <b-tab-item :label="t('synonyms')">

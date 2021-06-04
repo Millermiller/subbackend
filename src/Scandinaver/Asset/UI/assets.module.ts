@@ -13,8 +13,8 @@ import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
 import Translate from './translate.component/index.vue'
 import AssetComponent from './asset.component/index.vue'
 import CardComponent from './card.component/index.vue'
-import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
 import Modal from '@/Scandinaver/Asset/UI/modal.component/index.vue'
+import { Collection } from '@/Scandinaver/Core/Domain/Collection'
 
 @Component({
   components: {
@@ -27,24 +27,24 @@ import Modal from '@/Scandinaver/Asset/UI/modal.component/index.vue'
 })
 export default class AssetsModule extends Vue {
   @Inject()
-  private service: AssetService
+  private readonly service: AssetService
 
   @Inject()
-  private cardService: CardService
+  private readonly cardService: CardService
 
-  private words: Asset[] = []
-  private sentences: Asset[] = []
-  private text: string = ''
+  public words: Asset[] = []
+  public sentences: Asset[] = []
+  public text: string = ''
   public settingsModal: boolean = false
-  private cardsLoading: boolean = false
-  private assetsLoading: boolean = false
+  public cardsLoading: boolean = false
+  public assetsLoading: boolean = false
   private sentence: number = 0
-  private searchloaded: boolean = false
-  private sentencesloaded: boolean = false
-  private isComponentModalActive: boolean = false
+  public searchloaded: boolean = false
+  public sentencesloaded: boolean = false
+  public isComponentModalActive: boolean = false
   private editedAsset: Asset
-  private activeAsset: Asset = new Asset()
-  private assetForm: AssetDTO = {
+  public activeAsset: Asset = new Asset()
+  public assetForm: AssetDTO = {
     id: null,
     basic: true,
     type: 0,
@@ -52,8 +52,8 @@ export default class AssetsModule extends Vue {
     title: '',
     language: '',
   }
-  translates: Card[] = []
-  permissions: {}
+  public translates: Card[] = []
+  public permissions: {}
   private types: any = [
     {
       id: AssetType.WORDS,
@@ -71,11 +71,11 @@ export default class AssetsModule extends Vue {
     this.permissions = permissions;
   }
 
-  mounted() {
-    this.load()
+  async mounted(): Promise<void> {
+    await this.load()
   }
 
-  created() {
+  created(): void {
     this.$eventHub.$on(events.ADD_CART_TO_ASSET, this.add)
     this.$eventHub.$on(events.DELETE_CART_FROM_ASSET, this.removeCard)
     this.$eventHub.$on('setCardsLoading', this.changeCardsLoading)
@@ -85,7 +85,7 @@ export default class AssetsModule extends Vue {
     this.$eventHub.$on(events.RELOAD_ASSET, this.reloadAsset)
   }
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     this.$eventHub.$off(events.ADD_CART_TO_ASSET)
     this.$eventHub.$off(events.DELETE_CART_FROM_ASSET)
     this.$eventHub.$off('setCardsLoading')
@@ -95,36 +95,35 @@ export default class AssetsModule extends Vue {
     this.$eventHub.$off(events.RELOAD_ASSET)
   }
 
-  get cards() {
+  get cards(): Collection<Card> {
     return this.activeAsset.cards
   }
 
-  private async loadAsset(asset: Asset) {
+  private async loadAsset(asset: Asset): Promise<void> {
     this.changeCardsLoading(true)
     this.activeAsset = await this.service.getAsset(asset.id)
     this.changeCardsLoading(false)
   }
 
-  private async reloadAsset() {
+  private async reloadAsset(): Promise<void> {
     await this.loadAsset(this.activeAsset)
   }
 
-  private openEditCardModal(card: Card) {
-    console.log(card)
+  private openEditCardModal(card: Card): void {
     this.editedCard = card
     this.showEditCardModal()
   }
 
-  private showEditCardModal() {
+  private showEditCardModal(): void {
     this.settingsModal = true;
   }
 
-  closeEditCardModal() {
+  private closeEditCardModal(): void {
     this.editedCard = new Card()
     this.settingsModal = false
   }
 
-  async updateAssetOrder(el: any) {
+  public async updateAssetOrder(el: any): Promise<void> {
     const asset: Asset = el.moved.element
     const level = el.moved.newIndex + 1
 
@@ -154,7 +153,7 @@ export default class AssetsModule extends Vue {
     this.isComponentModalActive = true
   }
 
-  async load() {
+  private async load() {
     this.assetsLoading = true
     const assets = await this.service.getAll()
     this.words = assets.words
@@ -162,7 +161,7 @@ export default class AssetsModule extends Vue {
     this.assetsLoading = false
   }
 
-  async removeCard(data: any) {
+  public async removeCard(data: any) {
     this.cardsLoading = true
     try {
       await this.cardService.removeFromAsset(data.card, data.asset)
@@ -175,7 +174,7 @@ export default class AssetsModule extends Vue {
     }
   }
 
-  async removeAsset(asset: Asset) {
+  public async removeAsset(asset: Asset): Promise<void> {
     this.assetsLoading = true
     await this.service.destroyAsset(asset)
     await this.load()
@@ -183,7 +182,7 @@ export default class AssetsModule extends Vue {
     this.$buefy.snackbar.open(this.$tc('assetRemoved'))
   }
 
-  async addAssetModal(type: AssetType) {
+  public addAssetModal(type: AssetType): void {
     this.isComponentModalActive = true
     this.assetForm.type = type
     this.assetForm.level = this.getMaxLevel(type) + 1
@@ -203,7 +202,7 @@ export default class AssetsModule extends Vue {
     return data.reduce((prev, current) => ((prev.level > current.level) ? prev : current)).level
   }
 
-  async save() {
+  async save(): Promise<void> {
     if (this.assetForm.id) {
       await this.service.updateAsset(this.editedAsset, this.assetForm)
     } else {
@@ -214,14 +213,14 @@ export default class AssetsModule extends Vue {
     this.isComponentModalActive = false
   }
 
-  async search() {
+  public async search(): Promise<void> {
     this.searchloaded = true
     this.translates = []
     this.translates = await this.service.translate(this.text, false)
     this.searchloaded = false
   }
 
-  async searchSentences() {
+  public async searchSentences(): Promise<void> {
     this.sentencesloaded = true
     this.translates = []
     try {
@@ -233,12 +232,12 @@ export default class AssetsModule extends Vue {
     }
   }
 
-  async removeTranslate(data: any) {
+  public async removeTranslate(data: any): Promise<void> {
     await this.service.removeTranslate(data)
     this.translates.splice(data.index, 1)
   }
 
-  increment(): void {
+  public increment(): void {
     const aid = this.$store.getters.activeAssetId
 
     this.words.forEach((item: any, i) => {
@@ -246,7 +245,7 @@ export default class AssetsModule extends Vue {
     })
   }
 
-  decrement(): void {
+  public decrement(): void {
     const aid = this.$store.getters.activeAssetId
 
     this.words.forEach((item: any, i) => {
@@ -254,11 +253,11 @@ export default class AssetsModule extends Vue {
     })
   }
 
-  close() {
+  public close(): void {
     this.isComponentModalActive = false
   }
 
-  async add(card: Card) {
+  private async add(card: Card): Promise<void> {
     const asset = this.$store.getters.activeAssets
 
     if (!asset) {

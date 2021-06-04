@@ -3,7 +3,7 @@
     <b-field>
       <b-input v-model="newcategory"></b-input>
       <p class="control">
-        <button class="button is-success" @click="add">{{ $t('add') }}</button>
+        <button class="button is-success" @click="add()">{{ $t('add') }}</button>
       </p>
     </b-field>
   </Can>
@@ -40,7 +40,7 @@
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="isComponentModalActive = false">{{ $t('close') }}</button>
-          <button class="button is-primary" @click="update">
+          <button class="button is-primary" @click="update()">
             {{ $t('save') }}
           </button>
         </footer>

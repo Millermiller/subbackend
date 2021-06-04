@@ -7,30 +7,30 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API {
   @Service()
   export class SynonymAPI extends BaseAPI<Synonym> {
-    protected type: ClassType<Synonym> = Synonym
-    protected baseUrl: string = ''
+    protected readonly type: ClassType<Synonym> = Synonym
+    protected readonly baseUrl: string = ''
 
-    all(): Promise<AxiosResponse> {
+    public async all(): Promise<AxiosResponse> {
       throw new Error('Method not implemented.');
     }
 
-    one(id: number): Promise<AxiosResponse<Synonym>> {
+    public async one(id: number): Promise<AxiosResponse<Synonym>> {
       throw new Error('Method not implemented.');
     }
 
-    create(form: any): Promise<AxiosResponse<Synonym>> {
+    public async create(form: any): Promise<AxiosResponse<Synonym>> {
       throw new Error('Method not implemented.');
     }
 
-    update(id: string | number, data: any): Promise<AxiosResponse<Synonym>> {
+    public async update(id: string | number, data: any): Promise<AxiosResponse<Synonym>> {
       throw new Error('Method not implemented.');
     }
 
-    delete(id: string | number): Promise<any> {
+    public async delete(id: string | number): Promise<any> {
       throw new Error('Method not implemented.');
     }
 
-    search(data: any): Promise<AxiosResponse<Synonym[]>> {
+    public async search(data: any): Promise<AxiosResponse<Synonym[]>> {
       throw new Error('Method not implemented.');
     }
   }

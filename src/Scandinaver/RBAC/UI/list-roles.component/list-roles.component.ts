@@ -12,11 +12,11 @@ import { permissions } from '@/permissions/permission.type'
 })
 export default class ListRolesComponent extends Vue {
   @Inject()
-  private service: RoleService
+  private readonly service: RoleService
 
-  roles: Role[] = []
-  search: string = ''
-  loading: boolean = false
+  public roles: Role[] = []
+  public search: string = ''
+  public loading: boolean = false
   private isComponentModalActive: boolean = false
   private edited: RoleForm = {
     id: null,
@@ -24,29 +24,29 @@ export default class ListRolesComponent extends Vue {
     slug: '',
     description: '',
   }
-  permissions: {}
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.roles = await this.service.getAll()
     this.loading = false
   }
 
-  edit(role: Role) {
+  public edit(role: Role): void {
     this.edited = role.toDTO()
     this.showCreateModal()
   }
 
-  async create() {
+  public async create(): Promise<void> {
     if (this.edited.id) {
       const role = Role.fromDTO(this.edited)
       await this.service.update(role, this.edited)
@@ -57,11 +57,11 @@ export default class ListRolesComponent extends Vue {
     this.closeCreateModal()
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeCreateModal() {
+  public closeCreateModal(): void {
     this.edited = {
       id: null,
       name: '',
@@ -71,7 +71,7 @@ export default class ListRolesComponent extends Vue {
     this.isComponentModalActive = false
   }
 
-  async remove(role: Role) {
+  public async remove(role: Role): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -82,12 +82,12 @@ export default class ListRolesComponent extends Vue {
     })
   }
 
-  async removePermission(role: Role, permission: Permission) {
+  public async removePermission(role: Role, permission: Permission): Promise<void> {
     await this.service.detachPermission(role, permission)
     await this.load()
   }
 
-  async find() {
+  public async find(): Promise<void> {
     this.roles = await this.service.search(this.search)
   }
 }

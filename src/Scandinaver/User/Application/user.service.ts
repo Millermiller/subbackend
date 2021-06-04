@@ -8,9 +8,9 @@ import Role from '@/Scandinaver/RBAC/Domain/Role'
 @Service()
 export default class UserService extends BaseService<User> {
   @Inject()
-  private userRepository: UserRepository
+  private readonly userRepository: UserRepository
 
-  create(form: UserForm): Promise<User> | User | any {
+  public async create(form: UserForm): Promise<User> {
     const user = new User()
     user.login = form.login
     user.email = form.email
@@ -20,23 +20,23 @@ export default class UserService extends BaseService<User> {
     return this.userRepository.create(user.toDTO())
   }
 
-  async getAll(): Promise<User[]> {
+  public async getAll(): Promise<User[]> {
     return this.userRepository.all()
   }
 
-  async getOne(id: number): Promise<User> {
+  public async getOne(id: number): Promise<User> {
     return this.userRepository.one(id)
   }
 
-  async destroy(user: User) {
+  public async destroy(user: User): Promise<void> {
     return this.userRepository.delete(user)
   }
 
-  async search(query: string): Promise<User[]> {
+  public async search(query: string): Promise<User[]> {
     return this.userRepository.find(query)
   }
 
-  async update(user: User): Promise<User> {
+  public async update(user: User): Promise<User> {
     return this.userRepository.update(user, user.toDTO())
   }
 }

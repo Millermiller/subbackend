@@ -7,12 +7,12 @@
         :style="{'background-color': color}"
         @click="colorText(color)"
       ></button>
-      <button class="colorbutton" @click="clean">
+      <button class="colorbutton" @click="clean()">
         <i class="mdi mdi-eraser"></i>
       </button>
     </div>
     <div class="control content">
-      <div contenteditable="true" v-html="data.text" class="textarea" @input="handleTextInput"></div>
+      <div contenteditable="true" v-html="data.text" class="textarea" @input="handleTextInput($event)"></div>
     </div>
   </div>
   <div class="column is-1"></div>
@@ -24,7 +24,7 @@
         :style="{'background-color': color}"
         @click="colorValue(color)"
       ></button>
-      <button class="colorbutton" @click="clean">
+      <button class="colorbutton" @click="clean()">
         <i class="mdi mdi-eraser"></i>
       </button>
     </div>

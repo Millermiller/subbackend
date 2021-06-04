@@ -8,27 +8,27 @@ import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
 })
 export default class DescriptionComponent extends Vue {
   @Prop({ required: true })
-  private item!: Translate
+  public item!: Translate
 
   @Inject()
-  private service: TextService
+  private readonly service: TextService
 
   @Watch('item')
-  private onChange(val: any) {
+  private onChange(val: any): void {
     this.form.content = val.description
   }
 
-  private form: any = {
+  public form: any = {
     content: '',
   }
 
-  async save() {
+  public async save(): Promise<void> {
     await this.service.saveDescription(this.item, this.form.content)
     this.$buefy.snackbar.open(this.$tc('updated'))
     this.$emit('reload')
   }
 
-  clear() {
+  public clear(): void {
     this.form.content = ''
   }
 }

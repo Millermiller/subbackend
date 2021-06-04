@@ -6,25 +6,25 @@ import CommentRepository from '@/Scandinaver/Blog/Infrastructure/comment.reposit
 @Service()
 export default class CommentService extends BaseService<Comment> {
   @Inject()
-  private repository: CommentRepository
+  private readonly repository: CommentRepository
 
-  async create(input: any): Promise<Comment> {
+  public async create(input: any): Promise<Comment> {
     return new Comment()
   }
 
-  async getAll(): Promise<Comment[]> {
+  public async getAll(): Promise<Comment[]> {
     return this.repository.all()
   }
 
-  async destroy(comment: Comment) {
+  public async destroy(comment: Comment): Promise<void> {
     return this.repository.delete(comment)
   }
 
-  async search(query: string): Promise<Comment[]> {
+  public async search(query: string): Promise<Comment[]> {
     return this.repository.find(query)
   }
 
-  async update(comment: Comment): Promise<Comment> {
+  public async update(comment: Comment): Promise<Comment> {
     return this.repository.update(comment, comment)
   }
 }

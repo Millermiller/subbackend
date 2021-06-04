@@ -8,13 +8,13 @@ import RoleAPI = API.RoleAPI
 @Service()
 export default class RoleRepository extends CommonRepository<Role> {
   @Inject()
-  protected api: RoleAPI
+  protected readonly api: RoleAPI
 
-  addPermission(role: Role, permission: Permission) {
+  public async addPermission(role: Role, permission: Permission) {
     return this.api.attachPermission(role.getId(), permission.getId())
   }
 
-  removePermission(role: Role, permission: Permission) {
+  public async removePermission(role: Role, permission: Permission) {
     return this.api.detachPermission(role.getId(), permission.getId())
   }
 }

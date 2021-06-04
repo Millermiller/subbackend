@@ -9,14 +9,15 @@ import * as events from '@/events/events.type'
 })
 export default class TranslateComponent extends Vue {
   @Inject()
-  private cardService: CardService
+  private readonly cardService: CardService
 
   @Prop({ required: true })
-  private card!: Card
+  public card!: Card
+
   @Prop({ required: true })
   private index!: number
 
-  async add() {
+  public add(): void {
     this.$eventHub.$emit(events.ADD_CART_TO_ASSET, this.card)
   }
 }

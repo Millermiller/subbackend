@@ -9,15 +9,16 @@ export default class TranslateComponent extends Vue {
   private text!: any
 
   @Prop({ required: true })
-  private cleartext!: any
+  public cleartext!: any
 
   @Prop({ required: true })
-  private sentences!: any
+  public sentences!: any
 
-  removeWord(data: any) {
+  public removeWord(data: any): void {
     this.sentences[data.word.sentence_num].splice(data.index, 1)
   }
-  addWord(data: any) {
+
+  public addWord(data: any): void {
     this.sentences[data.word.sentence_num].splice(data.index + 1, 0,
       {
         orig: '',

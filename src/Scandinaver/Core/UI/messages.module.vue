@@ -42,23 +42,23 @@ import { Inject } from 'vue-typedi'
 })
 export default class MessagesPage extends Vue {
   @Inject()
-  private service: MessageService
+  private readonly service: MessageService
 
-  messages: Message[] = []
-  loading: boolean = false
-  defaultSortDirection: string = 'desc'
+  public messages: Message[] = []
+  public loading: boolean = false
+  public defaultSortDirection: string = 'desc'
 
-  mounted() {
+  mounted(): void {
     this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.messages = await this.service.getAll()
     this.loading = false
   }
 
-  async remove(row: any) {
+  public async remove(row: any): Promise<void> {
     await this.service.destroy(row)
     this.$buefy.snackbar.open(this.$tc('messageRemoved'))
     await this.load()

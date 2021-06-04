@@ -5,9 +5,9 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
   components: {},
 })
 export default class AudioWidgetComponent extends Vue {
-  private loading: boolean = false
+  public loading: boolean = false
 
-  get audiofiles() {
+  get audiofiles(): number {
     return store.getters.audioCount
   }
 }

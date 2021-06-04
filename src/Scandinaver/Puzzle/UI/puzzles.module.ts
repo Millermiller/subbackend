@@ -8,39 +8,39 @@ import { permissions } from '@/permissions/permission.type'
 @Component({})
 export default class PuzzlesModule extends Vue {
   @Inject()
-  private service: PuzzleService
+  private readonly service: PuzzleService
 
-  private edited: {text: string, translate: string} = {
+  public edited: {text: string, translate: string} = {
     text: '',
     translate: '',
   }
 
-  private puzzles: Puzzle[] = []
-  private isComponentModalActive: boolean = false
-  private loading: boolean = false
-  private permissions: {}
+  public puzzles: Puzzle[] = []
+  public isComponentModalActive: boolean = false
+  public loading: boolean = false
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  mounted() {
-    this.load()
+  async mounted(): Promise<void> {
+    await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.puzzles = await this.service.getPuzzles()
   }
 
-  async addPuzzle() {
+  public async addPuzzle(): Promise<void> {
     await this.service.create({ text: this.edited.text, translate: this.edited.translate })
     await this.load()
     this.$buefy.snackbar.open(this.$tc('uploaded'))
     this.closeSettingsModal()
   }
 
-  async remove(puzzle: Puzzle) {
+  public async remove(puzzle: Puzzle): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -50,15 +50,15 @@ export default class PuzzlesModule extends Vue {
     })
   }
 
-  edit(puzzle: Puzzle) {
+  public edit(puzzle: Puzzle): void {
     // TODO: implement
   }
 
-  showSettingsModal() {
+  public showSettingsModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeSettingsModal() {
+  public closeSettingsModal(): void {
     this.isComponentModalActive = false
   }
 }

@@ -8,15 +8,14 @@ import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
 })
 export default class ImageComponent extends Vue {
   @Prop({ required: true })
-  private item!: Translate
+  public item!: Translate
 
   @Inject()
-  private service: TextService
+  private readonly service: TextService
 
-  private imageSrc: string = ''
   private fileUploadFormData: FormData = new FormData()
 
-  previewThumbnail(event: any) {
+  public previewThumbnail(event: any): void {
     const input = event.target
 
     if (input.files && input.files[0]) {
@@ -32,7 +31,7 @@ export default class ImageComponent extends Vue {
     }
   }
 
-  async upload() {
+  public async upload(): Promise<void> {
     await this.service.saveImage(this.item, this.fileUploadFormData)
     this.$buefy.snackbar.open(this.$tc('updated'))
   }

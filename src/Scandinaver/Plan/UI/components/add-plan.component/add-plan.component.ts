@@ -8,15 +8,15 @@ import PlanService from '@/Scandinaver/Plan/Application/plan.service'
 })
 export default class AddPlanComponent extends Vue {
   @Inject()
-  private service: PlanService
+  private readonly service: PlanService
 
-  plan: Plan
+  public plan: Plan = new Plan()
 
-  back() {
+  public back(): void {
     this.$router.go(-1)
   }
 
-  async save() {
+  public async save(): Promise<void> {
     await this.service.create(this.plan)
     this.$router.go(-1)
   }

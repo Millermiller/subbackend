@@ -6,29 +6,29 @@ import PostRepository from '@/Scandinaver/Blog/Infrastructure/post.repository'
 @Service()
 export default class BlogService extends BaseService<Post> {
   @Inject()
-  private repository: PostRepository
+  private readonly repository: PostRepository
 
-  create(post: Post): Promise<Post> | Post {
+  public create(post: Post): Promise<Post> | Post {
     return this.repository.create(post)
   }
 
-  async getOne(id: number): Promise<Post> {
+  public async getOne(id: number): Promise<Post> {
     return this.repository.one(id)
   }
 
-  async getAll(): Promise<Post[]> {
+  public async getAll(): Promise<Post[]> {
     return this.repository.all()
   }
 
-  async destroy(post: Post) {
+  public async destroy(post: Post): Promise<void> {
     return this.repository.delete(post)
   }
 
-  async search(query: string): Promise<Post[]> {
+  public async search(query: string): Promise<Post[]> {
     return this.repository.find(query)
   }
 
-  async update(post: Post): Promise<Post> {
+  public async update(post: Post): Promise<Post> {
     return this.repository.update(post, post)
   }
 }

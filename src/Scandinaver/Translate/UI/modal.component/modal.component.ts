@@ -6,15 +6,15 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 })
 export default class ModalComponent extends Vue {
   @Prop({ required: true })
-  private visible!: any
+  public visible!: any
 
-  private form: any = {
+  public form: any = {
     title: '',
     origtext: '',
     translate: '',
   }
 
-  close() {
+  public close(): void {
     this.$emit('close')
   }
 }

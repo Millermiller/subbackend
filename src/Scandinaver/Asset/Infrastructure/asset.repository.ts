@@ -9,7 +9,7 @@ import AssetApi = API.AssetApi
 @Service()
 export default class AssetRepository extends CommonRepository<Asset> {
   @Inject()
-  protected api: AssetApi
+  protected readonly api: AssetApi
 
   public all(): Promise<Asset[]> {
     throw new Error('Method not implemented.')

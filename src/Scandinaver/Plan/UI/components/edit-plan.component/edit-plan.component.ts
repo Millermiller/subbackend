@@ -8,23 +8,23 @@ import PlanService from '@/Scandinaver/Plan/Application/plan.service'
 })
 export default class EditPlanComponent extends Vue {
   @Inject()
-  private service: PlanService
+  private readonly service: PlanService
 
-  plan: Plan
+  public plan: Plan = new Plan()
 
-  mounted() {
-    this.load(Number(this.$route.params.id))
+  async mounted(): Promise<void> {
+    await this.load(Number(this.$route.params.id))
   }
 
-  async load(id: number) {
+  private async load(id: number): Promise<void> {
     this.plan = await this.service.getOne(id)
   }
 
-  back() {
+  public back(): void {
     this.$router.go(-1)
   }
 
-  async save() {
+  public async save(): Promise<void> {
     await this.service.update(this.plan)
     this.$router.go(-1)
   }

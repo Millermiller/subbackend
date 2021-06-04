@@ -7,14 +7,14 @@ import { Route } from 'vue-router'
   components: {},
 })
 export default class UsersModule extends Vue {
-  private access: boolean = false
+  public access: boolean = false
 
-  created() {
+  created(): void {
     this.access = this.$ability.can(this.$route.meta.permission)
   }
 
   @Watch('$route')
-  private onRouteChange(route: Route) {
+  private onRouteChange(route: Route): void {
     this.access = this.$ability.can(route.meta.permission)
   }
 }

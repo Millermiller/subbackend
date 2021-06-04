@@ -11,54 +11,56 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API {
   @Service()
   export class CardApi extends BaseAPI<Card> {
-    protected type: ClassType<Card> = Card
-    protected baseUrl = 'card'
+    protected readonly type: ClassType<Card> = Card
+    protected readonly baseUrl = 'card'
 
-    all(): Promise<AxiosResponse<Card[]>> {
-      throw new Error('Method not implemented.');
-    }
-    one(id: number): Promise<AxiosResponse<Card>> {
-      throw new Error('Method not implemented.');
-    }
-    create(data: any): Promise<AxiosResponse<Card>> {
+    public async all(): Promise<AxiosResponse<Card[]>> {
       throw new Error('Method not implemented.');
     }
 
-    delete(id: string | number): Promise<any> {
+    public async one(id: number): Promise<AxiosResponse<Card>> {
       throw new Error('Method not implemented.');
     }
 
-    search(query: string): Promise<AxiosResponse<Card[]>> {
+    public async create(data: any): Promise<AxiosResponse<Card>> {
       throw new Error('Method not implemented.');
     }
 
-    translate(query: string, sentence: boolean): Promise<AxiosResponse<Card[]>> {
+    public async delete(id: string | number): Promise<any> {
+      throw new Error('Method not implemented.');
+    }
+
+    public async search(query: string): Promise<AxiosResponse<Card[]>> {
+      throw new Error('Method not implemented.');
+    }
+
+    public async translate(query: string, sentence: boolean): Promise<AxiosResponse<Card[]>> {
       return request.get(`/${this.baseUrl}/search`, {
         params: { query, sentence: +sentence, lang: store.getters.language },
       })
     }
 
-    createCard(card: Card): Promise<AxiosResponse<Card>> {
-      return request.post(`/${this.baseUrl}/${card.word.id}/${card.translate.id}/${card.asset.id}`)
+    public async createCard(card: Card): Promise<AxiosResponse<Card>> {
+      return request.post(`/${this.baseUrl}/${card.word.id}/${card.translate.getId()}/${card.asset.id}`)
     }
 
-    addCardToAsset(language: string, card: Card, asset: Asset): Promise<AxiosResponse<Card>> {
+    public async addCardToAsset(language: string, card: Card, asset: Asset): Promise<AxiosResponse<Card>> {
       return request.post(`/asset/${asset.getId()}/${card.getId()}`)
     }
 
-    removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {
+    public async removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {
       return request.delete(`/${language}/${this.baseUrl}/${card.getId()}/${asset.getId()}`)
     }
 
-    destroyCard(card: Card): Promise<AxiosResponse> {
+    public async destroyCard(card: Card): Promise<AxiosResponse> {
       return request.delete(`/${this.baseUrl}/${card.getId()}`)
     }
 
-    addWord(form: IDictionaryForm): Promise<AxiosResponse<Card>> {
+    public async addWord(form: IDictionaryForm): Promise<AxiosResponse<Card>> {
       return request.post('/word', form)
     }
 
-    uploadWordFile(language: string, data: any): Promise<AxiosResponse> {
+    public async uploadWordFile(language: string, data: any): Promise<AxiosResponse> {
       return request.post(`/${language}/wordfile`, data)
     }
   }

@@ -8,9 +8,9 @@ import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 @Service()
 export default class RoleService extends BaseService<Role> {
   @Inject()
-  private roleRepository: RoleRepository
+  private readonly roleRepository: RoleRepository
 
-  create(input: RoleForm): Promise<Role> | Role {
+  public async create(input: RoleForm): Promise<Role> {
     const role = new Role()
     role.name = input.name
     role.slug = input.slug
@@ -18,31 +18,31 @@ export default class RoleService extends BaseService<Role> {
     return this.roleRepository.create(role.toDTO())
   }
 
-  async getAll(): Promise<Role[]> {
+  public async getAll(): Promise<Role[]> {
     return this.roleRepository.all()
   }
 
-  async getOne(id: number): Promise<Role> {
+  public async getOne(id: number): Promise<Role> {
     return this.roleRepository.one(id)
   }
 
-  async destroy(role: Role) {
+  public async destroy(role: Role) {
     return this.roleRepository.delete(role)
   }
 
-  async search(query: string): Promise<Role[]> {
+  public async search(query: string): Promise<Role[]> {
     return this.roleRepository.find(query)
   }
 
-  async update(role: Role, form: RoleForm): Promise<Role> {
+  public async update(role: Role, form: RoleForm): Promise<Role> {
     return this.roleRepository.update(role, form)
   }
 
-  attachPermission(role: Role, permission: Permission) {
+  public attachPermission(role: Role, permission: Permission) {
     return this.roleRepository.addPermission(role, permission)
   }
 
-  detachPermission(role: Role, permission: Permission) {
+  public detachPermission(role: Role, permission: Permission) {
     return this.roleRepository.removePermission(role, permission)
   }
 }

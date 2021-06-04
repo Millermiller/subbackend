@@ -10,6 +10,7 @@ export default class Intro extends Entity {
   private _headerText: string
   private _sort: number
   private _active: boolean
+
   getId(): number {
     return this._id;
   }

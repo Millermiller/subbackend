@@ -1,21 +1,20 @@
 import { Getters } from 'vuex-smart-module'
 import State from '@/Scandinaver/Core/Infrastructure/store/user/state'
-import { Ability } from '@casl/ability'
 
 export default class UserGetters extends Getters<State> {
   get user() {
     return this.state.user
   }
 
-  get avatar() {
+  get avatar(): string {
     return this.state.user.avatar
   }
 
-  get login() {
+  get login(): string {
     return this.state.user.login
   }
 
-  get email() {
+  get email(): string {
     return this.state.user.email
   }
 
@@ -23,16 +22,16 @@ export default class UserGetters extends Getters<State> {
     return this.state.user.plan
   }
 
-  get active_to() {
+  get active_to(): string {
     return this.state.user.active_to
   }
 
-  get auth() {
+  get auth(): boolean {
     // TODO: сделать нормально
     return this.state.user && this.state.user.authenticated
   }
 
-  get isActive() {
+  get isActive(): boolean {
     return this.state.user.active
   }
 }

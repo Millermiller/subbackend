@@ -6,64 +6,42 @@ import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import Example from '@/Scandinaver/Asset/Domain/Example'
 
 export default class AssetMutations extends Mutations<State> {
-  addExample(card: Card) {
+  public addExample(card: Card): void {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')
     }
-    const index = this.state.activeAsset.cards.findIndex((item: any) => item.id === card.getId())
-    this.state.activeAsset.cards[index].examples.push(new Example())
+    const index = this.state.activeAsset.cards.all().findIndex((item: any) => item.id === card.getId())
+    this.state.activeAsset.cards.all()[index].examples.push(new Example())
   }
 
-  removeExample(data: {card: Card, index: number}) {
+  public removeExample(data: {card: Card, index: number}): void {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')
     }
-    const index = this.state.activeAsset.cards.findIndex((item: any) => item.id === data.card.getId())
-    this.state.activeAsset.cards[index].examples.splice(data.index, 1)
+    const index = this.state.activeAsset.cards.all().findIndex((item: any) => item.id === data.card.getId())
+    this.state.activeAsset.cards.all()[index].examples.splice(data.index, 1)
   }
 
-  updateExampleText(data: {card: Card, index: number}) {
+  public updateExampleText(data: {card: Card, index: number}): void {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')
     }
-    const index = this.state.activeAsset.cards.findIndex((item: any) => item.id === data.card.getId())
-    this.state.activeAsset.cards[index].examples.splice(data.index, 1)
+    const index = this.state.activeAsset.cards.all().findIndex((item: any) => item.id === data.card.getId())
+    this.state.activeAsset.cards.all()[index].examples.splice(data.index, 1)
   }
 
-  removeCard(card: Card) {
+  public removeCard(card: Card): void {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')
     }
-    const index = this.state.activeAsset.cards.findIndex((item: any) => item.id === card.getId())
-    this.state.activeAsset.cards.splice(index, 1)
+    const index = this.state.activeAsset.cards.all().findIndex((item: any) => item.id === card.getId())
+    this.state.activeAsset.cards.all().splice(index, 1)
   }
 
-  changeAssetTranslate(data: any) {
+  public addCard(card: Card): void {
     if (this.state.activeAsset === null) {
       throw new Error('asset is null')
     }
-    this.state.activeAsset.cards[data.index].translate.value = data.translate.value
-    this.state.activeAsset.cards[data.index].translate.id = data.translate.id
-  }
-
-  changeAssetWord(data: any) {
-    if (this.state.activeAsset === null) {
-      throw new Error('asset is null')
-    }
-    this.state.activeAsset.cards[data.index].translate.value = data.text
-  }
-
-  changeAssetAudio(data: any) {
-    if (this.state.activeAsset === null) {
-      throw new Error('asset is null')
-    }
-    this.state.activeAsset.cards[data.index].word.audio = data.url
-  }
-
-  addCard(card: Card) {
-    if (this.state.activeAsset === null) {
-      throw new Error('asset is null')
-    }
-    this.state.activeAsset.cards.push(card)
+    this.state.activeAsset.cards.add(card)
   }
 }

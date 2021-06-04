@@ -2,7 +2,7 @@
   <b-field>
     <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
     <p class="control">
-      <button class="button is-info" @click="find">{{ $t('search') }}</button>
+      <button class="button is-info" @click="find()">{{ $t('search') }}</button>
     </p>
     <Can :do="permissions.CREATE_POST">
       <button class="button is-success ml-10" @click="create()">{{ $t('newPost') }}</button>

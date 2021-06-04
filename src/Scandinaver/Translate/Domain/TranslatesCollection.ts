@@ -1,7 +1,7 @@
 
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
-import { BaseCollection } from '@/Scandinaver/Core/Domain/BaseCollection'
+import { Collection } from '@/Scandinaver/Core/Domain/Collection'
 
-export class TranslatesCollection extends BaseCollection<Translate> {
+export class TranslatesCollection extends Collection<Translate> {
 
 }

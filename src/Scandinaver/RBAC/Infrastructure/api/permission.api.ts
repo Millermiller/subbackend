@@ -6,7 +6,7 @@ import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 export namespace API {
   @Service()
   export class PermissionAPI extends BaseAPI<Permission> {
-    protected type: ClassType<Permission> = Permission
-    protected baseUrl = 'permission'
+    protected readonly type: ClassType<Permission> = Permission
+    protected readonly baseUrl = 'permission'
   }
 }

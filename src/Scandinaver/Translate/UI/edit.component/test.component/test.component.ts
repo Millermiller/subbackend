@@ -11,12 +11,12 @@ export default class TestComponent extends Vue {
   private dictionary!: any
 
   @Prop({ required: true })
-  private extras!: any
+  public extras!: any
 
   @Prop({ required: true })
   private cleartext!: any
 
-  private input: string = ''
+  public input: string = ''
   private inputWords: any[] = []
   private showedExtra: string = ''
   private showSuccess: boolean = false

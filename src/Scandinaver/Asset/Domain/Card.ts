@@ -17,6 +17,26 @@ export class Card extends Entity {
   private _user: User
   private _examples: Example[] = []
 
+  @Type(() => Word)
+  set word(value: Word) {
+    this._word = value
+  }
+
+  @Type(() => Translate)
+  set translate(value: Translate) {
+    this._translate = value
+  }
+
+  @Type(() => User)
+  set user(value: User) {
+    this._user = value
+  }
+
+  @Type(() => Example)
+  set examples(value: Example[]) {
+    this._examples = value
+  }
+
   getId(): number | string {
     return this.id
   }
@@ -53,11 +73,6 @@ export class Card extends Entity {
     this._asset = value
   }
 
-  @Type(() => Word)
-  set word(value: Word) {
-    this._word = value
-  }
-
   get word(): Word {
     return this._word
   }
@@ -66,27 +81,12 @@ export class Card extends Entity {
     return this._translate
   }
 
-  @Type(() => Translate)
-  set translate(value: Translate) {
-    this._translate = value
-  }
-
   get user(): User {
     return this._user
   }
 
-  @Type(() => User)
-  set user(value: User) {
-    this._user = value
-  }
-
   get examples(): Example[] {
     return this._examples
-  }
-
-  @Type(() => Example)
-  set examples(value: Example[]) {
-    this._examples = value
   }
 
   get subject(): string {
@@ -103,7 +103,7 @@ export class Card extends Entity {
       word: this._word,
       translate: this._translate,
       user: this._user,
-      examples: this._examples
+      examples: this._examples,
     }
   }
 

@@ -11,40 +11,40 @@ import PassingForm from '@/Scandinaver/Test/Domain/PassingForm'
 })
 export default class ListPassingsComponent extends Vue {
   @Inject()
-  private passingService: PassingService
+  private readonly passingService: PassingService
 
-  private loading: boolean = false
-  private isComponentModalActive: boolean = false
-  private passings: Passing[] = []
-  private edited: PassingForm = {
+  public loading: boolean = false
+  public isComponentModalActive: boolean = false
+  public passings: Passing[] = []
+  public edited: PassingForm = {
     id: null,
     errors: [],
     percent: 0,
     completed: false,
   }
-  permissions: {}
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.passings = await this.passingService.getAll()
     this.loading = false
   }
 
-  edit(passing: Passing) {
+  public edit(passing: Passing): void {
     this.edited = passing.toDTO()
     this.showCreateModal()
   }
 
-  async save() {
+  public async save(): Promise<void> {
     if (this.edited.id) {
       const passing = Passing.fromDTO(this.edited)
       await this.passingService.update(passing, this.edited)
@@ -55,7 +55,7 @@ export default class ListPassingsComponent extends Vue {
     this.closeCreateModal()
   }
 
-  async remove(row: Passing) {
+  public async remove(row: Passing): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -66,11 +66,11 @@ export default class ListPassingsComponent extends Vue {
     })
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeCreateModal() {
+  public closeCreateModal(): void {
     this.edited = {
       id: null,
       errors: [],
@@ -80,7 +80,7 @@ export default class ListPassingsComponent extends Vue {
     this.isComponentModalActive = false
   }
 
-  tagClass(completed: boolean): string {
+  public tagClass(completed: boolean): string {
     return completed ? 'is-info' : 'is-danger'
   }
 }

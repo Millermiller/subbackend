@@ -7,21 +7,21 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
 @Service()
 export default class PuzzleService extends BaseService<Puzzle> {
   @Inject()
-  private repository: PuzzleRepository
+  private readonly repository: PuzzleRepository
 
-  async create(data: any): Promise<Puzzle> {
+  public async create(data: any): Promise<Puzzle> {
     const puzzle = new Puzzle()
     puzzle.text = data.text
     puzzle.translate = data.translate
     return this.repository.create(puzzle)
   }
 
-  async getPuzzles() {
+  public async getPuzzles(): Promise<Puzzle[]> {
     const { language } = store.getters
     return this.repository.allByLanguage(language)
   }
 
-  async destroy(puzzle: Puzzle) {
+  public async destroy(puzzle: Puzzle): Promise<void> {
     return this.repository.delete(puzzle)
   }
 }

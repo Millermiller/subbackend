@@ -6,36 +6,36 @@ import Extra from './extra.component/index.vue'
 })
 export default class TooltipComponent extends Vue {
   @Prop({ required: true })
-  private item!: any
+  public item!: any
 
   @Prop({ required: true })
-  private extras!: any
+  public extras!: any
 
   @Prop({ required: true })
   private sentences!: any
 
   private showedExtra: string = ''
-  private text: any = {
+  public text: any = {
     computed: '',
   }
 
-  addExtra() {
+  public addExtra(): void {
     this.extras.push({ text_id: this.item.id })
   }
 
-  removeExtra(id: number) {
+  public removeExtra(id: number): void {
     this.extras.splice(id, 1)
   }
 
-  showExtra(extra: any) {
+  public showExtra(extra: any): void {
     this.showedExtra = extra.extra
   }
 
-  clearExtra() {
+  public clearExtra(): void {
     this.showedExtra = ''
   }
 
-  get output() {
+  get output(): string {
     let computed = ''
 
     for (let k = 0; k < this.sentences.length; k++) {
@@ -60,7 +60,7 @@ export default class TooltipComponent extends Vue {
   }
 
   @Watch('extras')
-  private onChange(val: any) {
+  private onChange(val: any): void {
     if (val.length) {
       const self = this
 

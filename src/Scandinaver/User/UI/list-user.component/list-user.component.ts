@@ -13,19 +13,19 @@ import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 })
 export default class ListUserComponent extends Vue {
   @Inject()
-  private service: UserService
+  private readonly service: UserService
 
   @Inject()
-  private roleService: RoleService
+  private readonly roleService: RoleService
 
-  private users: User[] = []
-  private roles: Role[] = []
-  private search: string = ''
-  private loading: boolean = false
-  private showModal: boolean = false
-  private permissions: {}
-  private generatedPassword: string = ''
-  private errors: {
+  public users: User[] = []
+  public roles: Role[] = []
+  public search: string = ''
+  public loading: boolean = false
+  public showModal: boolean = false
+  public permissions: {}
+  public generatedPassword: string = ''
+  public errors: {
     _login: string
     _email: string
     _password: string
@@ -35,7 +35,7 @@ export default class ListUserComponent extends Vue {
     _password: '',
   }
 
-  private edited: UserForm = {
+  public edited: UserForm = {
     id: null,
     email: '',
     login: '',
@@ -50,22 +50,22 @@ export default class ListUserComponent extends Vue {
     this.permissions = permissions
   }
 
-  mounted() {
-    this.load()
+  async mounted(): Promise<void> {
+    await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.users = await this.service.getAll()
     this.roles = await this.roleService.getAll()
     this.loading = false
   }
 
-  async edit(user: User) {
+  public async edit(user: User): Promise<void> {
     await this.$router.push({ name: 'user', params: { id: user.getId().toString() } })
   }
 
-  async create() {
+  public async create(): Promise<void> {
     let errors = false
     if (this.edited.login === '') {
       this.errors._login = 'Empty login'
@@ -106,7 +106,7 @@ export default class ListUserComponent extends Vue {
     }
   }
 
-  public closeModal() {
+  public closeModal(): void {
     this.edited = {
       id: null,
       email: '',
@@ -120,7 +120,7 @@ export default class ListUserComponent extends Vue {
     this.showModal = false
   }
 
-  async remove(row: User) {
+  public async remove(row: User): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -133,18 +133,18 @@ export default class ListUserComponent extends Vue {
     })
   }
 
-  async find() {
+  public async find(): Promise<void> {
     this.users = await this.service.search(this.search)
   }
 
-  type(value: any): string {
+  public type(value: any): string {
     if (new Date(value) < new Date()) {
       return 'is-warning'
     }
     return 'is-success'
   }
 
-  color(value: any): string {
+  public color(value: any): string {
     if (value === 1) {
       return 'green-plan'
     }
@@ -154,12 +154,12 @@ export default class ListUserComponent extends Vue {
     return 'blue-plan'
   }
 
-  removeRole(user: User, role: Role): void {
+  public removeRole(user: User, role: Role): void {
     console.log(user)
     console.log(role)
   }
 
-  generatePassword(): void {
+  public generatePassword(): void {
     const length = 8
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let retVal = ''

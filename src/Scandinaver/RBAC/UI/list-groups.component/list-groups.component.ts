@@ -11,41 +11,41 @@ import { PermissionGroupForm } from '@/Scandinaver/RBAC/Domain/PermissionGroupFo
 })
 export default class ListGroupsComponent extends Vue {
   @Inject()
-  private service: PermissionGroupService
+  private readonly service: PermissionGroupService
 
-  permissionGroups: PermissionGroup[] = []
-  search: string = ''
-  loading: boolean = false
-  private isComponentModalActive: boolean = false
-  private edited: PermissionGroupForm = {
+  public permissionGroups: PermissionGroup[] = []
+  public search: string = ''
+  public loading: boolean = false
+  public isComponentModalActive: boolean = false
+  public edited: PermissionGroupForm = {
     id: null,
     name: '',
     slug: '',
     description: '',
   }
-  permissions: {}
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.permissionGroups = await this.service.getAll()
     this.loading = false
   }
 
-  edit(permissionGroup: PermissionGroup) {
+  public edit(permissionGroup: PermissionGroup): void {
     this.edited = permissionGroup
     this.showCreateModal()
   }
 
-  async create() {
+  public async create(): Promise<void> {
     if (this.edited.id) {
       const group = PermissionGroup.fromDTO(this.edited)
       await this.service.update(group, this.edited)
@@ -56,11 +56,11 @@ export default class ListGroupsComponent extends Vue {
     this.closeCreateModal()
   }
 
-  showCreateModal() {
+  public showCreateModal(): void {
     this.isComponentModalActive = true
   }
 
-  closeCreateModal() {
+  private closeCreateModal(): void {
     this.edited = {
       id: null,
       name: '',
@@ -70,7 +70,7 @@ export default class ListGroupsComponent extends Vue {
     this.isComponentModalActive = false
   }
 
-  async remove(row: PermissionGroup) {
+  public async remove(row: PermissionGroup): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {
@@ -81,7 +81,7 @@ export default class ListGroupsComponent extends Vue {
     })
   }
 
-  async find() {
+  public async find(): Promise<void> {
     this.permissionGroups = await this.service.search(this.search)
   }
 }

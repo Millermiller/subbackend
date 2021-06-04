@@ -13,19 +13,19 @@ import { HIDE_CARD_MODAL, LOAD_ASSET, RELOAD_ASSET } from '@/events/events.type'
 })
 export default class ModalComponent extends Vue {
   @Prop({ required: true })
-  private visible!: boolean
+  public visible!: boolean
 
   @Prop({ required: true })
   private card: Card
 
   @Inject()
-  private cardService: CardService
+  private readonly cardService: CardService
 
   @Inject()
-  private assetService: AssetService
+  private readonly assetService: AssetService
 
   @Watch('visible')
-  private async onChange(val: any) {
+  private async onChange(val: any): Promise<void> {
     if (val) {
       this.editedCard = this.card.toDTO()
     }
@@ -35,8 +35,8 @@ export default class ModalComponent extends Vue {
   private text: string = ''
   private values: any[] = []
   private examples: { text: string; value: string }[] = []
-  private loading: boolean = false
-  private editedCard: CardForm = {
+  public loading: boolean = false
+  public editedCard: CardForm = {
     examples: [],
     id: 0,
     translate: undefined,
@@ -44,27 +44,27 @@ export default class ModalComponent extends Vue {
     word: undefined
   }
 
-  created() {
-    this.text = this.editedCard.translate ? this.editedCard.translate.value : ''
+  created(): void {
+    this.text = this.editedCard.translate ? this.editedCard.translate.getValue() : ''
     this.$eventHub.$on('updateExampleText', this.updateExampleText)
     this.$eventHub.$on('updateExampleValue', this.updateExampleValue)
   }
 
-  addExample() {
+  public addExample(): void {
     this.editedCard.examples.push(new Example())
   }
 
-  removeExample(index: number) {
+  public removeExample(index: number): void {
     this.editedCard.examples.splice(index, 1)
   }
 
-  updateExampleText(data: { index: number; value: string }) {
+  private updateExampleText(data: { index: number; value: string }): void {
     if (this.editedCard.examples[data.index]) {
       this.editedCard.examples[data.index].text = data.value
     }
   }
 
-  updateExampleValue(data: { index: number; value: string }) {
+  private updateExampleValue(data: { index: number; value: string }): void {
     if (this.editedCard.examples[data.index]) {
       this.editedCard.examples[data.index].value = data.value
     }
@@ -76,7 +76,7 @@ export default class ModalComponent extends Vue {
     // this.fileUploadFormData.append('id', this.card.word.getId())
   }
 
-  close() {
+  public close(): void {
     this.$eventHub.$emit(HIDE_CARD_MODAL)
   }
 
@@ -94,7 +94,7 @@ export default class ModalComponent extends Vue {
     //  )
   }
 
-  async save() {
+  public async save(): Promise<void> {
     this.loading = true
     try {
       await this.cardService.update(Card.fromDTO(this.editedCard), this.editedCard)
@@ -106,10 +106,5 @@ export default class ModalComponent extends Vue {
       this.$eventHub.$emit(HIDE_CARD_MODAL)
       this.loading = false
     }
-  }
-
-  play() {
-    // @ts-ignore
-    this.$refs.audio.play()
   }
 }

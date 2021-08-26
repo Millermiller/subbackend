@@ -41,7 +41,7 @@ export namespace API {
     }
 
     public async createCard(card: Card): Promise<AxiosResponse<Card>> {
-      return request.post(`/${this.baseUrl}/${card.word.id}/${card.translate.getId()}/${card.asset.id}`)
+      return request.post(`/${this.baseUrl}/${card.term.id}/${card.translate.getId()}/${card.asset.id}`)
     }
 
     public async addCardToAsset(language: string, card: Card, asset: Asset): Promise<AxiosResponse<Card>> {

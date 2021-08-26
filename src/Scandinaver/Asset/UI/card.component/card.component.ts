@@ -8,10 +8,10 @@ import { SHOW_CARD_MODAL } from '@/events/events.type'
 @Component({})
 export default class CardComponent extends Vue {
   @Prop({ required: true })
-  public card!: Card
+  public card: Card
 
   @Prop({ required: true })
-  private index!: number
+  private index: number
 
   @Inject()
   private readonly readerService: ReaderService
@@ -21,7 +21,7 @@ export default class CardComponent extends Vue {
   }
 
   public async play(): Promise<void> {
-    await this.readerService.read(this.card.word.getValue())
+    await this.readerService.read(this.card.term.getValue())
   }
 
   public removeCard(): void {

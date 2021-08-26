@@ -32,4 +32,8 @@ export default class Example extends Entity {
   set value(value: string) {
     this._value = value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

@@ -10,7 +10,7 @@ const routes = [
       icon: 'post-outline',
       menuitem: true,
       type: 'main',
-      label: i18n.t('posts'),
+      label: i18n.t('blog'),
     },
     component: () => import('@/Scandinaver/Blog/UI/blog.module.vue'),
     beforeEnter: requireAuth,
@@ -23,7 +23,7 @@ const routes = [
           permission: permissions.VIEW_POSTS,
           menuitem: true,
           type: 'main',
-          label: i18n.t('list'),
+          label: i18n.t('posts'),
         },
         component: () => import('@/Scandinaver/Blog/UI/components/list-post.component/index.vue'),
       },
@@ -32,7 +32,7 @@ const routes = [
         path: 'add',
         component: () => import('@/Scandinaver/Blog/UI/components/add-post.component/index.vue'),
         meta: {
-          menuitem: true,
+          menuitem: false,
           permission: permissions.CREATE_POST,
           type: 'main',
           label: i18n.t('addPost'),
@@ -42,7 +42,7 @@ const routes = [
       {
         name: 'categories',
         path: 'category',
-        component: () => import('@/Scandinaver/Blog/UI/components/edit-category.component/index.vue'),
+        component: () => import('@/Scandinaver/Blog/UI/components/list-category.component/index.vue'),
         meta: {
           menuitem: true,
           permission: permissions.VIEW_CATEGORIES,

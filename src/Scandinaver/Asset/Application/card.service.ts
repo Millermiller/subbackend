@@ -9,6 +9,7 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { API } from '../Infrastructure/api/card.api'
 import CardApi = API.CardApi
 import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
 @Service()
 export default class CardService extends BaseService<Card> {
@@ -57,9 +58,26 @@ export default class CardService extends BaseService<Card> {
 
   public async addAdminCard(param: { isSentence: any; word: string; translate: string }): Promise<Card> {
     const card = new Card()
-    card.word = new Word(param.word)
+    card.term = new Word(param.word)
     card.translate = new Translate(param.translate)
     card.sentence = param.isSentence
     return this.cardRepository.create(card)
+  }
+
+  destroy(entity: Card): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  getAll(): Promise<Card[]> {
+    return Promise.resolve([]);
+  }
+
+  fromDTO(dto: CardForm): Card {
+    const card = new Card()
+    card.id = dto.id
+    card.term = dto.term
+    card.translate = dto.translate
+    card.examples = dto.examples
+    return card
   }
 }

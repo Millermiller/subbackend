@@ -1,15 +1,15 @@
 <div class="columns">
   <div class="column">
-    <span class="asset_title pointer" @click="showSettingsModal()">{{ card.word.getValue() }}</span>
+    <span class="asset_title pointer" @click="showSettingsModal()">{{ card.term.getValue() }}</span>
   </div>
   <div class="column">
     <p class="is-pulled-left pointer" v-if="card.translate" @click="showSettingsModal()">
-      {{ card.translate.value }}
+      {{ card.translate.getValue() }}
     </p>
     <!-- <span class="is-pulled-right has-text-light" v-if="card.word.variants &gt; 1">({{ card.word.variants }})</span> -->
   </div>
   <div class="column">
-    <audio ref="audio" :src="card.word.audio" preload="auto"></audio>
+    <audio ref="audio" :src="card.term.audio" preload="auto"></audio>
     <b-button size="is-small" icon-right="play-circle-outline" @click="play()"></b-button>
     <b-button size="is-small" icon-right="circle-edit-outline" @click="showSettingsModal()"></b-button>
     <b-button

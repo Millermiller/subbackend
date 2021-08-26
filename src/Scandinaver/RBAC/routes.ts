@@ -51,8 +51,8 @@ const routes = [
         component: () => import('@/Scandinaver/RBAC/UI/list-groups.component/index.vue'),
       },
       {
-        name: 'settings',
-        path: 'settings',
+        name: 'rbac-ssettings',
+        path: 'rbac-settings',
         meta: {
           permission: permissions.VIEW_RBAC_SETTINGS,
           icon: 'format-list-bulleted',

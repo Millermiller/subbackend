@@ -2,11 +2,21 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Language from '@/Scandinaver/Languages/Domain/Language'
 import { Inject, Service } from 'typedi'
 import LanguageRepository from '@/Scandinaver/Languages/Infrastructure/language.repository'
+import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
 
 @Service()
 export default class LanguageService extends BaseService<Language> {
   @Inject()
   private readonly languageRepository: LanguageRepository
+
+  public fromDTO(dto: LanguageForm): Language {
+    const language = new Language()
+    language.id = dto.id
+    language.title = dto.title
+    language.letter = dto.letter
+    language.flag = dto.flag
+    return language
+  }
 
   public async create(input: any): Promise<Language> {
     return this.languageRepository.create(input)

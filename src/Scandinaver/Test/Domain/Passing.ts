@@ -94,13 +94,4 @@ export default class Passing extends Entity {
       percent: this._percent,
     }
   }
-
-  static fromDTO(dto: PassingForm): Passing {
-    const passing = new Passing()
-    passing.id = dto.id || 0
-    passing.completed = dto.completed
-    passing.percent = dto.percent
-
-    return passing
-  }
 }

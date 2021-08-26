@@ -5,7 +5,7 @@ import { User } from '@/Scandinaver/Core/Domain/User'
 
 export default interface CardForm {
   id: number,
-  word: Word,
+  term: Word,
   translate: Translate,
   examples: Example[],
   user: User

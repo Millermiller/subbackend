@@ -1,4 +1,4 @@
-<div class="columns">
+<div class="columns" style="justify-content: space-between">
   <div class="column is-4 asset-column">
     <div class="box">
       <b-loading :is-full-page="false" :active="assetsLoading" :can-cancel="true"></b-loading>
@@ -56,18 +56,18 @@
       </b-tabs>
     </div>
   </div>
-  <div class="column is-4 cards-column">
+  <div class="column is-4 cards-column" v-if="cards">
     <div class="box">
       <b-loading :is-full-page="false" :active="cardsLoading" :can-cancel="true"></b-loading>
       <draggable
               group="1"
-              :list="cards"
+              :list="cards.all()"
               @start="drag=true"
               @end="drag=false"
               @change="updateCardOrder($event)"
               handle=".handle">
         <CardComponent
-                v-for="(card, index) in cards"
+                v-for="(card, index) in cards.all()"
                 :card="card"
                 :index="index"
                 :key="card.id"

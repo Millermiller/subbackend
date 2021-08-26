@@ -1,0 +1,106 @@
+<div class="tile is-parent">
+  <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
+  <div class="tile is-child box">
+    <div class="columns">
+      <div class="column is-6">
+        <div class="column is-12 content" v-html="original"></div>
+        <div class="column is-12" v-html="translate"></div>
+      </div>
+      <div class="column is-6">
+        <div class="column is-12">
+          <div class="box" style="margin: 5px;">
+            <b-button class="mb-1" size="is-small" @click="addTranslate()" :disabled="!isTextSelected">
+              {{ $t('add') }}
+            </b-button>
+            <b-tabs v-model="activeTab" v-if="textEntity.dictionary !== undefined">
+              <b-tab-item v-for="(tab, index) in tabs"
+                          :label="tab.toString()"
+                          :key="index"
+                           style="max-height: 500px; overflow-y: scroll;overflow-x: hidden;">
+                  <item-component
+                    v-for="(item, index) in textEntity.dictionary"
+                    v-if="item.sentenceNum === tab - 1"
+                    :item="item"
+                    :index="index"
+                    :key="index"
+                    @remove="removeTranslate"
+                    @showSynonyms="showSynonymsModal"
+                    @showCoordinates="showCoordinatesModal"
+                  ></item-component>
+              </b-tab-item>
+            </b-tabs>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-primary mr-1" @click="save()">{{ $t('save') }}</button>
+        <b-button tag="router-link"
+                  :to="{ name: 'edit-text', params: { id: textEntity.getId().toString() } }"
+                  type="is-link">
+          {{ $t('back') }}
+        </b-button>
+      </div>
+    </div>
+  </div>
+  <b-modal :active.sync="isSynonymModalVisible" @close="closeSynonymModal()" has-modal-card :scroll="'keep'">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          Синонимы <span class="danger">{{selectedTranslate.value}}</span> ({{selectedTranslate.text}})
+        </p>
+        <button
+          type="button"
+          class="delete"
+          @click="closeSynonymModal()" />
+      </header>
+      <section class="modal-card-body">
+        <b-button class="mb-1" type="is-success" @click="addSynonym()">{{ $t('add') }}</b-button>
+        <b-field v-for="(synonym, index) in selectedTranslate.synonyms" :key="index">
+          <b-input type="text" placeholder="value" v-model="synonym.value" />
+          <p class="control">
+            <b-button class="is-danger" icon-right="close-circle" @click="removeSynonym(index)"></b-button>
+          </p>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="closeSynonymModal()">
+          {{ $t('close') }}
+        </button>
+      </footer>
+    </div>
+  </b-modal>
+  <b-modal :active.sync="isCoordinatesModalVisible"
+           @close="closeCoordinatesModal()"
+           has-modal-card
+           :custom-class="'without-background'"
+           :scroll="'keep'">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          Coordinates <span class="danger">{{selectedTranslate.value}}</span> ({{selectedTranslate.text}})
+        </p>
+        <button
+          type="button"
+          class="delete"
+          @click="closeCoordinatesModal()" />
+      </header>
+      <section class="modal-card-body">
+        <b-button class="mb-1" type="is-success" @click="addCoordinates()">{{ $t('add') }}</b-button>
+        <b-field v-for="(coordinate, index) in selectedTranslate.coordinates" :key="index">
+          <b-numberinput class="mr-1" controls-alignment="left" size="is-small" controls-position="compact" v-model="coordinate[0]"></b-numberinput>
+          <b-numberinput controls-alignment="left" size="is-small" controls-position="compact" v-model="coordinate[1]"></b-numberinput>
+          <p class="control">
+            <b-button class="is-danger" size="is-small" icon-right="close-circle" @click="removeCoordinate(index)"></b-button>
+          </p>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="closeCoordinatesModal()">
+          {{ $t('close') }}
+        </button>
+      </footer>
+    </div>
+  </b-modal>
+</div>

@@ -11,4 +11,8 @@ export default class Piece extends Entity {
   getId(): string {
     return this.word
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

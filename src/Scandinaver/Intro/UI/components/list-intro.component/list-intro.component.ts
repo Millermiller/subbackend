@@ -1,35 +1,27 @@
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
 import IntroService from '@/Scandinaver/Intro/Application/IntroService'
-import { permissions } from '@/permissions/permission.type'
 import Intro from '@/Scandinaver/Intro/Domain/Intro'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
+import { IntroForm } from '@/Scandinaver/Intro/Domain/IntroForm'
 
 @Component({
   components: {},
 })
-export default class ListIntroComponent extends Vue {
+export default class ListIntroComponent extends CRUDComponent<Intro, IntroForm> {
   @Inject()
-  private readonly introService: IntroService
+  protected readonly service: IntroService
 
-  public loading: boolean = false
-  public permissions: {}
-  public intros: Intro[] = []
+  protected modalTitleCreate = this.$root.$tc('createIntro')
+  protected modalTitleUpdate = this.$root.$tc('updateIntro')
 
-  constructor() {
-    super()
-    this.permissions = permissions
+  protected buildForm(): IntroForm {
+    return new IntroForm()
   }
 
   async mounted(): Promise<void> {
     // dont need load here if data load in activation hook (see keep-alive)
     await this.load()
-  }
-
-  private async load(): Promise<void> {
-    this.loading = true
-    this.intros = await this.introService.getAll()
-    this.loading = false
   }
 
   public tagClass(completed: boolean): string {
@@ -40,7 +32,7 @@ export default class ListIntroComponent extends Vue {
     await this.$router.push({ name: 'intro', params: { id: intro.getId().toString() } })
   }
 
-  public async add(intro: Intro): Promise<void> {
+  public async add(): Promise<void> {
     await this.$router.push({ name: 'create intro' })
   }
 

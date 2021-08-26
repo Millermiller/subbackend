@@ -2,11 +2,17 @@ import { Inject, Service } from 'typedi'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Page from '@/Scandinaver/Pages/Domain/Page'
 import PageRepository from '@/Scandinaver/Pages/Infrastructure/page.repository'
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import Plan from '@/Scandinaver/Plan/Domain/Plan'
 
 @Service()
 export default class PageService extends BaseService<Page> {
   @Inject()
   private readonly repository: PageRepository
+
+  public fromDTO(dto: EntityForm): Page {
+    return undefined
+  }
 
   public async create(page: Page): Promise<Page> {
     return this.repository.create(page)
@@ -28,7 +34,7 @@ export default class PageService extends BaseService<Page> {
     return this.repository.find(search)
   }
 
-  public async update(page: Page) {
-    return this.repository.update(page, page)
+  public async update(page: Page, data: {}) {
+    return this.repository.update(page, data)
   }
 }

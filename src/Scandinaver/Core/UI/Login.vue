@@ -56,7 +56,7 @@ export default class Login extends Vue {
   public loginerror: string = ''
   public passerror: string = ''
 
-  public submit(): Promise<void> {
+  public submit(): void {
     this.isLoading = true
     LoginService.login(this.form)
       .then(() => {

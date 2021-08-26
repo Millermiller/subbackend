@@ -10,6 +10,7 @@ import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
 import CardRepository from '@/Scandinaver/Asset/Infrastructure/card.repository'
 import { API } from '@/Scandinaver/Asset/Infrastructure/api/forvo.api'
 import ForvoAPI = API.ForvoAPI
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
 @Service()
 export default class AssetService extends BaseService<Asset> {
@@ -43,12 +44,12 @@ export default class AssetService extends BaseService<Asset> {
     return this.repository.one(assetId)
   }
 
-  public async updateAsset(asset: Asset, data: any): Promise<void> {
-    await this.repository.update(asset, data)
+  public async update(asset: Asset, data: any): Promise<Asset> {
+    return this.repository.update(asset, data)
     // store.commit(PATCH_PERSONAL, { asset: response.data, index: this.index })
   }
 
-  public async destroyAsset(asset: Asset): Promise<void> {
+  public async destroy(asset: Asset): Promise<void> {
     await this.repository.delete(asset)
   }
 
@@ -66,5 +67,9 @@ export default class AssetService extends BaseService<Asset> {
 
   public async translate(query: string, sentence: boolean): Promise<Card[]> {
     return this.cardRepository.translate(query, sentence)
+  }
+
+  fromDTO(dto: EntityForm): Asset {
+    return undefined;
   }
 }

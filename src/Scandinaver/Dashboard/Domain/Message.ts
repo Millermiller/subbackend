@@ -69,4 +69,8 @@ export default class Message extends Entity {
   set createdAt(value: string) {
     this._createdAt = value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

@@ -10,6 +10,15 @@ export default class RoleService extends BaseService<Role> {
   @Inject()
   private readonly roleRepository: RoleRepository
 
+  public fromDTO(dto: RoleForm): Role {
+    const role = new Role()
+    role.id = dto.id || 0
+    role.name = dto.name
+    role.slug = dto.slug
+    role.description = dto.description
+    return role
+  }
+
   public async create(input: RoleForm): Promise<Role> {
     const role = new Role()
     role.name = input.name

@@ -9,10 +9,15 @@ export default class CategoryService extends BaseService<Category> {
   @Inject()
   private readonly repository: CategoryRepository
 
-  public async create(input: any): Promise<Category> {
-    const category = new Category();
-    category.title = input
-    return this.repository.create(category.toDTO())
+  public fromDTO(dto: CategoryDTO): Category {
+    const category = new Category()
+    category.id = dto.id
+    category.title = dto.title
+    return category
+  }
+
+  public async create(data: CategoryDTO): Promise<Category> {
+    return this.repository.create(data)
   }
 
   public async getAll(): Promise<Category[]> {

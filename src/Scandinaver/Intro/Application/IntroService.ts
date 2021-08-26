@@ -9,6 +9,20 @@ export default class IntroService extends BaseService<Intro> {
   @Inject()
   private readonly repository: IntroRepository
 
+  public fromDTO(dto: IntroForm): Intro {
+    const intro = new Intro()
+    intro.id = dto.id || undefined
+    intro.page = dto.page
+    intro.target = dto.target
+    intro.content = dto.content
+    intro.position = dto.position
+    intro.headerText = dto.headerText
+    intro.sort = dto.sort
+    intro.active = dto.active
+
+    return intro
+  }
+
   public async create(input: IntroForm): Promise<Intro> {
     return this.repository.create(input)
   }

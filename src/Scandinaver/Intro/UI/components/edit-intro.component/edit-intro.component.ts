@@ -26,13 +26,15 @@ export default class EditIntroComponent extends Vue {
     content: '',
   }
   public readonly pages: any = [
-    'MainPage',
-    'AssetsPage',
-    'TestsPage',
-    'PersonalPage',
-    'TextPage',
-    'TextItem',
-    'PuzzlePage'
+    'MAIN_PAGE',
+    'DEFAULT_ASSET_PAGE',
+    'LEARN_ASSET_PAGE',
+    'DEFAULT_TEST_PAGE',
+    'TEST_PAGE',
+    'PERSONAL_PAGE',
+    'TRANSLATES_LIST_PAGE',
+    'TRANSLATE_PAGE',
+    'PUZZLE_PAGE',
   ]
   public positions: any = ['top', 'right', 'bottom', 'left']
   public active: boolean = false
@@ -47,8 +49,8 @@ export default class EditIntroComponent extends Vue {
   public async save(): Promise<void> {
     this.loading = true
     if (this.form.id !== undefined) {
-      const intro = Intro.fromDTO(this.form)
-      await this.service.update(intro, intro.toDTO())
+      // const intro = Intro.fromDTO(this.form)
+      // await this.service.update(intro, intro.toDTO())
     } else {
       await this.service.create(this.form)
     }

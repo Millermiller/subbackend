@@ -1,8 +1,15 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
+import DictionaryItem from './DictionaryItem'
 
 export default class Synonym extends Entity {
   private _id: number
   private _value: string
+  private _word: DictionaryItem
+
+  constructor() {
+    super()
+    this._value = ''
+  }
 
   getId(): number | string {
     return this.id;
@@ -22,5 +29,20 @@ export default class Synonym extends Entity {
 
   set value(value: string) {
     this._value = value
+  }
+
+  get word(): DictionaryItem {
+    return this._word
+  }
+
+  set word(value: DictionaryItem) {
+    this._word = value
+  }
+
+  public toDTO() {
+    return {
+      id: this._id,
+      value: this._value,
+    }
   }
 }

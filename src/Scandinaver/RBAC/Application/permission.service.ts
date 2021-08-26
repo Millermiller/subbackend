@@ -10,6 +10,15 @@ export default class PermissionService extends BaseService<Permission> {
   @Inject()
   private readonly permissionRepository: PermissionRepository
 
+  public fromDTO(dto: PermissionForm): Permission {
+    const permission = new Permission()
+    permission.id = dto.id || 0
+    permission.name = dto.name
+    permission.slug = dto.slug
+    permission.description = dto.description
+    return permission
+  }
+
   public async create(input: PermissionForm): Promise<Permission> {
     const permission = new Permission()
     permission.name = input.name

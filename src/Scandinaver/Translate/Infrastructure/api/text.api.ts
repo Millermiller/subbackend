@@ -5,6 +5,7 @@ import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
 import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 export namespace API {
   @Service()
@@ -41,7 +42,7 @@ export namespace API {
     }
 
     public async saveImage(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/image/${id}`, form)
+      return request.post(`/${this.baseUrl}/image/${id}`, form)
     }
 
     public async getSynonyms(id: number): Promise<AxiosResponse<Synonym[]>> {
@@ -57,11 +58,15 @@ export namespace API {
     }
 
     public async getTexts(language: string): Promise<AxiosResponse<Translate[]>> {
-      return request.get(`/${language}/texts`)
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          lang: language
+        },
+      })
     }
 
-    public async saveExtra(data: any): Promise<AxiosResponse> {
-      return request.post(`/${this.baseUrl}/extra`, data)
+    public async saveTooltips(data: any): Promise<AxiosResponse> {
+      return request.post(`/${this.baseUrl}/tooltip`, data)
     }
 
     public async saveSentences(data: any): Promise<AxiosResponse> {

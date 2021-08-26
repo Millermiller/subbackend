@@ -12,6 +12,9 @@ export class FeedbackForm implements IFeedbackForm {
   getId(): number | string {
     return this.message;
   }
+
+  toDTO(): any {
+  }
 }
 
 export class Feedback extends Entity {
@@ -21,5 +24,9 @@ export class Feedback extends Entity {
 
   getId(): number | string {
     return this.id;
+  }
+
+  toDTO(): any {
+    return {}
   }
 }

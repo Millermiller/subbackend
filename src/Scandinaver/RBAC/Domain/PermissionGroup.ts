@@ -47,13 +47,4 @@ export default class PermissionGroup extends Entity {
       description: this._description,
     }
   }
-
-  static fromDTO(dto: PermissionGroupForm): PermissionGroup {
-    const permissionGroup = new PermissionGroup()
-    permissionGroup.id = dto.id || 0
-    permissionGroup.name = dto.name
-    permissionGroup.slug = dto.slug
-    permissionGroup.description = dto.description
-    return permissionGroup
-  }
 }

@@ -16,4 +16,8 @@ export default class Translate extends Entity {
   getValue(): string {
     return this._value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

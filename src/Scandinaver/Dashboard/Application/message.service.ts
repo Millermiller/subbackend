@@ -2,11 +2,16 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Message from '@/Scandinaver/Dashboard/Domain/Message'
 import { Inject, Service } from 'typedi'
 import MessageRepository from '@/Scandinaver/Dashboard/Infrastructure/message.repository'
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
 @Service()
 export default class MessageService extends BaseService<Message> {
   @Inject()
   private readonly repository: MessageRepository
+
+  public fromDTO(dto: EntityForm): Message {
+    return undefined
+  }
 
   public create(input: any): Message {
     return new Message();
@@ -26,5 +31,9 @@ export default class MessageService extends BaseService<Message> {
 
   public async read(message: Message): Promise<Message> {
     return this.repository.update(message, { readed: true })
+  }
+
+  public update(entity: Message, data: any): Promise<Message> {
+    throw new Error('Method not implemented.');
   }
 }

@@ -2,6 +2,7 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Post from '@/Scandinaver/Blog/Domain/Post'
 import { Inject, Service } from 'typedi'
 import PostRepository from '@/Scandinaver/Blog/Infrastructure/post.repository'
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
 @Service()
 export default class BlogService extends BaseService<Post> {
@@ -28,7 +29,11 @@ export default class BlogService extends BaseService<Post> {
     return this.repository.find(query)
   }
 
-  public async update(post: Post): Promise<Post> {
-    return this.repository.update(post, post)
+  public async update(post: Post, data: any): Promise<Post> {
+    return this.repository.update(post, data)
+  }
+
+  fromDTO(dto: EntityForm): Post {
+    return undefined;
   }
 }

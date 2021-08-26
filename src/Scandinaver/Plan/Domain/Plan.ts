@@ -50,4 +50,8 @@ export default class Plan extends Entity {
   set cost_per_month(value: number) {
     this._cost_per_month = value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

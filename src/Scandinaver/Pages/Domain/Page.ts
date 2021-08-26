@@ -50,4 +50,8 @@ export default class Page extends Entity {
   set keywords(value: string) {
     this._keywords = value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

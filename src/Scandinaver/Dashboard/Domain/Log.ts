@@ -64,4 +64,8 @@ export default class Log extends Entity {
   get created_at(): Date {
     return this._created_at
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

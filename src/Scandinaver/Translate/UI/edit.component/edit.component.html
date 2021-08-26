@@ -1,35 +1,46 @@
-<div>
-  <div class="tile is-ancestor">
-    <div class="tile is-parent is-12">
-      <div class="tile is-child box">
-        <div class="block is-flex">
-          <b-tabs>
-            <b-tab-item label="Tooltips" selected="selected">
-              <tooltips :item="text" :extras="extras" :sentences="sentences" @update="updateTooltips()"></tooltips>
-            </b-tab-item>
-            <b-tab-item :label="$t('translate')">
-              <translate
-                :text="text"
-                :cleartext="cleartext"
-                :sentences="sentences"
-                @update="updateSentences()"
-              ></translate>
-            </b-tab-item>
-            <b-tab-item :label="t('synonyms')">
-              <synonyms :sentences="sentences"></synonyms>
-            </b-tab-item>
-            <b-tab-item :label="t('image')">
-              <images :item="text"></images>
-            </b-tab-item>
-            <b-tab-item :label="t('description')">
-              <description :item="text"></description>
-            </b-tab-item>
-            <b-tab-item :label="t('test')">
-              <test :textdata="text" :dictionary="dictionary" :extras="extras" :cleartext="cleartext"></test>
-            </b-tab-item>
-          </b-tabs>
-        </div>
-      </div>
+<div class="tile is-parent">
+  <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
+  <div class="tile is-child box">
+    <b-field label="Title">
+      <b-input type="text" v-model="textEntity.title" required></b-input>
+    </b-field>
+    <b-field label="Message">
+      <b-input v-model="textEntity.text" type="textarea" maxlength="1000"></b-input>
+    </b-field>
+  </div>
+  <div class="tile is-child box">
+    <div class="block is-flex" v-if="textEntity.getId()">
+      <b-button tag="router-link"
+                class="mr-1"
+                :to="{ name: 'text-tooltips', params: { id: textEntity.getId().toString() } }"
+                type="is-link">
+        Tooltips
+      </b-button>
+      <b-button tag="router-link"
+                class="mr-1"
+                :to="{ name: 'text-translate', params: { id: textEntity.getId() } }"
+                type="is-link is-info">
+        {{ $t('translate') }}
+      </b-button>
+      <b-button tag="router-link"
+                class="mr-1"
+                :to="{ name: 'tooltips', params: { id: textEntity.getId() } }"
+                type="is-link is-warning">
+        {{ $t('image') }}
+      </b-button>
+      <b-button tag="router-link"
+                class="mr-1"
+                :to="{ name: 'tooltips', params: { id: textEntity.getId() } }"
+                type="is-link is-success">
+        {{ $t('description') }}
+      </b-button>
+      <b-button tag="router-link"
+                class="mr-1"
+                :to="{ name: 'text-test', params: { id: textEntity.getId() } }"
+                type="is-link">
+        {{ $t('test') }}
+      </b-button>
     </div>
   </div>
 </div>
+

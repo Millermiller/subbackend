@@ -37,7 +37,7 @@ export default class SettingsComponent extends Vue {
     this.roles = await this.roleService.getAll()
     this.groups = await this.permissionGroupService.getAll()
     // eslint-disable-next-line no-return-assign
-    await this.roles.map(role => (this.model[role.getId()] = this.permissions.reduce((result: any, item: Permission) => {
+    this.roles.map(role => (this.model[role.getId()] = this.permissions.reduce((result: any, item: Permission) => {
       result[item.getId()] = role.permissions.find(p => p.getId() === item.getId()) !== undefined
       return result
     }, {})))

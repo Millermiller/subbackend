@@ -10,6 +10,15 @@ export default class PermissionGroupService extends BaseService<PermissionGroup>
   @Inject()
   private readonly permissionGroupRepository: PermissionGroupRepository
 
+  public fromDTO(dto: PermissionGroupForm): PermissionGroup {
+    const permissionGroup = new PermissionGroup()
+    permissionGroup.id = dto.id || 0
+    permissionGroup.name = dto.name
+    permissionGroup.slug = dto.slug
+    permissionGroup.description = dto.description
+    return permissionGroup
+  }
+
   public async create(input: PermissionGroupForm): Promise<PermissionGroup> {
     const permission = new PermissionGroup()
     permission.name = input.name

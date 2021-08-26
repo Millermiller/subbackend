@@ -136,7 +136,7 @@ export default class AssetsModule extends Vue {
     })
 
     asset.level = level
-    await this.service.updateAsset(asset, asset)
+    await this.service.update(asset, asset)
   }
 
   updateCardOrder(el: any) {
@@ -176,7 +176,7 @@ export default class AssetsModule extends Vue {
 
   public async removeAsset(asset: Asset): Promise<void> {
     this.assetsLoading = true
-    await this.service.destroyAsset(asset)
+    await this.service.destroy(asset)
     await this.load()
     this.assetsLoading = false
     this.$buefy.snackbar.open(this.$tc('assetRemoved'))
@@ -204,7 +204,7 @@ export default class AssetsModule extends Vue {
 
   async save(): Promise<void> {
     if (this.assetForm.id) {
-      await this.service.updateAsset(this.editedAsset, this.assetForm)
+      await this.service.update(this.editedAsset, this.assetForm)
     } else {
       await this.service.create(this.assetForm)
     }

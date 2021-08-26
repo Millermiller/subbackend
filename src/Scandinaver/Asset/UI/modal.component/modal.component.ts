@@ -41,7 +41,7 @@ export default class ModalComponent extends Vue {
     id: 0,
     translate: undefined,
     user: undefined,
-    word: undefined
+    term: undefined
   }
 
   created(): void {
@@ -97,7 +97,7 @@ export default class ModalComponent extends Vue {
   public async save(): Promise<void> {
     this.loading = true
     try {
-      await this.cardService.update(Card.fromDTO(this.editedCard), this.editedCard)
+      // await this.cardService.update(Card.fromDTO(this.editedCard), this.editedCard)
       this.$buefy.snackbar.open(this.$tc('cardUpdated'))
     } catch (error) {
       this.$buefy.snackbar.open(error)

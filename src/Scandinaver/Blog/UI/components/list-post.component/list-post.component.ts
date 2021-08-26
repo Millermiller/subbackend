@@ -1,46 +1,25 @@
 import Component from 'vue-class-component'
 import Post from '@/Scandinaver/Blog/Domain/Post'
-import Vue from 'vue'
 import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
-import { permissions } from '@/permissions/permission.type'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
+import { PostForm } from '@/Scandinaver/Blog/Domain/PostForm'
 
 @Component({
   components: {},
 })
-export default class ListPostComponent extends Vue {
+export default class ListPostComponent extends CRUDComponent<Post, PostForm> {
   @Inject()
-  private service: BlogService
+  protected service: BlogService
 
-  private articles: Post[] = []
   private search: string = ''
-  private loading: boolean = false
-  private permissions: {}
 
-  constructor() {
-    super();
-    this.permissions = permissions;
+  protected buildForm(): PostForm {
+    return new PostForm()
   }
 
   created() {
     this.load()
-  }
-
-  async load() {
-    this.loading = true
-    this.articles = await this.service.getAll()
-    this.loading = false
-  }
-
-  async remove(row: Post) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        await this.service.destroy(row)
-        this.$buefy.snackbar.open(this.$tc('postRemoved'))
-        await this.load()
-      },
-    })
   }
 
   edit(row: any) {
@@ -52,7 +31,7 @@ export default class ListPostComponent extends Vue {
   }
 
   async find() {
-    this.articles = await this.service.search(this.search)
+    this.entities = await this.service.search(this.search)
   }
 
   async activated() {

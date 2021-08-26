@@ -2,6 +2,7 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Inject, Service } from 'typedi'
 import Comment from '@/Scandinaver/Blog/Domain/Comment'
 import CommentRepository from '@/Scandinaver/Blog/Infrastructure/comment.repository'
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
 @Service()
 export default class CommentService extends BaseService<Comment> {
@@ -26,5 +27,9 @@ export default class CommentService extends BaseService<Comment> {
 
   public async update(comment: Comment): Promise<Comment> {
     return this.repository.update(comment, comment)
+  }
+
+  fromDTO(dto: EntityForm): Comment {
+    return undefined;
   }
 }

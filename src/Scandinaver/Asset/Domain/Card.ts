@@ -12,14 +12,14 @@ export class Card extends Entity {
   private _sentence: boolean
   private _favourite?: boolean
   private _asset: Asset
-  private _word: Word
+  private _term: Word
   private _translate!: Translate
   private _user: User
   private _examples: Example[] = []
 
   @Type(() => Word)
-  set word(value: Word) {
-    this._word = value
+  set term(value: Word) {
+    this._term = value
   }
 
   @Type(() => Translate)
@@ -73,8 +73,8 @@ export class Card extends Entity {
     this._asset = value
   }
 
-  get word(): Word {
-    return this._word
+  get term(): Word {
+    return this._term
   }
 
   get translate(): Translate {
@@ -90,29 +90,20 @@ export class Card extends Entity {
   }
 
   get subject(): string {
-    return this.word.getValue()
+    return this.term.getValue()
   }
 
   get value(): string {
-    return this.translate.value
+    return this.translate.getValue()
   }
 
   toDTO(): CardForm {
     return {
       id: this._id,
-      word: this._word,
+      term: this._term,
       translate: this._translate,
       user: this._user,
       examples: this._examples,
     }
-  }
-
-  static fromDTO(dto: CardForm): Card {
-    const card = new Card()
-    card.id = dto.id
-    card.word = dto.word
-    card.translate = dto.translate
-    card.examples = dto.examples
-    return card
   }
 }

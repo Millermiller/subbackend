@@ -34,7 +34,7 @@ export default class extends Vue {
   }
 
   get auth(): boolean {
-    return this.$ability.can(permissions.ACCESS_ADMIN_PAGE)
+    return this.$ability.can(permissions.ACCESS_ADMIN_PAGE) && this.$store.getters.auth
   }
 }
 </script>

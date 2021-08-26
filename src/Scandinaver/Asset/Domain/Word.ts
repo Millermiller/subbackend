@@ -51,4 +51,8 @@ export class Word extends Entity {
   getValue(): string {
     return this.value
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

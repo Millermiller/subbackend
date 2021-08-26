@@ -12,4 +12,8 @@ export default class Post extends Entity {
   getId(): number | string {
     return this.id
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

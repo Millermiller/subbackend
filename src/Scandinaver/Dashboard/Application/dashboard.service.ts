@@ -6,9 +6,9 @@ import DashboardApi = API.DashboardApi
 @Service()
 export default class DashboardService {
   @Inject()
-  private api: DashboardApi
+  private readonly api: DashboardApi
 
-  async loadDashboard() {
+  public async loadDashboard(): Promise<void> {
     const { language } = store.getters
     this.api.load(language).then(
       response => store.dispatch('setDashboard', response.data),

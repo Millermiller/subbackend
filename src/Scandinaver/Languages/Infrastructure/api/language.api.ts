@@ -8,10 +8,10 @@ import request from '@/utils/request'
 export namespace API {
   @Service()
   export class LanguageAPI extends BaseAPI<Language> {
-    protected type: ClassType<Language> = Language
-    protected baseUrl = 'language'
+    protected readonly type: ClassType<Language> = Language
+    protected readonly baseUrl = 'language'
 
-    update(id: number|string, form: any): Promise<AxiosResponse<Language>> {
+    public async update(id: number|string, form: any): Promise<AxiosResponse<Language>> {
       return request.post(`/${this.baseUrl}/${id}`, form)
     }
   }

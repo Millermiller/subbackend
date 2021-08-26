@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
 import PermissionService from '@/Scandinaver/RBAC/Application/permission.service'
@@ -6,88 +5,28 @@ import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import { PermissionForm } from '@/Scandinaver/RBAC/Domain/PermissionForm'
 import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
 import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
-import { permissions } from '@/permissions/permission.type'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 
 @Component({
   components: {},
 })
-export default class ListPermissionsComponent extends Vue {
+export default class ListPermissionsComponent extends CRUDComponent<Permission, PermissionForm> {
   @Inject()
-  private permissionService: PermissionService
+  protected readonly service: PermissionService
 
   @Inject()
-  private permissionGroupService: PermissionGroupService
+  private readonly permissionGroupService: PermissionGroupService
 
-  permissions: Permission[] = []
-  private groups: PermissionGroup[] = []
-  private loading: boolean = false
-  private isComponentModalActive: boolean = false
-  private edited: PermissionForm = {
-    id: null,
-    name: '',
-    slug: '',
-    description: '',
-    group: null,
-  }
-  permissionsList: {}
+  public groups: PermissionGroup[] = []
 
-  constructor() {
-    super();
-    this.permissionsList = permissions;
+  protected buildForm(): PermissionForm {
+    return new PermissionForm();
   }
 
-  async mounted() {
-    await this.load()
-  }
-
-  async load() {
+  protected async load(): Promise<void> {
     this.loading = true
-    this.permissions = await this.permissionService.getAll()
+    this.entities = await this.service.getAll()
     this.groups = await this.permissionGroupService.getAll()
     this.loading = false
-  }
-
-  edit(permission: Permission) {
-    this.edited = permission.toDTO()
-    this.showCreateModal()
-  }
-
-  async create() {
-    this.loading = true
-    if (this.edited.id) {
-      const permission = Permission.fromDTO(this.edited)
-      await this.permissionService.update(permission, this.edited)
-    } else {
-      await this.permissionService.create(this.edited)
-    }
-    await this.load()
-    this.closeCreateModal()
-    this.loading = false
-  }
-
-  showCreateModal() {
-    this.isComponentModalActive = true
-  }
-
-  closeCreateModal() {
-    this.edited = {
-      id: null,
-      name: '',
-      slug: '',
-      description: '',
-      group: null,
-    };
-    this.isComponentModalActive = false
-  }
-
-  async remove(row: Permission) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        await this.permissionService.destroy(row)
-        this.$buefy.snackbar.open(this.$tc('permissionRemoved'))
-        await this.load()
-      },
-    })
   }
 }

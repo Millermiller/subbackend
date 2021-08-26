@@ -11,11 +11,11 @@ export namespace API {
     protected type: ClassType<Message> = Message
     protected baseUrl = 'message'
 
-    create(data: any): Promise<AxiosResponse<Message>> {
+    public async create(data: any): Promise<AxiosResponse<Message>> {
       throw new Error('Method not implemented.')
     }
 
-    read(id: number): Promise<AxiosResponse> {
+    public async read(id: number): Promise<AxiosResponse> {
       return request.post(`/${this.baseUrl}/read?${id}`)
     }
   }

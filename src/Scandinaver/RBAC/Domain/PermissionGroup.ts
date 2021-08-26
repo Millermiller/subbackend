@@ -7,6 +7,10 @@ export default class PermissionGroup extends Entity {
   private _slug: string
   private _description: string
 
+  getId(): number {
+    return this._id;
+  }
+
   set id(value: number) {
     this._id = value
   }
@@ -27,10 +31,6 @@ export default class PermissionGroup extends Entity {
     this._slug = value
   }
 
-  getId(): number {
-    return this._id;
-  }
-
   get name(): string {
     return this._name
   }
@@ -46,14 +46,5 @@ export default class PermissionGroup extends Entity {
       slug: this._slug,
       description: this._description,
     }
-  }
-
-  static fromDTO(dto: PermissionGroupForm): PermissionGroup {
-    const permissionGroup = new PermissionGroup()
-    permissionGroup.id = dto.id || 0
-    permissionGroup.name = dto.name
-    permissionGroup.slug = dto.slug
-    permissionGroup.description = dto.description
-    return permissionGroup
   }
 }

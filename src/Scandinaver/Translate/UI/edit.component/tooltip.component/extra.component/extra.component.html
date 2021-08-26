@@ -1,19 +1,15 @@
 <div class="columns" v-on:mouseover="$emit('show', item)" v-on:mouseout="$emit('clear')">
   <div class="column is-5">
     <p class="control">
-      <input class="input" type="text" placeholder="orig" v-model="item.orig" />
+      <input class="input" type="text" placeholder="object" v-model="item.object" />
     </p>
   </div>
   <div class="column is-5">
     <p class="control">
-      <input class="input" type="text" placeholder="extra" v-model="item.extra" />
+      <input class="input" type="text" placeholder="value" v-model="item.value" />
     </p>
   </div>
   <div class="column is-2">
-    <a :class="['button', 'is-danger']" @click="$emit('remove', index)">
-      <span class="icon">
-        <i class="fa fa-trash-o"></i>
-      </span>
-    </a>
+    <b-button class="is-danger" size="is-small" icon-right="close-circle" @click="$emit('remove', index)"></b-button>
   </div>
 </div>

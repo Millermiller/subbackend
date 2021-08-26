@@ -10,13 +10,13 @@ import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repos
 @Service()
 export default class CardRepository extends CommonRepository<Card> {
   @Inject()
-  protected api: CardApi
+  protected readonly api: CardApi
 
   public async translate(word: string, sentence: boolean): Promise<Card[]> {
     return this.api.translate(word, sentence).then(response => plainToClass(Card, response.data))
   }
 
-  public async addWord(form: IDictionaryForm) {
+  public async addWord(form: IDictionaryForm): Promise<Card> {
     return this.api.addWord(form).then(response => plainToClass<Card, Card>(Card, response.data))
   }
 
@@ -24,7 +24,7 @@ export default class CardRepository extends CommonRepository<Card> {
     return this.api.addCardToAsset(language, card, asset).then(response => plainToClass(Card, response.data))
   }
 
-  async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
+  public async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
     return this.api.removeCard(language, card, asset).then(response => response)
   }
 }

@@ -11,7 +11,7 @@ import { LOAD_ASSET } from '@/events/events.type'
 })
 export default class AssetComponent extends Vue {
   @Inject()
-  public service: AssetService
+  private readonly service: AssetService
 
   @Prop({ required: true })
   public item!: Asset
@@ -19,19 +19,19 @@ export default class AssetComponent extends Vue {
   @Prop()
   public selected: boolean
 
-  private loaded: boolean = false
-  permissions: {}
+  public loaded: boolean = false
+  public permissions: {}
 
   constructor() {
     super();
     this.permissions = permissions;
   }
 
-  async load() {
+  public async load(): Promise<void> {
     this.$eventHub.$emit(LOAD_ASSET, this.item)
   }
 
-  async forvo(asset: Asset) {
+  public async forvo(asset: Asset): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('forvoConfirm'),
       onConfirm: async () => {

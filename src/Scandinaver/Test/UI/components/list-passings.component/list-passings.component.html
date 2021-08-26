@@ -1,8 +1,9 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('passings') }}</h4>
     <b-field> </b-field>
     <b-table
-      :data="passings"
+      :data="entities"
       paginated
       narrowed
       :loading="loading"
@@ -62,8 +63,16 @@
       </template>
     </b-table>
   </article>
-  <b-modal :active.sync="isComponentModalActive" has-modal-card="has-modal-card">
+  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ modalTitle }}</p>
+      <button
+        type="button"
+        class="delete"
+        @click="closeModalForm()" />
+    </header>
     <div class="modal-card" style="width: 400px">
+      <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
         <b-field label="Percent">
           <b-input type="text" v-model="edited.percent"></b-input>
@@ -75,7 +84,7 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="isComponentModalActive = false">
+        <button class="button" type="button" @click="closeModalForm()">
           {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="save()">

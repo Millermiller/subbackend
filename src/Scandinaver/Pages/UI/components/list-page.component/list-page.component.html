@@ -1,9 +1,9 @@
 <article class="tile is-child box">
   <div class="tile is-parent">
     <Can :do="permissions.CREATE_PAGE">
-      <a class="button is-success" @click="add">{{ $t('add') }}</a>
+      <a class="button is-success" @click="add()">{{ $t('add') }}</a>
     </Can>
-    <a class="button is-success" @click="find">{{ $t('find') }}</a>
+    <a class="button is-success" @click="find()">{{ $t('find') }}</a>
   </div>
   <b-table :data="pages" paginated narrowed :loading="loading" per-page="10">
     <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">

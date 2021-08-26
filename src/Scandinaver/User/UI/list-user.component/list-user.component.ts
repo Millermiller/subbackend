@@ -1,150 +1,55 @@
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
 import UserService from '@/Scandinaver/User/Application/user.service'
 import User from '@/Scandinaver/User/Domain/User'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
-import { permissions } from '@/permissions/permission.type'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 
 @Component({
   components: {},
 })
-export default class ListUserComponent extends Vue {
+export default class ListUserComponent extends CRUDComponent<User, UserForm> {
   @Inject()
-  private service: UserService
+  protected readonly service: UserService
 
   @Inject()
-  private roleService: RoleService
+  private readonly roleService: RoleService
 
-  private users: User[] = []
-  private roles: Role[] = []
-  private search: string = ''
-  private loading: boolean = false
-  private showModal: boolean = false
-  private permissions: {}
-  private generatedPassword: string = ''
-  private errors: {
-    _login: string
-    _email: string
-    _password: string
-  } = {
-    _login: '',
-    _email: '',
-    _password: '',
+  public roles: Role[] = []
+  public search: string = ''
+
+  protected modalTitleCreate = this.$root.$tc('createUser')
+  protected modalTitleUpdate = this.$root.$tc('updateUser')
+
+  protected buildForm(): UserForm {
+    return new UserForm()
   }
 
-  private edited: UserForm = {
-    id: null,
-    email: '',
-    login: '',
-    password: '',
-    password_confirmation: '',
-    roles: [],
-    plan: null,
-  }
-
-  constructor() {
-    super()
-    this.permissions = permissions
-  }
-
-  mounted() {
-    this.load()
-  }
-
-  async load() {
+  protected async load(): Promise<void> {
     this.loading = true
-    this.users = await this.service.getAll()
+    this.entities = await this.service.getAll()
     this.roles = await this.roleService.getAll()
     this.loading = false
   }
 
-  async edit(user: User) {
+  public async edit(user: User): Promise<void> {
     await this.$router.push({ name: 'user', params: { id: user.getId().toString() } })
   }
 
-  async create() {
-    let errors = false
-    if (this.edited.login === '') {
-      this.errors._login = 'Empty login'
-      errors = true
-    } else {
-      this.errors._login = ''
-    }
-
-    if (this.edited.email === '') {
-      this.errors._email = 'Empty mail'
-      errors = true
-    } else {
-      this.errors._email = ''
-    }
-
-    if (this.edited.password === '') {
-      this.errors._password = 'Empty password'
-      errors = true
-    } else {
-      this.errors._password = ''
-    }
-
-    if (!errors) {
-      try {
-        await this.service.create(this.edited)
-        await this.load()
-        this.closeModal()
-      } catch (response) {
-        const keys = Object.keys(response.errors)
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i].toString()
-          const data = response.errors[key]
-          // @ts-ignore
-          // eslint-disable-next-line prefer-destructuring
-          this.errors[key] = data[0]
-        }
-      }
-    }
+  public async find(): Promise<void> {
+    this.entities = await this.service.search(this.search)
   }
 
-  public closeModal() {
-    this.edited = {
-      id: null,
-      email: '',
-      login: '',
-      password: '',
-      password_confirmation: '',
-      roles: [],
-      plan: null,
-    }
-    this.generatedPassword = ''
-    this.showModal = false
-  }
-
-  async remove(row: User) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        this.loading = true
-        await this.service.destroy(row)
-        this.loading = false
-        this.$buefy.snackbar.open(this.$tc('userRemoved'))
-        await this.load()
-      },
-    })
-  }
-
-  async find() {
-    this.users = await this.service.search(this.search)
-  }
-
-  type(value: any): string {
+  public type(value: any): string {
     if (new Date(value) < new Date()) {
       return 'is-warning'
     }
     return 'is-success'
   }
 
-  color(value: any): string {
+  public color(value: any): string {
     if (value === 1) {
       return 'green-plan'
     }
@@ -154,12 +59,12 @@ export default class ListUserComponent extends Vue {
     return 'blue-plan'
   }
 
-  removeRole(user: User, role: Role): void {
+  public removeRole(user: User, role: Role): void {
     console.log(user)
     console.log(role)
   }
 
-  generatePassword(): void {
+  public generatePassword(): void {
     const length = 8
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let retVal = ''
@@ -167,6 +72,5 @@ export default class ListUserComponent extends Vue {
       retVal += charset.charAt(Math.floor(Math.random() * n))
     }
     this.edited.password = retVal
-    this.generatedPassword = retVal
   }
 }

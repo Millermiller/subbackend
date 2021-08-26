@@ -9,30 +9,30 @@ import { Inject } from 'vue-typedi'
 })
 export default class PlanModule extends Vue {
   @Inject()
-  private service: PlanService
+  private readonly service: PlanService
 
-  plans: Plan[]
-  loading: boolean
+  public plans: Plan[]
+  public loading: boolean
 
-  mounted() {
-    this.load()
+  async mounted(): Promise<void> {
+    await this.load()
   }
 
-  async load() {
+  private async load(): Promise<void> {
     this.loading = true
     this.plans = await this.service.getAll()
     this.loading = false
   }
 
-  edit(row: any) {
+  public edit(row: any): void {
     this.$router.push({ name: 'edit-plan', params: { id: row.id } })
   }
 
-  add() {
+  public add(): void {
     this.$router.push({ name: 'add-plan' })
   }
 
-  async remove(row: Plan) {
+  public async remove(row: Plan): Promise<void> {
     await this.$buefy.dialog.confirm({
       message: this.$tc('confirmRemove'),
       onConfirm: async () => {

@@ -7,30 +7,30 @@ import { Feedback } from '@/Scandinaver/Core/Domain/Contract/IFeedbackForm'
 export namespace API {
   @Service()
   export class FeedbackAPI extends BaseAPI<Feedback> {
-    protected type: ClassType<Feedback> = Feedback
-    protected baseUrl: string = 'feedback'
+    protected readonly type: ClassType<Feedback> = Feedback
+    protected readonly baseUrl: string = 'feedback'
 
-    all(): Promise<AxiosResponse<Feedback[]>> {
+    public async all(): Promise<AxiosResponse<Feedback[]>> {
       throw new Error('Method not implemented.')
     }
 
-    create(data: any): Promise<AxiosResponse<Feedback>> {
+    public async create(data: any): Promise<AxiosResponse<Feedback>> {
       throw new Error('Method not implemented.')
     }
 
-    delete(id: number | string): Promise<any> {
+    public async delete(id: number | string): Promise<any> {
       throw new Error('Method not implemented.')
     }
 
-    one(id: number): Promise<AxiosResponse<Feedback>> {
+    public async one(id: number): Promise<AxiosResponse<Feedback>> {
       throw new Error('Method not implemented.')
     }
 
-    search(data: any): Promise<AxiosResponse<Feedback[]>> {
+    public async search(data: any): Promise<AxiosResponse<Feedback[]>> {
       throw new Error('Method not implemented.')
     }
 
-    update(id: number | string, data: any): Promise<AxiosResponse<Feedback>> {
+    public async update(id: number | string, data: any): Promise<AxiosResponse<Feedback>> {
       throw new Error('Method not implemented.')
     }
   }

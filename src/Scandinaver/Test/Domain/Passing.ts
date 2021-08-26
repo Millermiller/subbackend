@@ -15,6 +15,16 @@ export default class Passing extends Entity {
   private _errors: string[]
   private _created: string
 
+  @Type(() => Asset)
+  set asset(value: Asset) {
+    this._asset = value
+  }
+
+  @Type(() => User)
+  set user(value: User) {
+    this._user = value
+  }
+
   getId(): number {
     return this._id;
   }
@@ -51,18 +61,9 @@ export default class Passing extends Entity {
     this._percent = value
   }
 
-  @Type(() => User)
-  set user(value: User) {
-    this._user = value
-  }
 
   get user(): User {
     return this._user
-  }
-
-  @Type(() => Asset)
-  set asset(value: Asset) {
-    this._asset = value
   }
 
   get asset(): Asset {
@@ -92,14 +93,5 @@ export default class Passing extends Entity {
       errors: [],
       percent: this._percent,
     }
-  }
-
-  static fromDTO(dto: PassingForm): Passing {
-    const passing = new Passing()
-    passing.id = dto.id || 0
-    passing.completed = dto.completed
-    passing.percent = dto.percent
-
-    return passing
   }
 }

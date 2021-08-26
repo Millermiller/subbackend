@@ -1,73 +1,77 @@
-<div>
-  <b-field>
-    <button class="button is-success" @click="showModal = true">{{ $t('add') }}</button>
-  </b-field>
-  <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
-  <table class="table is-bordered is-hoverable is-fullwidth">
-    <tr>
-      <th>Id</th>
-      <th>Title</th>
-      <th>Slug</th>
-      <th>Value</th>
-      <th>Actions</th>
-    </tr>
-    <tr v-for="setting in settings">
-      <td>{{setting.getId()}}</td>
-      <td>{{setting.title}}</td>
-      <td>{{setting.slug}}</td>
-      <td>
-        <b-input v-model="setting.value" v-if="setting.isNumber() || setting.isString()"></b-input>
-        <b-switch v-model="setting.value" v-if="setting.isBoolean()"></b-switch>
-      </td>
-      <td>
-        <button class="button is-warning is-small" @click="edit(setting)">
-          <b-icon icon="pencil" size="is-small"></b-icon>
-        </button>
-        <button class="button is-danger is-small ml-1" @click="remove(setting)">
-          <b-icon icon="close-circle" size="is-small"></b-icon>
-        </button>
-      </td>
-    </tr>
-  </table>
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('settings') }}</h4>
+    <b-field>
+      <button class="button is-success" @click="showModalForm">{{ $t('add') }}</button>
+    </b-field>
+    <b-loading :is-full-page="false" :active="loading" :can-cancel="true"></b-loading>
+    <table class="table is-bordered is-hoverable is-fullwidth">
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+      <tr v-for="setting in entities">
+        <td>{{ setting.getId() }}</td>
+        <td>{{ setting.title }}</td>
+        <td>{{ setting.slug }}</td>
+        <td>
+          <b-input v-model="setting.value" v-if="setting.isNumber() || setting.isString()"></b-input>
+          <b-switch v-model="setting.value" v-if="setting.isBoolean()"></b-switch>
+        </td>
+        <td>
+          <button class="button is-warning is-small" @click="edit(setting)">
+            <b-icon icon="pencil" size="is-small"></b-icon>
+          </button>
+          <button class="button is-danger is-small ml-1" @click="remove(setting)">
+            <b-icon icon="close-circle" size="is-small"></b-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
 
-  <button class="button is-success" @click="save()">{{$t('save')}}</button>
+    <button class="button is-success" @click="saveSettings()">{{ $t('save') }}</button>
 
-  <b-modal :active.sync="showModal" has-modal-card="has-modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Setting</p>
-      <button
-        type="button"
-        class="delete"
-        @click="closeModal()"/>
-    </header>
-    <form class="modal-card" style="width: 400px" @submit.prevent="create">
-      <section class="modal-card-body">
-        <b-field label="Title" required :type="{ 'is-danger': errors._title }" :message="errors._title">
-          <b-input v-model="edited.title" type="text"></b-input>
-        </b-field>
-      </section>
-      <section class="modal-card-body">
-        <b-field label="Slug" required :type="{ 'is-danger': errors._slug }" :message="errors._slug">
-          <b-input type="text" v-model="edited.slug"></b-input>
-        </b-field>
-      </section>
-      <section class="modal-card-body">
-        <b-field label="Type">
-          <b-select placeholder="Select a type" required v-model="edited.type">
-            <option value="string">String</option>
-            <option value="number">Number</option>
-            <option value="boolean">Boolean</option>
-          </b-select>
-        </b-field>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button" type="button" @click="closeModal()">
-          {{ $t('close') }}
-        </button>
-        <button class="button is-primary">
-          {{ $t('save') }}
-        </button>
-      </footer>
-    </form>
-  </b-modal>
+    <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">{{ modalTitle }}</p>
+        <button
+          type="button"
+          class="delete"
+          @click="closeModalForm()" />
+      </header>
+      <form class="modal-card" style="width: 400px" @submit.prevent="save()">
+        <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
+        <section class="modal-card-body">
+          <b-field label="Title" required>
+            <b-input v-model="edited.title" type="text"></b-input>
+          </b-field>
+        </section>
+        <section class="modal-card-body">
+          <b-field label="Slug" required>
+            <b-input type="text" v-model="edited.slug"></b-input>
+          </b-field>
+        </section>
+        <section class="modal-card-body">
+          <b-field label="Type">
+            <b-select placeholder="Select a type" required v-model="edited.type">
+              <option value="string">String</option>
+              <option value="number">Number</option>
+              <option value="boolean">Boolean</option>
+            </b-select>
+          </b-field>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="closeModalForm()">
+            {{ $t('close') }}
+          </button>
+          <button class="button is-primary">
+            {{ $t('save') }}
+          </button>
+        </footer>
+      </form>
+    </b-modal>
+  </article>
 </div>

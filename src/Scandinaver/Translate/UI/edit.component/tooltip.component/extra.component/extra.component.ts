@@ -1,12 +1,12 @@
-
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import Tooltip from '../../../../Domain/Tooltip'
 
 @Component({
   components: {},
 })
 export default class ExtraComponent extends Vue {
   @Prop({ required: true })
-  private item!: any
+  public item: Tooltip
   @Prop({ required: true })
-  private index!: any
+  private index: number
 }

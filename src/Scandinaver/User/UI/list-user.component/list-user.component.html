@@ -1,15 +1,16 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('users') }}</h4>
     <b-field>
       <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
       <p class="control">
-        <button class="button is-info" @click="find">Search</button>
+        <button class="button is-info" @click="find()">Search</button>
       </p>
       <Can :do="permissions.CREATE_USER">
-        <button class="button is-success ml-10" @click="showModal = true">{{ $t('addUser') }}</button>
+        <button class="button is-success ml-10" @click="showModalForm()">{{ $t('add') }}</button>
       </Can>
     </b-field>
-    <b-table :data="users"
+    <b-table :data="entities"
              paginated
              narrowed
              :loading="loading"
@@ -64,42 +65,44 @@
         </b-table-column>
     </b-table>
   </article>
-  <b-modal :active.sync="showModal" has-modal-card="has-modal-card">
+  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">New user</p>
+      <p class="modal-card-title">{{ modalTitle }}</p>
       <button
         type="button"
         class="delete"
-        @click="closeModal()"/>
+        @click="closeModalForm()"/>
     </header>
-    <form class="modal-card" style="width: 400px" @submit.prevent="create">
+    <form class="modal-card" style="width: 400px" @submit.prevent="save()">
+      <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
-        <b-field label="Login" :type="{ 'is-danger': errors._login }" :message="errors._login">
+        <b-field label="Login">
           <b-input v-model="edited.login" type="text"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Email" :type="{ 'is-danger': errors._email }" :message="errors._email">
+        <b-field label="Email">
           <b-input type="email" v-model="edited.email"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Password" :type="{ 'is-danger': errors._password }" :message="generatedPassword">
+        <b-field label="Password">
           <b-input type="password" v-model="edited.password" icon="magnify"></b-input>
           <p class="control">
             <button class="button is-primary" @click="generatePassword()" type="button">Generate</button>
           </p>
         </b-field>
+        <small>{{edited.password}}</small>
       </section>
       <section class="modal-card-body">
         <b-field label="Roles">
-          <b-checkbox v-for="role in roles" v-model="edited.roles" :native-value="role">
+          <b-checkbox v-for="role in roles.map(item => item.toDTO())" v-model="edited.roles" :native-value="role">
             {{ role.name }}
           </b-checkbox>
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="closeModal()">
+        <button class="button" type="button" @click="closeModalForm()">
           {{ $t('close') }}
         </button>
         <button class="button is-primary">

@@ -5,9 +5,9 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
   components: {},
 })
 export default class AssetWidgetComponent extends Vue {
-  private loading: boolean = false
+  public loading: boolean = false
 
-  get assets() {
+  get assets(): number {
     return store.getters.assetsCount
   }
 }

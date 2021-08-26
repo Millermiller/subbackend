@@ -18,6 +18,21 @@ export default class User extends Entity {
   private _roles: Role[]
   _password_confirmation: string
 
+  @Type(() => Permission)
+  set permissions(value: Permission[]) {
+    this._permissions = value
+  }
+
+  @Type(() => Plan)
+  set plan(value: Plan) {
+    this._plan = value
+  }
+
+  @Type(() => Role)
+  set roles(value: Role[]) {
+    this._roles = value
+  }
+
   set id(value: number) {
     this._id = value
   }
@@ -78,27 +93,12 @@ export default class User extends Entity {
     return this._permissions
   }
 
-  @Type(() => Permission)
-  set permissions(value: Permission[]) {
-    this._permissions = value
-  }
-
   get roles(): Role[] {
     return this._roles
   }
 
-  @Type(() => Role)
-  set roles(value: Role[]) {
-    this._roles = value
-  }
-
   get plan(): Plan {
     return this._plan
-  }
-
-  @Type(() => Plan)
-  set plan(value: Plan) {
-    this._plan = value
   }
 
   public toDTO(): UserForm {

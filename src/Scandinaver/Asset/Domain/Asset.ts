@@ -1,19 +1,27 @@
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
-import { Type } from 'class-transformer'
+import { Transform, Type } from 'class-transformer'
 import { AssetType } from '@/Scandinaver/Asset/Domain/Enum/AssetType'
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
+import { Collection } from '@/Scandinaver/Core/Domain/Collection'
 
 export class Asset extends Entity {
-  private _cards: Card[]
+  private _id: number
+  private _cards: Collection<Card>
   private _title: string
   private _type: AssetType
   private _level: number
-  private _selected?: boolean
-  private _count: number
   private _basic: boolean
 
-  private _id: number
+  @Type(() => Card)
+  @Transform(value => new Collection(value), { toClassOnly: true })
+  set cards(value: Collection<Card>) {
+    this._cards = value
+  }
+
+  getId(): number {
+    return this._id
+  }
 
   get id(): number {
     return this._id
@@ -23,8 +31,16 @@ export class Asset extends Entity {
     this._id = value
   }
 
-  getId(): number {
-    return this._id;
+  get title(): string {
+    return this._title
+  }
+
+  set title(value: string) {
+    this._title = value
+  }
+
+  get cards(): Collection<Card> {
+    return this._cards
   }
 
   get level(): number {
@@ -34,28 +50,13 @@ export class Asset extends Entity {
   set level(value: number) {
     this._level = value
   }
+
   get type(): AssetType {
     return this._type
   }
 
   set type(value: AssetType) {
     this._type = value
-  }
-  get title(): string {
-    return this._title
-  }
-
-  set title(value: string) {
-    this._title = value
-  }
-
-  get cards(): Card[] {
-    return this._cards
-  }
-
-  @Type(() => Card)
-  set cards(value: Card[]) {
-    this._cards = value
   }
 
   get basic(): boolean {

@@ -7,5 +7,5 @@ import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repos
 @Service()
 export default class PlanRepository extends CommonRepository<Plan> {
   @Inject()
-  protected api: PlanAPI
+  protected readonly api: PlanAPI
 }

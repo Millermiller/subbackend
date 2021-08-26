@@ -22,7 +22,7 @@ export default class EditPageComponent extends Vue {
   }
 
   async save() {
-    await this.service.update(this.page)
+    // await this.service.update(this.page)
     this.$router.go(-1)
   }
 

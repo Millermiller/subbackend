@@ -5,9 +5,9 @@ import IFeedbackForm, { FeedbackForm } from '@/Scandinaver/Core/Domain/Contract/
 @Service()
 export default class FeedbackService {
   @Inject()
-  private repository: FeedbackRepository
+  private readonly repository: FeedbackRepository
 
-  async addFeedback(form: IFeedbackForm): Promise<FeedbackForm> {
+  private async addFeedback(form: IFeedbackForm): Promise<FeedbackForm> {
     return this.repository.create(form)
   }
 }

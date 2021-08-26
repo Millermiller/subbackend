@@ -1,0 +1,25 @@
+<div>
+  <div class="columns mb-0" v-on:mouseover="$emit('show', item)" v-on:mouseout="$emit('clear')">
+    <div class="column is-3">
+      <p class="control">
+        <input class="input" type="text" v-model="item.text" :placeholder="$t('original')" />
+      </p>
+    </div>
+    <div class="column is-4">
+      <p class="control">
+        <input class="input" type="text" v-model="item.value" :placeholder="$t('translate')" />
+      </p>
+    </div>
+    <p class="column is-3">
+      <b-button class="is-warning mr-1" size="is-small" icon-right="view-dashboard"
+                @click="$emit('showSynonyms', { index: index, word: item })">{{item.synonyms.length}}</b-button>
+      <b-button class="is-warning mr-1" size="is-small" icon-right="pencil"
+                @click="$emit('showCoordinates', { index: index, word: item })"></b-button>
+      <b-button class="is-danger mr-1" size="is-small" icon-right="close-circle"
+                @click="$emit('remove', { index: index, word: item })"></b-button>
+    </p>
+  </div>
+  <div class="columns">
+    <div class="column is-12 pt-0"><small>{{ item.coordinates }}</small></div>
+  </div>
+</div>

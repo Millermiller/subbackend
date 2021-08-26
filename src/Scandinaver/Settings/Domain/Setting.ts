@@ -68,15 +68,4 @@ export class Setting extends Entity {
       type: this._type
     }
   }
-
-  static fromDTO(dto: SettingForm): Setting {
-    const setting = new Setting()
-    setting.id = dto.id || 0
-    setting.title = dto.title
-    setting.slug = dto.slug
-    setting.value = dto.value
-    setting.type = dto.type
-
-    return setting
-  }
 }

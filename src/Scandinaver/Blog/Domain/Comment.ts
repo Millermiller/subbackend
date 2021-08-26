@@ -7,4 +7,8 @@ export default class Comment extends Entity {
   getId(): number {
     return this.id;
   }
+
+  toDTO(): any {
+    return {}
+  }
 }

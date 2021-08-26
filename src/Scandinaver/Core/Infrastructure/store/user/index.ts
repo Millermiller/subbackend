@@ -4,7 +4,6 @@ import UserGetters from '@/Scandinaver/Core/Infrastructure/store/user/getters'
 import UserMutations from '@/Scandinaver/Core/Infrastructure/store/user/mutations'
 import UserActions from '@/Scandinaver/Core/Infrastructure/store/user/actions'
 
-
 export const userModule = new Module({
   namespaced: false,
   state: State,

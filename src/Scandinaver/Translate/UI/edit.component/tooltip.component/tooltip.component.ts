@@ -1,66 +1,68 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import Extra from './extra.component/index.vue'
+import ExtraComponent from './extra.component/index.vue'
+import { Inject } from 'vue-typedi'
+import TextService from '@/Scandinaver/Translate/Application/text.service'
+import { Translate } from '@/Scandinaver/Translate/Domain/Translate'
+import Tooltip from '../../../Domain/Tooltip'
 
 @Component({
-  components: { Extra },
+  components: { ExtraComponent },
 })
 export default class TooltipComponent extends Vue {
-  @Prop({ required: true })
-  private item!: any
+  @Inject()
+  private readonly service: TextService
 
-  @Prop({ required: true })
-  private extras!: any
+  private text: Translate = new Translate()
+  public loading: boolean = false
+  private showedTooltip: string = ''
 
-  @Prop({ required: true })
-  private sentences!: any
-
-  private showedExtra: string = ''
-  private text: any = {
-    computed: '',
+  async mounted() {
+    await this.load(Number(this.$route.params.id))
   }
 
-  addExtra() {
-    this.extras.push({ text_id: this.item.id })
+  async load(id: number): Promise<void> {
+    this.loading = true
+    this.text = await this.service.getText(id);
+    this.loading = false
   }
 
-  removeExtra(id: number) {
-    this.extras.splice(id, 1)
+  public addTooltip(): void {
+    const tooltip = new Tooltip()
+    tooltip.text_id = this.text.getId()
+    this.text.tooltips.push(tooltip)
   }
 
-  showExtra(extra: any) {
-    this.showedExtra = extra.extra
+  public removeTooltip(id: number): void {
+    this.text.tooltips.splice(id, 1)
   }
 
-  clearExtra() {
-    this.showedExtra = ''
+  public showTooltips(tooltips: Tooltip): void {
+    this.showedTooltip = tooltips.object
   }
 
-  get output() {
-    let computed = ''
+  public clearTooltips(): void {
+    this.showedTooltip = ''
+  }
 
-    for (let k = 0; k < this.sentences.length; k++) {
-      const sentence = this.sentences[k]
-      for (let i = 0; i < sentence.length; i++) {
-        computed = `${computed} ${sentence[i].word}`
-        if (i === sentence.length - 1) {
-          computed += '. '
-        }
-      }
-    }
+  public async save(): Promise<void> {
+    await this.service.saveTooltips(this.text, this.text.tooltips);
+    await this.load(this.text.getId())
+    this.$buefy.snackbar.open(this.$tc('updated'))
+  }
 
-    this.text.computed = computed
-
-    if (this.showedExtra !== '') {
-      this.text.computed = this.text.computed.replace(
-        new RegExp(`(^|\\s|>)(${this.showedExtra})([^\\w]|$|<)`, 'gi'),
+  get output(): string {
+    let computed = this.text.text
+    if (this.showedTooltip !== '') {
+      computed = computed.replace(
+        new RegExp(`(^|\\s|>)(${this.showedTooltip})([^\\w]|$|<)`, 'gi'),
         '$1<span class="extra">$2</span>$3',
       )
     }
-    return this.text.computed
+    return computed
   }
 
   @Watch('extras')
-  private onChange(val: any) {
+  private onChange(val: any): void {
     if (val.length) {
       const self = this
 
@@ -70,7 +72,7 @@ export default class TooltipComponent extends Vue {
           extras[i].addEventListener(
             'mouseover',
             (el: any) => {
-              self.showedExtra = el.target.getAttribute('data-original-title')
+              self.showedTooltip = el.target.getAttribute('data-original-title')
             },
             false,
           )
@@ -78,7 +80,7 @@ export default class TooltipComponent extends Vue {
           extras[i].addEventListener(
             'mouseout',
             (el) => {
-              self.showedExtra = ''
+              self.showedTooltip = ''
             },
             false,
           )

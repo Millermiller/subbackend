@@ -1,17 +1,51 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import Piece from '@/Scandinaver/Puzzle/Domain/Piece'
-import PieceCollection from '@/Scandinaver/Puzzle/Domain/PieceCollection'
+import { Collection } from '@/Scandinaver/Core/Domain/Collection'
+import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
+import { PuzzleForm } from '@/Scandinaver/Puzzle/Domain/PuzzleForm'
 
 export class Puzzle extends Entity {
-  id!: number
+  private _id!: number
   active: boolean
-  success!: boolean
-  text!: string
-  translate: any
-  pieces: PieceCollection
+  success: boolean
+  private _text: string
+  private _translate: any
+  private _language: any
+  pieces: Collection<Piece>
 
   getId(): number | string {
-    return this.id
+    return this._id
+  }
+
+  get id(): number {
+    return this._id
+  }
+
+  set id(value: number) {
+    this._id = value
+  }
+
+  get text(): string {
+    return this._text
+  }
+
+  set text(value: string) {
+    this._text = value
+  }
+  get translate(): any {
+    return this._translate
+  }
+
+  set translate(value: any) {
+    this._translate = value
+  }
+
+  get language(): any {
+    return this._language
+  }
+
+  set language(value: any) {
+    this._language = value
   }
 
   generate(): Puzzle {
@@ -20,7 +54,7 @@ export class Puzzle extends Entity {
     slices.forEach((item: string) => {
       pieces.push(new Piece(item))
     })
-    this.pieces = new PieceCollection(pieces)
+    this.pieces = new Collection<Piece>(pieces)
     return this
   }
 
@@ -31,5 +65,14 @@ export class Puzzle extends Entity {
   setActive(active: boolean) {
     this.active = active
     return this
+  }
+
+  public toDTO(): PuzzleForm {
+    return {
+      id: this._id,
+      text: this._text,
+      translate: this._translate,
+      language: ''
+    }
   }
 }

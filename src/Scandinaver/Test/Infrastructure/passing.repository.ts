@@ -7,5 +7,5 @@ import PassingAPI = API.PassingAPI
 @Service()
 export default class PassingRepository extends CommonRepository<Passing> {
   @Inject()
-  protected api: PassingAPI
+  protected readonly api: PassingAPI
 }

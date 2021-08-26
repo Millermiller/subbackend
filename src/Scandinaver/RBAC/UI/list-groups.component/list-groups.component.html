@@ -1,16 +1,13 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('groups') }}</h4>
     <b-field>
-      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
-      <p class="control">
-        <button class="button is-info" @click="find">Search</button>
-      </p>
       <Can :do="permissions.CREATE_PERMISSION_GROUP">
-        <button class="button is-success ml-10" @click="showCreateModal()">{{ $t('newGroup') }}</button>
+        <button class="button is-success" @click="showModalForm()">{{ $t('add') }}</button>
       </Can>
     </b-field>
     <b-field> </b-field>
-    <b-table :data="permissionGroups" paginated narrowed :loading="loading" per-page="20">
+    <b-table :data="entities" paginated narrowed :loading="loading" per-page="20">
       <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
@@ -37,8 +34,9 @@
       </b-table-column>
     </b-table>
   </article>
-  <b-modal :active.sync="isComponentModalActive" has-modal-card="has-modal-card">
+  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
     <div class="modal-card" style="width: 400px">
+      <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
         <b-field label="Title">
           <b-input type="text" v-model="edited.name"></b-input>
@@ -55,10 +53,10 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="isComponentModalActive = false">
+        <button class="button" type="button" @click="closeModalForm">
           {{ $t('close') }}
         </button>
-        <button class="button is-primary" @click="create()">
+        <button class="button is-primary" @click="save()">
           {{ $t('save') }}
         </button>
       </footer>

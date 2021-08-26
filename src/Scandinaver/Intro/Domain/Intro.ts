@@ -10,6 +10,7 @@ export default class Intro extends Entity {
   private _headerText: string
   private _sort: number
   private _active: boolean
+
   getId(): number {
     return this._id;
   }
@@ -89,19 +90,5 @@ export default class Intro extends Entity {
       sort: this._sort,
       active: this._active
     }
-  }
-
-  static fromDTO(dto: IntroForm): Intro {
-    const intro = new Intro()
-    intro.id = dto.id || undefined
-    intro.page = dto.page
-    intro.target = dto.target
-    intro.content = dto.content
-    intro.position = dto.position
-    intro.headerText = dto.headerText
-    intro.sort = dto.sort
-    intro.active = dto.active
-
-    return intro
   }
 }

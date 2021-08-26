@@ -1,101 +1,62 @@
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
-import { permissions } from '@/permissions/permission.type'
 import LanguageService from '@/Scandinaver/Languages/Application/language.service'
 import Language from '@/Scandinaver/Languages/Domain/Language'
 import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 
 @Component({
   components: {},
 })
-export default class ListLanguagesComponent extends Vue {
+export default class ListLanguagesComponent extends CRUDComponent<Language, LanguageForm> {
   @Inject()
-  private service: LanguageService
+  protected readonly service: LanguageService
 
-  private languages: Language[] = []
-  private preview: any = null
-  private loading: boolean = false
-  private isComponentModalActive: boolean = false
-  public fileUploadFormData: FormData = new FormData()
-  private edited: LanguageForm = {
-    id: null,
-    title: '',
-    letter: '',
-    flag: '',
-  }
-  permissions: {}
+  private fileUploadFormData: FormData = new FormData()
 
-  constructor() {
-    super();
-    this.permissions = permissions;
+  protected modalTitleCreate = this.$root.$tc('createLanguage')
+  protected modalTitleUpdate = this.$root.$tc('updateLanguage')
+
+  protected buildForm(): LanguageForm {
+    return new LanguageForm()
   }
 
-  async mounted() {
-    await this.load()
-  }
-
-  async load() {
-    this.loading = true
-    this.languages = await this.service.getAll()
-    this.loading = false
-  }
-
-  edit(language: Language) {
+  public edit(language: Language): void {
     this.edited = language.toDTO()
-    this.preview = this.edited.flag
-    this.isComponentModalActive = true
+    this.modalTitle = this.modalTitleUpdate
+    this.isModalFormActive = true
   }
 
-  async create() {
+  public async save(): Promise<void> {
     this.fileUploadFormData.append('title', this.edited.title)
     this.fileUploadFormData.append('letter', this.edited.letter)
     if (this.edited.id) {
-      const language = Language.fromDTO(this.edited)
+      const language = this.service.fromDTO(this.edited)
       await this.service.update(language, this.fileUploadFormData)
     } else {
       await this.service.create(this.fileUploadFormData)
     }
     this.fileUploadFormData = new FormData()
     await this.load()
-    this.closeCreateModal()
+    this.closeModalForm()
   }
 
-  showCreateModal() {
+  public showModalForm(): void {
     this.edited = {
       id: null,
       title: '',
       letter: '',
       flag: '',
     };
+    if (this.modalTitle === '') {
+      this.modalTitle = this.modalTitleCreate
+    }
     this.fileUploadFormData = new FormData()
-    this.preview = null
-    this.isComponentModalActive = true
+    this.isModalFormActive = true
   }
 
-  closeCreateModal() {
-    this.edited = {
-      id: null,
-      title: '',
-      letter: '',
-      flag: '',
-    };
-    this.isComponentModalActive = false
-  }
-
-  async remove(language: Language) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        await this.service.destroy(language)
-        this.$buefy.snackbar.open(this.$tc('removed'))
-        await this.load()
-      },
-    })
-  }
-
-  bindFile(e: any) {
+  public bindFile(e: any): void {
     this.fileUploadFormData.append('file', e)
-    this.preview = URL.createObjectURL(e)
+    this.edited.flag = URL.createObjectURL(e)
   }
 }

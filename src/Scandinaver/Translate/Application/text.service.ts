@@ -2,83 +2,71 @@ import { Service } from 'typedi'
 import { Inject } from 'vue-typedi'
 import TextRepository from '@/Scandinaver/Translate/Infrastructure/text.repository'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
-import { TranslateForm } from '@/Scandinaver/Translate/UI/translates.module'
-import { Word } from '@/Scandinaver/Asset/Domain/Word'
-import SynonymRepository from '@/Scandinaver/Translate/Infrastructure/synonym.repository'
-import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { Translate } from '../Domain/Translate'
+import { TranslateForm } from '@/Scandinaver/Translate/Domain/TranslateForm'
 
 @Service()
 export default class TextService extends BaseService<Translate> {
   @Inject()
-  private textRepository: TextRepository
+  private readonly textRepository: TextRepository
 
-  @Inject()
-  private synonymRepository: SynonymRepository
-
-  public async create(form: TranslateForm): Promise<Translate> {
-    return this.textRepository.create(form);
+  public async create(data: TranslateForm): Promise<Translate> {
+    data.language = store.getters.language
+    return this.textRepository.create(data);
   }
 
-  async getTranslate(id: number): Promise<Translate> {
-    return this.textRepository.one(id)
-  }
-
-  public async all(): Promise<Translate[]> {
+  public async getAll(): Promise<Translate[]> {
     const { language } = store.getters
     return this.textRepository.allByLanguage(language);
   }
 
-  public async getText(id: number) {
+  public async getText(id: number): Promise<Translate> {
     return this.textRepository.one(id)
   }
 
-  public removeText(translate: Translate) {
+  public async destroy(translate: Translate): Promise<void> {
     return this.textRepository.delete(translate);
   }
 
-  public publishText(translate: Translate) {
+  public async publishText(translate: Translate): Promise<Translate> {
     translate.publish()
-    return this.textRepository.update(translate, translate);
+    return this.textRepository.update(translate, translate.toDTO());
   }
 
-  public unPublishText(translate: Translate) {
+  public async unPublishText(translate: Translate): Promise<Translate> {
     translate.unpublish()
-    return this.textRepository.update(translate, translate);
+    return this.textRepository.update(translate, translate.toDTO());
   }
 
-  async getSynonyms(word: Word): Promise<Synonym[]> {
-    return this.synonymRepository.getByWord(word)
-  }
-
-  addSynonym(word: Word, value: string): Promise<Synonym> {
-    const synonym = new Synonym()
-    synonym.id = word.id
-    synonym.value = value
-    return this.synonymRepository.create(synonym)
-  }
-
-  async deleteSynonym(synonym: Synonym) {
-    return this.synonymRepository.delete(synonym)
-  }
-
-  saveImage(translate: Translate, data: FormData) {
+  public async saveImage(translate: Translate, data: FormData): Promise<any> {
     return this.textRepository.saveImage(translate, data)
   }
 
-  async saveExtra(translate: Translate, extra: any) {
-    translate.extra = extra;
-    await this.textRepository.update(translate, translate)
+  public async saveTooltips(translate: Translate, tooltips: any): Promise<any> {
+    translate.tooltips = tooltips;
+    await this.textRepository.update(translate, translate.toDTO())
   }
 
-  async updateSentences(translate: Translate, sentences: any) {
+  public async updateSentences(translate: Translate, sentences: any): Promise<any> {
     translate.sentences = sentences
-    await this.textRepository.update(translate, translate)
+    await this.textRepository.update(translate, translate.toDTO())
   }
 
-  async saveDescription(translate: Translate, description: string) {
+  public async saveDescription(translate: Translate, description: string): Promise<any> {
     translate.description = description
-    await this.textRepository.update(translate, translate)
+    await this.textRepository.update(translate, translate.toDTO())
+  }
+
+  public fromDTO(dto: TranslateForm): Translate {
+    const translate = new Translate()
+    translate.id = dto.id
+    translate.title = dto.title
+    translate.translate = dto.translate
+    return translate
+  }
+
+  public async update(translate: Translate): Promise<any> {
+    await this.textRepository.update(translate, translate.toDTO())
   }
 }

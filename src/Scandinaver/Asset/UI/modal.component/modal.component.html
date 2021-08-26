@@ -44,7 +44,7 @@
     <div class="example-section">
       <h2 class="subtitle is-5">
         {{ $t('examples') }}
-        <span @click="addExample" class="button is-success pull-right">{{ $t('add') }}</span>
+        <span @click="addExample()" class="button is-success pull-right">{{ $t('add') }}</span>
       </h2>
       <div>
         <ModalExampleComponent
@@ -60,20 +60,20 @@
     <!--
     <div class="audio-section">
       <audio ref="audio" :src="editedCard.word.audio" preload="auto"></audio>
-      <a :class="['button', 'is-small']" @click="play">
+      <a :class="['button', 'is-small']" @click="play()">
         <span class="icon">
           <i class="fa fa-volume-up"></i>
         </span>
       </a>
       <form enctype="multipart/form-data" action="" method="post" name="addAudio" ref="audioform">
         <input type="file" name="audiofile" @change="bindFile" />
-        <a class="button is-success" @click="updateAudio">{{ $t('uploadAudio') }}</a>
+        <a class="button is-success" @click="updateAudio()">{{ $t('uploadAudio') }}</a>
       </form>
     </div>
     -->
     <div class="actions mt-10">
-      <a class="button is-success" @click="save">{{ $t('save') }}</a>
-      <a class="button is-warning" @click="close">{{ $t('cancel') }}</a>
+      <a class="button is-success" @click="save()">{{ $t('save') }}</a>
+      <a class="button is-warning" @click="close()">{{ $t('cancel') }}</a>
     </div>
   </section>
 </b-modal>

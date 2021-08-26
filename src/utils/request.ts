@@ -2,6 +2,8 @@ import axios from 'axios'
 import Vue from 'vue'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { SnackbarProgrammatic as Snackbar } from 'buefy'
+import { router } from '@/router'
+import { LoginService } from '@/Scandinaver/Core/Application/login.service'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -25,9 +27,21 @@ service.interceptors.request.use(
   },
 )
 
-service.interceptors.response.use(undefined, (error) => {
+service.interceptors.response.use(undefined, async (error) => {
   if (error.response) {
     Snackbar.open(error.response.data)
+    let errors = Object.values(error.response.data.errors);
+    errors = errors.flat();
+    errors.forEach((error: any, index: any) => {
+      Snackbar.open({ message: error, duration: 5000 })
+    })
+  }
+  if (error.response.status === 403) {
+    store.commit('setAuth', false)
+    store.commit('resetUser')
+    const cookieName = process.env.VUE_APP_COOKIE_NAME as string || 'authfrontend._token'
+    Vue.$cookies.remove(cookieName, '/', process.env.VUE_APP_COOKIE_DOMAIN || '.scandinaver.org')
+    await router.push('/login')
   }
   return Promise.reject(error.response.data)
 })

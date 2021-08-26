@@ -10,9 +10,18 @@ export default class Permission extends Entity {
   private _description: string
   private _group: PermissionGroup | null
 
+  @Type(() => PermissionGroup)
+  set group(value: PermissionGroup | null) {
+    this._group = value
+  }
+
   constructor() {
     super();
     this._group = null
+  }
+
+  getId(): number | string {
+    return this._id
   }
 
   set id(value: number) {
@@ -47,15 +56,6 @@ export default class Permission extends Entity {
     return this._group
   }
 
-  @Type(() => PermissionGroup)
-  set group(value: PermissionGroup | null) {
-    this._group = value
-  }
-
-  getId(): number | string {
-    return this._id
-  }
-
   toDTO(): PermissionForm {
     return {
       id: this._id,
@@ -64,14 +64,5 @@ export default class Permission extends Entity {
       description: this._description,
       group: this._group === null ? null : this._group.getId(),
     }
-  }
-
-  static fromDTO(dto: PermissionForm): Permission {
-    const permission = new Permission()
-    permission.id = dto.id || 0
-    permission.name = dto.name
-    permission.slug = dto.slug
-    permission.description = dto.description
-    return permission
   }
 }

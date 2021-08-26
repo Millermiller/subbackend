@@ -1,4 +1,4 @@
-<div class="columns">
+<div class="columns" style="justify-content: space-between">
   <div class="column is-4 asset-column">
     <div class="box">
       <b-loading :is-full-page="false" :active="assetsLoading" :can-cancel="true"></b-loading>
@@ -56,18 +56,18 @@
       </b-tabs>
     </div>
   </div>
-  <div class="column is-4 cards-column">
+  <div class="column is-4 cards-column" v-if="cards">
     <div class="box">
       <b-loading :is-full-page="false" :active="cardsLoading" :can-cancel="true"></b-loading>
       <draggable
               group="1"
-              :list="cards"
+              :list="cards.all()"
               @start="drag=true"
               @end="drag=false"
-              @change="updateCardOrder"
+              @change="updateCardOrder($event)"
               handle=".handle">
         <CardComponent
-                v-for="(card, index) in cards"
+                v-for="(card, index) in cards.all()"
                 :card="card"
                 :index="index"
                 :key="card.id"
@@ -82,7 +82,7 @@
       <div class="block">
         <p class="control has-addons">
           <input class="input" type="text" placeholder="rus" v-model="text" />
-          <a :class="['button', {'is-loading': searchloaded }]" @click="search">{{$t('search')}}</a>
+          <a :class="['button', {'is-loading': searchloaded }]" @click="search()">{{$t('search')}}</a>
           <a :class="['button', {'is-loading': sentencesloaded }]" @click="searchSentences()">{{$t('inSentences')}}</a>
         </p>
       </div>
@@ -98,7 +98,7 @@
       </div>
     </div>
   </div>
-  <b-modal :active.sync="isComponentModalActive" @close="close">
+  <b-modal :active.sync="isComponentModalActive" @close="close()">
     <div class="box">
       <div class="translate-section">
         <p>
@@ -124,12 +124,12 @@
           </b-field>
 
           <p class="control">
-            <button class="button is-success" @click="save">
+            <button class="button is-success" @click="save()">
               {{$t('save')}}
             </button>
           </p>
           <p class="control">
-            <button class="button is-warning" @click="close">
+            <button class="button is-warning" @click="close()">
               {{$t('cancel')}}
             </button>
           </p>

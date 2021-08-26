@@ -5,7 +5,7 @@ import requestBuffer from '@/utils/requestBuffer'
 export namespace API {
   @Service()
   export class ReaderAPI {
-    read(text: string): Promise<AxiosResponse> {
+    public async read(text: string): Promise<AxiosResponse> {
       return requestBuffer.get(`/read?text=${text}`)
     }
   }

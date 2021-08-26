@@ -8,9 +8,18 @@ import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
 @Service()
 export default class PermissionService extends BaseService<Permission> {
   @Inject()
-  private permissionRepository: PermissionRepository
+  private readonly permissionRepository: PermissionRepository
 
-  create(input: PermissionForm): Promise<Permission> | Permission {
+  public fromDTO(dto: PermissionForm): Permission {
+    const permission = new Permission()
+    permission.id = dto.id || 0
+    permission.name = dto.name
+    permission.slug = dto.slug
+    permission.description = dto.description
+    return permission
+  }
+
+  public async create(input: PermissionForm): Promise<Permission> {
     const permission = new Permission()
     permission.name = input.name
     permission.slug = input.slug
@@ -22,23 +31,23 @@ export default class PermissionService extends BaseService<Permission> {
     return this.permissionRepository.create(permission.toDTO())
   }
 
-  async getAll(): Promise<Permission[]> {
+  public async getAll(): Promise<Permission[]> {
     return this.permissionRepository.all()
   }
 
-  async getOne(id: number): Promise<Permission> {
+  public async getOne(id: number): Promise<Permission> {
     return this.permissionRepository.one(id)
   }
 
-  async destroy(role: Permission) {
+  public async destroy(role: Permission): Promise<void> {
     return this.permissionRepository.delete(role)
   }
 
-  async search(query: string): Promise<Permission[]> {
+  public async search(query: string): Promise<Permission[]> {
     return this.permissionRepository.find(query)
   }
 
-  async update(permission: Permission, data: PermissionForm): Promise<Permission> {
+  public async update(permission: Permission, data: PermissionForm): Promise<Permission> {
     return this.permissionRepository.update(permission, data)
   }
 }

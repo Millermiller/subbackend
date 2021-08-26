@@ -20,7 +20,7 @@
             span {{version}}
 
         .nav-right.is-flex
-          a.nav-item(@click="logout") {{$t('logout')}}
+          a.nav-item(@click="logout()") {{$t('logout')}}
 </template>
 
 <script lang="ts">
@@ -34,11 +34,11 @@ import { version } from '../../../../package.json';
 })
 export default class NavBarComponent extends Vue {
   @Prop()
-  private show: Boolean
+  public show: Boolean
 
-  private version: string = `v.${version}`
+  public version: string = `v.${version}`
 
-  private languages = [
+  public languages = [
     {
       label: 'is',
       name: 'Исландский',
@@ -49,18 +49,18 @@ export default class NavBarComponent extends Vue {
     },
   ];
 
-  private selectedLanguage: string = 'is'
+  public selectedLanguage: string = 'is'
 
   @Watch('selectedLanguage')
-  private onChange(val: any) {
+  private onChange(val: any): void {
     store.commit('setLanguage', val)
   }
 
-  created() {
+  created(): void {
     store.commit('setLanguage', this.selectedLanguage)
   }
 
-  logout() {
+  public logout(): void {
     store.commit('setFullscreenLoading', true)
     LoginService.logout().then((response) => {
       this.$router.push({ path: '/login' })
@@ -82,7 +82,6 @@ export default class NavBarComponent extends Vue {
     }
 
     .nav-right {
-      align-items: stretch;
       align-items: stretch;
       flex: 1;
       justify-content: flex-end;

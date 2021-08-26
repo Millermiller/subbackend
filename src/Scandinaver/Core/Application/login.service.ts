@@ -26,7 +26,7 @@ export class LoginService {
     })
   }
 
-  public static checkAuth() {
+  public static checkAuth(): Promise<void> {
     return new Promise((resolve, reject) => {
       const cookieName = process.env.VUE_APP_COOKIE_NAME as string || 'authfrontend._token'
       const token = Vue.$cookies.get(cookieName)
@@ -47,7 +47,7 @@ export class LoginService {
     })
   }
 
-  public static logout() {
+  public static logout(): Promise<void> {
     const cookieName = process.env.VUE_APP_COOKIE_NAME as string || 'authfrontend._token'
     const token = Vue.$cookies.get(cookieName)
     return UserAPI.logout(token).then((response) => {
@@ -57,7 +57,7 @@ export class LoginService {
     })
   }
 
-  private static fetchUser(token: string) {
+  private static fetchUser(token: string): Promise<void> {
     return new Promise((resolve, reject) => {
       store.commit('setFullscreenLoading', true)
       UserAPI

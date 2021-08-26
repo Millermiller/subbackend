@@ -51,13 +51,4 @@ export default class Language extends Entity {
       flag: this._flag,
     }
   }
-
-  public static fromDTO(dto: LanguageForm): Language {
-    const language = new Language()
-    language.id = dto.id
-    language.title = dto.title
-    language.letter = dto.letter
-    language.flag = dto.flag
-    return language
-  }
 }

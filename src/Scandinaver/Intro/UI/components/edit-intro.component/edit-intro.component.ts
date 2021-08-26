@@ -13,9 +13,9 @@ import { IntroForm } from '@/Scandinaver/Intro/Domain/IntroForm'
 })
 export default class EditIntroComponent extends Vue {
   @Inject()
-  private service: IntroService
+  private readonly service: IntroService
 
-  private form: IntroForm = {
+  public form: IntroForm = {
     id: undefined,
     page: '',
     target: '',
@@ -25,41 +25,43 @@ export default class EditIntroComponent extends Vue {
     active: false,
     content: '',
   }
-  private pages: any = [
-    'MainPage',
-    'AssetsPage',
-    'TestsPage',
-    'PersonalPage',
-    'TextPage',
-    'TextItem',
-    'PuzzlePage'
+  public readonly pages: any = [
+    'MAIN_PAGE',
+    'DEFAULT_ASSET_PAGE',
+    'LEARN_ASSET_PAGE',
+    'DEFAULT_TEST_PAGE',
+    'TEST_PAGE',
+    'PERSONAL_PAGE',
+    'TRANSLATES_LIST_PAGE',
+    'TRANSLATE_PAGE',
+    'PUZZLE_PAGE',
   ]
-  private positions: any = ['top', 'right', 'bottom', 'left']
-  private active: boolean = false
-  private loading: boolean = false
+  public positions: any = ['top', 'right', 'bottom', 'left']
+  public active: boolean = false
+  public loading: boolean = false
 
-  async load(id: number) {
+  private async load(id: number): Promise<void> {
     this.loading = true
     this.form = await this.service.getOne(id)
     this.loading = false
   }
 
-  async save() {
+  public async save(): Promise<void> {
     this.loading = true
     if (this.form.id !== undefined) {
-      const intro = Intro.fromDTO(this.form)
-      await this.service.update(intro, intro.toDTO())
+      // const intro = Intro.fromDTO(this.form)
+      // await this.service.update(intro, intro.toDTO())
     } else {
       await this.service.create(this.form)
     }
     await this.$router.go(-1)
   }
 
-  back() {
+  public back(): void {
     this.$router.go(-1)
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     const { id } = this.$route.params
     if (isNumeric(id)) {
       await this.load(parseInt(this.$route.params.id, 10))
@@ -68,11 +70,11 @@ export default class EditIntroComponent extends Vue {
     this.active = true;
   }
 
-  activated() {
+  activated(): void {
     this.active = true;
   }
 
-  deactivated() {
+  deactivated(): void {
     this.active = false;
   }
 }

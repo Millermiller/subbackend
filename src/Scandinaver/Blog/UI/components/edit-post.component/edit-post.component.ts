@@ -37,7 +37,7 @@ export default class EditPostComponent extends Vue {
     if (this.post.title === '') {
       this.$buefy.snackbar.open(this.$tc('enterTitile'))
     }
-    await this.blogService.update(this.post)
+    await this.blogService.update(this.post, this.post)
     this.$router.go(-1)
   }
 

@@ -159,21 +159,6 @@ a {
     border-left: 5px solid;
 }
 
-span[tooltip]:hover:after {
-    content: attr(tooltip);
-    padding: 4px 8px;
-    color: #333;
-    position: absolute;
-    left: 0;
-    top: -20px;
-    white-space: nowrap;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #ff3860;
-    background-color: #fff;
-}
-
 .slideInDown {
     animation-name: slideInDown;
 }
@@ -468,5 +453,5 @@ table td {
     z-index: 1;
 }
 textarea.textarea {
-    min-height: 70px !important;
+    min-height: 270px !important;
 }

@@ -8,9 +8,18 @@ import PermissionGroupRepository
 @Service()
 export default class PermissionGroupService extends BaseService<PermissionGroup> {
   @Inject()
-  private permissionGroupRepository: PermissionGroupRepository
+  private readonly permissionGroupRepository: PermissionGroupRepository
 
-  create(input: PermissionGroupForm): Promise<PermissionGroup> | PermissionGroup {
+  public fromDTO(dto: PermissionGroupForm): PermissionGroup {
+    const permissionGroup = new PermissionGroup()
+    permissionGroup.id = dto.id || 0
+    permissionGroup.name = dto.name
+    permissionGroup.slug = dto.slug
+    permissionGroup.description = dto.description
+    return permissionGroup
+  }
+
+  public async create(input: PermissionGroupForm): Promise<PermissionGroup> {
     const permission = new PermissionGroup()
     permission.name = input.name
     permission.slug = input.slug
@@ -18,23 +27,23 @@ export default class PermissionGroupService extends BaseService<PermissionGroup>
     return this.permissionGroupRepository.create(permission.toDTO())
   }
 
-  async getAll(): Promise<PermissionGroup[]> {
+  public async getAll(): Promise<PermissionGroup[]> {
     return this.permissionGroupRepository.all()
   }
 
-  async getOne(id: number): Promise<PermissionGroup> {
+  public async getOne(id: number): Promise<PermissionGroup> {
     return this.permissionGroupRepository.one(id)
   }
 
-  async destroy(role: PermissionGroup) {
+  public async destroy(role: PermissionGroup): Promise<void> {
     return this.permissionGroupRepository.delete(role)
   }
 
-  async search(query: string): Promise<PermissionGroup[]> {
+  public async search(query: string): Promise<PermissionGroup[]> {
     return this.permissionGroupRepository.find(query)
   }
 
-  async update(group: PermissionGroup, data: PermissionGroupForm): Promise<PermissionGroup> {
+  public async update(group: PermissionGroup, data: PermissionGroupForm): Promise<PermissionGroup> {
     return this.permissionGroupRepository.update(group, data)
   }
 }

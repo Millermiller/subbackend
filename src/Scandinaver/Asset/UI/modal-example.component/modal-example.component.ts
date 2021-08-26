@@ -10,20 +10,20 @@ export default class ModalExampleComponent extends Vue {
   @Prop({ required: true })
   private index: number
 
-  private data: { text: string; value: string } = { text: '', value: '' }
+  public data: { text: string; value: string } = { text: '', value: '' }
 
-  private colors: string[] = ['#e13c4c', '#4c7737', '#3f4bb8']
+  public colors: string[] = ['#e13c4c', '#4c7737', '#3f4bb8']
 
-  created() {
+  created(): void {
     this.data.text = this.item.text
     this.data.value = this.item.value
   }
 
-  get itemText() {
+  get itemText(): string {
     return this.item.text
   }
 
-  get itemValue() {
+  get itemValue(): string {
     return this.item.value
   }
 
@@ -35,29 +35,29 @@ export default class ModalExampleComponent extends Vue {
     this.$eventHub.$emit('updateExampleValue', { index: this.index, value })
   }
 
-  colorText(color: string) {
+  public colorText(color: string): void {
     // @ts-ignore
     const searchText: string = window.getSelection().toString()
     this.itemText = this.itemText.replace(searchText, `<span style="color: ${color};">${searchText}</span>`)
     this.data.text = this.itemText
   }
 
-  colorValue(color: string) {
+  public colorValue(color: string): void {
     // @ts-ignore
     const searchText: string = window.getSelection().toString()
     this.itemValue = this.itemValue.replace(searchText, `<span style="color: ${color};">${searchText}</span>`)
     this.data.value = this.itemValue
   }
 
-  handleTextInput(e: any) {
+  public handleTextInput(e: any): void {
     this.itemText = e.target.innerHTML
   }
 
-  handleValueInput(e: any) {
+  public handleValueInput(e: any): void {
     this.itemValue = e.target.innerHTML
   }
 
-  clean() {
+  public clean(): void {
     this.itemText = this.data.text.replace(/\n|<.*?>/g, '')
     this.data.text = this.itemText
   }

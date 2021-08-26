@@ -7,27 +7,32 @@ import CategoryDTO from '@/Scandinaver/Blog/Domain/CategoryDTO'
 @Service()
 export default class CategoryService extends BaseService<Category> {
   @Inject()
-  private repository: CategoryRepository
+  private readonly repository: CategoryRepository
 
-  async create(input: any): Promise<Category> {
-    const category = new Category();
-    category.title = input
-    return this.repository.create(category.toDTO())
+  public fromDTO(dto: CategoryDTO): Category {
+    const category = new Category()
+    category.id = dto.id
+    category.title = dto.title
+    return category
   }
 
-  async getAll(): Promise<Category[]> {
+  public async create(data: CategoryDTO): Promise<Category> {
+    return this.repository.create(data)
+  }
+
+  public async getAll(): Promise<Category[]> {
     return this.repository.all()
   }
 
-  async destroy(category: Category) {
+  public async destroy(category: Category): Promise<void> {
     return this.repository.delete(category)
   }
 
-  async search(query: string): Promise<Category[]> {
+  public async search(query: string): Promise<Category[]> {
     return this.repository.find(query)
   }
 
-  async update(category: Category, data: CategoryDTO): Promise<Category> {
+  public async update(category: Category, data: CategoryDTO): Promise<Category> {
     return this.repository.update(category, data)
   }
 }

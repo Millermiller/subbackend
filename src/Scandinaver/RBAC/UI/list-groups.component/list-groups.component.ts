@@ -1,87 +1,24 @@
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Inject } from 'vue-typedi'
 import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
 import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
-import { permissions } from '@/permissions/permission.type'
 import { PermissionGroupForm } from '@/Scandinaver/RBAC/Domain/PermissionGroupForm'
+import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 
 @Component({
   components: {},
 })
-export default class ListGroupsComponent extends Vue {
+export default class ListGroupsComponent extends CRUDComponent<PermissionGroup, PermissionGroupForm> {
   @Inject()
-  private service: PermissionGroupService
+  protected readonly service: PermissionGroupService
 
-  permissionGroups: PermissionGroup[] = []
-  search: string = ''
-  loading: boolean = false
-  private isComponentModalActive: boolean = false
-  private edited: PermissionGroupForm = {
-    id: null,
-    name: '',
-    slug: '',
-    description: '',
-  }
-  permissions: {}
+  public search: string = ''
 
-  constructor() {
-    super();
-    this.permissions = permissions;
+  protected buildForm(): PermissionGroupForm {
+    return new PermissionGroupForm();
   }
 
-  async mounted() {
-    await this.load()
-  }
-
-  async load() {
-    this.loading = true
-    this.permissionGroups = await this.service.getAll()
-    this.loading = false
-  }
-
-  edit(permissionGroup: PermissionGroup) {
-    this.edited = permissionGroup
-    this.showCreateModal()
-  }
-
-  async create() {
-    if (this.edited.id) {
-      const group = PermissionGroup.fromDTO(this.edited)
-      await this.service.update(group, this.edited)
-    } else {
-      await this.service.create(this.edited)
-    }
-    await this.load()
-    this.closeCreateModal()
-  }
-
-  showCreateModal() {
-    this.isComponentModalActive = true
-  }
-
-  closeCreateModal() {
-    this.edited = {
-      id: null,
-      name: '',
-      slug: '',
-      description: '',
-    };
-    this.isComponentModalActive = false
-  }
-
-  async remove(row: PermissionGroup) {
-    await this.$buefy.dialog.confirm({
-      message: this.$tc('confirmRemove'),
-      onConfirm: async () => {
-        await this.service.destroy(row)
-        this.$buefy.snackbar.open(this.$tc('groupRemoved'))
-        await this.load()
-      },
-    })
-  }
-
-  async find() {
-    this.permissionGroups = await this.service.search(this.search)
+  public async find(): Promise<void> {
+    this.entities = await this.service.search(this.search)
   }
 }

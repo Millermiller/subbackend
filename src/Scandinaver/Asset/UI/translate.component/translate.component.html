@@ -6,7 +6,7 @@
     <span class="asset_title">{{ card.value }}</span>
   </div>
   <div class="column">
-    <b-button class="is-success" size="is-small" icon-right="plus-circle-outline" @click="add"></b-button>
+    <b-button class="is-success" size="is-small" icon-right="plus-circle-outline" @click="add()"></b-button>
     <b-button class="is-danger" size="is-small" icon-right="close-circle" @click="$emit('remove', { item: card, index: index })"></b-button>
   </div>
 </div>

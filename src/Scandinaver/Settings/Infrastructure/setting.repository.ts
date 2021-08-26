@@ -8,7 +8,7 @@ import { SettingForm } from '@/Scandinaver/Settings/Domain/SettingForm'
 @Service()
 export default class SettingRepository extends CommonRepository<Setting> {
   @Inject()
-  protected api: SettingsAPI
+  protected readonly api: SettingsAPI
 
   public async saveAll(settings: SettingForm[]): Promise<any> {
     return this.api.saveAll(settings)

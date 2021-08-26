@@ -5,9 +5,9 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
   components: {},
 })
 export default class UsersWidgetComponent extends Vue {
-  private loading: boolean = false
+  public loading: boolean = false
 
-  get users() {
+  get users(): number {
     return store.getters.usersCount
   }
 }

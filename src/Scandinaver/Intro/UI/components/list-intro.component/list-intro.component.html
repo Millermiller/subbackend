@@ -4,11 +4,11 @@
     <Can :do="permissions.CREATE_INTRO">
       <b-field>
         <p class="control">
-          <button class="button is-success" @click="add">{{ $t('add') }}</button>
+          <button class="button is-success" @click="add()">{{ $t('add') }}</button>
         </p>
       </b-field>
     </Can>
-    <b-table :data="intros" paginated narrowed :loading="loading" per-page="50" striped hoverable>
+    <b-table :data="entities" paginated narrowed :loading="loading" per-page="50" striped hoverable>
       <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
         {{ props.row.id }}
       </b-table-column>

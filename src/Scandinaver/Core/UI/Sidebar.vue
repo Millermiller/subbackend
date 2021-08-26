@@ -37,7 +37,7 @@
       li(v-for="(item, index) in subMenu", :key="index")
         router-link(
           :to="item.path",
-          :exact="true",
+          :exact="false",
           :aria-expanded="isExpanded(item) ? 'true' : 'false'",
           v-if="!isParent(item) && $can(item.meta.permission)",
           @click.native="toggle(item)")
@@ -83,7 +83,6 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
   },
 })
 export default class Sidebar extends Vue {
-  private routes = routes
   private mainMenu: Array<RouteConfig> = routes.filter(item => item.meta.menuitem && item.meta.type === 'main')
   private subMenu: Array<RouteConfig> = routes.filter(item => item.meta.menuitem && item.meta.type === 'sub')
   private isReady: boolean = false
@@ -101,24 +100,24 @@ export default class Sidebar extends Vue {
     return store.getters.language
   }
 
-  isExpanded(item: any): boolean {
+  public isExpanded(item: any): boolean {
     return item.expanded
   }
 
-  isParent(item: RouteConfig) {
+  public isParent(item: RouteConfig): boolean {
     return item.children && item.children.some(item => item.meta.menuitem)
   }
 
-  isMenuItem(item: RouteConfig): boolean {
+  public isMenuItem(item: RouteConfig): boolean {
     return item.meta && item.meta.menuitem
   }
 
-  toggle(item: any): void {
+  public toggle(item: any): void {
     Vue.set(item, 'expanded', !item.expanded)
     item.meta.expanded = item.expanded
   }
 
-  shouldExpandMatchItem(route: Route): void {
+  private shouldExpandMatchItem(route: Route): void {
     const { matched } = route
     const lastMatched = matched[matched.length - 1]
     let parent = lastMatched.parent || lastMatched
@@ -132,16 +131,16 @@ export default class Sidebar extends Vue {
     }
     const item = this.menu.find(el => el.path === parent.path)
     if (item) {
-      //  Vue.set(item, 'expanded', true)
+      Vue.set(item, 'expanded', true)
     }
     this.menu.filter(el => el.path !== parent.path).forEach(el => Vue.set(el, 'expanded', false))
   }
 
-  generatePath(item: any, subItem: any): string {
+  public generatePath(item: any, subItem: any): string {
     return `${item.component ? `${item.path}/` : ''}${subItem.path}`
   }
 
-  findParentFromMenu(route: Route): any {
+  private findParentFromMenu(route: Route): any {
     const { menu } = this
     for (let i = 0, l = menu.length; i < l; i++) {
       const item = menu[i]

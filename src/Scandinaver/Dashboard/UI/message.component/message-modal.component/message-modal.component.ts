@@ -10,20 +10,20 @@ import MessageService from '@/Scandinaver/Dashboard/Application/message.service'
 })
 export default class MessageModalComponent extends Vue {
   @Prop({ required: true })
-  private item!: Message
+  public item!: Message
 
   @Prop({ required: true })
   private visible!: any
 
   @Inject()
-  private service: MessageService
+  private readonly service: MessageService
 
-  close() {
+  public close(): void {
     this.$emit('close')
   }
 
   @Watch('visible')
-  private async onChange(val: any) {
+  private async onChange(val: any): Promise<void> {
     if (val) {
       await this.service.read(this.item)
     }

@@ -1,3 +1,24 @@
 $mdi-font-path: "~@mdi/font/fonts";
 @import "~@mdi/font/scss/materialdesignicons";
 @import "./variables";
+
+.modal-background {
+  background-color: rgba(10, 10, 10, .56);
+}
+
+span[tooltip]:hover {
+  &:after {
+    content: attr(tooltip);
+    padding: 4px 8px;
+    color: #333;
+    position: absolute;
+    left: 20px;
+    top: -35px;
+    white-space: nowrap;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 2px solid var(--tooltip-color);
+    background-color: #fff;
+  }
+}

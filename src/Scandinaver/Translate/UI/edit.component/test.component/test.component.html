@@ -1,19 +1,20 @@
 <div class="columns">
   <div class="column is-6">
-    <div class="tile is-child box" style="position: relative;">
-      <vue-progress-bar></vue-progress-bar>
+    <div class="tile is-child box mt-3" style="position: relative;">
       <p v-html="output" class="content"></p>
       <div>
-        <template v-for="extra in extras">
+        <template v-for="tooltip in textEntity.tooltips">
           <div class="col-md-6">
             <p class="pointer">
-              <span v-on:mouseover="showExtra(extra)" v-on:mouseout="clearExtra">{{ extra.orig }}</span>
+              <span v-on:mouseover="showTooltip(tooltip)" v-on:mouseout="clearTooltip()">{{ tooltip.object }}</span>
               -
-              {{ extra.extra }}
+              {{ tooltip.value }}
             </p>
           </div>
         </template>
       </div>
+      <hr>
+      <span class="h3">{{progress}}%</span>
     </div>
   </div>
   <div class="column is-6">
@@ -22,9 +23,10 @@
       class="tile is-parent content"
       id="transarea"
       :placeholder="$t('translate')"
-      v-model="input"
-      v-on:input="separate"
+      v-model="inputStream"
+      @input="findPosition($event)"
+      @click="findPosition($event)"
     ></textarea>
-    <button @click="clear" class="button is-primary">{{ $t('clear') }}</button>
+    <button @click="clear()" class="button is-primary">{{ $t('clear') }}</button>
   </div>
 </div>

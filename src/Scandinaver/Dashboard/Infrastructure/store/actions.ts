@@ -4,7 +4,7 @@ import DashboardGetters from '@/Scandinaver/Dashboard/Infrastructure/store/gette
 import DashboardMutations from '@/Scandinaver/Dashboard/Infrastructure/store/mutations'
 
 export default class DashboardActions extends Actions<DashboardState, DashboardGetters, DashboardMutations, DashboardActions> {
-  setDashboard(data: any) {
+  public setDashboard(data: any): void {
     this.commit('setWordsCount', data.words.count)
     this.commit('setAssetsCount', data.assets.count)
     this.commit('setAudioCount', data.audio)

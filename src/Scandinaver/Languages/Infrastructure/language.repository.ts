@@ -8,9 +8,9 @@ import { plainToClass } from 'class-transformer'
 @Service()
 export default class LanguageRepository extends CommonRepository<Language> {
   @Inject()
-  protected api: LanguageAPI
+  protected readonly api: LanguageAPI
 
-  async update(language: Language, form: any): Promise<Language> {
+  public async update(language: Language, form: any): Promise<Language> {
     return this.api.update(language.getId(), form).then(response => plainToClass(this.api.class, response.data))
   }
 }

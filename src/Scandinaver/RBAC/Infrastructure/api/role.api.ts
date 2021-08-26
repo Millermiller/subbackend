@@ -7,14 +7,14 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 export namespace API {
   @Service()
   export class RoleAPI extends BaseAPI<Role> {
-    protected type: ClassType<Role> = Role
-    protected baseUrl = 'role'
+    protected readonly type: ClassType<Role> = Role
+    protected readonly baseUrl = 'role'
 
-    attachPermission(role: number | string, permission: number | string) {
+    public async attachPermission(role: number | string, permission: number | string) {
       return request.post(`/${this.baseUrl}/${role}/${permission}`)
     }
 
-    detachPermission(role: number | string, permission: number | string) {
+    public async detachPermission(role: number | string, permission: number | string) {
       return request.delete(`/${this.baseUrl}/${role}/${permission}`)
     }
   }

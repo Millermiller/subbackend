@@ -8,9 +8,9 @@ import UserAPI = API.UserAPI
 @Service()
 export default class UserRepository extends CommonRepository<User> {
   @Inject()
-  protected api: UserAPI
+  protected readonly api: UserAPI
 
-  async find(query: string): Promise<User[]> {
+  public async find(query: string): Promise<User[]> {
     return this.api.search(query).then(response => plainToClass(User, response.data))
   }
 }

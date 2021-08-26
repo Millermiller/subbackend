@@ -5,7 +5,7 @@ import RBACMutations from '@/Scandinaver/RBAC/Infrastructure/store/mutations'
 import { User } from '@/Scandinaver/Core/Domain/User'
 
 export default class RBACActions extends Actions<RBACState, RBACGetters, RBACMutations, RBACActions> {
-  initialiseRBAC(data: User) {
+  public initialiseRBAC(data: User): void {
     this.commit('setPermissions', data.permissions)
 
     const payload = data.permissions.map(item => ({

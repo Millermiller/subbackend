@@ -8,10 +8,10 @@ import { Setting } from '@/Scandinaver/Settings/Domain/Setting'
 export namespace API {
   @Service()
   export class SettingsAPI extends BaseAPI<Setting> {
-    protected type: ClassType<Setting> = Setting
-    protected baseUrl = 'setting'
+    protected readonly type: ClassType<Setting> = Setting
+    protected readonly baseUrl = 'setting'
 
-    saveAll(data: any): Promise<AxiosResponse> {
+    public async saveAll(data: any): Promise<AxiosResponse> {
       return request.put(`/${this.baseUrl}/`, data)
     }
   }

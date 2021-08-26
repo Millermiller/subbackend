@@ -7,5 +7,5 @@ import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repos
 @Service()
 export default class PageRepository extends CommonRepository<Page> {
   @Inject()
-  protected api: MetaAPI
+  protected readonly api: MetaAPI
 }

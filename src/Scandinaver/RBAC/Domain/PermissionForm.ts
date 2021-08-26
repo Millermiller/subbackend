@@ -1,6 +1,6 @@
+import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 
-export interface PermissionForm {
-  id: number | null
+export class PermissionForm extends EntityForm {
   name: string
   slug: string
   description: string

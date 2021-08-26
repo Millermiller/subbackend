@@ -52,12 +52,11 @@ export default class Login extends Vue {
     password: '',
   }
 
-  private error: string = ''
-  private loginerror: string = ''
-  private passerror: string = ''
-  private loading: boolean = false
+  public error: string = ''
+  public loginerror: string = ''
+  public passerror: string = ''
 
-  submit() {
+  public submit(): void {
     this.isLoading = true
     LoginService.login(this.form)
       .then(() => {

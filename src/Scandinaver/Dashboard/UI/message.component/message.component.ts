@@ -9,16 +9,15 @@ import Modal from './message-modal.component/index.vue'
 })
 export default class MessageComponent extends Vue {
   @Prop({ required: true })
-  private item!: Message
+  public item!: Message
 
-  private showModal: boolean = false
-  private cardModal: any = null
-  private imageModal: any = null
+  public showModal: boolean = false
 
-  openModalBasic() {
+  public openModalBasic(): void {
     this.showModal = true
   }
-  closeModalBasic() {
+
+  public closeModalBasic(): void {
     this.showModal = false
   }
 }

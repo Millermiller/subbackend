@@ -7,21 +7,32 @@ import { SettingForm } from '@/Scandinaver/Settings/Domain/SettingForm'
 @Service()
 export default class SettingService extends BaseService<Setting> {
   @Inject()
-  private settingRepository: SettingRepository
+  private readonly settingRepository: SettingRepository
 
-  create(data: SettingForm): Promise<Setting> | Setting {
+  public fromDTO(dto: SettingForm): Setting {
+    const setting = new Setting()
+    setting.id = dto.id || 0
+    setting.title = dto.title
+    setting.slug = dto.slug
+    setting.value = dto.value
+    setting.type = dto.type
+
+    return setting
+  }
+
+  public async create(data: SettingForm): Promise<Setting> {
     return this.settingRepository.create(data)
   }
 
-  async getAll(): Promise<Setting[]> {
+  public async getAll(): Promise<Setting[]> {
     return this.settingRepository.all()
   }
 
-  async update(setting: Setting, form: SettingForm): Promise<Setting> {
+  public async update(setting: Setting, form: SettingForm): Promise<Setting> {
     return this.settingRepository.update(setting, form)
   }
 
-  async save(settings: Setting[]): Promise<any> {
+  public async save(settings: Setting[]): Promise<any> {
     const settingsData: SettingForm[] = []
 
     settings.forEach((setting: Setting) => {
@@ -31,7 +42,7 @@ export default class SettingService extends BaseService<Setting> {
     return this.settingRepository.saveAll(settingsData)
   }
 
-  async destroy(setting: Setting) {
+  public async destroy(setting: Setting): Promise<void> {
     return this.settingRepository.delete(setting)
   }
 }

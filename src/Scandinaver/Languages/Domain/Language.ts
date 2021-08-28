@@ -4,8 +4,10 @@ import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
 export default class Language extends Entity {
   private _id: number
   private _title: string
+  private _description: string
   private _letter: string
   private _flag: string
+  private _image: string
 
   getId(): number | string {
     return this._id;
@@ -43,12 +45,29 @@ export default class Language extends Entity {
     this._flag = value
   }
 
+  get image(): string {
+    return this._image
+  }
+
+  set image(value: string) {
+    this._image = value
+  }
+  get description(): string {
+    return this._description
+  }
+
+  set description(value: string) {
+    this._description = value
+  }
+
   public toDTO(): LanguageForm {
     return {
       id: this._id,
       title: this._title,
       letter: this._letter,
       flag: this._flag,
+      description: this._description,
+      image: this._image,
     }
   }
 }

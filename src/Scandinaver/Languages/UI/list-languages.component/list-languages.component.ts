@@ -28,8 +28,10 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
   }
 
   public async save(): Promise<void> {
+    this.loadingModal = true
     this.fileUploadFormData.append('title', this.edited.title)
     this.fileUploadFormData.append('letter', this.edited.letter)
+    this.fileUploadFormData.append('description', this.edited.description)
     if (this.edited.id) {
       const language = this.service.fromDTO(this.edited)
       await this.service.update(language, this.fileUploadFormData)
@@ -38,15 +40,18 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
     }
     this.fileUploadFormData = new FormData()
     await this.load()
+    this.loadingModal = false
     this.closeModalForm()
   }
 
   public showModalForm(): void {
     this.edited = {
+      description: '',
+      image: undefined,
       id: null,
       title: '',
       letter: '',
-      flag: '',
+      flag: ''
     };
     if (this.modalTitle === '') {
       this.modalTitle = this.modalTitleCreate
@@ -55,8 +60,13 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
     this.isModalFormActive = true
   }
 
-  public bindFile(e: any): void {
+  public bindFlag(e: any): void {
     this.fileUploadFormData.append('file', e)
     this.edited.flag = URL.createObjectURL(e)
+  }
+
+  public bindImage(e: any): void {
+    this.fileUploadFormData.append('image', e)
+    this.edited.image = URL.createObjectURL(e)
   }
 }

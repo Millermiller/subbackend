@@ -35,7 +35,7 @@
       </b-table-column>
     </b-table>
   </article>
-  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
+  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card" :width="960" class="w960">
     <header class="modal-card-head">
       <p class="modal-card-title">{{ modalTitle }}</p>
       <button
@@ -43,31 +43,57 @@
         class="delete"
         @click="closeModalForm()" />
     </header>
-    <div class="modal-card" style="width: 400px">
+    <div class="modal-card">
       <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
-      <section class="modal-card-body">
-        <b-field label="Title">
-          <b-input type="text" v-model="edited.title" required></b-input>
-        </b-field>
-      </section>
-      <section class="modal-card-body">
-        <b-field label="Letter">
-          <b-input type="text" v-model="edited.letter" required></b-input>
-        </b-field>
-      </section>
-      <section class="modal-card-body">
-        <b-field label="Flag">
-          <b-upload class="file-label" @input="bindFile($event)">
-            <span class="file-cta">
-                <b-icon class="file-icon" icon="upload"></b-icon>
-                <span class="file-label">Click to upload</span>
-            </span>
-            <span class="file-name flag-preview-wrapper" v-if="edited.flag">
-                <img class="image flag-preview" :src="edited.flag" />
-            </span>
-          </b-upload>
-        </b-field>
-      </section>
+      <div class="box">
+        <div class="columns">
+          <div class="column">
+            <section class="modal-card-body">
+              <b-field label="Title">
+                <b-input type="text" v-model="edited.title" required></b-input>
+              </b-field>
+            </section>
+            <section class="modal-card-body">
+              <b-field label="Letter">
+                <b-input type="text" v-model="edited.letter" required></b-input>
+              </b-field>
+            </section>
+            <section class="modal-card-body">
+              <b-field label="Flag">
+                <b-upload class="file-label" @input="bindFlag($event)">
+                <span class="file-cta">
+                    <b-icon class="file-icon" icon="upload"></b-icon>
+                    <span class="file-label">Click to upload</span>
+                </span>
+                  <span class="file-name flag-preview-wrapper" v-if="edited.flag">
+                    <img class="image flag-preview" :src="edited.flag" />
+                </span>
+                </b-upload>
+              </b-field>
+            </section>
+            <section class="modal-card-body">
+              <b-field label="Image">
+                <b-upload class="file-label" @input="bindImage($event)">
+                <span class="file-cta">
+                    <b-icon class="file-icon" icon="upload"></b-icon>
+                    <span class="file-label">Click to upload</span>
+                </span>
+                  <span class="file-name flag-preview-wrapper" v-if="edited.image">
+                    <img class="image flag-preview" :src="edited.image" />
+                </span>
+                </b-upload>
+              </b-field>
+            </section>
+          </div>
+          <div class="column">
+            <section class="modal-card-body">
+              <b-field label="Description">
+                <b-input type="textarea" v-model="edited.description" required></b-input>
+              </b-field>
+            </section>
+          </div>
+        </div>
+      </div>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="closeModalForm()">
           {{ $t('close') }}

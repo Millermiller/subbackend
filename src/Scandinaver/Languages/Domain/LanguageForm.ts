@@ -6,4 +6,5 @@ export class LanguageForm extends EntityForm {
   letter: string
   flag: any
   image: any
+  active: boolean
 }

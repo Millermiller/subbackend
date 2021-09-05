@@ -32,6 +32,7 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
     this.fileUploadFormData.append('title', this.edited.title)
     this.fileUploadFormData.append('letter', this.edited.letter)
     this.fileUploadFormData.append('description', this.edited.description)
+    this.fileUploadFormData.append('active', this.edited.active.toString())
     if (this.edited.id) {
       const language = this.service.fromDTO(this.edited)
       await this.service.update(language, this.fileUploadFormData)
@@ -51,7 +52,8 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
       id: null,
       title: '',
       letter: '',
-      flag: ''
+      flag: '',
+      active: false
     };
     if (this.modalTitle === '') {
       this.modalTitle = this.modalTitleCreate
@@ -68,5 +70,9 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
   public bindImage(e: any): void {
     this.fileUploadFormData.append('image', e)
     this.edited.image = URL.createObjectURL(e)
+  }
+
+  public tagClass(published: boolean): string {
+    return published ? 'is-info' : 'is-danger'
   }
 }

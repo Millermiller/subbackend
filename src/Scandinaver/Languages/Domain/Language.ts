@@ -8,6 +8,7 @@ export default class Language extends Entity {
   private _letter: string
   private _flag: string
   private _image: string
+  private _active: boolean
 
   getId(): number | string {
     return this._id;
@@ -60,6 +61,14 @@ export default class Language extends Entity {
     this._description = value
   }
 
+  get active(): boolean {
+    return this._active
+  }
+
+  set active(value: boolean) {
+    this._active = value
+  }
+
   public toDTO(): LanguageForm {
     return {
       id: this._id,
@@ -68,6 +77,7 @@ export default class Language extends Entity {
       flag: this._flag,
       description: this._description,
       image: this._image,
+      active: this._active,
     }
   }
 }

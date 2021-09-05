@@ -14,6 +14,7 @@ export interface IUser {
   plan: Plan
   roles: Role[]
   permissions: Permission[]
+  permissionsSimple: string[]
   getFavouriteAsset(): Asset
 }
 
@@ -29,6 +30,7 @@ export class User implements IUser {
   cardsCreated: number
   permissions: Permission[]
   roles: Role[]
+  permissionsSimple: string[]
 
   constructor(id: number, email: string, login: string, avatar: string) {
     this.id = id

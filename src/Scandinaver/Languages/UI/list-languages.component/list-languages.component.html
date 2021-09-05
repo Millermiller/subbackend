@@ -20,6 +20,9 @@
       <b-table-column field="letter" label="Letter" sortable searchable v-slot="props">
         {{ props.row.letter }}
       </b-table-column>
+      <b-table-column field="published" label="Published" sortable v-slot="props">
+        <b-tag :type="tagClass(props.row.active)">{{ props.row.active ? 'true' : 'false' }}</b-tag>
+      </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">
         <Can :do='permissions.UPDATE_ROLE'>
           <button class="button is-warning is-small"
@@ -89,6 +92,13 @@
             <section class="modal-card-body">
               <b-field label="Description">
                 <b-input type="textarea" v-model="edited.description" required></b-input>
+              </b-field>
+              <b-field>
+                <b-switch v-model="edited.active"
+                          true-value="true"
+                          false-value="false">
+                  {{ 'active' }}
+                </b-switch>
               </b-field>
             </section>
           </div>

@@ -10,7 +10,7 @@ const routes = [
       icon: 'post-outline',
       permission: permissions.VIEW_POSTS,
       menuitem: true,
-      type: 'main',
+      type: 'sub',
       label: i18n.t('languages'),
     },
     component: () => import('@/Scandinaver/Languages/UI/languages.module.vue'),

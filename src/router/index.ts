@@ -27,6 +27,7 @@ export function requireAuth(to: any, _from: any, next: any): any {
 }
 
 export const routes: RouteConfig[] = [
+  ...languageRoutes,
   ...coreRoutes,
   ...assetRoutes,
   ...blogRoutes,
@@ -39,7 +40,6 @@ export const routes: RouteConfig[] = [
   ...userRoutes,
   ...rbacRoutes,
   ...passingRoutes,
-  ...languageRoutes,
   {
     path: '*',
     redirect: '/is',

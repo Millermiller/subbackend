@@ -33,16 +33,22 @@ export default class ListLanguagesComponent extends CRUDComponent<Language, Lang
     this.fileUploadFormData.append('letter', this.edited.letter)
     this.fileUploadFormData.append('description', this.edited.description)
     this.fileUploadFormData.append('active', this.edited.active.toString())
-    if (this.edited.id) {
-      const language = this.service.fromDTO(this.edited)
-      await this.service.update(language, this.fileUploadFormData)
-    } else {
-      await this.service.create(this.fileUploadFormData)
+    try {
+      if (this.edited.id) {
+        const language = this.service.fromDTO(this.edited)
+        await this.service.update(language, this.fileUploadFormData)
+      } else {
+        await this.service.create(this.fileUploadFormData)
+      }
+      this.fileUploadFormData = new FormData()
+      await this.load()
+      this.loadingModal = false
+      this.closeModalForm()
+    } catch (e) {
+      //
+    } finally {
+      this.loadingModal = false
     }
-    this.fileUploadFormData = new FormData()
-    await this.load()
-    this.loadingModal = false
-    this.closeModalForm()
   }
 
   public showModalForm(): void {

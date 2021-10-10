@@ -1,8 +1,8 @@
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
-import Plan from '@/Scandinaver/Plan/Domain/Plan'
 import { Inject, Service } from 'typedi'
-import PlanRepository from '@/Scandinaver/Plan/Infrastructure/plan.repository'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import PlanRepository from '@/Scandinaver/Billing/Infrastructure/plan.repository'
+import Plan from '@/Scandinaver/Billing/Domain/Plan'
 
 @Service()
 export default class PlanService extends BaseService<Plan> {

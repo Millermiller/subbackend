@@ -1,8 +1,8 @@
-import Plan from '@/Scandinaver/Plan/Domain/Plan'
 import { Inject, Service } from 'typedi'
-import { API } from './api/plan.api'
-import PlanAPI = API.PlanAPI
 import { CommonRepository } from '@/Scandinaver/Core/Infrastructure/common.repository'
+import { API } from '@/Scandinaver/Billing/Infrastructure/api/plan.api'
+import PlanAPI = API.PlanAPI
+import Plan from '@/Scandinaver/Billing/Domain/Plan'
 
 @Service()
 export default class PlanRepository extends CommonRepository<Plan> {

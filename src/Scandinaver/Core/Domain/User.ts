@@ -1,8 +1,8 @@
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
-import Plan from '@/Scandinaver/Plan/Domain/Plan'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
+import Plan from '@/Scandinaver/Billing/Domain/Plan'
 
 export interface IUser {
   avatar: string

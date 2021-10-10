@@ -8,12 +8,12 @@ import puzzleRoutes from '@/Scandinaver/Puzzle/routes'
 import blogRoutes from '@/Scandinaver/Blog/routes'
 import introRoutes from '@/Scandinaver/Intro/routes'
 import pagesRoutes from '@/Scandinaver/Pages/routes'
-import planRoutes from '@/Scandinaver/Plan/routes'
 import settingsRoutes from '@/Scandinaver/Settings/routes'
 import userRoutes from '@/Scandinaver/User/routes'
 import rbacRoutes from '@/Scandinaver/RBAC/routes'
 import passingRoutes from '@/Scandinaver/Test/routes'
 import languageRoutes from '@/Scandinaver/Languages/routes'
+import billingRoutes from '@/Scandinaver/Billing/routes'
 
 Vue.use(VueRouter)
 
@@ -33,7 +33,7 @@ export const routes: RouteConfig[] = [
   ...blogRoutes,
   ...introRoutes,
   // ...pagesRoutes,
-  ...planRoutes,
+  ...billingRoutes,
   ...puzzleRoutes,
   ...settingsRoutes,
   ...translateRoutes,

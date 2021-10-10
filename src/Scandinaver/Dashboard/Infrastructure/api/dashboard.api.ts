@@ -1,12 +1,17 @@
 import { Service } from 'typedi'
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 export namespace API {
   @Service()
   export class DashboardApi {
     public async load(language: string): Promise<AxiosResponse> {
-      return request.get(`/${language}/dashboard`)
+      return request.get('/dashboard', {
+        params: {
+          lang: store.getters.language,
+        },
+      })
     }
   }
 }

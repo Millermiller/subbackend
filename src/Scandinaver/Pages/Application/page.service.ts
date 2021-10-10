@@ -3,7 +3,6 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Page from '@/Scandinaver/Pages/Domain/Page'
 import PageRepository from '@/Scandinaver/Pages/Infrastructure/page.repository'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
-import Plan from '@/Scandinaver/Plan/Domain/Plan'
 
 @Service()
 export default class PageService extends BaseService<Page> {

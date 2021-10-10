@@ -2,8 +2,8 @@ import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
 import { Type } from 'class-transformer'
-import Plan from '@/Scandinaver/Plan/Domain/Plan'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
+import Plan from '@/Scandinaver/Billing/Domain/Plan'
 
 export default class User extends Entity {
   private _id: number

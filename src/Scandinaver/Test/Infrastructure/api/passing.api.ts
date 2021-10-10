@@ -14,7 +14,11 @@ export namespace API {
 
     public async all(): Promise<AxiosResponse<Passing[]>> {
       const { language } = store.getters
-      return request.get(`/${language}/test`)
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          lang: store.getters.language,
+        },
+      })
     }
 
     public async one(id: number): Promise<AxiosResponse> {

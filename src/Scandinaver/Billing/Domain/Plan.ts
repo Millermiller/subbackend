@@ -1,4 +1,5 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
+import { PlanForm } from '@/Scandinaver/Billing/Domain/PlanForm'
 
 export default class Plan extends Entity {
   private _id: number
@@ -51,7 +52,9 @@ export default class Plan extends Entity {
     this._cost_per_month = value
   }
 
-  toDTO(): any {
-    return {}
+  toDTO(): PlanForm {
+    return {
+      id: this._id,
+    }
   }
 }

@@ -5,6 +5,7 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { Responses } from '../../../Core/Domain/Contract/Responses'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 export namespace API {
   @Service()
@@ -21,7 +22,11 @@ export namespace API {
     }
 
     public async getAssets(language: string): Promise<AxiosResponse<Responses.GetAssetsResponse>> {
-      return request.get(`/${language}/assets`)
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          lang: store.getters.language,
+        },
+      })
     }
 
     public async save(asset: Asset): Promise<AxiosResponse> {

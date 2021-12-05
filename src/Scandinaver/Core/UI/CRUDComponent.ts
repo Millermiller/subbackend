@@ -4,6 +4,9 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { permissions } from '@/permissions/permission.type'
 import Component from 'vue-class-component'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
+import { PaginationConfig } from '@/Scandinaver/Core/Infrastructure/PaginationConfig'
 
 // @ts-ignore
 @Component
@@ -20,6 +23,9 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   public modalTitle: string = ''
   protected modalTitleCreate: string = ''
   protected modalTitleUpdate: string = ''
+  public config: PaginationConfig = new PaginationConfig()
+  protected filters: FiltersData = new FiltersData()
+  public page: number = 1
 
   constructor() {
     super()
@@ -28,12 +34,16 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   }
 
   async mounted(): Promise<void> {
+    this.filters.page = this.page
+    this.filters.pageSize = this.config.per_page
     await this.load()
   }
 
   protected async load(): Promise<void> {
     this.loading = true
-    this.entities = await this.service.getAll()
+    const paginatedData: PaginatedResponse<T> = await this.service.getAll(this.filters)
+    this.entities = paginatedData.data
+    this.config = paginatedData.meta.pagination
     this.loading = false
   }
 
@@ -54,7 +64,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
         await this.service.create(this.edited)
         this.$buefy.snackbar.open(this.$tc('created'))
       }
-      this.entities = await this.service.getAll()
+      this.entities = await this.service.getAll(new FiltersData())
       this.closeModalForm()
       this.loadingModal = false
     } catch (error) {
@@ -87,5 +97,45 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
     this.isModalFormActive = false
     this.modalTitle = ''
     this.edited = this.buildForm()
+  }
+
+  async onPageChange(page: number) {
+    this.page = page
+    this.filters.page = this.page
+    await this.load()
+  }
+
+  async onFiltersChange(filters: any) {
+    Object.keys(filters).forEach((prop) => {
+      if (filters[prop] !== '') {
+        const existingFilter = this.filters.filters.filter(i => i.field === prop)[0]
+        if (existingFilter) {
+          existingFilter.value = filters[prop]
+        } else {
+          this.filters.filters.push({ field: prop, value: filters[prop], operator: 'like' })
+        }
+      } else {
+        this.filters.filters = this.filters.filters.filter(item => item.field !== prop)
+      }
+    })
+    await this.load()
+  }
+
+  async sortingPriorityRemoved(field: string) {
+    this.filters.sort = this.filters.sort.filter(
+      priority => priority.field !== field
+    )
+    await this.load()
+  }
+
+  async onSort(field: string, order: string, event: any) {
+    const existingPriority = this.filters.sort.filter(i => i.field === field)[0]
+    if (existingPriority) {
+      existingPriority.order = existingPriority.order === 'desc' ? 'asc' : 'desc'
+    } else {
+      this.filters.sort.push({ field, order })
+    }
+
+    await this.load()
   }
 }

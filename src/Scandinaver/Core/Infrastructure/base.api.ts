@@ -2,6 +2,9 @@ import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import { AxiosResponse } from 'axios'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import request from '@/utils/request'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export abstract class BaseAPI<D extends Entity> {
   protected readonly type: ClassType<D>
@@ -11,8 +14,10 @@ export abstract class BaseAPI<D extends Entity> {
     return this.type
   }
 
-  public async all(): Promise<AxiosResponse<D[]>> {
-    return request.get(`/${this.baseUrl}`)
+  public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<D>>> {
+    return request.get(`/${this.baseUrl}`, {
+      params: filters,
+    })
   }
 
   public async one(id: number): Promise<AxiosResponse<D>> {

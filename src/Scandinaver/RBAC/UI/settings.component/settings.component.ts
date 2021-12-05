@@ -6,6 +6,8 @@ import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {},
@@ -33,9 +35,10 @@ export default class SettingsComponent extends Vue {
 
   private async load(): Promise<void> {
     this.loading = true
-    this.permissions = await this.permissionService.getAll()
-    this.roles = await this.roleService.getAll()
-    this.groups = await this.permissionGroupService.getAll()
+    this.permissions = await this.permissionService.getAll(new FiltersData())
+    const paginatedData: PaginatedResponse<Role> = await this.roleService.getAll(new FiltersData())
+    this.roles = paginatedData.data
+    this.groups = await this.permissionGroupService.getAll(new FiltersData())
     // eslint-disable-next-line no-return-assign
     this.roles.map(role => (this.model[role.getId()] = this.permissions.reduce((result: any, item: Permission) => {
       result[item.getId()] = role.permissions.find(p => p.getId() === item.getId()) !== undefined

@@ -5,14 +5,32 @@
         <button class="button is-success" @click="showModalForm()">{{ $t('add') }}</button>
     </b-field>
   </Can>
-  <b-table :data="entities" paginated="paginated" :loading="loading" per-page="20" striped hoverable>
-    <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+  <b-table
+    :data="entities"
+    paginated
+    :loading="loading"
+    per-page="20"
+    striped
+    hoverable
+    backend-pagination
+    backend-sorting
+    backend-filtering
+    sort-multiple
+    :sort-multiple-data="filters.sort"
+    @page-change="onPageChange"
+    @filters-change="onFiltersChange"
+    @sort="onSort"
+    @sorting-priority-removed="sortingPriorityRemoved"
+    :debounce-search="500"
+    :total="config.total"
+    :per-page="config.per_page">
+    <b-table-column field="category.id" label="ID" width="140" sortable searchable numeric v-slot="props">
       {{ props.row.id }}
     </b-table-column>
-    <b-table-column field="title" label="Name" sortable v-slot="props">
+    <b-table-column field="category.title" label="Name" sortable searchable v-slot="props">
       {{ props.row.title }}
     </b-table-column>
-    <b-table-column custom-key="actions" v-slot="props">
+    <b-table-column custom-key="actions" v-slot="props" numeric>
       <Can :do="permissions.UPDATE_CATEGORY">
         <button class="button is-warning is-small" @click="edit(props.row)">
           <b-icon icon="pencil" size="is-small"></b-icon>

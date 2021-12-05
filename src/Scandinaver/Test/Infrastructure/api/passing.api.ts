@@ -5,6 +5,8 @@ import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import Passing from '@/Scandinaver/Test/Domain/Passing'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -12,11 +14,13 @@ export namespace API {
     protected readonly type: ClassType<Passing> = Passing
     protected readonly baseUrl: string = 'test'
 
-    public async all(): Promise<AxiosResponse<Passing[]>> {
-      const { language } = store.getters
+    public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Passing>>> {
       return request.get(`/${this.baseUrl}`, {
         params: {
           lang: store.getters.language,
+          sort: filters.sort,
+          filters: filters.filters,
+          pageSize: filters.pageSize,
         },
       })
     }

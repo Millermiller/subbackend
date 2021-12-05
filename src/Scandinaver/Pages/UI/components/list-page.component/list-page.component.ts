@@ -4,6 +4,7 @@ import Page from '@/Scandinaver/Pages/Domain/Page'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { permissions } from '@/permissions/permission.type'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Component({
   components: {},
@@ -29,7 +30,7 @@ export default class ListPageComponent extends Vue {
 
   async load() {
     this.loading = true
-    this.pages = await this.service.getAll()
+    this.pages = await this.service.getAll(new FiltersData())
     this.loading = false
   }
 

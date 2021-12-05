@@ -1,7 +1,7 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import { RoleForm } from '@/Scandinaver/RBAC/Domain/RoleForm'
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
-import { Type } from 'class-transformer'
+import { Exclude, Type } from 'class-transformer'
 
 export default class Role extends Entity {
   private _id: number
@@ -9,6 +9,9 @@ export default class Role extends Entity {
   private _slug: string
   private _description: string
   private _permissions: Permission[]
+
+  @Exclude()
+  private type: string
 
   @Type(() => Permission)
   set permissions(value: Permission[]) {

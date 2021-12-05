@@ -7,20 +7,37 @@
       </Can>
     </b-field>
     <b-field> </b-field>
-    <b-table :data="entities" paginated narrowed :loading="loading" per-page="30" hoverable>
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+    <b-table
+      :data="entities"
+      paginated="paginated"
+      narrowed
+      :loading="loading"
+      hoverable
+      backend-pagination
+      backend-sorting
+      backend-filtering
+      sort-multiple
+      :sort-multiple-data="filters.sort"
+      @page-change="onPageChange"
+      @filters-change="onFiltersChange"
+      @sort="onSort"
+      @sorting-priority-removed="sortingPriorityRemoved"
+      :debounce-search="500"
+      :total="config.total"
+      :per-page="config.per_page">
+      <b-table-column field="permission.id" label="ID" width="140" sortable searchablenumeric v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
-      <b-table-column field="name" label="Title" sortable searchable v-slot="props">
+      <b-table-column field="permission.name" label="Title" sortable searchable v-slot="props">
         {{ props.row.name }}
       </b-table-column>
-      <b-table-column field="slug" label="Slug" sortable searchable v-slot="props">
+      <b-table-column field="permission.slug" label="Slug" sortable searchable v-slot="props">
         {{ props.row.slug }}
       </b-table-column>
-      <b-table-column field="description" label="Description" sortable v-slot="props">
+      <b-table-column field="permission.description" label="Description" sortable searchable v-slot="props">
         {{ props.row.description }}
       </b-table-column>
-      <b-table-column field="group.name" label="Group" sortable searchable v-slot="props">
+      <b-table-column field="g.slug" label="Group" sortable searchable v-slot="props">
         {{ props.row.group.name }}
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">

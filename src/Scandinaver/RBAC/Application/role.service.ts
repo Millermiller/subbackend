@@ -4,6 +4,8 @@ import Role from '@/Scandinaver/RBAC/Domain/Role'
 import RoleRepository from '@/Scandinaver/RBAC/Infrastructure/role.repository'
 import { RoleForm } from '@/Scandinaver/RBAC/Domain/RoleForm'
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class RoleService extends BaseService<Role> {
@@ -27,8 +29,8 @@ export default class RoleService extends BaseService<Role> {
     return this.roleRepository.create(role.toDTO())
   }
 
-  public async getAll(): Promise<Role[]> {
-    return this.roleRepository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Role>> {
+    return this.roleRepository.paginate(filters)
   }
 
   public async getOne(id: number): Promise<Role> {

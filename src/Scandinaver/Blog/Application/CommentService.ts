@@ -3,6 +3,8 @@ import { Inject, Service } from 'typedi'
 import Comment from '@/Scandinaver/Blog/Domain/Comment'
 import CommentRepository from '@/Scandinaver/Blog/Infrastructure/comment.repository'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class CommentService extends BaseService<Comment> {
@@ -13,8 +15,8 @@ export default class CommentService extends BaseService<Comment> {
     return new Comment()
   }
 
-  public async getAll(): Promise<Comment[]> {
-    return this.repository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Comment[]>> {
+    return this.repository.paginate(filters)
   }
 
   public async destroy(comment: Comment): Promise<void> {

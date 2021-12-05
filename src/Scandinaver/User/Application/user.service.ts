@@ -3,9 +3,10 @@ import User from '@/Scandinaver/User/Domain/User'
 import { Inject, Service } from 'typedi'
 import UserRepository from '@/Scandinaver/User/Infrastructure/user.repository'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
-import Role from '@/Scandinaver/RBAC/Domain/Role'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class UserService extends BaseService<User> {
@@ -25,8 +26,8 @@ export default class UserService extends BaseService<User> {
     return this.userRepository.create(user.toDTO())
   }
 
-  public async getAll(): Promise<User[]> {
-    return this.userRepository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<User>> {
+    return this.userRepository.paginate(filters)
   }
 
   public async getOne(id: number): Promise<User> {

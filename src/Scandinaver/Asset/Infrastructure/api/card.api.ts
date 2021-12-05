@@ -7,6 +7,7 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -14,7 +15,7 @@ export namespace API {
     protected readonly type: ClassType<Card> = Card
     protected readonly baseUrl = 'card'
 
-    public async all(): Promise<AxiosResponse<Card[]>> {
+    public async all(): Promise<AxiosResponse<PaginatedResponse<Card>>> {
       throw new Error('Method not implemented.');
     }
 

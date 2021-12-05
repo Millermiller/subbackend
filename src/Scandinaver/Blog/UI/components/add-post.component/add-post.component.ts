@@ -5,6 +5,8 @@ import { Inject } from 'vue-typedi'
 import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import CategoryService from '@/Scandinaver/Blog/Application/CategoryService'
 import Category from '@/Scandinaver/Blog/Domain/Category'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {
@@ -43,6 +45,7 @@ export default class AddPostComponent extends Vue {
   }
 
   async mounted() {
-    this.categories = await this.categoryService.getAll()
+    const data: PaginatedResponse<Category> = await this.categoryService.getAll(new FiltersData())
+    this.categories = data.data
   }
 }

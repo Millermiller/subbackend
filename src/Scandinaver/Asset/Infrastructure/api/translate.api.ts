@@ -2,13 +2,14 @@ import { AxiosResponse } from 'axios'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { ClassType } from 'class-transformer/ClassTransformer'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API{
   export class TranslateApi extends BaseAPI<Translate> {
     protected readonly type: ClassType<Translate> = Translate
     protected readonly baseUrl: string = 'translate'
 
-    public async all(): Promise<AxiosResponse<Translate[]>> {
+    public async all(): Promise<AxiosResponse<PaginatedResponse<Translate>>> {
       throw new Error('Method not implemented.')
     }
 

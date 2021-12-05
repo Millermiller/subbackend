@@ -6,6 +6,9 @@ import Role from '@/Scandinaver/RBAC/Domain/Role'
 import UserForm from '@/Scandinaver/User/Domain/UserForm'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginationConfig } from '@/Scandinaver/Core/Infrastructure/PaginationConfig'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {},
@@ -18,10 +21,11 @@ export default class ListUserComponent extends CRUDComponent<User, UserForm> {
   private readonly roleService: RoleService
 
   public roles: Role[] = []
-  public search: string = ''
 
   protected modalTitleCreate = this.$root.$tc('createUser')
   protected modalTitleUpdate = this.$root.$tc('updateUser')
+
+  public search: string = ''
 
   protected buildForm(): UserForm {
     return new UserForm()
@@ -29,8 +33,11 @@ export default class ListUserComponent extends CRUDComponent<User, UserForm> {
 
   protected async load(): Promise<void> {
     this.loading = true
-    this.entities = await this.service.getAll()
-    this.roles = await this.roleService.getAll()
+    const response = await this.service.getAll(this.filters)
+    this.entities = response.data
+    this.config = response.meta.pagination
+    const paginatedData: PaginatedResponse<Role> = await this.roleService.getAll(new FiltersData())
+    this.roles = paginatedData.data
     this.loading = false
   }
 

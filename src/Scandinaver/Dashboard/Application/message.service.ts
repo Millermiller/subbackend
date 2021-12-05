@@ -3,6 +3,7 @@ import Message from '@/Scandinaver/Dashboard/Domain/Message'
 import { Inject, Service } from 'typedi'
 import MessageRepository from '@/Scandinaver/Dashboard/Infrastructure/message.repository'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Service()
 export default class MessageService extends BaseService<Message> {
@@ -17,8 +18,8 @@ export default class MessageService extends BaseService<Message> {
     return new Message();
   }
 
-  public async getAll(): Promise<Message[]> {
-    return this.repository.all()
+  public async getAll(filters: FiltersData): Promise<Message[]> {
+    return this.repository.all(filters)
   }
 
   public async getOne(id: number): Promise<Message> {

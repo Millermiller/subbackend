@@ -1,13 +1,6 @@
 <article class="tile is-child box">
-  <b-field>
-    <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"> </b-input>
-    <p class="control">
-      <button class="button is-info" @click="find()">
-        {{ $t('search') }}
-      </button>
-    </p>
-  </b-field>
-  <b-table :data="comments" paginated narrowed :loading="loading" per-page="10">
+  <h4 class="title text-center">{{ $t('comments') }}</h4>
+  <b-table :data="entities" paginated narrowed :loading="loading" per-page="20">
     <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
       {{ props.row.id }}
     </b-table-column>

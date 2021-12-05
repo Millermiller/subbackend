@@ -30,9 +30,9 @@
       }" />
 
       <b-field :label="$t('category')">
-        <b-select :placeholder="$t('selectCategory')" v-model="post.category_id">
+        <b-select :placeholder="$t('selectCategory')" v-model="post.category.id">
           <option v-for="category in categories" :value="category.id" :key="category.id">
-            {{ category.name }}
+            {{ category.title }}
           </option>
         </b-select>
       </b-field>

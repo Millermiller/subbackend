@@ -4,6 +4,7 @@ import { Order } from '@/Scandinaver/Billing/Domain/Order'
 import OrderRepository from '@/Scandinaver/Billing/Infrastructure/order.repository'
 import { OrderForm } from '@/Scandinaver/Billing/Domain/OrderForm'
 import { retry } from 'rxjs/operators'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Service()
 export default class OrderService extends BaseService<Order> {
@@ -22,8 +23,8 @@ export default class OrderService extends BaseService<Order> {
     return undefined;
   }
 
-  getAll(): Promise<Order[]> {
-    return this.orderRepository.all()
+  getAll(filters: FiltersData): Promise<Order[]> {
+    return this.orderRepository.all(filters)
   }
 
   update(entity: Order, data: any): Promise<Order> {

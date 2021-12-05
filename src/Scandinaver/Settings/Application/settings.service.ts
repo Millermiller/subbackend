@@ -3,6 +3,8 @@ import { Setting } from '@/Scandinaver/Settings/Domain/Setting'
 import { Inject, Service } from 'typedi'
 import SettingRepository from '@/Scandinaver/Settings/Infrastructure/setting.repository'
 import { SettingForm } from '@/Scandinaver/Settings/Domain/SettingForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class SettingService extends BaseService<Setting> {
@@ -24,8 +26,8 @@ export default class SettingService extends BaseService<Setting> {
     return this.settingRepository.create(data)
   }
 
-  public async getAll(): Promise<Setting[]> {
-    return this.settingRepository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Setting>> {
+    return this.settingRepository.paginate(filters)
   }
 
   public async update(setting: Setting, form: SettingForm): Promise<Setting> {

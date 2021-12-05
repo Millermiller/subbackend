@@ -3,6 +3,7 @@ import { Inject, Service } from 'typedi'
 import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 import PlanRepository from '@/Scandinaver/Billing/Infrastructure/plan.repository'
 import Plan from '@/Scandinaver/Billing/Domain/Plan'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Service()
 export default class PlanService extends BaseService<Plan> {
@@ -17,8 +18,8 @@ export default class PlanService extends BaseService<Plan> {
     return this.repository.create(input)
   }
 
-  public async getAll(): Promise<Plan[]> {
-    return this.repository.all()
+  public async getAll(filters: FiltersData): Promise<Plan[]> {
+    return this.repository.all(filters)
   }
 
   public async getOne(id: number): Promise<Plan> {

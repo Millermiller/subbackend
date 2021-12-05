@@ -13,7 +13,7 @@ export namespace API {
     protected readonly type: ClassType<Asset> = Asset
     protected readonly baseUrl = 'asset'
 
-    public async all(): Promise<AxiosResponse<Asset[]>> {
+    public async all(): Promise<AxiosResponse<{data: Asset[], meta: any}>> {
       throw new Error('Method not implemented.')
     }
 

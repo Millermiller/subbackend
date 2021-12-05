@@ -16,6 +16,18 @@
         <b-table
           :data="log"
           paginated="paginated"
+          backend-pagination
+          backend-sorting
+          backend-filtering
+          sort-multiple
+          :sort-multiple-data="filters.sort"
+          @page-change="onPageChange"
+          @filters-change="onFiltersChange"
+          @sort="onSort"
+          @sorting-priority-removed="sortingPriorityRemoved"
+          :debounce-search="1000"
+          :total="config.total"
+          :per-page="config.per_page"
           :narrowed=true
           :loading="loading"
           :default-sort-direction="defaultSortDirection"
@@ -23,24 +35,22 @@
           :has-detailed-visible="(row, index) => row.extra.length > 0"
           default-sort="id"
           detailed
-          detail-key="id"
-          per-page="50">
-            <b-table-column field="id" label="ID" width="40" sortable="sortable" numeric="numeric" v-slot="props">
+          detail-key="id">
+            <b-table-column field="log.id" label="ID" width="140" sortable searchable v-slot="props">
               {{ props.row.id }}
             </b-table-column>
 
-            <b-table-column field="description" label="message" sortable="sortable" v-slot="props">
+            <b-table-column field="log.message" label="message" sortable searchable v-slot="props">
               {{ props.row.message }}
             </b-table-column>
 
-            <b-table-column field="owner" label="user" sortable="sortable"  width="40" v-slot="props">
+            <b-table-column field="owner.login" label="user" sortable searchable width="140" v-slot="props">
               {{ props.row.owner ? props.row.owner.login : '' }}
             </b-table-column>
 
-            <b-table-column field="created_at" label="created_at" sortable centered v-slot="props">
+            <b-table-column field="log.createdAt" label="created_at" sortable centered v-slot="props">
               <span class="tag light">
-                {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new
-                Date(props.row.created_at).toLocaleTimeString()}}
+                {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new Date(props.row.created_at).toLocaleTimeString()}}
               </span>
             </b-table-column>
             <b-table-column custom-key="actions"  width="100" v-slot="props">

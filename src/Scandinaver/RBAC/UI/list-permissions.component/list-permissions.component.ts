@@ -6,6 +6,8 @@ import { PermissionForm } from '@/Scandinaver/RBAC/Domain/PermissionForm'
 import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
 import PermissionGroupService from '@/Scandinaver/RBAC/Application/permission.group.service'
 import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {},
@@ -25,8 +27,11 @@ export default class ListPermissionsComponent extends CRUDComponent<Permission, 
 
   protected async load(): Promise<void> {
     this.loading = true
-    this.entities = await this.service.getAll()
-    this.groups = await this.permissionGroupService.getAll()
+    const paginatedDataPermission: PaginatedResponse<Permission> = await this.service.getAll(this.filters)
+    this.entities = paginatedDataPermission.data
+    this.config = paginatedDataPermission.meta.pagination
+    const paginatedDataPermissionGroup: PaginatedResponse<PermissionGroup> = await this.permissionGroupService.getAll(new FiltersData())
+    this.groups = paginatedDataPermissionGroup.data
     this.loading = false
   }
 }

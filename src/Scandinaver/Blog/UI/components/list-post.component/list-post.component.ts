@@ -18,8 +18,13 @@ export default class ListPostComponent extends CRUDComponent<Post, PostForm> {
     return new PostForm()
   }
 
-  created() {
-    this.load()
+  // eslint-disable-next-line no-empty-function
+  async mounted(): Promise<void> {
+
+  }
+
+  async created() {
+    // await this.load()
   }
 
   edit(row: any) {

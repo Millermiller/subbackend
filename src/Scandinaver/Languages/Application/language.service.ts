@@ -3,6 +3,7 @@ import Language from '@/Scandinaver/Languages/Domain/Language'
 import { Inject, Service } from 'typedi'
 import LanguageRepository from '@/Scandinaver/Languages/Infrastructure/language.repository'
 import { LanguageForm } from '@/Scandinaver/Languages/Domain/LanguageForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Service()
 export default class LanguageService extends BaseService<Language> {
@@ -22,8 +23,8 @@ export default class LanguageService extends BaseService<Language> {
     return this.languageRepository.create(input)
   }
 
-  public async getAll(): Promise<Language[]> {
-    return this.languageRepository.all()
+  public async getAll(filters: FiltersData): Promise<Language[]> {
+    return this.languageRepository.all(filters)
   }
 
   public async destroy(language: Language) {

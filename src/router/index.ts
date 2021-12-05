@@ -14,6 +14,7 @@ import rbacRoutes from '@/Scandinaver/RBAC/routes'
 import passingRoutes from '@/Scandinaver/Test/routes'
 import languageRoutes from '@/Scandinaver/Languages/routes'
 import billingRoutes from '@/Scandinaver/Billing/routes'
+import statisticRoutes from '@/Scandinaver/Statistic/routes'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,7 @@ export const routes: RouteConfig[] = [
   ...userRoutes,
   ...rbacRoutes,
   ...passingRoutes,
+  ...statisticRoutes,
   {
     path: '*',
     redirect: '/is',

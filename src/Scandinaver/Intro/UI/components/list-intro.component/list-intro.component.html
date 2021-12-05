@@ -8,32 +8,50 @@
         </p>
       </b-field>
     </Can>
-    <b-table :data="entities" paginated narrowed :loading="loading" per-page="50" striped hoverable>
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+    <b-table
+      :data="entities"
+      paginated
+      narrowed
+      :loading="loading"
+      striped
+      hoverable
+      backend-pagination
+      backend-sorting
+      backend-filtering
+      sort-multiple
+      :sort-multiple-data="filters.sort"
+      @page-change="onPageChange"
+      @filters-change="onFiltersChange"
+      @sort="onSort"
+      @sorting-priority-removed="sortingPriorityRemoved"
+      :debounce-search="500"
+      :total="config.total"
+      :per-page="config.per_page">
+      <b-table-column field="intro.id" label="ID" width="140" sortable numeric searchable v-slot="props">
         {{ props.row.id }}
       </b-table-column>
 
-      <b-table-column field="page" label="page" sortable searchable v-slot="props">
+      <b-table-column field="intro.page" label="page" sortable searchable v-slot="props">
         {{ props.row.page }}
       </b-table-column>
 
-      <b-table-column field="target" label="target" width="200" sortable v-slot="props">
+      <b-table-column field="intro.target" label="target" width="200" sortable searchable v-slot="props">
         {{ props.row.target }}
       </b-table-column>
 
-      <b-table-column field="content" label="content" v-slot="props">
+      <b-table-column field="intro.content" label="content" v-slot="props">
         {{ props.row.content }}
       </b-table-column>
 
-      <b-table-column field="position" label="position" v-slot="props">
+      <b-table-column field="intro.position" label="position" searchable v-slot="props">
         {{ props.row.position }}
       </b-table-column>
 
-      <b-table-column field="sort" label="sort" sortable v-slot="props">
+      <b-table-column field="intro.sort" label="sort" sortable v-slot="props">
         {{ props.row.sort }}
       </b-table-column>
 
-      <b-table-column field="active" label="active" sortable v-slot="props">
+      <b-table-column field="intro.active" label="active" searchable sortable v-slot="props">
         <b-tag :type="tagClass(props.row.active)">{{props.row.active}}</b-tag>
       </b-table-column>
 

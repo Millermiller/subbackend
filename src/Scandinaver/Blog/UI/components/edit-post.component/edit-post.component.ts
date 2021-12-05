@@ -5,6 +5,8 @@ import BlogService from '@/Scandinaver/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
 import CategoryService from '@/Scandinaver/Blog/Application/CategoryService'
 import { Editor } from '@tinymce/tinymce-vue/lib/cjs/main/ts/components/Editor'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {
@@ -49,12 +51,10 @@ export default class EditPostComponent extends Vue {
     this.post.content = html
   }
 
-  async mounted() {
+  async activated() {
     await this.load(Number(this.$route.params.id))
-    this.categories = await this.categoryService.getAll()
-  }
-
-  activated() {
+    const data: PaginatedResponse<Category> = await this.categoryService.getAll(new FiltersData())
+    this.categories = data.data
     this.active = true;
   }
 

@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import ILoginForm from '@/Scandinaver/Core/Domain/Contract/ILoginForm'
 import { Service } from 'typedi'
+import { deserialize } from 'json-api-deserialize'
 
 export interface ILoginData {
   state: any
@@ -42,6 +43,10 @@ export namespace API {
           },
         },
       })
+      request.interceptors.response.use(response => ({
+        ...response,
+        ...deserialize(response.data),
+      }), error => Promise.reject(error));
       return request.get('/me')
     }
   }

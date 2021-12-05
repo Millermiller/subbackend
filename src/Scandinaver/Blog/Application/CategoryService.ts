@@ -3,6 +3,8 @@ import { Inject, Service } from 'typedi'
 import Category from '@/Scandinaver/Blog/Domain/Category'
 import CategoryRepository from '@/Scandinaver/Blog/Infrastructure/category.repository'
 import CategoryDTO from '@/Scandinaver/Blog/Domain/CategoryDTO'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class CategoryService extends BaseService<Category> {
@@ -20,8 +22,8 @@ export default class CategoryService extends BaseService<Category> {
     return this.repository.create(data)
   }
 
-  public async getAll(): Promise<Category[]> {
-    return this.repository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Category>> {
+    return this.repository.paginate(filters)
   }
 
   public async destroy(category: Category): Promise<void> {

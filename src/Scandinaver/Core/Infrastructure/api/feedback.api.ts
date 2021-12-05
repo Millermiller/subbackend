@@ -3,6 +3,7 @@ import { Service } from 'typedi'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { Feedback } from '@/Scandinaver/Core/Domain/Contract/IFeedbackForm'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -10,7 +11,7 @@ export namespace API {
     protected readonly type: ClassType<Feedback> = Feedback
     protected readonly baseUrl: string = 'feedback'
 
-    public async all(): Promise<AxiosResponse<Feedback[]>> {
+    public async all(): Promise<AxiosResponse<PaginatedResponse<Feedback>>> {
       throw new Error('Method not implemented.')
     }
 

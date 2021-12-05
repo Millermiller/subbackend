@@ -1,6 +1,8 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { plainToClass } from 'class-transformer'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export class CommonRepository<D extends Entity> {
   protected readonly api: BaseAPI<D>
@@ -9,8 +11,15 @@ export class CommonRepository<D extends Entity> {
     this.api = api
   }
 
-  public async all(): Promise<D[]> {
-    return this.api.all().then(response => plainToClass(this.api.class, response.data))
+  public async all(filters: FiltersData): Promise<any> {
+    return this.api.all(filters).then(response => plainToClass(this.api.class, response.data))
+  }
+
+  public async paginate(filters: FiltersData): Promise<PaginatedResponse<D>> {
+    return this.api.all(filters).then(response => ({
+      data: plainToClass<D, D>(this.api.class, response.data),
+      meta: response.meta // TODO: inherit AxiosResponse
+    }))
   }
 
   public async one(id: number): Promise<D> {

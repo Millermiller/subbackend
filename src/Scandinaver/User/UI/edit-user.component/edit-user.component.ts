@@ -4,6 +4,8 @@ import { Inject } from 'vue-typedi'
 import UserService from '@/Scandinaver/User/Application/user.service'
 import RoleService from '@/Scandinaver/RBAC/Application/role.service'
 import Role from '@/Scandinaver/RBAC/Domain/Role'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Component({
   components: {},
@@ -27,7 +29,8 @@ export default class EditUserComponent extends Vue {
   private async load(id: number): Promise<void> {
     this.loading = true
     this.user = await this.userService.getOne(id)
-    this.roles = await this.roleService.getAll()
+    const paginatedData: PaginatedResponse<Role> = await this.roleService.getAll(new FiltersData())
+    this.roles = paginatedData.data
     this.loading = false
   }
 

@@ -3,6 +3,8 @@ import Passing from '@/Scandinaver/Test/Domain/Passing'
 import { Inject, Service } from 'typedi'
 import PassingRepository from '@/Scandinaver/Test/Infrastructure/passing.repository'
 import PassingForm from '@/Scandinaver/Test/Domain/PassingForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class PassingService extends BaseService<Passing> {
@@ -13,8 +15,12 @@ export default class PassingService extends BaseService<Passing> {
     return new Passing();
   }
 
-  public async getAll(): Promise<Passing[]> {
-    return this.passingRepository.all()
+  public async getAll(filters: FiltersData): Promise<Passing[]> {
+    return this.passingRepository.all(filters)
+  }
+
+  public async filter(filters: FiltersData): Promise<PaginatedResponse<Passing>> {
+    return this.passingRepository.paginate(filters)
   }
 
   public async destroy(passing: Passing) {

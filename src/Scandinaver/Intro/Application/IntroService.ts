@@ -3,6 +3,8 @@ import Intro from '@/Scandinaver/Intro/Domain/Intro'
 import { Inject, Service } from 'typedi'
 import IntroRepository from '@/Scandinaver/Intro/Infrastructure/IntroRepository'
 import { IntroForm } from '@/Scandinaver/Intro/Domain/IntroForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class IntroService extends BaseService<Intro> {
@@ -31,8 +33,8 @@ export default class IntroService extends BaseService<Intro> {
     return this.repository.one(id)
   }
 
-  public async getAll(): Promise<Intro[]> {
-    return this.repository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Intro>> {
+    return this.repository.paginate(filters)
   }
 
   public async destroy(intro: Intro): Promise<void> {

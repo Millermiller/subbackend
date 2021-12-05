@@ -4,6 +4,7 @@ import { Order } from '@/Scandinaver/Billing/Domain/Order'
 import { Payment } from '@/Scandinaver/Billing/Domain/Payment'
 import PaymentRepository from '@/Scandinaver/Billing/Infrastructure/payment.repository'
 import { PaymentForm } from '@/Scandinaver/Billing/Domain/PaymentForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Service()
 export default class PaymentService extends BaseService<Payment> {
@@ -22,8 +23,8 @@ export default class PaymentService extends BaseService<Payment> {
     return undefined;
   }
 
-  getAll(): Promise<Payment[]> {
-    return this.paymentRepository.all()
+  getAll(filters: FiltersData): Promise<Payment[]> {
+    return this.paymentRepository.all(filters)
   }
 
   update(entity: Order, data: any): Promise<Order> {

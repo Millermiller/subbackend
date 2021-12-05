@@ -4,6 +4,8 @@ import PermissionRepository from '@/Scandinaver/RBAC/Infrastructure/permission.r
 import Permission from '@/Scandinaver/RBAC/Domain/Permission'
 import { PermissionForm } from '@/Scandinaver/RBAC/Domain/PermissionForm'
 import PermissionGroup from '@/Scandinaver/RBAC/Domain/PermissionGroup'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class PermissionService extends BaseService<Permission> {
@@ -31,8 +33,8 @@ export default class PermissionService extends BaseService<Permission> {
     return this.permissionRepository.create(permission.toDTO())
   }
 
-  public async getAll(): Promise<Permission[]> {
-    return this.permissionRepository.all()
+  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Permission>> {
+    return this.permissionRepository.paginate(filters)
   }
 
   public async getOne(id: number): Promise<Permission> {

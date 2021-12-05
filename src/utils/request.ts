@@ -4,6 +4,7 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { SnackbarProgrammatic as Snackbar } from 'buefy'
 import { router } from '@/router'
 import { LoginService } from '@/Scandinaver/Core/Application/login.service'
+import { deserialize } from 'json-api-deserialize'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -14,10 +15,6 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
-    const { language } = store.getters
-    if (language !== null) {
-      // config.baseURL += `/${language}`
-    }
     const cookieName = (process.env.VUE_APP_COOKIE_NAME as string) || 'authfrontend._token'
     config.headers.common.Authorization = Vue.$cookies.get(cookieName)
     return config
@@ -27,7 +24,10 @@ service.interceptors.request.use(
   },
 )
 
-service.interceptors.response.use(undefined, async (error) => {
+service.interceptors.response.use(response => ({
+  ...response,
+  ...deserialize(response.data),
+}), async (error) => {
   if (error.response) {
     Snackbar.open(error.response.data)
     let errors = Object.values(error.response.data.errors);

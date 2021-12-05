@@ -16,19 +16,19 @@
              :loading="loading"
              per-page="20"
              :default-sort="['id', 'desc']">
-        <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+        <b-table-column field="user.id" label="ID" width="40" sortable searchable v-slot="props">
           {{ props.row.id }}
         </b-table-column>
         <b-table-column field="avatar" label="" width="90" v-slot="props">
           <img class="avatar-small" :src="props.row.avatar" />
         </b-table-column>
-        <b-table-column field="login" label="Login" sortable v-slot="props">
+        <b-table-column field="user.login" label="Login" sortable searchable v-slot="props">
           {{ props.row.login }}
         </b-table-column>
-        <b-table-column field="email" label="Email" sortable v-slot="props">
+        <b-table-column field="user.email" label="Email" sortable searchable v-slot="props">
           {{ props.row.email }}
         </b-table-column>
-        <b-table-column field="roles" label="Roles" sortable v-slot="props">
+        <b-table-column field="user.roles" label="Roles" sortable v-slot="props">
           <b-taglist>
             <Can :do="permissions.UPDATE_USER">
             <b-tag type="is-info"
@@ -41,11 +41,13 @@
             </Can>
           </b-taglist>
         </b-table-column>
+      <!--
         <b-table-column field="plan.name" label="plan" sortable v-slot="props">
           <span :class="color(props.row.plan.id)">
             {{ props.row.plan.name }}
           </span>
         </b-table-column>
+        -->
         <b-table-column field="date" label="active_to" sortable="sortable" centered="centered" v-slot="props">
           <span class="tag" :class="type(props.row.active_to)">
             {{ new Date(props.row.active_to).toLocaleDateString() }}

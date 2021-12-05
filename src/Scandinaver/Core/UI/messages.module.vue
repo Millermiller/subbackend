@@ -35,6 +35,7 @@ import Vue from 'vue'
 import Message from '@/Scandinaver/Dashboard/Domain/Message'
 import MessageService from '@/Scandinaver/Dashboard/Application/message.service'
 import { Inject } from 'vue-typedi'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 @Component({
   name: 'MessagesPage',
@@ -54,7 +55,7 @@ export default class MessagesPage extends Vue {
 
   private async load(): Promise<void> {
     this.loading = true
-    this.messages = await this.service.getAll()
+    this.messages = await this.service.getAll(new FiltersData())
     this.loading = false
   }
 

@@ -26,9 +26,11 @@ export default class Category extends Entity {
   }
 
   toDTO(): CategoryDTO {
-    return {
-      id: this._id,
-      title: this._title,
-    }
+    const dto = new CategoryDTO()
+
+    dto.id = this._id
+    dto.title = this._title
+
+    return dto
   }
 }

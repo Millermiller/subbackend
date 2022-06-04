@@ -10,24 +10,9 @@
     </Can>
     <b-table
       :data="entities"
-      paginated
-      narrowed
-      :loading="loading"
-      striped
-      hoverable
-      backend-pagination
-      backend-sorting
-      backend-filtering
-      sort-multiple
-      :sort-multiple-data="filters.sort"
-      @page-change="onPageChange"
-      @filters-change="onFiltersChange"
-      @sort="onSort"
-      @sorting-priority-removed="sortingPriorityRemoved"
-      :debounce-search="500"
-      :total="config.total"
-      :per-page="config.per_page">
-      <b-table-column field="intro.id" label="ID" width="140" sortable numeric searchable v-slot="props">
+      v-bind="tableProperties"
+      v-on="tableEvents">
+      <b-table-column field="intro.id" label="ID" width="80" sortable searchable v-slot="props">
         {{ props.row.id }}
       </b-table-column>
 

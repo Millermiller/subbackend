@@ -7,6 +7,8 @@ import { assetModule } from '@/Scandinaver/Asset/Infrastructure/store/asset'
 import { puzzleModule } from '@/Scandinaver/Puzzle/Infrastructure/store'
 import { dashboardModule } from '@/Scandinaver/Dashboard/Infrastructure/store'
 import { rbacModule } from '@/Scandinaver/RBAC/Infrastructure/store'
+import Language from '@/Scandinaver/Languages/Domain/Language'
+import { BehaviorSubject } from 'rxjs'
 
 // State
 class State {
@@ -19,7 +21,8 @@ class State {
   rightMenuOpen = false
   showDictionary = true
   intro: any = []
-  language: string = ''
+  language: Language = new Language()
+  isLanguageLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 }
 
 // Getters
@@ -41,7 +44,7 @@ class CommonGetters extends Getters<State> {
     return this.state.backdrop
   }
 
-  get language(): string {
+  get language(): Language {
     return this.state.language
   }
 }
@@ -73,8 +76,11 @@ class CommonMutations extends Mutations<State> {
     this.state.domain = domain
   }
 
-  setLanguage(language: string) {
+  setLanguage(language: Language) {
     this.state.language = language
+    if (this.state.isLanguageLoaded.value === false) {
+      this.state.isLanguageLoaded.next(true)
+    }
   }
 }
 
@@ -104,6 +110,16 @@ class CommonActions extends Actions<State, CommonGetters, CommonMutations, Commo
 
   toggleMenuOpen() {
     this.commit('setMenuOpen', false)
+  }
+
+  languageAsync(): Promise<Language> {
+    return new Promise((resolve, reject) => {
+      this.state.isLanguageLoaded.subscribe((data) => {
+        if (data === true && this.state.language.id) {
+          resolve(this.state.language)
+        }
+      })
+    });
   }
 }
 

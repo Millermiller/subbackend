@@ -12,13 +12,8 @@ export default class PermissionService extends BaseService<Permission> {
   @Inject()
   private readonly permissionRepository: PermissionRepository
 
-  public fromDTO(dto: PermissionForm): Permission {
-    const permission = new Permission()
-    permission.id = dto.id || 0
-    permission.name = dto.name
-    permission.slug = dto.slug
-    permission.description = dto.description
-    return permission
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Permission>> {
+    return this.permissionRepository.paginate(filters)
   }
 
   public async create(input: PermissionForm): Promise<Permission> {
@@ -33,23 +28,11 @@ export default class PermissionService extends BaseService<Permission> {
     return this.permissionRepository.create(permission.toDTO())
   }
 
-  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Permission>> {
-    return this.permissionRepository.paginate(filters)
-  }
-
-  public async getOne(id: number): Promise<Permission> {
-    return this.permissionRepository.one(id)
+  public async update(permission: Permission, data: PermissionForm): Promise<Permission> {
+    return this.permissionRepository.update(permission, data)
   }
 
   public async destroy(role: Permission): Promise<void> {
     return this.permissionRepository.delete(role)
-  }
-
-  public async search(query: string): Promise<Permission[]> {
-    return this.permissionRepository.find(query)
-  }
-
-  public async update(permission: Permission, data: PermissionForm): Promise<Permission> {
-    return this.permissionRepository.update(permission, data)
   }
 }

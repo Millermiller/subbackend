@@ -3,13 +3,14 @@ import { Card } from '@/Scandinaver/Asset/Domain/Card'
 import CardRepository from '@/Scandinaver/Asset/Infrastructure/card.repository'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
-import { Word } from '@/Scandinaver/Asset/Domain/Word'
+import { Term } from '@/Scandinaver/Asset/Domain/Term'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { API } from '../Infrastructure/api/card.api'
 import CardApi = API.CardApi
 import CardForm from '@/Scandinaver/Asset/Domain/CardForm'
-import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class CardService extends BaseService<Card> {
@@ -19,6 +20,10 @@ export default class CardService extends BaseService<Card> {
   @Inject()
   private readonly api: CardApi
 
+  get(filtersData: FiltersData): Promise<PaginatedResponse<Card>> {
+    return this.cardRepository.paginate(filtersData)
+  }
+
   public create(input: any): Promise<Card> {
     throw new Error('Method not implemented.')
   }
@@ -27,28 +32,23 @@ export default class CardService extends BaseService<Card> {
     return this.cardRepository.update(card, data)
   }
 
+  destroy(entity: Card): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
   public async addCardToAsset(card: Card, asset: Asset): Promise<Card> {
     const { language } = store.getters
-    await this.cardRepository.add(language, card, asset)
-    store.commit('addCard', card)
-    return card
+    return await this.cardRepository.add(language, card, asset)
   }
 
   public async removeFromAsset(card: Card, asset: Asset): Promise<Card> {
     const { language } = store.getters
-    await this.cardRepository.removeFromAsset(language, card, asset)
-    await store.commit('removeCard', card)
+    await this.cardRepository.removeFromAsset(card, asset)
+
+    const index = asset.cards.all().findIndex((item: any) => item.id === card.getId())
+    asset.cards.all().splice(index, 1)
+
     return card
-  }
-
-  public async createCard(card: Card): Promise<Card> {
-    return this.cardRepository.create(card)
-    // store.commit(INCREMENT_PERSONAL_COUNTER, card.id)
-  }
-
-  public async destroyCard(card: Card): Promise<void> {
-    await this.cardRepository.delete(card)
-    store.commit('removeCard', card)
   }
 
   public async uploadWordFile(fileUploadFormData: FormData): Promise<any> {
@@ -58,26 +58,9 @@ export default class CardService extends BaseService<Card> {
 
   public async addAdminCard(param: { isSentence: any; word: string; translate: string }): Promise<Card> {
     const card = new Card()
-    card.term = new Word(param.word)
+    card.term = new Term(param.word)
     card.translate = new Translate(param.translate)
     card.sentence = param.isSentence
     return this.cardRepository.create(card)
-  }
-
-  destroy(entity: Card): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
-  getAll(): Promise<Card[]> {
-    return Promise.resolve([]);
-  }
-
-  fromDTO(dto: CardForm): Card {
-    const card = new Card()
-    card.id = dto.id
-    card.term = dto.term
-    card.translate = dto.translate
-    card.examples = dto.examples
-    return card
   }
 }

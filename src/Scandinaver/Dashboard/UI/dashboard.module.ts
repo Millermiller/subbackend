@@ -8,21 +8,21 @@ import MessageService from '@/Scandinaver/Dashboard/Application/message.service'
 import DashboardService from '@/Scandinaver/Dashboard/Application/dashboard.service'
 import { Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
-import MessageComponent from './message.component/index.vue'
-import WordsWidget from './words-widget.component/index.vue'
-import AssetsWidget from './asset-widget.component/index.vue'
-import AudioWidget from './audio-widget.component/index.vue'
-import TextsWidget from './texts-widget.component/index.vue'
-import UsersWidget from './users-widget.component/index.vue'
+import MessageComponent from './components/message.component/index.vue'
+import CardsWidget from './components/cards-widget.component/index.vue'
+import AssetsWidget from './components/asset-widget.component/index.vue'
+import PuzzleWidget from './components/puzzle-widget.component/index.vue'
+import TextsWidget from './components/texts-widget.component/index.vue'
+import UsersWidget from './components/users-widget.component/index.vue'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginationConfig } from '@/Scandinaver/Core/Infrastructure/PaginationConfig'
 
 @Component({
   components: {
     MessageComponent,
-    WordsWidget,
+    CardsWidget,
     AssetsWidget,
-    AudioWidget,
+    PuzzleWidget,
     TextsWidget,
     UsersWidget,
   },
@@ -88,14 +88,14 @@ export default class DashboardModule extends Vue {
   async onFiltersChange(filters: any) {
     Object.keys(filters).forEach((prop) => {
       if (filters[prop] !== '') {
-        const existingFilter = this.filters.filters.filter(i => i.field === prop)[0]
+        const existingFilter = this.filters.filter.filter(i => i.field === prop)[0]
         if (existingFilter) {
           existingFilter.value = filters[prop]
         } else {
-          this.filters.filters.push({ field: prop, value: filters[prop], operator: 'like' })
+          this.filters.filter.push({ field: prop, value: filters[prop], operator: 'like' })
         }
       } else {
-        this.filters.filters = this.filters.filters.filter(item => item.field !== prop)
+        this.filters.filter = this.filters.filter.filter(item => item.field !== prop)
       }
     })
     await this.loadLogs()

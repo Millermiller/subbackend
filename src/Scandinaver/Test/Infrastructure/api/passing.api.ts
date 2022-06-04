@@ -15,11 +15,16 @@ export namespace API {
     protected readonly baseUrl: string = 'test'
 
     public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Passing>>> {
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+      if (existingFilter) {
+        existingFilter.value = store.getters.language ? store.getters.language.id : 1
+      } else {
+        filters.filter.push({ field: 'language.id', value: store.getters.language.id, operator: 'eq' })
+      }
       return request.get(`/${this.baseUrl}`, {
         params: {
-          lang: store.getters.language,
           sort: filters.sort,
-          filters: filters.filters,
+          filter: filters.filter,
           pageSize: filters.pageSize,
         },
       })

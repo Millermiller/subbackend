@@ -23,7 +23,7 @@ const routes = [
           permission: permissions.VIEW_USERS,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/User/UI/list-user.component/index.vue'),
+        component: () => import('@/Scandinaver/User/UI/components/list-user.component/index.vue'),
       },
       {
         name: 'user',
@@ -32,7 +32,7 @@ const routes = [
           permission: permissions.UPDATE_USER,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/User/UI/edit-user.component/index.vue'),
+        component: () => import('@/Scandinaver/User/UI/components/edit-user.component/index.vue'),
       },
     ],
   },

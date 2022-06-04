@@ -87,11 +87,13 @@ export default class Passing extends Entity {
   }
 
   toDTO(): PassingForm {
-    return {
-      id: this._id,
-      completed: this._completed,
-      errors: [],
-      percent: this._percent,
-    }
+    const dto = new PassingForm()
+
+    dto.id = this._id
+    dto.completed = this._completed
+    dto.errors = []
+    dto.percent = this._percent
+
+    return dto
   }
 }

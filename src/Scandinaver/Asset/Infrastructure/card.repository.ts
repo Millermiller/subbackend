@@ -24,7 +24,7 @@ export default class CardRepository extends CommonRepository<Card> {
     return this.api.addCardToAsset(language, card, asset).then(response => plainToClass(Card, response.data))
   }
 
-  public async removeFromAsset(language: string, card: Card, asset: Asset): Promise<any> {
-    return this.api.removeCard(language, card, asset).then(response => response)
+  public async removeFromAsset(card: Card, asset: Asset): Promise<any> {
+    return this.api.removeCard(card, asset).then(response => response)
   }
 }

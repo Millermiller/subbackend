@@ -30,7 +30,7 @@ export default class ListPageComponent extends Vue {
 
   async load() {
     this.loading = true
-    this.pages = await this.service.getAll(new FiltersData())
+    this.pages = await this.service.get(new FiltersData())
     this.loading = false
   }
 

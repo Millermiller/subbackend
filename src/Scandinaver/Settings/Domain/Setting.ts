@@ -60,12 +60,14 @@ export class Setting extends Entity {
   }
 
   toDTO(): SettingForm {
-    return {
-      id: this._id,
-      title: this._title,
-      slug: this._slug,
-      value: this._value,
-      type: this._type
-    }
+    const dto = new SettingForm()
+
+    dto.id = this._id
+    dto.title = this._title
+    dto.slug = this._slug
+    dto.value = this._value
+    dto.type = this._type
+
+    return dto
   }
 }

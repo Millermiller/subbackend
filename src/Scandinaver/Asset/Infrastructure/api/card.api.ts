@@ -8,6 +8,7 @@ import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 
 export namespace API {
   @Service()
@@ -15,8 +16,21 @@ export namespace API {
     protected readonly type: ClassType<Card> = Card
     protected readonly baseUrl = 'card'
 
-    public async all(): Promise<AxiosResponse<PaginatedResponse<Card>>> {
-      throw new Error('Method not implemented.');
+    public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Card>>> {
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+      if (existingFilter) {
+        existingFilter.value = store.getters.language ? store.getters.language.id : 1
+      } else {
+        filters.filter.push({ field: 'language.id', value: store.getters.language.id, operator: 'eq' })
+      }
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          sort: filters.sort,
+          filter: filters.filter,
+          pageSize: filters.pageSize,
+          page: filters.page,
+        },
+      })
     }
 
     public async one(id: number): Promise<AxiosResponse<Card>> {
@@ -37,7 +51,7 @@ export namespace API {
 
     public async translate(query: string, sentence: boolean): Promise<AxiosResponse<Card[]>> {
       return request.get(`/${this.baseUrl}/search`, {
-        params: { query, sentence: +sentence, lang: store.getters.language },
+        params: { query, sentence: +sentence, lang: store.getters.language.id },
       })
     }
 
@@ -49,8 +63,8 @@ export namespace API {
       return request.post(`/asset/${asset.getId()}/${card.getId()}`)
     }
 
-    public async removeCard(language: string, card: Card, asset: Asset): Promise<AxiosResponse> {
-      return request.delete(`/${language}/${this.baseUrl}/${card.getId()}/${asset.getId()}`)
+    public async removeCard(card: Card, asset: Asset): Promise<AxiosResponse> {
+      return request.delete(`/asset/${asset.getId()}/${card.getId()}`)
     }
 
     public async destroyCard(card: Card): Promise<AxiosResponse> {

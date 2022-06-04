@@ -1,9 +1,9 @@
 <div v-if="access">
   <div class="tile is-ancestor">
     <UsersWidget />
-    <WordsWidget />
+    <CardsWidget />
     <AssetsWidget />
-    <AudioWidget />
+    <PuzzleWidget />
     <TextsWidget />
   </div>
   <div class="tile is-ancestor">
@@ -36,7 +36,7 @@
           default-sort="id"
           detailed
           detail-key="id">
-            <b-table-column field="log.id" label="ID" width="140" sortable searchable v-slot="props">
+            <b-table-column field="log.id" label="ID" width="80" sortable searchable v-slot="props">
               {{ props.row.id }}
             </b-table-column>
 

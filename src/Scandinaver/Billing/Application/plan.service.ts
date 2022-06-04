@@ -1,6 +1,5 @@
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Inject, Service } from 'typedi'
-import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 import PlanRepository from '@/Scandinaver/Billing/Infrastructure/plan.repository'
 import Plan from '@/Scandinaver/Billing/Domain/Plan'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
@@ -10,15 +9,11 @@ export default class PlanService extends BaseService<Plan> {
   @Inject()
   private readonly repository: PlanRepository
 
-  public fromDTO(dto: EntityForm): Plan {
-    return undefined
-  }
-
   public async create(input: any): Promise<Plan> {
     return this.repository.create(input)
   }
 
-  public async getAll(filters: FiltersData): Promise<Plan[]> {
+  public async get(filters: FiltersData): Promise<Plan[]> {
     return this.repository.all(filters)
   }
 

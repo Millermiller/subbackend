@@ -1,0 +1,8 @@
+<div class="tile is-parent words-widget-component">
+  <article class="tile is-child box" style="position:relative;">
+    <b-tag class="is-info">{{language}}</b-tag>
+    <b-loading :is-full-page="false" v-model="loading" :can-cancel="false"></b-loading>
+    <p class="title">{{ data }}</p>
+    <p class="subtitle">{{ title }}</p>
+  </article>
+</div>

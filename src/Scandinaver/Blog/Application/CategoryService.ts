@@ -11,18 +11,11 @@ export default class CategoryService extends BaseService<Category> {
   @Inject()
   private readonly repository: CategoryRepository
 
-  public fromDTO(dto: CategoryDTO): Category {
-    const category = new Category()
-    category.id = dto.id
-    category.title = dto.title
-    return category
-  }
-
   public async create(data: CategoryDTO): Promise<Category> {
     return this.repository.create(data)
   }
 
-  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Category>> {
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Category>> {
     return this.repository.paginate(filters)
   }
 

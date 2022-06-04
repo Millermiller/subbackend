@@ -12,13 +12,8 @@ export default class RoleService extends BaseService<Role> {
   @Inject()
   private readonly roleRepository: RoleRepository
 
-  public fromDTO(dto: RoleForm): Role {
-    const role = new Role()
-    role.id = dto.id || 0
-    role.name = dto.name
-    role.slug = dto.slug
-    role.description = dto.description
-    return role
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Role>> {
+    return this.roleRepository.paginate(filters)
   }
 
   public async create(input: RoleForm): Promise<Role> {
@@ -29,24 +24,20 @@ export default class RoleService extends BaseService<Role> {
     return this.roleRepository.create(role.toDTO())
   }
 
-  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Role>> {
-    return this.roleRepository.paginate(filters)
-  }
-
-  public async getOne(id: number): Promise<Role> {
-    return this.roleRepository.one(id)
+  public async update(role: Role, form: RoleForm): Promise<Role> {
+    return this.roleRepository.update(role, form)
   }
 
   public async destroy(role: Role) {
     return this.roleRepository.delete(role)
   }
 
-  public async search(query: string): Promise<Role[]> {
-    return this.roleRepository.find(query)
+  public async getOne(id: number): Promise<Role> {
+    return this.roleRepository.one(id)
   }
 
-  public async update(role: Role, form: RoleForm): Promise<Role> {
-    return this.roleRepository.update(role, form)
+  public async search(query: string): Promise<Role[]> {
+    return this.roleRepository.find(query)
   }
 
   public attachPermission(role: Role, permission: Permission) {

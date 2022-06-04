@@ -55,11 +55,13 @@ export default class Role extends Entity {
   }
 
   toDTO(): RoleForm {
-    return {
-      id: this._id,
-      name: this._name,
-      slug: this._slug,
-      description: this._description,
-    }
+    const dto = new RoleForm()
+
+    dto.id = this._id
+    dto.name = this._name
+    dto.slug = this._slug
+    dto.description = this._description
+
+    return dto
   }
 }

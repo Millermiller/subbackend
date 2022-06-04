@@ -97,7 +97,7 @@ export default class Sidebar extends Vue {
   }
 
   get language(): string {
-    return store.getters.language
+    return store.getters.language.letter
   }
 
   public isExpanded(item: any): boolean {

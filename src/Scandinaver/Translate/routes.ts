@@ -18,7 +18,7 @@ const routes = [
     beforeEnter: requireAuth,
     children: [
       {
-        name: 'list',
+        name: 'list-texts',
         path: '',
         meta: {
           permission: permissions.VIEW_TEXTS,
@@ -26,7 +26,7 @@ const routes = [
           label: i18n.t('list'),
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Translate/UI/list-texts.component/index.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/components/list-texts.component/index.vue'),
       },
       {
         name: 'edit-text',
@@ -35,7 +35,7 @@ const routes = [
           permission: permissions.UPDATE_TEXT,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Translate/UI/edit.component/index.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/components/edit.component/index.vue'),
       },
       {
         name: 'text-tooltips',
@@ -44,7 +44,7 @@ const routes = [
           permission: permissions.UPDATE_TEXT,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Translate/UI/edit.component/tooltip.component/index.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/components/edit.component/tooltip.component/index.vue'),
       },
       {
         name: 'text-translate',
@@ -53,7 +53,7 @@ const routes = [
           permission: permissions.UPDATE_TEXT,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Translate/UI/edit.component/translate.component/index.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/components/edit.component/translate.component/index.vue'),
       },
       {
         name: 'text-test',
@@ -62,7 +62,7 @@ const routes = [
           permission: permissions.UPDATE_TEXT,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Translate/UI/edit.component/test.component/index.vue'),
+        component: () => import('@/Scandinaver/Translate/UI/components/edit.component/test.component/index.vue'),
       },
     ],
   },

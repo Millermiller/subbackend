@@ -6,6 +6,8 @@ import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { Responses } from '../../../Core/Domain/Contract/Responses'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -13,8 +15,22 @@ export namespace API {
     protected readonly type: ClassType<Asset> = Asset
     protected readonly baseUrl = 'asset'
 
-    public async all(): Promise<AxiosResponse<{data: Asset[], meta: any}>> {
-      throw new Error('Method not implemented.')
+    public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Asset>>> {
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+      const languageId = store.getters.language.id ? store.getters.language.id : 1
+      if (existingFilter) {
+        existingFilter.value = languageId
+      } else {
+        filters.filter.push({ field: 'language.id', value: languageId, operator: 'eq' })
+      }
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          sort: filters.sort,
+          filter: filters.filter,
+          pageSize: filters.pageSize,
+          page: filters.page,
+        },
+      })
     }
 
     public async search(data: any): Promise<AxiosResponse<Asset[]>> {

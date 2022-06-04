@@ -1,0 +1,7 @@
+<div class="tile is-parent pointer" @click="redirect('list-user')">
+  <article class="tile is-child box" style="position:relative;">
+    <b-loading :is-full-page="false" v-model="loading" :can-cancel="false"></b-loading>
+    <p class="title">{{ data }}</p>
+    <p class="subtitle">{{ title }}</p>
+  </article>
+</div>

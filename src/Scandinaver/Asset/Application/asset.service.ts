@@ -4,13 +4,13 @@ import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import TranslateRepository from '@/Scandinaver/Asset/Infrastructure/translate.repository'
-import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { Card } from '@/Scandinaver/Asset/Domain/Card'
-import AssetDTO from '@/Scandinaver/Asset/Domain/AssetDTO'
+import AssetDTO from '@/Scandinaver/Asset/Domain/DTO/AssetDTO'
 import CardRepository from '@/Scandinaver/Asset/Infrastructure/card.repository'
 import { API } from '@/Scandinaver/Asset/Infrastructure/api/forvo.api'
 import ForvoAPI = API.ForvoAPI
-import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class AssetService extends BaseService<Asset> {
@@ -26,22 +26,13 @@ export default class AssetService extends BaseService<Asset> {
   @Inject()
   private readonly forvoApi: ForvoAPI
 
+  public async get(filterData: FiltersData): Promise<PaginatedResponse<Asset>> {
+    return this.repository.paginate(filterData)
+  }
+
   public async create(data: AssetDTO): Promise<Asset> {
-    data.language = store.getters.language
+    data.language = store.getters.language.letter
     return this.repository.create(data)
-  }
-
-  public async reload(asset: Asset): Promise<void> {
-    const data = await this.repository.one(asset.id)
-    store.commit('setActiveAsset', data)
-  }
-
-  public async getAll(): Promise<any> {
-    return this.repository.allByLanguage()
-  }
-
-  public async getAsset(assetId: number): Promise<any> {
-    return this.repository.one(assetId)
   }
 
   public async update(asset: Asset, data: any): Promise<Asset> {
@@ -57,19 +48,11 @@ export default class AssetService extends BaseService<Asset> {
     return this.forvoApi.getAudio(asset.id).then(response => response.data)
   }
 
-  public async updateTitle(asset: Asset, title: string): Promise<Asset> {
-    return this.repository.update(asset, { title })
-  }
-
-  public async removeTranslate(data: Translate): Promise<void> {
-    return this.translateRepository.delete(data.getId())
-  }
-
   public async translate(query: string, sentence: boolean): Promise<Card[]> {
     return this.cardRepository.translate(query, sentence)
   }
 
-  fromDTO(dto: EntityForm): Asset {
-    return undefined;
+  async setSort(asset: Asset): Promise<Asset> {
+    return this.repository.update(asset, asset.toDTO())
   }
 }

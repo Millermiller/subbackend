@@ -22,9 +22,11 @@ export class Item extends Entity {
   }
 
   toDTO(): ItemForm {
-    return {
-      id: this._id,
-      type: this._type,
-    }
+    const dto = new ItemForm()
+
+    dto.id = this._id
+    dto.type = this._type
+
+    return dto
   }
 }

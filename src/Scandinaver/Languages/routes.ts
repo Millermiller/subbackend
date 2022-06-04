@@ -23,7 +23,7 @@ const routes = [
           permission: permissions.VIEW_POSTS,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Languages/UI/list-languages.component/index.vue'),
+        component: () => import('@/Scandinaver/Languages/UI/components/list-languages.component/index.vue'),
       },
     ],
   },

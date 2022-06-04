@@ -1,0 +1,114 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('users') }}</h4>
+    <b-field>
+      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
+      <p class="control">
+        <button class="button is-info" @click="find()">Search</button>
+      </p>
+      <Can :do="permissions.CREATE_USER">
+        <button class="button is-success ml-10" @click="showModalForm()">{{ $t('add') }}</button>
+      </Can>
+    </b-field>
+    <b-table
+      :data="entities"
+      v-bind="tableProperties"
+      v-on="tableEvents">
+        <b-table-column field="user.id" label="ID" width="80" sortable searchable v-slot="props">
+          {{ props.row.id }}
+        </b-table-column>
+        <b-table-column field="avatar" label="" width="90" v-slot="props">
+          <img class="avatar-small" :src="props.row.avatar" />
+        </b-table-column>
+        <b-table-column field="user.login" label="Login" sortable searchable v-slot="props">
+          {{ props.row.login }}
+        </b-table-column>
+        <b-table-column field="user.email" label="Email" sortable searchable v-slot="props">
+          {{ props.row.email }}
+        </b-table-column>
+        <b-table-column field="user.roles" label="Roles" sortable v-slot="props">
+          <b-taglist>
+            <Can :do="permissions.UPDATE_USER">
+            <b-tag type="is-info"
+                   closable
+                   @close="removeRole(props.row, role)"
+                   v-for="role in props.row.roles">{{role.name}}</b-tag>
+            </Can>
+            <Can not :do="permissions.UPDATE_USER">
+              <b-tag type="is-info" v-for="role in props.row.roles">{{role.name}}</b-tag>
+            </Can>
+          </b-taglist>
+        </b-table-column>
+      <!--
+        <b-table-column field="plan.name" label="plan" sortable v-slot="props">
+          <span :class="color(props.row.plan.id)">
+            {{ props.row.plan.name }}
+          </span>
+        </b-table-column>
+        -->
+        <b-table-column field="date" label="active_to" sortable="sortable" centered="centered" v-slot="props">
+          <span class="tag" :class="type(props.row.active_to)">
+            {{ new Date(props.row.active_to).toLocaleDateString() }}
+          </span>
+        </b-table-column>
+        <b-table-column custom-key="actions" v-slot="props">
+          <Can :do="permissions.UPDATE_USER">
+            <button class="button is-warning is-small" @click="edit(props.row)">
+              <b-icon icon="account-edit" size="is-small"></b-icon>
+            </button>
+          </Can>
+          <Can :do="permissions.DELETE_USER">
+            <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+              <b-icon icon="account-remove" size="is-small"></b-icon>
+            </button>
+          </Can>
+        </b-table-column>
+    </b-table>
+  </article>
+  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ modalTitle }}</p>
+      <button
+        type="button"
+        class="delete"
+        @click="closeModalForm()"/>
+    </header>
+    <form class="modal-card" style="width: 400px" @submit.prevent="save()">
+      <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
+      <section class="modal-card-body">
+        <b-field label="Login">
+          <b-input v-model="edited.login" type="text"></b-input>
+        </b-field>
+      </section>
+      <section class="modal-card-body">
+        <b-field label="Email">
+          <b-input type="email" v-model="edited.email"></b-input>
+        </b-field>
+      </section>
+      <section class="modal-card-body">
+        <b-field label="Password">
+          <b-input type="password" v-model="edited.password" icon="magnify"></b-input>
+          <p class="control">
+            <button class="button is-primary" @click="generatePassword()" type="button">Generate</button>
+          </p>
+        </b-field>
+        <small>{{edited.password}}</small>
+      </section>
+      <section class="modal-card-body">
+        <b-field label="Roles">
+          <b-checkbox v-for="role in roles.map(item => item.toDTO())" v-model="edited.roles" :native-value="role">
+            {{ role.name }}
+          </b-checkbox>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="closeModalForm()">
+          {{ $t('close') }}
+        </button>
+        <button class="button is-primary">
+          {{ $t('save') }}
+        </button>
+      </footer>
+    </form>
+  </b-modal>
+</div>

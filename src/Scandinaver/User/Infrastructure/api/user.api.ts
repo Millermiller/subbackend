@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
 
 export namespace API {
   @Service()
@@ -18,8 +19,18 @@ export namespace API {
     }
 
     public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<User>>> {
-      return request.get(`/${this.baseUrl}?includes[]=roles`, {
-        params: filters,
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+      if (existingFilter) {
+        existingFilter.value = store.getters.language ? store.getters.language.id : 1
+      } else {
+        filters.filter.push({ field: 'language.id', value: store.getters.language.id, operator: 'eq' })
+      }
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          sort: filters.sort,
+          filter: filters.filter,
+          pageSize: filters.pageSize,
+        },
       })
     }
   }

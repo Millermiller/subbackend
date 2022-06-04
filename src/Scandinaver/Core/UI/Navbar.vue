@@ -7,10 +7,11 @@
             b-field
               b-select(placeholder="Select a name", v-model="selectedLanguage")
                 option(v-for="language in languages"
-                :value="language.label"
-                :key="language.label").
-                  {{ language.name }}
-
+                :value="language.id"
+                :key="language.id").
+                  {{ language.title }}
+          .nav-item
+            a(:href="elasticLink" target="__blank") ElasticPanel
           a.nav-item.is-hidden-tablet(@click="toggleSidebar(!sidebar.opened)")
             i.fa.fa-bars(aria-hidden="true")
 
@@ -28,36 +29,46 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { LoginService } from '@/Scandinaver/Core/Application/login.service'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { version } from '../../../../package.json';
+import { Inject } from 'vue-typedi'
+import LanguageService from '@/Scandinaver/Languages/Application/language.service'
+import { FiltersData } from '../Application/FiltersData';
+import Language from '@/Scandinaver/Languages/Domain/Language';
 
 @Component({
   name: 'NavBarComponent',
 })
 export default class NavBarComponent extends Vue {
+  @Inject()
+  private service: LanguageService
+
   @Prop()
   public show: Boolean
 
   public version: string = `v.${version}`
 
-  public languages = [
-    {
-      label: 'is',
-      name: 'Исландский',
-    },
-    {
-      label: 'sw',
-      name: 'Шведский',
-    },
-  ];
+  public languages: Language[] = []
 
-  public selectedLanguage: string = 'is'
+  public selectedLanguage: number = 1
+
+  public elasticLink = process.env.VUE_APP_ELASTIC_PANEL
 
   @Watch('selectedLanguage')
-  private onChange(val: any): void {
-    store.commit('setLanguage', val)
+  private onChange(val: number): void {
+    store.commit('setLanguage', this.languages.find(item => item.id === val))
   }
 
-  created(): void {
-    store.commit('setLanguage', this.selectedLanguage)
+  async created(): Promise<void> {
+    const data = await this.service.get(new FiltersData())
+    this.languages = data.data
+    const queryParams = this.$route.query
+    if (queryParams.language) {
+      const language = this.languages.find(item => item.letter === queryParams.language)
+      this.selectedLanguage = language.id
+      store.commit('setLanguage', language)
+    } else {
+      this.selectedLanguage = this.languages[0].id
+      store.commit('setLanguage', this.languages[0])
+    }
   }
 
   public logout(): void {

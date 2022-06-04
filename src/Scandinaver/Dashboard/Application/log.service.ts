@@ -2,7 +2,6 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Log from '@/Scandinaver/Dashboard/Domain/Log'
 import { Inject, Service } from 'typedi'
 import LogRepository from '@/Scandinaver/Dashboard/Infrastructure/log.repository'
-import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
@@ -11,15 +10,11 @@ export default class LogService extends BaseService<Log> {
   @Inject()
   private readonly repository: LogRepository
 
-  public fromDTO(dto: EntityForm): Log {
-    return undefined
-  }
-
   public create(input: any): Log {
     return new Log()
   }
 
-  public async getAll(filters: FiltersData): Promise<Log[]> {
+  public async get(filters: FiltersData): Promise<Log[]> {
     return this.repository.all(filters)
   }
 

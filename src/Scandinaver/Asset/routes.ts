@@ -12,10 +12,21 @@ const routes = [
       menuitem: true,
       type: 'sub',
       language: true,
-      label: i18n.t('assets'),
+      label: `${i18n.t('assets')}`,
     },
     beforeEnter: requireAuth,
-    component: () => import('@/Scandinaver/Asset/UI/assets.module.vue'),
+    component: () => import('@/Scandinaver/Asset/UI/assets.list.module.vue'),
+    children: [
+      {
+        name: 'list-assets',
+        path: '',
+        meta: {
+          permission: permissions.VIEW_ASSETS,
+          menuitem: false,
+        },
+        component: () => import('@/Scandinaver/Asset/UI/components/list-assets.component/index.vue'),
+      },
+    ],
   },
   {
     name: 'upload',
@@ -29,7 +40,7 @@ const routes = [
       language: true,
     },
     beforeEnter: requireAuth,
-    component: () => import('@/Scandinaver/Asset/UI/upload.component/upload.component.vue'),
+    component: () => import('@/Scandinaver/Asset/UI/components/upload.component/index.vue'),
   },
 ]
 

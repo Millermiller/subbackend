@@ -2,7 +2,6 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import Passing from '@/Scandinaver/Test/Domain/Passing'
 import { Inject, Service } from 'typedi'
 import PassingRepository from '@/Scandinaver/Test/Infrastructure/passing.repository'
-import PassingForm from '@/Scandinaver/Test/Domain/PassingForm'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
@@ -15,8 +14,8 @@ export default class PassingService extends BaseService<Passing> {
     return new Passing();
   }
 
-  public async getAll(filters: FiltersData): Promise<Passing[]> {
-    return this.passingRepository.all(filters)
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Passing>> {
+    return this.passingRepository.paginate(filters)
   }
 
   public async filter(filters: FiltersData): Promise<PaginatedResponse<Passing>> {
@@ -29,14 +28,5 @@ export default class PassingService extends BaseService<Passing> {
 
   public async update(passing: Passing, data: any): Promise<Passing> {
     return this.passingRepository.update(passing, data)
-  }
-
-  public fromDTO(dto: PassingForm): Passing {
-    const passing = new Passing()
-    passing.id = dto.id || 0
-    passing.completed = dto.completed
-    passing.percent = dto.percent
-
-    return passing
   }
 }

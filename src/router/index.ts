@@ -50,7 +50,7 @@ export const routes: RouteConfig[] = [
 ]
 
 export const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   linkActiveClass: 'is-active',
   base: process.env.BASE_URL,
   routes,

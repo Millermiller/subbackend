@@ -70,14 +70,16 @@ export default class Language extends Entity {
   }
 
   public toDTO(): LanguageForm {
-    return {
-      id: this._id,
-      title: this._title,
-      letter: this._letter,
-      flag: this._flag,
-      description: this._description,
-      image: this._image,
-      active: this._active,
-    }
+    const dto = new LanguageForm()
+
+    dto.id = this._id
+    dto.title = this._title
+    dto.letter = this._letter
+    dto.flag = this._flag
+    dto.description = this._description
+    dto.image = this._image
+    dto.active = this._active
+
+    return dto
   }
 }

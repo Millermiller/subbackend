@@ -15,16 +15,7 @@ export default class EditIntroComponent extends Vue {
   @Inject()
   private readonly service: IntroService
 
-  public form: IntroForm = {
-    id: undefined,
-    page: '',
-    target: '',
-    position: '',
-    sort: 0,
-    headerText: '',
-    active: false,
-    content: '',
-  }
+  public form: IntroForm = new IntroForm()
   public readonly pages: any = [
     'MAIN_PAGE',
     'DEFAULT_ASSET_PAGE',
@@ -42,7 +33,7 @@ export default class EditIntroComponent extends Vue {
 
   private async load(id: number): Promise<void> {
     this.loading = true
-    this.form = await this.service.getOne(id)
+    this.form = await this.service.getOne(id).then(item => item.toDTO())
     this.loading = false
   }
 

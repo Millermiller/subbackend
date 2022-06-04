@@ -1,9 +1,7 @@
 import Component from 'vue-class-component'
-import Vue from 'vue'
 import { Inject } from 'vue-typedi'
 import PassingService from '@/Scandinaver/Test/Application/passing.service'
 import Passing from '@/Scandinaver/Test/Domain/Passing'
-import { permissions } from '@/permissions/permission.type'
 import PassingForm from '@/Scandinaver/Test/Domain/PassingForm'
 import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 
@@ -13,6 +11,8 @@ import { CRUDComponent } from '@/Scandinaver/Core/UI/CRUDComponent'
 export default class ListPassingsComponent extends CRUDComponent<Passing, PassingForm> {
   @Inject()
   protected readonly service: PassingService
+
+  protected watchLanguage = true
 
   protected modalTitleUpdate = this.$root.$tc('updatePassing')
 

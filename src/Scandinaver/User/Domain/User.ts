@@ -102,14 +102,16 @@ export default class User extends Entity {
   }
 
   public toDTO(): UserForm {
-    return {
-      id: this._id,
-      email: this._email,
-      login: this._login,
-      password: this._password,
-      password_confirmation: this._password,
-      roles: this._roles.map(role => role.toDTO()),
-      plan: this._plan,
-    }
+    const dto = new UserForm()
+
+    dto.id = this._id
+    dto.email = this._email
+    dto.login = this._login
+    dto.password = this._password
+    dto.password_confirmation = this._password
+    dto.roles = this._roles.map(role => role.toDTO())
+    dto.plan = this._plan
+
+    return dto
   }
 }

@@ -53,8 +53,8 @@ export default class Plan extends Entity {
   }
 
   toDTO(): PlanForm {
-    return {
-      id: this._id,
-    }
+    const dto = new PlanForm()
+    dto.id = this._id
+    return dto
   }
 }

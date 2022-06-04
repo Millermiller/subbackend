@@ -1,0 +1,42 @@
+<div class="columns">
+  <div class="column is-5">
+    <div>
+      <button
+        v-for="(color, index) in colors"
+        class="colorbutton"
+        :style="{'background-color': color}"
+        @click="colorText(color)"
+      ></button>
+      <button class="colorbutton" @click="cleanText()">
+        <i class="mdi mdi-eraser"></i>
+      </button>
+    </div>
+    <div class="control content">
+      <div contenteditable="true" v-html="item.text" class="textarea" @input="handleTextInput($event)"></div>
+    </div>
+  </div>
+  <div class="column is-1"></div>
+  <div class="column is-5">
+    <div>
+      <button
+        v-for="(color, index) in colors"
+        class="colorbutton"
+        :style="{'background-color': color}"
+        @click="colorValue(color)"
+      ></button>
+      <button class="colorbutton" @click="cleanValue()">
+        <i class="mdi mdi-eraser"></i>
+      </button>
+    </div>
+    <div class="control content">
+      <div contenteditable="true" v-html="item.value" class="textarea" @input="handleValueInput($event)"></div>
+    </div>
+  </div>
+  <div class="column is-1">
+    <a :class="['button', 'is-danger', 'is-small']" @click="$emit('remove', index)">
+      <span class="icon">
+        <i class="mdi mdi-close-circle"></i>
+      </span>
+    </a>
+  </div>
+</div>

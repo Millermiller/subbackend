@@ -6,6 +6,8 @@ import Synonym from '@/Scandinaver/Translate/Domain/Synonym'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -13,8 +15,32 @@ export namespace API {
     protected readonly type: ClassType<Translate> = Translate
     protected readonly baseUrl = 'text'
 
-    public async all(): Promise<AxiosResponse> {
-      return request.get(`/${this.baseUrl}`)
+    public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Translate>>> {
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+
+      const { language } = store.getters
+      // if (!language.id) {
+      //   store.subscribe((mutation: any, state: any) => {
+      //     console.log(mutation.type)
+      //     if (mutation.type === 'setLanguage') {
+      //       // eslint-disable-next-line prefer-destructuring
+      //       language = state.language
+      //       console.log(2)
+      //     }
+      //   })
+      // }
+      if (existingFilter) {
+        existingFilter.value = language.id
+      } else {
+        filters.filter.push({ field: 'language.id', value: language.id, operator: 'eq' })
+      }
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          sort: filters.sort,
+          filter: filters.filter,
+          pageSize: filters.pageSize,
+        },
+      })
     }
 
     public async one(id: number): Promise<AxiosResponse<Translate>> {

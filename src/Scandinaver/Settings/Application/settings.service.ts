@@ -11,22 +11,11 @@ export default class SettingService extends BaseService<Setting> {
   @Inject()
   private readonly settingRepository: SettingRepository
 
-  public fromDTO(dto: SettingForm): Setting {
-    const setting = new Setting()
-    setting.id = dto.id || 0
-    setting.title = dto.title
-    setting.slug = dto.slug
-    setting.value = dto.value
-    setting.type = dto.type
-
-    return setting
-  }
-
   public async create(data: SettingForm): Promise<Setting> {
     return this.settingRepository.create(data)
   }
 
-  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Setting>> {
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Setting>> {
     return this.settingRepository.paginate(filters)
   }
 

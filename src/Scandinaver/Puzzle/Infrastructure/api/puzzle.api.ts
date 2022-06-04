@@ -5,6 +5,8 @@ import { Service } from 'typedi'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { BaseAPI } from '@/Scandinaver/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 export namespace API {
   @Service()
@@ -16,6 +18,22 @@ export namespace API {
       return request.get(`/${this.baseUrl}`, {
         params: {
           lang: store.getters.language,
+        },
+      })
+    }
+
+    public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<Puzzle>>> {
+      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
+      if (existingFilter) {
+        existingFilter.value = store.getters.language ? store.getters.language.id : 1
+      } else {
+        filters.filter.push({ field: 'language.id', value: store.getters.language.id, operator: 'eq' })
+      }
+      return request.get(`/${this.baseUrl}`, {
+        params: {
+          sort: filters.sort,
+          filter: filters.filter,
+          pageSize: filters.pageSize,
         },
       })
     }

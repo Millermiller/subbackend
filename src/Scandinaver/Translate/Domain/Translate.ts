@@ -126,17 +126,19 @@ export class Translate implements Entity {
   }
 
   public toDTO(): TranslateForm {
-    return {
-      id: this._id,
-      title: this._title,
-      language: this._language.letter,
-      original: this._text,
-      translate: this._translate,
-      tooltips: this._tooltips.map((tooltip: Tooltip) => tooltip.toDTO()),
-      dictionary: this._dictionary.map((item: DictionaryItem) => item.toDTO()),
-      published: this._published,
-      sentences: this._sentences,
-      description: this._description
-    }
+    const dto = new TranslateForm()
+
+    dto.id = this._id
+    dto.title = this._title
+    dto.language = this._language.letter
+    dto.original = this._text
+    dto.translate = this._translate
+    dto.tooltips = this._tooltips.map((tooltip: Tooltip) => tooltip.toDTO())
+    dto.dictionary = this._dictionary.map((item: DictionaryItem) => item.toDTO())
+    dto.published = this._published
+    dto.sentences = this._sentences
+    dto.description = this._description
+
+    return dto
   }
 }

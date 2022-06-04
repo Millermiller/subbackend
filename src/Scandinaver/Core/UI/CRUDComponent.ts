@@ -7,10 +7,13 @@ import { EntityForm } from '@/Scandinaver/Core/Domain/Contract/EntityForm'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 import { PaginationConfig } from '@/Scandinaver/Core/Infrastructure/PaginationConfig'
+import Language from '@/Scandinaver/Languages/Domain/Language'
+import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { Watch } from 'vue-property-decorator'
 
 // @ts-ignore
 @Component
-export abstract class CRUDComponent<T extends Entity, D extends EntityForm> extends Vue {
+export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> extends Vue {
   protected abstract service: BaseService<T>
   protected abstract buildForm(): D
 
@@ -18,6 +21,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   public loadingModal: boolean = false
   protected entities: T[] = []
   protected edited: D = null
+  protected formErrors: D = null
   public permissions: {} = {}
   public isModalFormActive: boolean = false
   public modalTitle: string = ''
@@ -26,6 +30,33 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   public config: PaginationConfig = new PaginationConfig()
   protected filters: FiltersData = new FiltersData()
   public page: number = 1
+  protected watchLanguage: boolean = false
+
+  get tableProperties() {
+    return {
+      paginated: true,
+      narrowed: true,
+      hoverable: true,
+      loading: this.loading,
+      total: this.config.total,
+      'backend-filtering': true,
+      'backend-sorting': true,
+      'sort-multiple': true,
+      'backend-pagination': true,
+      'debounce-search': 500,
+      'sort-multiple-data': this.filters.sort,
+      'per-page': this.config.per_page,
+    }
+  }
+
+  get tableEvents() {
+    return {
+      'page-change': this.onPageChange,
+      'filters-change': this.onFiltersChange,
+      sort: this.onSort,
+      'sorting-priority-removed': this.sortingPriorityRemoved
+    }
+  }
 
   constructor() {
     super()
@@ -36,14 +67,35 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   async mounted(): Promise<void> {
     this.filters.page = this.page
     this.filters.pageSize = this.config.per_page
-    await this.load()
+    console.log(this.filters)
+    if (this.watchLanguage === true) {
+      if (this.language.id !== undefined) {
+        await this.load()
+      }
+    } else {
+      await this.load()
+    }
+  }
+  get language(): Language {
+    return store.getters.language
+  }
+
+  @Watch('language')
+  private async onLanguageChange(language: Language, oldLanguage: Language): Promise<void> {
+    if (this.watchLanguage === true) {
+      await this.load()
+    }
   }
 
   protected async load(): Promise<void> {
     this.loading = true
-    const paginatedData: PaginatedResponse<T> = await this.service.getAll(this.filters)
+    console.log(this.filters)
+    const paginatedData: PaginatedResponse<T> = await this.service.get(this.filters)
     this.entities = paginatedData.data
     this.config = paginatedData.meta.pagination
+    // const str = JSON.stringify(this.filters)
+    // eslint-disable-next-line no-restricted-globals
+    // history.pushState({}, null, `${this.$route.path}?filter=${str}`)
     this.loading = false
   }
 
@@ -57,17 +109,20 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
     this.loadingModal = true
     try {
       if (this.edited.id) {
-        const entity = this.service.fromDTO(this.edited)
+        const entity = this.edited.fromDTO()
+        console.log(this.edited)
+        console.log(entity)
         await this.service.update(entity, this.edited)
         this.$buefy.snackbar.open(this.$tc('updated'))
       } else {
         await this.service.create(this.edited)
         this.$buefy.snackbar.open(this.$tc('created'))
       }
-      this.entities = await this.service.getAll(new FiltersData())
+      await this.load()
       this.closeModalForm()
       this.loadingModal = false
-    } catch (error) {
+    } catch (data) {
+      this.formErrors = data.errors
       // this.$buefy.snackbar.open(error) // its already displayed
       this.loadingModal = false
     }
@@ -108,14 +163,14 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
   async onFiltersChange(filters: any) {
     Object.keys(filters).forEach((prop) => {
       if (filters[prop] !== '') {
-        const existingFilter = this.filters.filters.filter(i => i.field === prop)[0]
+        const existingFilter = this.filters.filter.filter(i => i.field === prop)[0]
         if (existingFilter) {
           existingFilter.value = filters[prop]
         } else {
-          this.filters.filters.push({ field: prop, value: filters[prop], operator: 'like' })
+          this.filters.filter.push({ field: prop, value: filters[prop], operator: 'like' })
         }
       } else {
-        this.filters.filters = this.filters.filters.filter(item => item.field !== prop)
+        this.filters.filter = this.filters.filter.filter(item => item.field !== prop)
       }
     })
     await this.load()
@@ -137,5 +192,9 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm> exte
     }
 
     await this.load()
+  }
+
+  public reset() {
+    this.filters = new FiltersData()
   }
 }

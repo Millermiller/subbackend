@@ -53,7 +53,7 @@ export default class EditPostComponent extends Vue {
 
   async activated() {
     await this.load(Number(this.$route.params.id))
-    const data: PaginatedResponse<Category> = await this.categoryService.getAll(new FiltersData())
+    const data: PaginatedResponse<Category> = await this.categoryService.get(new FiltersData())
     this.categories = data.data
     this.active = true;
   }

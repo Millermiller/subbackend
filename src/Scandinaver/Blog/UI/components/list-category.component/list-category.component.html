@@ -1,71 +1,58 @@
-<article class="tile is-child box">
-  <h4 class="title text-center">{{ $t('categories') }}</h4>
-  <Can :do="permissions.CREATE_CATEGORY">
-    <b-field>
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('categories') }}</h4>
+    <Can :do="permissions.CREATE_CATEGORY">
+      <b-field>
         <button class="button is-success" @click="showModalForm()">{{ $t('add') }}</button>
-    </b-field>
-  </Can>
-  <b-table
-    :data="entities"
-    paginated
-    :loading="loading"
-    per-page="20"
-    striped
-    hoverable
-    backend-pagination
-    backend-sorting
-    backend-filtering
-    sort-multiple
-    :sort-multiple-data="filters.sort"
-    @page-change="onPageChange"
-    @filters-change="onFiltersChange"
-    @sort="onSort"
-    @sorting-priority-removed="sortingPriorityRemoved"
-    :debounce-search="500"
-    :total="config.total"
-    :per-page="config.per_page">
-    <b-table-column field="category.id" label="ID" width="140" sortable searchable numeric v-slot="props">
-      {{ props.row.id }}
-    </b-table-column>
-    <b-table-column field="category.title" label="Name" sortable searchable v-slot="props">
-      {{ props.row.title }}
-    </b-table-column>
-    <b-table-column custom-key="actions" v-slot="props" numeric>
-      <Can :do="permissions.UPDATE_CATEGORY">
-        <button class="button is-warning is-small" @click="edit(props.row)">
-          <b-icon icon="pencil" size="is-small"></b-icon>
-        </button>
-      </Can>
-      <Can :do="permissions.DELETE_CATEGORY">
-        <button class="button is-danger is-small ml-1" @click="remove(props.row)">
-          <b-icon icon="close-circle" size="is-small"></b-icon>
-        </button>
-      </Can>
-    </b-table-column>
-  </b-table>
-  <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">{{ modalTitle }}</p>
-      <button
-        type="button"
-        class="delete"
-        @click="closeModalForm()" />
-    </header>
-    <form>
-      <div class="modal-card" style="width: 400px">
-        <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
-        <section class="modal-card-body">
-          <b-field :label="$t('title')">
-            <b-input type="text" v-model="edited.title"></b-input>
-          </b-field>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button" type="button" @click="closeModalForm()">{{ $t('close') }}</button>
-          <button class="button is-primary" @click="save()">
-            {{ $t('save') }}
+      </b-field>
+    </Can>
+    <b-table
+      :data="entities"
+      v-bind="tableProperties"
+      v-on="tableEvents">
+      <b-table-column field="category.id" label="ID" width="80" sortable searchable v-slot="props">
+        {{ props.row.id }}
+      </b-table-column>
+      <b-table-column field="category.title" label="Name" sortable searchable v-slot="props">
+        {{ props.row.title }}
+      </b-table-column>
+      <b-table-column custom-key="actions" v-slot="props" numeric>
+        <Can :do="permissions.UPDATE_CATEGORY">
+          <button class="button is-warning is-small" @click="edit(props.row)">
+            <b-icon icon="pencil" size="is-small"></b-icon>
           </button>
-        </footer>
-      </div>
-    </form>
-  </b-modal>
-</article>
+        </Can>
+        <Can :do="permissions.DELETE_CATEGORY">
+          <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+            <b-icon icon="close-circle" size="is-small"></b-icon>
+          </button>
+        </Can>
+      </b-table-column>
+    </b-table>
+    <b-modal :active.sync="isModalFormActive" has-modal-card="has-modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">{{ modalTitle }}</p>
+        <button
+          type="button"
+          class="delete"
+          @click="closeModalForm()" />
+      </header>
+      <form>
+        <div class="modal-card" style="width: 400px">
+          <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
+          <section class="modal-card-body">
+            <b-field :label="$t('title')">
+              <b-input type="text" v-model="edited.title"></b-input>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="closeModalForm()">{{ $t('close') }}</button>
+            <button class="button is-primary" @click="save()">
+              {{ $t('save') }}
+            </button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+  </article>
+</div>

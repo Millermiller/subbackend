@@ -12,6 +12,7 @@ const routes = [
       menuitem: true,
       label: i18n.t('passings'),
       type: 'sub',
+      language: true
     },
     component: () => import('@/Scandinaver/Test/UI/passings.module.vue'),
     beforeEnter: requireAuth,

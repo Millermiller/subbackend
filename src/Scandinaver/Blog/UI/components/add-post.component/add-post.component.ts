@@ -45,7 +45,7 @@ export default class AddPostComponent extends Vue {
   }
 
   async mounted() {
-    const data: PaginatedResponse<Category> = await this.categoryService.getAll(new FiltersData())
+    const data: PaginatedResponse<Category> = await this.categoryService.get(new FiltersData())
     this.categories = data.data
   }
 }

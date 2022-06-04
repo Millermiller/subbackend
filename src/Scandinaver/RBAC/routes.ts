@@ -24,7 +24,7 @@ const routes = [
           type: 'main',
           label: 'roles',
         },
-        component: () => import('@/Scandinaver/RBAC/UI/list-roles.component/index.vue'),
+        component: () => import('@/Scandinaver/RBAC/UI/components/list-roles.component/index.vue'),
       },
       {
         name: 'list-permissions',
@@ -36,7 +36,7 @@ const routes = [
           type: 'main',
           label: 'permissions',
         },
-        component: () => import('@/Scandinaver/RBAC/UI/list-permissions.component/index.vue'),
+        component: () => import('@/Scandinaver/RBAC/UI/components/list-permissions.component/index.vue'),
       },
       {
         name: 'list-groups',
@@ -48,7 +48,7 @@ const routes = [
           type: 'main',
           label: 'groups',
         },
-        component: () => import('@/Scandinaver/RBAC/UI/list-groups.component/index.vue'),
+        component: () => import('@/Scandinaver/RBAC/UI/components/list-groups.component/index.vue'),
       },
       {
         name: 'rbac-ssettings',
@@ -60,7 +60,7 @@ const routes = [
           type: 'main',
           label: 'settings',
         },
-        component: () => import('@/Scandinaver/RBAC/UI/settings.component/index.vue'),
+        component: () => import('@/Scandinaver/RBAC/UI/components/settings.component/index.vue'),
       },
     ],
   },

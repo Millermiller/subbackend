@@ -68,11 +68,13 @@ export class Puzzle extends Entity {
   }
 
   public toDTO(): PuzzleForm {
-    return {
-      id: this._id,
-      text: this._text,
-      translate: this._translate,
-      language: ''
-    }
+    const dto = new PuzzleForm()
+
+    dto.id = this._id
+    dto.text = this._text
+    dto.translate = this._translate
+    dto.language = ''
+
+    return dto
   }
 }

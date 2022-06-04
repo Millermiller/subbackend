@@ -1,8 +1,9 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
+import TranslateDTO from '@/Scandinaver/Asset/Domain/DTO/TranslateDTO'
 
 export default class Translate extends Entity {
   private _id?: number
-  private readonly _value: string
+  private _value: string
 
   constructor(value: string) {
     super()
@@ -13,11 +14,32 @@ export default class Translate extends Entity {
     return this._id
   }
 
-  getValue(): string {
+  get id(): number {
+    return this._id
+  }
+
+  set id(value: number) {
+    this._id = value
+  }
+
+  get value(): string {
     return this._value
   }
 
-  toDTO(): any {
-    return {}
+  set value(value: string) {
+    this._value = value
+  }
+
+  getValue(): string {
+    return this.value
+  }
+
+  toDTO(): TranslateDTO {
+    const dto = new TranslateDTO()
+
+    dto.id = this._id
+    dto.value = this._value
+
+    return dto
   }
 }

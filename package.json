@@ -1,6 +1,6 @@
 {
   "name": "subbackend",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "private": true,
   "scripts": {
     "run development": "vue-cli-service serve --mode development --host admin.scandinaver.local --port 8181",
@@ -18,7 +18,7 @@
     "@types/reflect-metadata": "^0.1.0",
     "axios": "^0.21.4",
     "buefy": "0.9.3",
-    "canvas": "^2.8.0",
+    "canvas": "^2.9.1",
     "class-transformer": "^0.3.1",
     "core-js": "^3.4.4",
     "fibers": "^5.0.0",
@@ -89,6 +89,10 @@
       "@vue/typescript"
     ],
     "rules": {
+      "no-return-await": "off",
+      "eslint-disable-next-line": "on",
+      "no-return-assign": "off",
+      "prefer-destructuring": "off",
       "no-underscore-dangle": "off",
       "comma-dangle": "off",
       "import/order": "off",

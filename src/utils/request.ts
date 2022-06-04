@@ -12,7 +12,6 @@ const service = axios.create({
   // withCredentials: true // send cookies when cross-domain requests
 })
 
-// Request interceptors
 service.interceptors.request.use(
   (config) => {
     const cookieName = (process.env.VUE_APP_COOKIE_NAME as string) || 'authfrontend._token'
@@ -28,6 +27,7 @@ service.interceptors.response.use(response => ({
   ...response,
   ...deserialize(response.data),
 }), async (error) => {
+  console.log(error)
   if (error.response) {
     Snackbar.open(error.response.data)
     let errors = Object.values(error.response.data.errors);

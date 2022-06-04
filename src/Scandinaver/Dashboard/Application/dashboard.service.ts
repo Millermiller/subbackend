@@ -9,9 +9,9 @@ export default class DashboardService {
   private readonly api: DashboardApi
 
   public async loadDashboard(): Promise<void> {
-    const { language } = store.getters
-    this.api.load(language).then(
-      response => store.dispatch('setDashboard', response.data),
-    )
+    // const { language } = store.getters
+    // this.api.load(language).then(
+    //   response => store.dispatch('setDashboard', response.data),
+    // )
   }
 }

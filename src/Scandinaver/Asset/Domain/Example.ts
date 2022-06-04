@@ -1,4 +1,5 @@
 import { Entity } from '@/Scandinaver/Core/Domain/Contract/Entity'
+import ExampleDTO from '@/Scandinaver/Asset/Domain/DTO/ExampleDTO'
 
 export default class Example extends Entity {
   private _id: number
@@ -33,7 +34,13 @@ export default class Example extends Entity {
     this._value = value
   }
 
-  toDTO(): any {
-    return {}
+  toDTO(): ExampleDTO {
+    const dto = new ExampleDTO()
+
+    dto.id = this._id
+    dto.text = this._text
+    dto.value = this._value
+
+    return dto
   }
 }

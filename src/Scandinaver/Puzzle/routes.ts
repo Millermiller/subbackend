@@ -24,7 +24,7 @@ const routes = [
           permission: permissions.VIEW_PUZZLES,
           menuitem: false,
         },
-        component: () => import('@/Scandinaver/Puzzle/UI/list-puzzles.component/index.vue'),
+        component: () => import('@/Scandinaver/Puzzle/UI/components/list-puzzles.component/index.vue'),
       },
     ],
   },

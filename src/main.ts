@@ -14,7 +14,6 @@ import { abilitiesPlugin, Can } from '@casl/vue'
 import { router } from './router'
 import App from './App.vue'
 
-
 Vue.use(abilitiesPlugin, store.getters.ability)
 Vue.component('Can', Can)
 Vue.use(Buefy, {
@@ -32,6 +31,7 @@ Vue.use(VueProgressBar, {
     opacity: '0.1s',
   },
 })
+// Vue.use(contenteditable)
 
 Vue.config.productionTip = false
 Vue.prototype.$eventHub = new Vue()

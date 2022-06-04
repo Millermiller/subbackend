@@ -80,15 +80,17 @@ export default class Intro extends Entity {
   }
 
   toDTO(): IntroForm {
-    return {
-      id: this._id,
-      page: this._page,
-      target: this._target,
-      content: this._content,
-      position: this._position,
-      headerText: this._headerText,
-      sort: this._sort,
-      active: this._active
-    }
+    const dto = new IntroForm()
+
+    dto.id = this._id
+    dto.page = this._page
+    dto.target = this._target
+    dto.content = this._content
+    dto.position = this._position
+    dto.headerText = this._headerText
+    dto.sort = this._sort
+    dto.active = this._active
+
+    return dto
   }
 }

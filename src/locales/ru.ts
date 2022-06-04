@@ -1,4 +1,5 @@
 export const messages = {
+  all: 'Все',
   dashboard: 'Дашборд',
   sentences: 'Предложения',
   sentence: 'Предложение',
@@ -113,5 +114,12 @@ export const messages = {
   updateIntro: 'Изменить',
   createCategory: 'Создать категорию',
   updateCategory: 'Изменить категорию',
-  blog: 'Блог'
+  blog: 'Блог',
+  type: 'Тип',
+  asset: {
+    words: 'Слова',
+    sentences: 'Предложения',
+    personal: 'Персональные',
+    favourites: 'Избранное',
+  }
 }

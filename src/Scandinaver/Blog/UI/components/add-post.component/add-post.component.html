@@ -1,10 +1,10 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <b-field :label="$t('title')">
+      <b-field :label="$tc('title')">
         <b-input v-model="post.title" required="required"></b-input>
       </b-field>
-      <b-field :label="$t('preview')">
+      <b-field :label="$tc('preview')">
         <b-input v-model="post.anonse" type="textarea"></b-input>
       </b-field>
       <editor v-model="post.content"
@@ -28,8 +28,8 @@
                      bullist numlist outdent indent | removeformat | help'
        }"
       />
-      <b-field :label="$t('category')">
-        <b-select :placeholder="$t('selectCategory')" v-model="post.category">
+      <b-field :label="$tc('category')">
+        <b-select :placeholder="$tc('selectCategory')" v-model="post.category">
           <option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</option>
         </b-select>
       </b-field>

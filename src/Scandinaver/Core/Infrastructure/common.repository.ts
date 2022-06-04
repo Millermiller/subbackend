@@ -17,7 +17,9 @@ export class CommonRepository<D extends Entity> {
 
   public async paginate(filters: FiltersData): Promise<PaginatedResponse<D>> {
     return this.api.all(filters).then(response => ({
+      // @ts-ignore
       data: plainToClass<D, D>(this.api.class, response.data),
+      // @ts-ignore
       meta: response.meta // TODO: inherit AxiosResponse
     }))
   }

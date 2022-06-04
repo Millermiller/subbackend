@@ -25,12 +25,12 @@ const routes = [
           type: 'main',
           label: i18n.t('payments'),
         },
-        component: () => import('@/Scandinaver/Billing/UI/list-payments.component/index.vue'),
+        component: () => import('@/Scandinaver/Billing/UI/components/list-payments.component/index.vue'),
       },
       {
         name: 'orders',
         path: 'orders',
-        component: () => import('@/Scandinaver/Billing/UI/list-orders.component/index.vue'),
+        component: () => import('@/Scandinaver/Billing/UI/components/list-orders.component/index.vue'),
         meta: {
           menuitem: true,
           permission: permissions.VIEW_POSTS,
@@ -48,7 +48,7 @@ const routes = [
           menuitem: true,
           label: i18n.t('plans'),
         },
-        component: () => import('@/Scandinaver/Billing/UI/list-plans.component/index.vue'),
+        component: () => import('@/Scandinaver/Billing/UI/components/list-plans.component/index.vue'),
       },
     ],
   },

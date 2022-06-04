@@ -1,0 +1,98 @@
+<b-modal :active.sync="visible"
+         :width="960"
+         class="w960"
+         has-modal-card="has-modal-card"
+>
+  <header class="modal-card-head">
+    <p class="modal-card-title">{{ $tc('editCard') }}</p>
+    <button
+      type="button"
+      class="delete"
+      @click="close()" />
+  </header>
+  <div class="modal-card" style="width: 960px">
+    <b-loading :is-full-page="false" :active="loading" :can-cancel="true"/>
+    <section class="modal-card-body">
+      <section class="box">
+        <div class="header">
+          <b-field :grouped="true" group-multiline>
+            <div class="control">
+              <b-taglist :attached="true">
+                <b-tag type="is-dark">Card</b-tag>
+                <b-tag type="is-info">{{ editedCard.id }}</b-tag>
+              </b-taglist>
+            </div>
+            <div class="control" v-if="editedCard.term">
+              <b-taglist attached>
+                <b-tag type="is-dark">Term</b-tag>
+                <b-tag type="is-info">{{ editedCard.term.id }}</b-tag>
+              </b-taglist>
+            </div>
+            <div class="control" v-if="editedCard.translate">
+              <b-taglist attached>
+                <b-tag type="is-dark">Translate</b-tag>
+                <b-tag type="is-info">{{ editedCard.translate.id }}</b-tag>
+              </b-taglist>
+            </div>
+          </b-field>
+        </div>
+        <div class="columns">
+          <div class="column is-5" v-if="editedCard.term">
+            <b-field label="Term">
+              <b-input type="textarea"
+                       placeholder="text"
+                       v-model="editedCard.term.value"
+                       style="width: 300px;height: 100px;" />
+            </b-field>
+          </div>
+          <div class="column is-5" v-if="editedCard.translate">
+            <b-field label="Translate">
+              <b-input type="textarea"
+                       placeholder="text"
+                       v-model="editedCard.translate.value"
+                       style="width: 300px;" />
+            </b-field>
+          </div>
+        </div>
+        <div class="example-section">
+          <h2 class="subtitle is-5">
+            {{ $t('examples') }}
+            <span @click="addExample()" class="button is-success pull-right">{{ $t('add') }}</span>
+          </h2>
+          <div>
+            <ModalExampleComponent
+              v-for="(item, index) in editedCard.examples"
+              :item="item"
+              :index="index"
+              :key="item.id"
+              v-on:remove="removeExample"
+            >
+            </ModalExampleComponent>
+          </div>
+        </div>
+        <!--
+        <div class="audio-section">
+          <audio ref="audio" :src="./editedCard.word.audio" preload="auto"></audio>
+          <a :class="['button', 'is-small']" @click="play()">
+            <span class="icon">
+              <i class="fa fa-volume-up"></i>
+            </span>
+          </a>
+          <form enctype="multipart/form-data" action="" method="post" name="addAudio" ref="audioform">
+            <input type="file" name="audiofile" @change="bindFile" />
+            <a class="button is-success" @click="updateAudio()">{{ $t('uploadAudio') }}</a>
+          </form>
+        </div>
+        -->
+      </section>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button" type="button" @click="close()">
+        {{ $t('close') }}
+      </button>
+      <button class="button is-primary" @click="save()">
+        {{ $t('save') }}
+      </button>
+    </footer>
+  </div>
+</b-modal>

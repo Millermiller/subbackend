@@ -1,7 +1,6 @@
 import { Inject, Service } from 'typedi'
 import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { Item } from '@/Scandinaver/Statistic/Domain/Item'
-import { ItemForm } from '@/Scandinaver/Statistic/Domain/ItemForm'
 import SettingRepository from '@/Scandinaver/Statistic/Infrastructure/statistic.repository'
 import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
@@ -19,11 +18,7 @@ export default class StatisticService extends BaseService<Item> {
     return this.statisticRepository.delete(entity)
   }
 
-  fromDTO(dto: ItemForm): Item {
-    return undefined;
-  }
-
-  getAll(filters: FiltersData): Promise<Item[]> {
+  get(filters: FiltersData): Promise<Item[]> {
     return this.statisticRepository.all(filters)
   }
 

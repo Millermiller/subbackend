@@ -57,12 +57,14 @@ export default class Permission extends Entity {
   }
 
   toDTO(): PermissionForm {
-    return {
-      id: this._id,
-      name: this._name,
-      slug: this._slug,
-      description: this._description,
-      group: this._group === null ? null : this._group.getId(),
-    }
+    const dto = new PermissionForm()
+
+    dto.id = this._id
+    dto.name = this._name
+    dto.slug = this._slug
+    dto.description = this._description
+    dto.group = this._group === null ? null : this._group.getId()
+
+    return dto
   }
 }

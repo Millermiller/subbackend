@@ -19,7 +19,7 @@ export default class BlogService extends BaseService<Post> {
     return this.repository.one(id)
   }
 
-  public async getAll(filters: FiltersData): Promise<PaginatedResponse<Post>> {
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Post>> {
     return this.repository.paginate(filters)
   }
 
@@ -33,9 +33,5 @@ export default class BlogService extends BaseService<Post> {
 
   public async update(post: Post, data: any): Promise<Post> {
     return this.repository.update(post, data)
-  }
-
-  fromDTO(dto: EntityForm): Post {
-    return undefined;
   }
 }

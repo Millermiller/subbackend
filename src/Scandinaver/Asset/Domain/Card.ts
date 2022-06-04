@@ -1,4 +1,4 @@
-import { Word } from '@/Scandinaver/Asset/Domain/Word'
+import { Term } from '@/Scandinaver/Asset/Domain/Term'
 import Translate from '@/Scandinaver/Asset/Domain/Translate'
 import { User } from '@/Scandinaver/Core/Domain/User'
 import { Asset } from '@/Scandinaver/Asset/Domain/Asset'
@@ -12,13 +12,13 @@ export class Card extends Entity {
   private _sentence: boolean
   private _favourite?: boolean
   private _asset: Asset
-  private _term: Word
+  private _term: Term
   private _translate!: Translate
   private _user: User
   private _examples: Example[] = []
 
-  @Type(() => Word)
-  set term(value: Word) {
+  @Type(() => Term)
+  set term(value: Term) {
     this._term = value
   }
 
@@ -33,7 +33,7 @@ export class Card extends Entity {
   }
 
   @Type(() => Example)
-  set examples(value: Example[]) {
+  set example(value: Example[]) {
     this._examples = value
   }
 
@@ -73,7 +73,7 @@ export class Card extends Entity {
     this._asset = value
   }
 
-  get term(): Word {
+  get term(): Term {
     return this._term
   }
 
@@ -98,12 +98,14 @@ export class Card extends Entity {
   }
 
   toDTO(): CardForm {
-    return {
-      id: this._id,
-      term: this._term,
-      translate: this._translate,
-      user: this._user,
-      examples: this._examples,
-    }
+    const dto = new CardForm()
+
+    dto.id = this._id
+    dto.term = this._term.toDTO()
+    dto.translate = this._translate.toDTO()
+    dto.user = this._user
+    dto.examples = this._examples.map(item => item.toDTO())
+
+    return dto
   }
 }

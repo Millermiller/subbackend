@@ -1,4 +1,4 @@
-import _Vue from "vue";
+import _Vue from 'vue';
 import { ColorModifiers, GlobalPositions } from './helpers'
 
 export declare type DialogConfig = {

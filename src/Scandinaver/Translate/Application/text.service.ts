@@ -5,28 +5,33 @@ import { BaseService } from '@/Scandinaver/Core/Application/base.service'
 import { store } from '@/Scandinaver/Core/Infrastructure/store'
 import { Translate } from '../Domain/Translate'
 import { TranslateForm } from '@/Scandinaver/Translate/Domain/TranslateForm'
+import { FiltersData } from '@/Scandinaver/Core/Application/FiltersData'
+import { PaginatedResponse } from '@/Scandinaver/Core/Infrastructure/PaginatedResponse'
 
 @Service()
 export default class TextService extends BaseService<Translate> {
   @Inject()
   private readonly textRepository: TextRepository
 
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Translate>> {
+    return this.textRepository.paginate(filters);
+  }
+
   public async create(data: TranslateForm): Promise<Translate> {
     data.language = store.getters.language
     return this.textRepository.create(data);
   }
 
-  public async getAll(): Promise<Translate[]> {
-    const { language } = store.getters
-    return this.textRepository.allByLanguage(language);
-  }
-
-  public async getText(id: number): Promise<Translate> {
-    return this.textRepository.one(id)
+  public async update(translate: Translate): Promise<any> {
+    await this.textRepository.update(translate, translate.toDTO())
   }
 
   public async destroy(translate: Translate): Promise<void> {
     return this.textRepository.delete(translate);
+  }
+
+  public async getText(id: number): Promise<Translate> {
+    return this.textRepository.one(id)
   }
 
   public async publishText(translate: Translate): Promise<Translate> {
@@ -55,18 +60,6 @@ export default class TextService extends BaseService<Translate> {
 
   public async saveDescription(translate: Translate, description: string): Promise<any> {
     translate.description = description
-    await this.textRepository.update(translate, translate.toDTO())
-  }
-
-  public fromDTO(dto: TranslateForm): Translate {
-    const translate = new Translate()
-    translate.id = dto.id
-    translate.title = dto.title
-    translate.translate = dto.translate
-    return translate
-  }
-
-  public async update(translate: Translate): Promise<any> {
     await this.textRepository.update(translate, translate.toDTO())
   }
 }

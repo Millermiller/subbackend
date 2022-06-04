@@ -10,15 +10,11 @@ export default class MessageService extends BaseService<Message> {
   @Inject()
   private readonly repository: MessageRepository
 
-  public fromDTO(dto: EntityForm): Message {
-    return undefined
-  }
-
   public create(input: any): Message {
     return new Message();
   }
 
-  public async getAll(filters: FiltersData): Promise<Message[]> {
+  public async get(filters: FiltersData): Promise<Message[]> {
     return this.repository.all(filters)
   }
 

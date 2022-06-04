@@ -40,11 +40,13 @@ export default class PermissionGroup extends Entity {
   }
 
   toDTO(): PermissionGroupForm {
-    return {
-      id: this._id,
-      name: this._name,
-      slug: this._slug,
-      description: this._description,
-    }
+    const dto = new PermissionGroupForm()
+
+    dto.id = this._id
+    dto.name = this._name
+    dto.slug = this._slug
+    dto.description = this._description
+
+    return dto
   }
 }

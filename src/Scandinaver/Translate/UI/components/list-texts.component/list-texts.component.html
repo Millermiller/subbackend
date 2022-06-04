@@ -1,0 +1,82 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <h4 class="title text-center">{{ $t('texts') }}</h4>
+    <b-field>
+      <Can :do="permissions.CREATE_TEXT">
+        <button class="button is-success" @click="showCreateFormModal()">{{ $t('add') }}</button>
+      </Can>
+    </b-field>
+    <b-table
+      :data="entities"
+      v-bind="tableProperties"
+      v-on="tableEvents">
+      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+        {{ props.row.getId() }}
+      </b-table-column>
+      <b-table-column field="level" label="level" sortable v-slot="props">
+        {{ props.row.level }}
+      </b-table-column>
+      <b-table-column field="title" label="title" sortable v-slot="props">
+        {{ props.row.title }}
+      </b-table-column>
+      <b-table-column field="description" label="description" sortable v-slot="props">
+        {{ props.row.description }}
+      </b-table-column>
+      <b-table-column field="image" label="" width="90" v-slot="props">
+        <img class="avatar-small" :src="props.row.image" />
+      </b-table-column>
+      <b-table-column field="published" label="Published" sortable v-slot="props">
+        <b-tag :type="tagClass(props.row.isPublished())">{{ props.row.isPublished() }}</b-tag>
+      </b-table-column>
+      <b-table-column custom-key="actions" v-slot="props">
+        <Can :do="permissions.UPDATE_TEXT">
+          <button class="button is-warning is-small" @click="edit(props.row)">
+            <b-icon icon="pencil" size="is-small"></b-icon>
+          </button>
+        </Can>
+        <Can :do="permissions.UPDATE_TEXT">
+          <button class="button is-warning is-small ml-1" @click="setVisibility(props.row)">
+            <b-icon :icon="icon(props.row)" size="is-small"></b-icon>
+          </button>
+        </Can>
+        <Can :do="permissions.DELETE_TEXT">
+          <button class="button is-danger is-small ml-1" @click="remove(props.row)">
+            <b-icon icon="close-circle" size="is-small"></b-icon>
+          </button>
+        </Can>
+      </b-table-column>
+    </b-table>
+  </article>
+  <b-modal :active.sync="isComponentModalActive" @close="close" has-modal-card>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">New text</p>
+        <button
+          type="button"
+          class="delete"
+          @click="closeCreateFormModal()" />
+      </header>
+      <section class="modal-card-body">
+        <b-field label="Title">
+          <input class="input" type="text" v-model="form.title" :placeholder="$t('title')" />
+        </b-field>
+        <b-field label="Orig (Должно заканчиваться точкой!)">
+          <b-input type="textarea" v-model="form.original"></b-input>
+        </b-field>
+        <b-field label="Translate">
+          <b-input type="textarea" v-model="form.translate"></b-input>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="closeCreateFormModal()">
+          {{ $t('close') }}
+        </button>
+        <button class="button is-primary" @click="add()">
+          {{ $t('save') }}
+        </button>
+      </footer>
+    </div>
+  </b-modal>
+</div>
+
+

@@ -55,7 +55,7 @@ export default class MessagesPage extends Vue {
 
   private async load(): Promise<void> {
     this.loading = true
-    this.messages = await this.service.getAll(new FiltersData())
+    this.messages = await this.service.get(new FiltersData())
     this.loading = false
   }
 

@@ -23,7 +23,7 @@
     "core-js": "^3.4.4",
     "fibers": "^5.0.0",
     "json-api-deserialize": "0.0.4",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "sass": "^1.25.0",

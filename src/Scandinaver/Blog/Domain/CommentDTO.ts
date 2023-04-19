@@ -5,5 +5,4 @@ export default class CommentDTO extends EntityForm<Comment> {
   fromDTO(): Comment {
     return undefined;
   }
-
 }

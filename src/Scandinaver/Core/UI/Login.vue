@@ -10,7 +10,7 @@
                 {{ error }}
               </small>
               <b-field label="Login" :type="{ 'is-danger': loginerror }" :message="loginerror">
-                <b-input v-model="form.login" placeholder="Login" maxlength="30"></b-input>
+                <b-input v-model="form.username" placeholder="Login" maxlength="30"></b-input>
               </b-field>
 
               <b-field label="Password" :type="{ 'is-danger': passerror }" :message="passerror">
@@ -48,7 +48,7 @@ export default class Login extends Vue {
   private isLoading: boolean = false
 
   private form: ILoginForm = {
-    login: '',
+    username: '',
     password: '',
   }
 

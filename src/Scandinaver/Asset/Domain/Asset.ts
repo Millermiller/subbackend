@@ -11,7 +11,7 @@ export class Asset extends Entity {
   private _id: number
   private _cards: Collection<Card>
   private _title: string
-  private _type: AssetType
+  private _category: AssetType
   private _level: number
   private _basic: boolean
   private _language: Language
@@ -55,12 +55,12 @@ export class Asset extends Entity {
     this._level = value
   }
 
-  get type(): AssetType {
-    return this._type
+  get category(): AssetType {
+    return this._category
   }
 
-  set type(value: AssetType) {
-    this._type = value
+  set category(value: AssetType) {
+    this._category = value
   }
 
   get basic(): boolean {
@@ -93,7 +93,7 @@ export class Asset extends Entity {
   }
 
   get stringType(): string {
-    switch (this._type) {
+    switch (this._category) {
       case AssetType.WORDS:
         return i18n.tc('asset.words')
       case AssetType.SENTENCES:
@@ -115,7 +115,7 @@ export class Asset extends Entity {
     dto.title = this._title
     dto.level = this._level
     dto.basic = this._basic
-    dto.type = this._type
+    dto.type = this._category
     dto.sorting = this.calculateSorting()
 
     return dto

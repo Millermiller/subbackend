@@ -16,7 +16,7 @@ export default class AssetDTO extends EntityForm<Asset> {
     asset.id = this.id
     asset.title = this.title
     asset.level = this.level
-    asset.type = this.type
+    asset.category = this.type
 
     return asset
   }

@@ -1,12 +1,19 @@
 <div class="tile is-parent">
   <article class="tile is-child box">
-    <h4 class="title text-center">{{ $t('roles') }}</h4>
+    <h4 class="title">
+      {{ $t('roles') }}
+      <b-icon
+        icon="autorenew"
+        size="is-small"
+        :class="['pointer', 'is-pulled-right', {'rotating': loading}]"
+        @click.native="reload()">
+      </b-icon>
+    </h4>
     <b-field>
       <Can :do='permissions.CREATE_ROLE'>
         <button class="button is-success" @click="showModalForm()">{{ $t('add') }}</button>
       </Can>
     </b-field>
-    <b-field> </b-field>
     <b-table
       :data="entities"
       v-bind="tableProperties"

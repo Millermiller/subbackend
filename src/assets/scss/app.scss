@@ -25,3 +25,13 @@ span[tooltip]:hover {
     background-color: #fff;
   }
 }
+
+@keyframes loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: loading-rotate 0.4s linear infinite;
+}

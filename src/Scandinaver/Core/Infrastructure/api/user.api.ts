@@ -6,7 +6,7 @@ import { deserialize } from 'json-api-deserialize'
 export interface ILoginData {
   state: any
   message: string
-  access_token: string
+  token: string
 }
 
 export namespace API {
@@ -14,7 +14,7 @@ export namespace API {
   export class UserAPI {
     public static login(data: ILoginForm): Promise<AxiosResponse<ILoginData>> {
       const request = axios.create({
-        baseURL: process.env.VUE_APP_BASE_API || 'https://api.scandinaver.org',
+        baseURL: process.env.VUE_APP_BASE_API,
         timeout: 5000,
       })
       return request.post('/login', data)

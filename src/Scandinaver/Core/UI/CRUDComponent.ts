@@ -67,7 +67,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
   async mounted(): Promise<void> {
     this.filters.page = this.page
     this.filters.pageSize = this.config.per_page
-    console.log(this.filters)
+    // console.log(this.filters)
     if (this.watchLanguage === true) {
       if (this.language.id !== undefined) {
         await this.load()
@@ -89,7 +89,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
 
   protected async load(): Promise<void> {
     this.loading = true
-    console.log(this.filters)
+    // console.log(this.filters)
     const paginatedData: PaginatedResponse<T> = await this.service.get(this.filters)
     this.entities = paginatedData.data
     this.config = paginatedData.meta.pagination
@@ -196,5 +196,10 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
 
   public reset() {
     this.filters = new FiltersData()
+  }
+
+  async reload(): Promise<void> {
+    console.log('reload')
+    await this.load()
   }
 }

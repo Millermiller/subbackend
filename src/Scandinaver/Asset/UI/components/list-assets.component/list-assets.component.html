@@ -17,7 +17,7 @@
       :has-detailed-visible="(row, index) => row.cards.count() > 0"
       detailed
       detail-key="id">
-      <b-table-column field="asset.id" label="ID" width="40" sortable searchable numeric v-slot="props">
+      <b-table-column field="asset.id" label="ID" width="320" sortable searchable v-slot="props">
         {{ props.row.id }}
       </b-table-column>
 

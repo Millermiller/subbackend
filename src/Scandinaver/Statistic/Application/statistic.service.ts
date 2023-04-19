@@ -10,23 +10,19 @@ export default class StatisticService extends BaseService<Item> {
   @Inject()
   private readonly statisticRepository: SettingRepository
 
-  create(input: any): Promise<Item> | Item {
+  public async create(input: any): Promise<Item> {
     return new Item();
   }
 
-  destroy(entity: Item): Promise<void> {
+  public async destroy(entity: Item): Promise<void> {
     return this.statisticRepository.delete(entity)
   }
 
-  get(filters: FiltersData): Promise<Item[]> {
-    return this.statisticRepository.all(filters)
-  }
-
-  public async filter(filters: FiltersData): Promise<PaginatedResponse<Item>> {
+  public async get(filters: FiltersData): Promise<PaginatedResponse<Item>> {
     return this.statisticRepository.paginate(filters)
   }
 
-  update(entity: Item, data: any): Promise<Item> {
+  public async update(entity: Item, data: any): Promise<Item> {
     return Promise.resolve(undefined);
   }
 }

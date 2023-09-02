@@ -9,9 +9,9 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import Navbar from '@/Scandinaver/Core/UI/Navbar.vue'
-import Sidebar from '@/Scandinaver/Core/UI/Sidebar.vue'
-import AppMain from '@/Scandinaver/Core/UI/AppMain.vue'
+import Navbar from '@/app/Core/UI/Navbar.vue'
+import Sidebar from '@/app/Core/UI/Sidebar.vue'
+import AppMain from '@/app/Core/UI/AppMain.vue'
 import { permissions } from './permissions/permission.type'
 
 @Component({

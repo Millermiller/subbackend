@@ -1,6 +1,6 @@
 declare module 'vue-user' {
   import { PluginFunction } from 'vue'
-  import { IUser } from '@/Scandinaver/Core/Domain/User'
+  import { IUser } from '@/app/Core/Domain/User'
 
   const install: PluginFunction<{}>
 

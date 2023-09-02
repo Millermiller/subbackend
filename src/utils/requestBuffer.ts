@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Vue from 'vue'
 import { SnackbarProgrammatic as Snackbar } from 'buefy'
-import { store } from '@/Scandinaver/Core/Infrastructure/store'
+import { store } from '@/app/Core/Infrastructure/store'
+import TokenService from '@/app/Core/Application/token.service';
 
 const requestBuffer = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -16,8 +17,8 @@ requestBuffer.interceptors.request.use(
       config.baseURL += `/${language}`
     }
     config.responseType = 'arraybuffer'
-    const cookieName = (process.env.VUE_APP_COOKIE_NAME as string) || 'authfrontend._token'
-    config.headers.common.Authorization = Vue.$cookies.get(cookieName)
+    const token = TokenService.getToken()
+    config.headers.common.Authorization = `Bearer ${token}`
     return config
   },
   (error) => {

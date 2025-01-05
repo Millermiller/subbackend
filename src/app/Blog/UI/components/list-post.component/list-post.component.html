@@ -2,10 +2,6 @@
   <article class="tile is-child box">
     <h4 class="title text-center">{{ $t('posts') }}</h4>
     <b-field>
-      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
-      <p class="control">
-        <button class="button is-info" @click="find()">{{ $t('search') }}</button>
-      </p>
       <Can :do="permissions.CREATE_POST">
         <button class="button is-success" @click="create()">{{ $t('add') }}</button>
       </Can>
@@ -14,28 +10,28 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+      <b-table-column field="id" label="ID" width="40" :sortable="true" v-slot="props">
         {{ props.row.id }}
       </b-table-column>
-      <b-table-column field="title" label="Title" sortable searchable v-slot="props">
+      <b-table-column field="title" label="Title" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.title }}
       </b-table-column>
-      <b-table-column field="category.name" label="Category" sortable searchable v-slot="props">
+      <b-table-column field="category.name" label="Category" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.category.title }}
       </b-table-column>
-      <b-table-column field="category.name" label="Autor" sortable searchable v-slot="props">
+      <b-table-column field="category.name" label="Autor" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.user.login }}
       </b-table-column>
-      <b-table-column field="views" label="Views" sortable centered v-slot="props">
+      <b-table-column field="views" label="Views" :sortable="true" :centered="true" v-slot="props">
         {{ props.row.views }}
       </b-table-column>
-      <b-table-column field="comments" label="comments" sortable centered v-slot="props">
+      <b-table-column field="comments" label="comments" :sortable="true" :centered="true" v-slot="props">
         {{ props.row.comments.length }}
       </b-table-column>
-      <b-table-column field="status" label="status" sortable centered v-slot="props">
+      <b-table-column field="status" label="status" :sortable="true" :centered="true" v-slot="props">
         {{ props.row.status }}
       </b-table-column>
-      <b-table-column field="created_at" label="created_at" sortable centered v-slot="props">
+      <b-table-column field="created_at" label="created_at" :sortable="true" :centered="true" v-slot="props">
         <span class="light tag"> {{ new Date(props.row.created_at).toLocaleDateString() }}</span>
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">

@@ -45,18 +45,18 @@
       <form class="modal-card" style="width: 400px" @submit.prevent="save()">
         <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
         <section class="modal-card-body">
-          <b-field label="Title" required>
-            <b-input v-model="edited.title" type="text"></b-input>
+          <b-field label="Title" :message="formErrors.title" :type="{ 'is-danger': formErrors.title }">
+            <b-input v-model="edited.title" type="text" @input="formErrors.title = null"></b-input>
           </b-field>
         </section>
         <section class="modal-card-body">
-          <b-field label="Slug" required>
-            <b-input type="text" v-model="edited.slug"></b-input>
+          <b-field label="Slug" :message="formErrors.slug" :type="{ 'is-danger': formErrors.slug }">
+            <b-input type="text" v-model="edited.slug" @input="formErrors.slug = null"></b-input>
           </b-field>
         </section>
         <section class="modal-card-body">
-          <b-field label="Type">
-            <b-select placeholder="Select a type" required v-model="edited.type">
+          <b-field label="Type" :message="formErrors.type" :type="{ 'is-danger': formErrors.type }">
+            <b-select placeholder="Select a type" @input="formErrors.type = null" v-model="edited.type">
               <option value="string">String</option>
               <option value="number">Number</option>
               <option value="boolean">Boolean</option>

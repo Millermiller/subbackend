@@ -23,7 +23,7 @@ export class LoginService {
           }
         },
         (response) => {
-          reject(response.response.data)
+          reject(response)
         },
       )
     })

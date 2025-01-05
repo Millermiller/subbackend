@@ -10,13 +10,13 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="category.id" label="ID" width="80" sortable searchable v-slot="props">
+      <b-table-column field="category.id" label="ID" width="80" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.id }}
       </b-table-column>
-      <b-table-column field="category.title" label="Name" sortable searchable v-slot="props">
+      <b-table-column field="category.title" label="Name" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.title }}
       </b-table-column>
-      <b-table-column custom-key="actions" v-slot="props" numeric>
+      <b-table-column custom-key="actions" v-slot="props" :numeric="true">
         <Can :do="permissions.UPDATE_CATEGORY">
           <button class="button is-warning is-small" @click="edit(props.row)">
             <b-icon icon="pencil" size="is-small"></b-icon>
@@ -41,8 +41,8 @@
         <div class="modal-card" style="width: 400px">
           <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
           <section class="modal-card-body">
-            <b-field :label="$t('title')">
-              <b-input type="text" v-model="edited.title"></b-input>
+            <b-field :label="$t('title')" :message="formErrors.title" :type="{ 'is-danger': formErrors.title }">
+              <b-input type="text" v-model="edited.title" @input="formErrors.title = null"></b-input>
             </b-field>
           </section>
           <footer class="modal-card-foot">

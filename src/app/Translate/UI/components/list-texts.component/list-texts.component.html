@@ -10,22 +10,22 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+      <b-table-column field="id" label="ID" width="40" :sortable="true" :numeric="true" v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
-      <b-table-column field="level" label="level" sortable v-slot="props">
+      <b-table-column field="level" label="level" :sortable="true" v-slot="props">
         {{ props.row.level }}
       </b-table-column>
-      <b-table-column field="title" label="title" sortable v-slot="props">
+      <b-table-column field="title" label="title" :sortable="true" v-slot="props">
         {{ props.row.title }}
       </b-table-column>
-      <b-table-column field="description" label="description" sortable v-slot="props">
+      <b-table-column field="description" label="description" :sortable="true" v-slot="props">
         {{ props.row.description }}
       </b-table-column>
       <b-table-column field="image" label="" width="90" v-slot="props">
-        <img class="avatar-small" :src="props.row.image" />
+        <img class="avatar-small" :src="props.row.image"  alt=""/>
       </b-table-column>
-      <b-table-column field="published" label="Published" sortable v-slot="props">
+      <b-table-column field="published" label="Published" :sortable="true" v-slot="props">
         <b-tag :type="tagClass(props.row.isPublished())">{{ props.row.isPublished() }}</b-tag>
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">
@@ -47,7 +47,7 @@
       </b-table-column>
     </b-table>
   </article>
-  <b-modal :active.sync="isComponentModalActive" @close="close" has-modal-card>
+  <b-modal :active.sync="isComponentModalActive" @close="close" :has-modal-card="true">
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">New text</p>

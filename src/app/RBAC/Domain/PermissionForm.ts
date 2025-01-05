@@ -2,10 +2,10 @@ import { EntityForm } from '@/app/Core/Domain/Contract/EntityForm'
 import Permission from '@/app/RBAC/Domain/Permission'
 
 export class PermissionForm extends EntityForm<Permission> {
-  name: string
-  slug: string
-  description: string
-  group: number | null
+  name: string = null
+  slug: string = null
+  description: string = null
+  groupId: number | null = null
 
   public fromDTO(): Permission {
     const permission = new Permission()

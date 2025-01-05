@@ -11,19 +11,19 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="id" label="ID" width="80" sortable searchable v-slot="props">
+      <b-table-column field="id" label="ID" width="80" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
 
-      <b-table-column field="title" label="Title" sortable searchable v-slot="props">
+      <b-table-column field="title" label="Title" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.name }}
       </b-table-column>
 
-      <b-table-column field="slug" label="Slug" sortable searchable v-slot="props">
+      <b-table-column field="slug" label="Slug" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.slug }}
       </b-table-column>
 
-      <b-table-column field="description" label="Description" sortable searchable v-slot="props">
+      <b-table-column field="description" label="Description" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.description }}
       </b-table-column>
 
@@ -45,22 +45,22 @@
     <div class="modal-card" style="width: 400px">
       <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
-        <b-field label="Title">
-          <b-input type="text" v-model="edited.name"></b-input>
+        <b-field label="Title" :message="formErrors.name" :type="{'is-danger': formErrors.name}">
+          <b-input type="text" v-model="edited.name" @input="formErrors.name = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Slug">
-          <b-input type="text" v-model="edited.slug"></b-input>
+        <b-field label="Slug" :message="formErrors.slug" :type="{'is-danger': formErrors.slug}">
+          <b-input type="text" v-model="edited.slug" @input="formErrors.slug = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Description">
-          <b-input type="textarea" v-model="edited.description"></b-input>
+        <b-field label="Description" :message="formErrors.description" :type="{'is-danger': formErrors.description}">
+          <b-input type="textarea" v-model="edited.description" @input="formErrors.description = null"></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="closeModalForm">
+        <button class="button" type="button" @click="closeModalForm()">
           {{ $t('close') }}
         </button>
         <button class="button is-primary" @click="save()">

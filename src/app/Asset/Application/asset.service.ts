@@ -32,6 +32,7 @@ export default class AssetService extends BaseService<Asset> {
 
   public async create(data: AssetDTO): Promise<Asset> {
     data.language = store.getters.language.letter
+    data.level = Number(data.level)
     return this.repository.create(data)
   }
 

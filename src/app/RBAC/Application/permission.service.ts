@@ -16,16 +16,8 @@ export default class PermissionService extends BaseService<Permission> {
     return this.permissionRepository.paginate(filters)
   }
 
-  public async create(input: PermissionForm): Promise<Permission> {
-    const permission = new Permission()
-    permission.name = input.name
-    permission.slug = input.slug
-    permission.description = input.description
-    if (input.group) {
-      permission.group = new PermissionGroup()
-      permission.group.id = input.group
-    }
-    return this.permissionRepository.create(permission.toDTO())
+  public async create(permissionForm: PermissionForm): Promise<Permission> {
+    return this.permissionRepository.create(permissionForm)
   }
 
   public async update(permission: Permission, data: PermissionForm): Promise<Permission> {

@@ -16,10 +16,10 @@
         <b-table
           :data="log"
           paginated="paginated"
-          backend-pagination
-          backend-sorting
-          backend-filtering
-          sort-multiple
+          :backend-pagination="true"
+          :backend-sorting="true"
+          :backend-filtering="true"
+          :sort-multiple="true"
           :sort-multiple-data="filters.sort"
           @page-change="onPageChange"
           @filters-change="onFiltersChange"
@@ -31,24 +31,24 @@
           :narrowed=true
           :loading="loading"
           :default-sort-direction="defaultSortDirection"
-          :row-class="(row, index) => row.level"
-          :has-detailed-visible="(row, index) => row.extra.length > 0"
+          :row-class="(row) => row.level"
+          :has-detailed-visible="(row) => row.extra.length > 0"
           default-sort="id"
-          detailed
+          :detailed="true"
           detail-key="id">
-            <b-table-column field="log.id" label="ID" width="80" sortable searchable v-slot="props">
+            <b-table-column field="log.id" label="ID" width="80" :ortable="true" :searchable="true" v-slot="props">
               {{ props.row.id }}
             </b-table-column>
 
-            <b-table-column field="log.message" label="message" sortable searchable v-slot="props">
+            <b-table-column field="log.message" label="message" :sortable="true" :searchable="true" v-slot="props">
               {{ props.row.message }}
             </b-table-column>
 
-            <b-table-column field="owner.login" label="user" sortable searchable width="140" v-slot="props">
+            <b-table-column field="owner.login" label="user" :sortable="true" :searchable="true" width="140" v-slot="props">
               {{ props.row.owner ? props.row.owner.login : '' }}
             </b-table-column>
 
-            <b-table-column field="log.createdAt" label="created_at" sortable centered v-slot="props">
+            <b-table-column field="log.createdAt" label="created_at" :sortable="true" :centered="true" v-slot="props">
               <span class="tag light">
                 {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new Date(props.row.created_at).toLocaleTimeString()}}
               </span>
@@ -61,7 +61,7 @@
                 <b-icon icon="close-circle" size="is-small"></b-icon>
               </button>
             </b-table-column>
-            <template slot="detail" slot-scope="props">
+            <template #detail="props">
               <article class="media">
                 <div class="media-content">
                   <div class="content">

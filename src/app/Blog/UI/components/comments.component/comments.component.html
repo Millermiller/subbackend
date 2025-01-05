@@ -5,15 +5,15 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+      <b-table-column field="id" label="ID" width="40" :sortable="true" :numeric="true" v-slot="props">
         {{ props.row.id }}
       </b-table-column>
 
-      <b-table-column field="post_id" label="Post" sortable v-slot="props">
+      <b-table-column field="post_id" label="Post" :sortable="true" v-slot="props">
         {{ props.row.post_id }}
       </b-table-column>
 
-      <b-table-column field="text" label="text" sortable v-slot="props">
+      <b-table-column field="text" label="text" :sortable="true" v-slot="props">
         {{ props.row.text }}
       </b-table-column>
 

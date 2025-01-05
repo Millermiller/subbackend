@@ -15,6 +15,7 @@ import { Watch } from 'vue-property-decorator'
 @Component
 export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> extends Vue {
   protected abstract service: BaseService<T>
+
   protected abstract buildForm(): D
 
   public loading: boolean = false
@@ -54,20 +55,20 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
       'page-change': this.onPageChange,
       'filters-change': this.onFiltersChange,
       sort: this.onSort,
-      'sorting-priority-removed': this.sortingPriorityRemoved
+      'sorting-priority-removed': this.sortingPriorityRemoved,
     }
   }
 
   constructor() {
     super()
-    this.permissions = permissions;
+    this.permissions = permissions
     this.edited = this.buildForm()
+    this.formErrors = this.buildForm()
   }
 
   async mounted(): Promise<void> {
     this.filters.page = this.page
     this.filters.pageSize = this.config.per_page
-    // console.log(this.filters)
     if (this.watchLanguage === true) {
       if (this.language.id !== undefined) {
         await this.load()
@@ -76,6 +77,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
       await this.load()
     }
   }
+
   get language(): Language {
     return store.getters.language
   }
@@ -89,7 +91,6 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
 
   protected async load(): Promise<void> {
     this.loading = true
-    // console.log(this.filters)
     const paginatedData: PaginatedResponse<T> = await this.service.get(this.filters)
     this.entities = paginatedData.data
     this.config = paginatedData.meta.pagination
@@ -110,8 +111,6 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
     try {
       if (this.edited.id) {
         const entity = this.edited.fromDTO()
-        console.log(this.edited)
-        console.log(entity)
         await this.service.update(entity, this.edited)
         this.$buefy.snackbar.open(this.$tc('updated'))
       } else {
@@ -122,8 +121,17 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
       this.closeModalForm()
       this.loadingModal = false
     } catch (data) {
-      this.formErrors = data.errors
-      // this.$buefy.snackbar.open(error) // its already displayed
+      if (data.status === 422) {
+        this.formErrors = data.violations.reduce((accumulator: any, value: {
+            propertyPath: string
+            title: string
+          }) => ({
+          ...accumulator,
+          [value.propertyPath]: accumulator[value.propertyPath] ? [...accumulator[value.propertyPath], value.title] : [value.title],
+        }),
+        {})
+      }
+    } finally {
       this.loadingModal = false
     }
   }
@@ -152,6 +160,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
     this.isModalFormActive = false
     this.modalTitle = ''
     this.edited = this.buildForm()
+    this.formErrors = this.buildForm()
   }
 
   async onPageChange(page: number) {
@@ -178,7 +187,7 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
 
   async sortingPriorityRemoved(field: string) {
     this.filters.sort = this.filters.sort.filter(
-      priority => priority.field !== field
+      priority => priority.field !== field,
     )
     await this.load()
   }
@@ -194,12 +203,12 @@ export abstract class CRUDComponent<T extends Entity, D extends EntityForm<T>> e
     await this.load()
   }
 
-  public reset() {
+  public async reset() {
     this.filters = new FiltersData()
+    await this.load()
   }
 
   async reload(): Promise<void> {
-    console.log('reload')
     await this.load()
   }
 }

@@ -5,10 +5,10 @@ import { Type } from 'class-transformer'
 
 export default class Permission extends Entity {
   private _id: number
-  private _name: string
-  private _slug: string
-  private _description: string
-  private _group: PermissionGroup | null
+  private _name: string = null
+  private _slug: string = null
+  private _description: string = null
+  private _group: PermissionGroup | null = null
 
   @Type(() => PermissionGroup)
   set group(value: PermissionGroup | null) {
@@ -59,11 +59,11 @@ export default class Permission extends Entity {
   toDTO(): PermissionForm {
     const dto = new PermissionForm()
 
-    dto.id = this._id
+    dto.id = Number(this._id)
     dto.name = this._name
     dto.slug = this._slug
     dto.description = this._description
-    dto.group = this._group === null ? null : this._group.getId()
+    dto.groupId = this._group === null ? null : Number(this._group.getId())
 
     return dto
   }

@@ -2,35 +2,31 @@
   <article class="tile is-child box">
     <h4 class="title text-center">{{ $t('users') }}</h4>
     <b-field>
-      <b-input :placeholder="$t('search')" type="search" icon="magnify" v-model="search"></b-input>
-      <p class="control">
-        <button class="button is-info" @click="find()">Search</button>
-      </p>
       <Can :do="permissions.CREATE_USER">
-        <button class="button is-success ml-10" @click="showModalForm()">{{ $t('add') }}</button>
+        <button class="button is-success" @click="showModalForm()">{{ $t('add') }}</button>
       </Can>
     </b-field>
     <b-table
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-        <b-table-column field="user.id" label="ID" width="80" sortable searchable v-slot="props">
+        <b-table-column field="user.id" label="ID" width="80" :sortable="true" :searchable="true" v-slot="props">
           {{ props.row.id }}
         </b-table-column>
         <b-table-column field="avatar" label="" width="90" v-slot="props">
-          <img class="avatar-small" :src="props.row.avatar" />
+          <img class="avatar-small" :src="props.row.avatar"  alt=""/>
         </b-table-column>
-        <b-table-column field="user.login" label="Login" sortable searchable v-slot="props">
+        <b-table-column field="user.login" label="Login" :sortable="true" :searchable="true" v-slot="props">
           {{ props.row.login }}
         </b-table-column>
-        <b-table-column field="user.email" label="Email" sortable searchable v-slot="props">
+        <b-table-column field="user.email" label="Email" :sortable="true" :searchable="true" v-slot="props">
           {{ props.row.email }}
         </b-table-column>
-        <b-table-column field="user.roles" label="Roles" sortable v-slot="props">
+        <b-table-column field="user.roles" label="Roles" :sortable="true" v-slot="props">
           <b-taglist>
             <Can :do="permissions.UPDATE_USER">
             <b-tag type="is-info"
-                   closable
+                   :closable="true"
                    @close="removeRole(props.row, role)"
                    v-for="role in props.row.roles">{{role.name}}</b-tag>
             </Can>
@@ -46,7 +42,7 @@
           </span>
         </b-table-column>
         -->
-        <b-table-column field="date" label="active_to" sortable="sortable" centered="centered" v-slot="props">
+        <b-table-column field="date" label="active_to" :sortable="true" :centered="true" v-slot="props">
           <span class="tag" :class="type(props.row.active_to)">
             {{ new Date(props.row.active_to).toLocaleDateString() }}
           </span>
@@ -76,26 +72,25 @@
     <form class="modal-card" style="width: 400px" @submit.prevent="save()">
       <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
-        <b-field label="Login">
-          <b-input v-model="edited.login" type="text"></b-input>
+        <b-field label="Login" :message="formErrors.login" :type="{ 'is-danger': formErrors.login }">
+          <b-input v-model="edited.login" type="text" @input="formErrors = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Email">
-          <b-input type="email" v-model="edited.email"></b-input>
+        <b-field label="Email" :message="formErrors.email" :type="{ 'is-danger': formErrors.email }">
+          <b-input type="email" v-model="edited.email" @input="formErrors = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Password">
-          <b-input type="password" v-model="edited.password" icon="magnify"></b-input>
+        <b-field label="Password" :message="formErrors.password" :type="{ 'is-danger': formErrors.password }">
+          <b-input type="text" v-model="edited.password" @input="formErrors.password = null"></b-input>
           <p class="control">
             <button class="button is-primary" @click="generatePassword()" type="button">Generate</button>
           </p>
         </b-field>
-        <small>{{edited.password}}</small>
       </section>
       <section class="modal-card-body">
-        <b-field label="Roles">
+        <b-field label="Roles" :message="formErrors.roles" :type="{ 'is-danger': formErrors.roles }">
           <b-checkbox v-for="role in roles.map(item => item.toDTO())" v-model="edited.roles" :native-value="role">
             {{ role.name }}
           </b-checkbox>

@@ -33,7 +33,7 @@ export abstract class BaseAPI<D extends Entity> {
   }
 
   public async update(id: number|string, form: any): Promise<AxiosResponse<D>> {
-    return request.put(`/${this.baseUrl}/${id}`, form)
+    return request.post(`/${this.baseUrl}/${id}`, form)
   }
 
   public async search(query: string): Promise<AxiosResponse<D[]>> {

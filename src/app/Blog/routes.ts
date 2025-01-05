@@ -29,7 +29,7 @@ const routes = [
       },
       {
         name: 'add-post',
-        path: 'add',
+        path: 'list/add',
         component: () => import('@/app/Blog/UI/components/add-post.component/index.vue'),
         meta: {
           menuitem: false,

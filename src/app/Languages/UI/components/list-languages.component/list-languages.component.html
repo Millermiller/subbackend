@@ -11,21 +11,21 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents"
-      detailed
+      :detailed="true"
       detail-key="_id">
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+      <b-table-column field="id" label="ID" width="40" :sortable="true" :numeric="true" v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
       <b-table-column field="flag" label="flag" width="90" v-slot="props">
         <img class="flag-small" :src="props.row.flag"  alt=""/>
       </b-table-column>
-      <b-table-column field="title" label="Title" sortable searchable v-slot="props">
+      <b-table-column field="title" label="Title" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.title }}
       </b-table-column>
-      <b-table-column field="letter" label="Letter" sortable searchable v-slot="props">
+      <b-table-column field="letter" label="Letter" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.letter }}
       </b-table-column>
-      <b-table-column field="published" label="Published" sortable v-slot="props">
+      <b-table-column field="published" label="Published" :sortable="true" v-slot="props">
         <b-tag :type="tagClass(props.row.active)">{{ props.row.active ? 'true' : 'false' }}</b-tag>
       </b-table-column>
       <b-table-column custom-key="actions" v-slot="props">
@@ -53,20 +53,19 @@
     </header>
     <div class="modal-card">
       <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
-      <div class="box">
+      <section class="modal-card-body">
         <div class="columns">
           <div class="column">
-            <section class="modal-card-body">
+
               <b-field label="Title">
                 <b-input type="text" v-model="edited.title" required></b-input>
               </b-field>
-            </section>
-            <section class="modal-card-body">
+
               <b-field label="Letter">
                 <b-input type="text" v-model="edited.letter" required></b-input>
               </b-field>
-            </section>
-            <section class="modal-card-body">
+
+
               <b-field label="Flag">
                 <b-upload class="file-label" @input="bindFlag($event)">
                 <span class="file-cta">
@@ -74,12 +73,11 @@
                     <span class="file-label">Click to upload</span>
                 </span>
                   <span class="file-name flag-preview-wrapper" v-if="edited.flag">
-                    <img class="image flag-preview" :src="edited.flag" />
+                    <img class="image flag-preview" :src="edited.flag"  alt=""/>
                 </span>
                 </b-upload>
               </b-field>
-            </section>
-            <section class="modal-card-body">
+
               <b-field label="Image">
                 <b-upload class="file-label" @input="bindImage($event)">
                 <span class="file-cta">
@@ -87,14 +85,12 @@
                     <span class="file-label">Click to upload</span>
                 </span>
                   <span class="file-name flag-preview-wrapper" v-if="edited.image">
-                    <img class="image flag-preview" :src="edited.image" />
+                    <img class="image flag-preview" :src="edited.image"  alt=""/>
                 </span>
                 </b-upload>
               </b-field>
-            </section>
           </div>
           <div class="column">
-            <section class="modal-card-body">
               <b-field label="Description">
                 <b-input type="textarea" v-model="edited.description" required></b-input>
               </b-field>
@@ -105,10 +101,9 @@
                   {{ 'active' }}
                 </b-switch>
               </b-field>
-            </section>
           </div>
         </div>
-      </div>
+      </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="closeModalForm()">
           {{ $t('close') }}

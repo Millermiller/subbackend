@@ -3,19 +3,19 @@ import Post from '@/app/Blog/Domain/Post'
 import BlogService from '@/app/Blog/Application/BlogService'
 import { Inject } from 'vue-typedi'
 import { CRUDComponent } from '@/app/Core/UI/CRUDComponent'
-import { PostForm } from '@/app/Blog/Domain/PostForm'
+import { PostDTO } from '@/app/Blog/Domain/PostDTO'
 
 @Component({
   components: {},
 })
-export default class ListPostComponent extends CRUDComponent<Post, PostForm> {
+export default class ListPostComponent extends CRUDComponent<Post, PostDTO> {
   @Inject()
   protected service: BlogService
 
   private search: string = ''
 
-  protected buildForm(): PostForm {
-    return new PostForm()
+  protected buildForm(): PostDTO {
+    return new PostDTO()
   }
 
   // eslint-disable-next-line no-empty-function

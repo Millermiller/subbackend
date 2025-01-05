@@ -10,23 +10,23 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="permission.id" label="ID" width="80" sortable searchable v-slot="props">
+      <b-table-column field="permission.id" label="ID" width="80" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
 
-      <b-table-column field="permission.name" label="Title" sortable searchable v-slot="props">
+      <b-table-column field="permission.name" label="Title" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.name }}
       </b-table-column>
 
-      <b-table-column field="permission.slug" label="Slug" sortable searchable v-slot="props">
+      <b-table-column field="permission.slug" label="Slug" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.slug }}
       </b-table-column>
 
-      <b-table-column field="permission.description" label="Description" sortable searchable v-slot="props">
+      <b-table-column field="permission.description" label="Description" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.description }}
       </b-table-column>
 
-      <b-table-column field="g.slug" label="Group" sortable searchable v-slot="props">
+      <b-table-column field="g.slug" label="Group" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.group.name }}
       </b-table-column>
 
@@ -48,24 +48,27 @@
     <div class="modal-card" style="width: 400px">
       <b-loading :is-full-page="false" :active="loadingModal" :can-cancel="true"></b-loading>
       <section class="modal-card-body">
-        <b-field label="Title">
-          <b-input type="text" v-model="edited.name"></b-input>
+        <b-field label="Title" :message="formErrors.name" :type="{ 'is-danger': formErrors.name }">
+          <b-input type="text" v-model="edited.name" @input="formErrors.name = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-field label="Slug">
-          <b-input type="text" v-model="edited.slug"></b-input>
+        <b-field label="Slug" :message="formErrors.slug" :type="{ 'is-danger': formErrors.slug }">
+          <b-input type="text" v-model="edited.slug" @input="formErrors.slug = null"></b-input>
         </b-field>
       </section>
       <section class="modal-card-body">
-        <b-select placeholder="Select a group" expanded v-model="edited.group">
-          <option
-            v-for="group in groups"
-            :value="group.getId()"
-            :key="group.getId()">
-            {{ group.name }}
-          </option>
-        </b-select>
+        <b-field :message="formErrors.groupId" :type="{ 'is-danger': formErrors.groupId }">
+          <b-select placeholder="Select a group" expanded v-model="edited.groupId"
+          @change="formErrors.groupId = null">
+            <option
+              v-for="group in groups"
+              :value="group.getId()"
+              :key="group.getId()">
+              {{ group.name }}
+            </option>
+          </b-select>
+        </b-field>
       </section>
       <section class="modal-card-body">
         <b-field label="Description">

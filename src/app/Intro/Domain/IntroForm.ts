@@ -7,7 +7,7 @@ export class IntroForm extends EntityForm<Intro> {
   content: string
   position: string
   headerText: string
-  sort: number
+  sorting: number
   active: boolean
 
   public fromDTO(): Intro {
@@ -18,7 +18,7 @@ export class IntroForm extends EntityForm<Intro> {
     intro.content = this.content
     intro.position = this.position
     intro.headerText = this.headerText
-    intro.sort = this.sort
+    intro.sort = this.sorting
     intro.active = this.active
 
     return intro

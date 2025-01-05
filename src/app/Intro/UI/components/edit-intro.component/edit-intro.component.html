@@ -3,58 +3,63 @@
   <div class="tile is-parent">
     <div class="tile is-child box">
       <div v-if="form.id !== undefined" class="header">Intro №{{ form.id }}</div>
-      <editor v-model="form.content"
-              v-if="active"
-              api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
-              :init="{
-                  file_browser_callback_types: 'file image media',
-                  automatic_uploads: true,
-                  paste_data_images: true,
-                  images_upload_url: '/handleidingen/upload',
-                  images_upload_credentials: true,
-                  height: 200,
-                  menubar: false,
-                   plugins: [
-                     'imagetools image advlist autolink lists link image charmap print preview anchor',
-                     'searchreplace visualblocks code fullscreen',
-                     'insertdatetime media table paste code help wordcount'
-                   ],
-                   toolbar:
-                     'image insertfile |  undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | \
-                     bullist numlist outdent indent | removeformat | help'
-       }"
-      />
-      <b-field :label="$t('page')">
-        <b-select :placeholder="$t('selectPage')" v-model="form.page">
+      <b-field :message="errors.content" :type="{ 'is-danger': errors.content }">
+        <editor v-model="form.content"
+                v-if="active"
+                @input="errors.content = null"
+                api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
+                :init="{
+                    file_browser_callback_types: 'file image media',
+                    automatic_uploads: true,
+                    paste_data_images: true,
+                    images_upload_url: '/handleidingen/upload',
+                    images_upload_credentials: true,
+                    height: 200,
+                    menubar: false,
+                     plugins: [
+                       'imagetools image advlist autolink lists link image charmap print preview anchor',
+                       'searchreplace visualblocks code fullscreen',
+                       'insertdatetime media table paste code help wordcount'
+                     ],
+                     toolbar:
+                       'image insertfile |  undo redo | formatselect | bold italic backcolor | \
+                       alignleft aligncenter alignright alignjustify | \
+                       bullist numlist outdent indent | removeformat | help'
+         }"
+        />
+      </b-field>
+      <b-field :label="$t('page')" :message="errors.page" :type="{ 'is-danger': errors.page }">
+        <b-select :placeholder="$t('selectPage')" v-model="form.page" @input="errors.page = null">
           <option v-for="page in pages" :value="page" :key="page">
             {{ page }}
           </option>
         </b-select>
       </b-field>
 
-      <b-field label="target">
-        <b-input v-model="form.target"></b-input>
+      <b-field label="target" :message="errors.target" :type="{ 'is-danger': errors.target }">
+        <b-input v-model="form.target" @input="errors.target = null"></b-input>
       </b-field>
 
-      <b-field label="position">
-        <b-select placeholder=" - " v-model="form.position">
+      <b-field label="position" :message="errors.position" :type="{ 'is-danger': errors.position }">
+        <b-select placeholder=" - " v-model="form.position" @input="errors.position = null">
           <option v-for="position in positions" :value="position" :key="position">
             {{ position }}
           </option>
         </b-select>
       </b-field>
 
-      <b-field label="sort">
-        <b-input v-model="form.sort"></b-input>
+      <b-field label="sort" :message="errors.sorting" :type="{ 'is-danger': errors.sorting }">
+        <b-input v-model="form.sort" @input="errors.sorting = null"></b-input>
       </b-field>
 
-      <b-field label="headerText">
-        <b-input v-model="form.headerText"></b-input>
+      <b-field label="headerText" :message="errors.headerText" :type="{ 'is-danger': errors.headerText }">
+        <b-input v-model="form.headerText" @input="errors.headerText = null"></b-input>
       </b-field>
 
       <div class="active">
-        <b-checkbox v-model="form.active">active</b-checkbox>
+        <b-field :message="errors.active" :type="{ 'is-danger': errors.active }">
+          <b-checkbox v-model="form.active" @change="errors.active = null">active</b-checkbox>
+        </b-field>
       </div>
 
       <p class="control">

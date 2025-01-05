@@ -21,31 +21,27 @@ export default class EditPostComponent extends Vue {
   private categoryService: CategoryService
 
   private post: Post = new Post()
-  private categories: Category[] = []
-  private seotitle: string = ''
-  private seodescription: string = ''
-  private keywords: string = ''
-  private config = {}
+  private errors: { [x: string]: any } = []
   private active: boolean = false
+  private categories: Category[] = []
 
   async load(id: number) {
     this.post = await this.blogService.getOne(id)
   }
 
   async save() {
-    if (this.post.content === '') {
-      this.$buefy.snackbar.open(this.$tc('enterText'))
+    try {
+      await this.blogService.update(this.post, this.post)
+      this.$router.go(-1)
+    } catch (e) {
+      this.errors = e.violations.reduce((accumulator: any, value: {
+          propertyPath: string
+          title: string }) => ({ ...accumulator, [value.propertyPath]: value.title }),
+      {})
     }
-    if (this.post.title === '') {
-      this.$buefy.snackbar.open(this.$tc('enterTitile'))
-    }
-    await this.blogService.update(this.post, this.post)
-    this.$router.go(-1)
   }
 
-  back() {
-    this.$router.go(-1)
-  }
+  public back = () => this.$router.go(-1)
 
   onEditorChange({ editor, html, text }: any) {
     this.post.content = html

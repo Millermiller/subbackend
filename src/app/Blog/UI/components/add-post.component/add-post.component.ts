@@ -20,11 +20,10 @@ export default class AddPostComponent extends Vue {
   @Inject()
   private categoryService: CategoryService
 
-  post: Post = new Post()
-  categories: Category[] = []
-  seotitle: ''
-  seodescription: ''
-  keywords: ''
+  public post: Post = new Post()
+  public categories: Category[] = []
+  public errors: { [x: string]: any } = []
+
   editorConfig = {
     events: {
       initialized() {
@@ -34,18 +33,22 @@ export default class AddPostComponent extends Vue {
   }
 
   async save() {
-    if (this.post.content === '') {
-      this.$buefy.snackbar.open(this.$tc('enterText'))
+    try {
+      await this.blogService.create(this.post)
+      this.$router.go(-1)
+    } catch (e) {
+      this.errors = e.violations.reduce((accumulator: any, value: {
+          propertyPath: string
+          title: string
+        }) => ({ ...accumulator, [value.propertyPath]: value.title }),
+      {})
     }
-    if (this.post.title === '') {
-      this.$buefy.snackbar.open(this.$tc('enterTitle'))
-    }
-    await this.blogService.create(this.post)
-    this.$router.go(-1)
   }
 
   async mounted() {
     const data: PaginatedResponse<Category> = await this.categoryService.get(new FiltersData())
     this.categories = data.data
   }
+
+  public back = () => this.$router.go(-1)
 }

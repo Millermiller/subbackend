@@ -17,9 +17,14 @@ export default class ListSettingsComponent extends CRUDComponent<Setting, Settin
 
   public async saveSettings(): Promise<void> {
     this.loading = true
-    await this.service.save(this.entities)
-    this.loading = false
-    this.$buefy.snackbar.open(this.$tc('saved'))
+    try {
+      await this.service.save(this.entities)
+      this.$buefy.snackbar.open(this.$tc('saved'))
+    } catch (e) {
+      //
+    } finally {
+      this.loading = false
+    }
   }
 
   protected buildForm(): SettingForm {

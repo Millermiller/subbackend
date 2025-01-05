@@ -12,7 +12,7 @@ export default class BlogService extends BaseService<Post> {
   private readonly repository: PostRepository
 
   public create(post: Post): Promise<Post> | Post {
-    return this.repository.create(post)
+    return this.repository.create(post.toDTO())
   }
 
   public async getOne(id: number): Promise<Post> {
@@ -31,7 +31,7 @@ export default class BlogService extends BaseService<Post> {
     return this.repository.find(query)
   }
 
-  public async update(post: Post, data: any): Promise<Post> {
-    return this.repository.update(post, data)
+  public async update(post: Post, data: Post): Promise<Post> {
+    return this.repository.update(post, data.toDTO())
   }
 }

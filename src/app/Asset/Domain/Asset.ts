@@ -88,7 +88,7 @@ export class Asset extends Entity {
     this._sorting = value
   }
 
-  public calculateSorting(): number[]|null {
+  public calculateSorting(): number[] | null {
     return this._cards?.all().map(card => card.id)
   }
 
@@ -107,13 +107,28 @@ export class Asset extends Entity {
     }
   }
 
+  get tagType(): string {
+    switch (this._category) {
+      case AssetType.WORDS:
+        return 'is-primary'
+      case AssetType.SENTENCES:
+        return 'is-info'
+      case AssetType.PERSONAL:
+        return 'is-warning'
+      case AssetType.FAVORITES:
+        return 'is-success'
+      default:
+        return 'is-light'
+    }
+  }
+
   toDTO(): AssetDTO {
     const dto = new AssetDTO()
 
     dto.language = this._language.letter
     dto.id = this._id
     dto.title = this._title
-    dto.level = this._level
+    dto.level = Number(this._level)
     dto.basic = this._basic
     dto.type = this._category
     dto.sorting = this.calculateSorting()

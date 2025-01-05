@@ -52,7 +52,7 @@ export namespace API {
     }
 
     public async update(id: string | number, data: any): Promise<AxiosResponse<Translate>> {
-      return request.put(`/${this.baseUrl}/${id}`, data)
+      return request.post(`/${this.baseUrl}/${id}`, data)
     }
 
     public async delete(id: string | number): Promise<any> {
@@ -64,7 +64,7 @@ export namespace API {
     }
 
     public async saveDescription(id: number, form: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/description/${id}`, form)
+      return request.post(`/${this.baseUrl}/description/${id}`, form)
     }
 
     public async saveImage(id: number, form: any): Promise<AxiosResponse> {

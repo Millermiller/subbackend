@@ -1,15 +1,17 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <b-field :label="$tc('title')">
-        <b-input v-model="post.title" required="required"></b-input>
+      <b-field :label="$tc('title')" :message="errors.title" :type="{ 'is-danger': errors.title }">
+        <b-input v-model="post.title" required="required" @input="errors.title = null"></b-input>
       </b-field>
-      <b-field :label="$tc('preview')">
-        <b-input v-model="post.anonse" type="textarea"></b-input>
+      <b-field :label="$tc('preview')" :message="errors.announce" :type="{ 'is-danger': errors.announce }">
+        <b-input v-model="post.announce" type="textarea" @input="errors.announce = null"></b-input>
       </b-field>
-      <editor v-model="post.content"
-              api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
-              :init="{
+      <b-field :label="$tc('content')" :message="errors.content" :type="{ 'is-danger': errors.content }">
+        <editor v-model="post.content"
+                @input="errors.content = null"
+                api-key="rcqs1z9zxbqb3zpprppyqw7igixy286nzmmuxuhrqegf1hrp"
+                :init="{
                   file_browser_callback_types: 'file image media',
                   automatic_uploads: true,
                   paste_data_images: true,
@@ -27,20 +29,21 @@
                      alignleft aligncenter alignright alignjustify | \
                      bullist numlist outdent indent | removeformat | help'
        }"
-      />
-      <b-field :label="$tc('category')">
-        <b-select :placeholder="$tc('selectCategory')" v-model="post.category">
-          <option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</option>
+        />
+      </b-field>
+      <b-field :label="$tc('category')" :message="errors.categoryId" :type="{ 'is-danger': errors.categoryId }">
+        <b-select :placeholder="$tc('selectCategory')" v-model="post.category" @input="errors.categoryId = null">
+          <option v-for="category in categories" :value="category" :key="category.id">{{ category.title }}</option>
         </b-select>
       </b-field>
       <div class="field">
         <b-checkbox v-model="post.comment_status" true-value="1" false-value="0">
-          {{$t('allowComments')}}
+          {{ $t('allowComments') }}
         </b-checkbox>
       </div>
       <div class="field">
         <b-checkbox v-model="post.status" true-value="1" false-value="0">
-          {{$t('published')}}
+          {{ $t('published') }}
         </b-checkbox>
       </div>
       <b-field label="seotitle">
@@ -53,9 +56,10 @@
         <b-input v-model="post.keywords" type="textarea"></b-input>
       </b-field>
       <p class="control">
-        <button class="button is-success" @click="save()">
-          {{$t('save')}}
+        <button class="button is-success mr-1" @click="save()">
+          {{ $t('save') }}
         </button>
+        <button class="button is-light" @click="back()">{{ $t('back') }}</button>
       </p>
     </div>
   </div>

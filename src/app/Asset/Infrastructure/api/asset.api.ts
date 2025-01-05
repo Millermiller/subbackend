@@ -4,7 +4,7 @@ import { Service } from 'typedi'
 import { Asset } from '@/app/Asset/Domain/Asset'
 import { BaseAPI } from '@/app/Core/Infrastructure/base.api'
 import { ClassType } from 'class-transformer/ClassTransformer'
-import { Responses } from '../../../Core/Domain/Contract/Responses'
+import { Responses } from '@/app/Core/Domain/Contract/Responses'
 import { store } from '@/app/Core/Infrastructure/store'
 import { FiltersData } from '@/app/Core/Application/FiltersData'
 import { PaginatedResponse } from '@/app/Core/Infrastructure/PaginatedResponse'
@@ -46,7 +46,7 @@ export namespace API {
     }
 
     public async save(asset: Asset): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/${asset.getId()}`, asset)
+      return request.post(`/${this.baseUrl}/${asset.getId()}`, asset)
     }
 
     public async translate(data: any): Promise<AxiosResponse> {

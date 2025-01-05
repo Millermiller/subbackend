@@ -19,12 +19,6 @@ export namespace API {
     }
 
     public async all(filters: FiltersData): Promise<AxiosResponse<PaginatedResponse<User>>> {
-      const existingFilter = filters.filter.filter(i => i.field === 'language.id')[0]
-      if (existingFilter) {
-        existingFilter.value = store.getters.language ? store.getters.language.id : 1
-      } else {
-        filters.filter.push({ field: 'language.id', value: store.getters.language.id, operator: 'eq' })
-      }
       return request.get(`/${this.baseUrl}`, {
         params: {
           sort: filters.sort,

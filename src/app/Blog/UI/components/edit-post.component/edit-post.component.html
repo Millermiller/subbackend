@@ -1,15 +1,16 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <b-field :label="$t('title')">
+      <b-field :label="$t('title')" :message="errors.title" :type="{ 'is-danger': errors.title }">
         <b-input v-model="post.title"></b-input>
       </b-field>
-      <b-field :label="$t('preview')">
-        <b-input v-model="post.anonse" type="textarea"></b-input>
+      <b-field :label="$t('preview')" :message="errors.announce" :type="{ 'is-danger': errors.announce }">
+        <b-input v-model="post.announce" type="textarea" @input="errors.announce = null"></b-input>
       </b-field>
 
       <editor api-key="xqajoloqnmeovh9embntxbexkao8fyl1ca1rje0ygh1x981g"
               v-if="active"
+              :message="errors.content" :type="{ 'is-danger': errors.content }"
               v-model="post.content"
               :init="{
         height: 500,

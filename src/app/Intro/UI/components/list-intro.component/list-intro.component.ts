@@ -21,7 +21,7 @@ export default class ListIntroComponent extends CRUDComponent<Intro, IntroForm> 
 
   async mounted(): Promise<void> {
     // dont need load here if data load in activation hook (see keep-alive)
-    await this.load()
+    // await this.load()
   }
 
   public tagClass(completed: boolean): string {

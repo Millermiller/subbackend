@@ -63,22 +63,15 @@ export default class Login extends Vue {
         if (this.$ability.can(permissions.ACCESS_ADMIN_PAGE)) {
           this.$router.push('/')
         } else {
-          this.loginerror = 'FORBIDDEN'
+          this.error = 'FORBIDDEN'
           LoginService.logout()
           this.isLoading = false
         }
       })
       .catch((error: any) => {
-        if (error.errors) {
-          this.loginerror = error.errors.login[0] || ''
-          this.passerror = error.errors.password[0] || ''
-          this.error = ''
-        } else {
-          this.error = error
-          this.loginerror = ''
-          this.passerror = ''
+        if (error.code === 401) {
+          this.error = error.message
         }
-
         this.isLoading = false
       })
   }

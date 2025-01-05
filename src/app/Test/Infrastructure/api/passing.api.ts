@@ -43,7 +43,7 @@ export namespace API {
     }
 
     public async update(id: number|string, form: any): Promise<AxiosResponse> {
-      return request.put(`/${this.baseUrl}/${id}`, form)
+      return request.post(`/${this.baseUrl}/${id}`, form)
     }
 
     public async search(query: string): Promise<AxiosResponse<Passing[]>> {

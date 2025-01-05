@@ -88,7 +88,7 @@ export default class Intro extends Entity {
     dto.content = this._content
     dto.position = this._position
     dto.headerText = this._headerText
-    dto.sort = this._sort
+    dto.sorting = Number(this._sort)
     dto.active = this._active
 
     return dto

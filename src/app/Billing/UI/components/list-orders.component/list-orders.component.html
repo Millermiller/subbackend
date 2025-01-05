@@ -11,7 +11,7 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="id" label="ID" width="40" sortable numeric v-slot="props">
+      <b-table-column field="id" label="ID" width="40" :sortable="true" :numeric="true" v-slot="props">
         {{ props.row.getId() }}
       </b-table-column>
       <!-- MAKE COLUMNS HERE -->

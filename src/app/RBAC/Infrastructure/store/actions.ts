@@ -6,7 +6,6 @@ import { User } from '@/app/Core/Domain/User'
 
 export default class RBACActions extends Actions<RBACState, RBACGetters, RBACMutations, RBACActions> {
   public initialiseRBAC(data: User): void {
-    console.log(data)
     if (data.permissionList) {
       this.commit('setPermissions', data.permissionList)
 

@@ -12,15 +12,15 @@
       :data="entities"
       v-bind="tableProperties"
       v-on="tableEvents">
-      <b-table-column field="intro.id" label="ID" width="80" sortable searchable v-slot="props">
+      <b-table-column field="intro.id" label="ID" width="80" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.id }}
       </b-table-column>
 
-      <b-table-column field="intro.page" label="page" sortable searchable v-slot="props">
+      <b-table-column field="intro.page" label="page" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.page }}
       </b-table-column>
 
-      <b-table-column field="intro.target" label="target" width="200" sortable searchable v-slot="props">
+      <b-table-column field="intro.target" label="target" width="200" :sortable="true" :searchable="true" v-slot="props">
         {{ props.row.target }}
       </b-table-column>
 
@@ -28,15 +28,15 @@
         {{ props.row.content }}
       </b-table-column>
 
-      <b-table-column field="intro.position" label="position" searchable v-slot="props">
+      <b-table-column field="intro.position" label="position" :searchable="true" v-slot="props">
         {{ props.row.position }}
       </b-table-column>
 
-      <b-table-column field="intro.sort" label="sort" sortable v-slot="props">
+      <b-table-column field="intro.sort" label="sort" :sortable="true" v-slot="props">
         {{ props.row.sort }}
       </b-table-column>
 
-      <b-table-column field="intro.active" label="active" searchable sortable v-slot="props">
+      <b-table-column field="intro.active" label="active" :sortable="true" :searchable="true" v-slot="props">
         <b-tag :type="tagClass(props.row.active)">{{props.row.active}}</b-tag>
       </b-table-column>
 
